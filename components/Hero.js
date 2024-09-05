@@ -64,11 +64,11 @@ const Hero = () => {
                     >
                         <MotiText
                             style={{
-                                fontFamily: FONTS.headingSemiBold,
+                                fontFamily: FONTS.medium,
                                 fontSize: normalize(50),//FONT_SIZES.heroHeading,
                                 lineHeight: 68,
                                 color: COLORS.white,
-                                marginBottom: SPACING.medium,
+                                marginBottom: SPACING.xx_small,
                                 textAlign: width > 1380 ? 'left' : 'center',
                                 //whiteSpace: 'nowrap'
                             }}
@@ -161,7 +161,7 @@ const Hero = () => {
                     >
                         <Image
                             contentFit='contain'
-                            source={require('../assets/images/hero_mobile_app3.png')}
+                            source={require('../assets/images/hero_mobile_app4.png')}
                             style={{
                                 width: width * 0.5,
                                 maxWidth: 500,
@@ -177,6 +177,7 @@ const Hero = () => {
                         gap: normalize(120),
                         justifyContent: 'center',
                         flexWrap: 'wrap',
+                        paddingHorizontal: SPACING.page_horizontal,
                     }}
                 >
                     <View
@@ -190,11 +191,7 @@ const Hero = () => {
                         >
                             30+
                         </Text>
-                        <Text style={{
-                            fontFamily: FONTS.light,
-                            fontSize: FONT_SIZES.x_large,
-                            color: COLORS.grey400,
-                        }}>
+                        <Text style={styles.heroStatsText}>
                             Aktivních klientů
                         </Text>
                     </View>
@@ -209,11 +206,7 @@ const Hero = () => {
                         >
                             100+
                         </Text>
-                        <Text style={{
-                            fontFamily: FONTS.light,
-                            fontSize: FONT_SIZES.x_large,
-                            color: COLORS.grey400,
-                        }}>
+                        <Text style={styles.heroStatsText}>
                             Tipů každý měsíc
                         </Text>
                     </View>
@@ -228,11 +221,7 @@ const Hero = () => {
                         >
                             10 let
                         </Text>
-                        <Text style={{
-                            fontFamily: FONTS.light,
-                            fontSize: FONT_SIZES.x_large,
-                            color: COLORS.grey400,
-                        }}>
+                        <Text style={styles.heroStatsText}>
                             Zkušeností v sázení
                         </Text>
                     </View>
@@ -250,5 +239,10 @@ const styles = StyleSheet.create({
         fontFamily: FONTS.regular,
         fontSize: normalize(40),
         color: COLORS.accent
+    },
+    heroStatsText: {
+        fontFamily: FONTS.light,
+        fontSize: FONT_SIZES.large,
+        color: COLORS.grey400,
     }
 })

@@ -62,9 +62,9 @@ export const FONT_SIZES = {
     medium: normalizeSize(12, 12, 14), //base
     large: normalizeSize(14, 14, 16), //paragraph
     x_large: normalizeSize(18, 18, 20),
-    h1: normalizeSize(24, 24, 28),
-    h2: normalizeSize(22, 22, 26),
-    h3: normalizeSize(20, 20, 24),
+    h1: normalizeSize(34, 34, 38),
+    h2: normalizeSize(32, 32, 36),
+    h3: normalizeSize(20, 20, 26),
     heroHeading: normalizeSize(60, 60, 65),
 }
 

@@ -2,7 +2,7 @@
   "name": "betadvising",
   "version": "1.0.0",
   "main": "expo/AppEntry.js",
-  "homepage": "https://jakubmuzzik.github.io/betadvising",
+  "homepage": "https://jakubmuzzik.github.io/BetAdvising/",
   "scripts": {
     "start": "expo start",
     "android": "expo start --android",

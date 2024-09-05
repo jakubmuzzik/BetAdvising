@@ -633,14 +633,16 @@ const Steps = () => {
                         borderRadius: 20,
                         borderWidth: 1,
                         borderColor: COLORS.accent,
-                        maxWidth: 500
+                        maxWidth: 500,
                     }}
                 >
                     <Image
                         source={require('../assets/images/guarantee.png')}
                         style={{
-                            width: 80,
+                            flex: 1,
                             aspectRatio: 99 / 92,
+                            flexShrink: 1,
+                            minWidth: 50
                         }}
                         contentFit='contain'
                     />
@@ -674,55 +676,66 @@ const Steps = () => {
         </View>
     )
 
-
     return (
-        <View style={{
-            alignItems: 'center',
-            justifyContent: 'center',
-            alignSelf: 'center',
-            maxWidth: 1380,
-            paddingHorizontal: SPACING.page_horizontal,
-        }}>
-            {/* <Image
-                source={require('../assets/images/blurred_glow_primary.png')}
+        <View
+            style={{
+                paddingHorizontal: SPACING.page_horizontal,
+            }}
+        >
+            <View
                 style={{
-                    width: width * 0.3,
-                    height: width * 0.3,
-                    position: 'absolute',
-                    top: -120,
-                    opacity: .7
-                }}
-                contentFit='contain'
-            /> */}
-            <Text
-                style={{
-                    fontFamily: FONTS.medium,
-                    fontSize: FONT_SIZES.medium,
-                    color: COLORS.accent,
-                    marginBottom: 5,
-                    textAlign: 'center'
+                    width: '100%',
+                    borderWidth: 1,
+                    borderColor: COLORS.grey400,
+                    backgroundColor: 'rgba(255,255,255,.05)',
+                    borderRadius: 10
                 }}
             >
-                Jak to funguje
-            </Text>
-            <Text
-                style={{
-                    fontFamily: FONTS.medium,
-                    fontSize: FONT_SIZES.h1,
-                    color: COLORS.white,
-                    textAlign: 'center',
-                    maxWidth: 500,
-                    marginBottom: normalize(80)
-                }}
-            >
-                3 jednoduché kroky k získání těch nejlepší tipů
-            </Text>
+                <View style={{
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    alignSelf: 'center',
+                    maxWidth: 1380,
+                    paddingHorizontal: SPACING.medium,
+                    paddingTop: SPACING.x_large,
+                    paddingBottom: normalize(100)
+                }}>
+                    <Text
+                        style={{
+                            fontFamily: FONTS.medium,
+                            fontSize: FONT_SIZES.medium,
+                            color: COLORS.accent,
+                            marginBottom: 5,
+                            textAlign: 'center'
+                        }}
+                    >
+                        Jak to funguje
+                    </Text>
+                    <Text
+                        style={{
+                            fontFamily: FONTS.medium,
+                            fontSize: FONT_SIZES.h1,
+                            color: COLORS.white,
+                            textAlign: 'center',
+                            maxWidth: 500,
+                            marginBottom: normalize(80)
+                        }}
+                    >
+                        3 jednoduché kroky k získání těch nejlepší tipů
+                    </Text>
 
-            {width > 1000 ? renderFirstStepLarge() : renderFirstStepSmall()}
+                    {width > 1000 ? renderFirstStepLarge() : renderFirstStepSmall()}
 
-            {width > 1000 ? renderSecondStepLarge() : renderSecondStepSmall()}
+                    {width > 1000 ? renderSecondStepLarge() : renderSecondStepSmall()}
 
-            {width > 1000 ? renderThirdStepLarge() : renderThirdStepSmall()}
+                    {width > 1000 ? renderThirdStepLarge() : renderThirdStepSmall()}
+                </View>
+            </View>
+            <LinearGradient
+                colors={['rgba(22,22,22,0)', COLORS.primary]}
+                style={{ position: 'absolute', bottom: -1, width: '100%', height: 200, right: SPACING.page_horizontal, left: SPACING.page_horizontal }}
+                locations={[0, 0.75]}
+            />
         </View>
     )
 }

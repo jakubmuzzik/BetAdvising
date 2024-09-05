@@ -1,6 +1,6 @@
 import React from 'react'
 import { View } from 'react-native'
-import { COLORS } from '../constants'
+import { COLORS, SPACING } from '../constants'
 import { normalize } from '../utils'
 import { Route, createBrowserRouter, createRoutesFromElements, RouterProvider } from 'react-router-dom'
 
@@ -12,7 +12,7 @@ const LayoutWithHeader = ({ children }) => (
     <>
         <Header />
 
-        <View style={{ flex: 1, marginTop: normalize(70), backgroundColor: COLORS.lightBlack }}>
+        <View style={{ flex: 1, marginTop: normalize(70), backgroundColor: COLORS.lightBlack, marginBottom: SPACING.large }}>
             {children}
         </View>
 

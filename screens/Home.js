@@ -5,6 +5,7 @@ import { normalize } from '../utils'
 import Hero from '../components/Hero'
 import AboutUs from '../components/AboutUs'
 import Steps from '../components/Steps'
+import Packages from '../components/Packages'
 
 const Home = () => {
 
@@ -18,6 +19,7 @@ const Home = () => {
             <Hero />
             <AboutUs />
             <Steps />
+            <Packages />
         </View>
     )
 }

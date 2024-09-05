@@ -163,7 +163,7 @@ const Hero = () => {
                             contentFit='contain'
                             source={require('../assets/images/hero_mobile_app4.png')}
                             style={{
-                                width: width * 0.5,
+                                width:  width > 1380 ? width * 0.5 : width * 0.8,
                                 maxWidth: 500,
                                 aspectRatio: 837.86 / 672.9
                             }}

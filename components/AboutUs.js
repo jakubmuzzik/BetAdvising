@@ -28,7 +28,7 @@ const AboutUs = () => {
                     flexGrow: 1,
                     justifyContent: 'center',
                     zIndex: 2,
-                    width: width > 1380 ? width * 0.3 : width * 0.5,
+                    width: width > 1380 ? width * 0.3 : width - SPACING.page_horizontal * 2,
                     //alignItems: 'center'
                 }}>
                     <Image
@@ -46,7 +46,7 @@ const AboutUs = () => {
                 <View style={{
                     flexGrow: 1,
                     justifyContent: 'center',
-                    width: width > 1380 ? width * 0.3 : width * 0.5,
+                    width: width > 1380 ? width * 0.3 : width - SPACING.page_horizontal * 2,
                     maxWidth: 500,
                     //alignItems: 'center'
                 }}>

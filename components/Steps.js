@@ -124,12 +124,13 @@ const Steps = () => {
     const renderFirstStepSmall = () => (
         <View style={{
             flexDirection: 'row',
-            gap: SPACING.large,
-            alignSelf: 'flex-start'
+            gap: SPACING.large
+            //alignSelf: 'flex-start'
         }}>
             <View
                 style={{
-                    flexGrow: 0
+                    flexGrow: 0,
+                    flexShrink: 1
                 }}
             >
                 <LinearGradient
@@ -342,7 +343,7 @@ const Steps = () => {
         <View style={{
             flexDirection: 'row',
             gap: SPACING.large,
-            alignSelf: 'flex-start'
+            //alignSelf: 'flex-start'
         }}>
             <View
                 style={{
@@ -570,7 +571,7 @@ const Steps = () => {
         <View style={{
             flexDirection: 'row',
             gap: SPACING.large,
-            alignSelf: 'flex-start'
+            //alignSelf: 'flex-start'
         }}>
             <View
                 style={{
@@ -694,7 +695,6 @@ const Steps = () => {
                 <View style={{
                     alignItems: 'center',
                     justifyContent: 'center',
-                    alignSelf: 'center',
                     maxWidth: 1380,
                     paddingHorizontal: SPACING.medium,
                     paddingTop: SPACING.x_large,
@@ -718,17 +718,21 @@ const Steps = () => {
                             color: COLORS.white,
                             textAlign: 'center',
                             maxWidth: 500,
-                            marginBottom: normalize(80)
+                            marginBottom: normalize(80),
                         }}
                     >
                         3 jednoduché kroky k získání těch nejlepší tipů
                     </Text>
 
-                    {width > 1000 ? renderFirstStepLarge() : renderFirstStepSmall()}
+                    <View style={{
 
-                    {width > 1000 ? renderSecondStepLarge() : renderSecondStepSmall()}
+                    }}>
+                        {width > 1000 ? renderFirstStepLarge() : renderFirstStepSmall()}
 
-                    {width > 1000 ? renderThirdStepLarge() : renderThirdStepSmall()}
+                        {width > 1000 ? renderSecondStepLarge() : renderSecondStepSmall()}
+
+                        {width > 1000 ? renderThirdStepLarge() : renderThirdStepSmall()}
+                    </View>
                 </View>
             </View>
             <LinearGradient

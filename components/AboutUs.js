@@ -62,8 +62,8 @@ const AboutUs = () => {
                     /> */}
                     <Text
                         style={{
-                            fontFamily: FONTS.medium,
-                            fontSize: FONT_SIZES.medium,
+                            fontFamily: FONTS.regular,
+                            fontSize: FONT_SIZES.large,
                             color: COLORS.accent,
                             marginBottom: 5
                         }}

@@ -33,6 +33,7 @@ const Steps = () => {
                 <View style={{
                     marginTop: SPACING.large,
                     flexDirection: 'row',
+                    flexWrap: 'wrap',
                     gap: SPACING.small
                 }}>
                     <TouchableOpacity
@@ -188,6 +189,7 @@ const Steps = () => {
                 <View style={{
                     marginTop: SPACING.large,
                     flexDirection: 'row',
+                    flexWrap: 'wrap',
                     gap: SPACING.small
                 }}>
                     <TouchableOpacity
@@ -471,7 +473,7 @@ const Steps = () => {
                     end={{ x: 1, y: 0 }}
                     style={{
                         marginTop: SPACING.large,
-                        flex: 1,
+                        //flex: 1,
                         justifyContent: 'center',
                         alignItems: 'center',
                         flexDirection: 'row',
@@ -681,11 +683,14 @@ const Steps = () => {
         <View
             style={{
                 paddingHorizontal: SPACING.page_horizontal,
+                width: '100%',
+                alignItems: 'center',
             }}
         >
             <View
                 style={{
-                    width: '100%',
+                    maxWidth: 1680,
+                    flex: 1,
                     borderWidth: 1,
                     borderColor: COLORS.grey400,
                     backgroundColor: 'rgba(255,255,255,.05)',
@@ -695,7 +700,6 @@ const Steps = () => {
                 <View style={{
                     alignItems: 'center',
                     justifyContent: 'center',
-                    maxWidth: 1380,
                     paddingHorizontal: SPACING.medium,
                     paddingTop: SPACING.x_large,
                     paddingBottom: normalize(100)
@@ -724,9 +728,7 @@ const Steps = () => {
                         3 jednoduché kroky k získání těch nejlepší tipů
                     </Text>
 
-                    <View style={{
-
-                    }}>
+                    <View>
                         {width > 1000 ? renderFirstStepLarge() : renderFirstStepSmall()}
 
                         {width > 1000 ? renderSecondStepLarge() : renderSecondStepSmall()}
@@ -737,7 +739,7 @@ const Steps = () => {
             </View>
             <LinearGradient
                 colors={['rgba(22,22,22,0)', COLORS.primary]}
-                style={{ position: 'absolute', bottom: -1, width: '100%', height: 200, right: SPACING.page_horizontal, left: SPACING.page_horizontal }}
+                style={{ position: 'absolute', bottom: -1,  height: 200, right: 0, left: 0 }}
                 locations={[0, 0.75]}
             />
         </View>

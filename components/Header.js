@@ -105,7 +105,7 @@ const Header = () => {
                     style={{ 
                         justifyContent: 'center', 
                         alignItems: 'center', 
-                        borderRadius: 20
+                        borderRadius: 10
                     }}
                 >
                     <TouchableOpacity
@@ -125,7 +125,7 @@ const Header = () => {
                                 fontSize: FONT_SIZES.large 
                             }}
                         >
-                            ZÍSKAT APLIKACI
+                            Získat tipy →
                         </Text>
                     </TouchableOpacity>
                 </HoverableView>

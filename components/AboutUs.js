@@ -106,7 +106,7 @@ const AboutUs = () => {
                             color: COLORS.white
                         }}
                     >
-                        Váš partner pro sázení
+                        Nech se inspirovat
                     </Text>
                     <Text
                         style={{

@@ -4,6 +4,7 @@ import { COLORS, FONT_SIZES, FONTS, SPACING } from '../constants'
 import { normalize } from '../utils'
 import { Image } from 'expo-image'
 import Package from './Package'
+import { LinearGradient } from 'expo-linear-gradient'
 
 const Packages = () => {
     const { width } = useWindowDimensions()
@@ -14,24 +15,59 @@ const Packages = () => {
                 width: '100%'
             }}
         >
-            <Image
-                source={require('../assets/images/dot_grid2.png')}
-                style={{
-                    width,
-                    aspectRatio: 1824 / 623,
-                    maxWidth: 1380,
-                    top: 0,
-                    bottom: 0,
-                    left: 0,
-                    right: 0,
-                    margin: 'auto',
-                    //height: 200 * 1.4,
-                    position: 'absolute',
-                    //top: -120,
-                    opacity: 1
-                }}
-                contentFit='contain'
-            />
+            {width < 1230 ? (
+                <LinearGradient
+                    colors={[COLORS.primary, 'rgba(255,255,255,.05)', COLORS.primary]}
+                    start={{ x: 0, y: 0 }}
+                    end={{ x: 1, y: 0 }}
+                    style={{
+                        position: 'absolute',
+                        width: width - SPACING.page_horizontal * 1.5,
+                        maxWidth: 1180,
+                        left: 0,
+                        right: 0,
+                        margin: 'auto',
+                        height: 300,
+                        top: -30,
+                        //borderTopWidth: 1,
+                        borderColor: COLORS.grey400,
+                    }}
+                >
+                    <LinearGradient
+                        colors={['rgba(255,255,255,0)', COLORS.grey400, 'rgba(255,255,255,.0)']}
+                        start={{ x: 0, y: 0 }}
+                        end={{ x: 1, y: 0 }}
+                        style={{
+                            height: 1
+                        }}
+                    />
+                    <LinearGradient
+                        colors={['rgba(255,255,255,0)', COLORS.primary]}
+                        style={{ position: 'absolute', bottom: 0, height: 100, right: 0, left: 0 }}
+                        locations={[0, 0.75]}
+                    />
+                </LinearGradient>
+            ) : (
+                <Image
+                    source={require('../assets/images/dot_grid3.png')}
+                    style={{
+                        width,
+                        aspectRatio: 1824 / 623,
+                        maxWidth: 1380,
+                        top: 0,
+                        bottom: 0,
+                        left: 0,
+                        right: 0,
+                        margin: 'auto',
+                        //height: 200 * 1.4,
+                        position: 'absolute',
+                        //top: -120,
+                        opacity: 1
+                    }}
+                    contentFit='contain'
+                />
+            )}
+            
             <Image
                 source={require('../assets/images/arrow.png')}
                 style={{
@@ -70,7 +106,7 @@ const Packages = () => {
                     style={{
                         fontFamily: FONTS.light,
                         fontSize: FONT_SIZES.large,
-                        color: COLORS.grey400,
+                        color: COLORS.grey300,
                         lineHeight: FONT_SIZES.large * 1.5,
                         marginBottom: SPACING.large,
                         textAlign: 'center',

@@ -309,7 +309,7 @@ const Steps = () => {
                         style={{
                             justifyContent: 'center',
                             alignItems: 'center',
-                            borderRadius: 20,
+                            borderRadius: 10,
                             width: 'fit-content',
                             borderWidth: 1,
                             borderColor: COLORS.grey300,
@@ -412,7 +412,7 @@ const Steps = () => {
                         style={{
                             justifyContent: 'center',
                             alignItems: 'center',
-                            borderRadius: 20,
+                            borderRadius: 10,
                             width: 'fit-content',
                             borderWidth: 1,
                             borderColor: COLORS.grey300,

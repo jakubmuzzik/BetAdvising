@@ -97,6 +97,7 @@ const Hero = () => {
                                 color: COLORS.grey300,
                                 marginBottom: SPACING.large,
                                 textAlign: width > 1380 ? 'left' : 'center',
+                                lineHeight: FONT_SIZES.x_large * 1.5
                             }}
                             from={{
                                 opacity: 0,
@@ -115,42 +116,84 @@ const Hero = () => {
                                 delay: 100
                             }}
                         >
-                            Odborné tipy na sázení doručované přímo do mobilní aplikace
+                            Získej přístup k nejlepším tipům na sázení od profesionálních tipařů. Začni s 200 kreditama zdarma.
                         </MotiText>
 
-                        <HoverableView
-                            hoveredBackgroundColor={COLORS.hoveredAccent}
-                            backgroundColor={COLORS.accent}
-                            style={{
-                                justifyContent: 'center',
-                                alignItems: 'center',
-                                borderRadius: 20,
-                                width: 'fit-content',
-                                alignSelf: width > 1380 ? 'auto' : 'center'
-                            }}
-                        >
-                            <TouchableOpacity
-                                onPress={onGetAppPress}
+                        <View style={{
+                            flexDirection: 'row',
+                            gap: SPACING.medium
+                        }}>
+                            <HoverableView
+                                hoveredBackgroundColor={COLORS.hoveredAccent}
+                                backgroundColor={COLORS.accent}
                                 style={{
-                                    paddingHorizontal: SPACING.x_small,
-                                    paddingVertical: SPACING.xx_small,
-                                    flexDirection: 'row',
                                     justifyContent: 'center',
-                                    alignItems: 'center'
+                                    alignItems: 'center',
+                                    borderRadius: 10,
+                                    width: 'fit-content',
+                                    alignSelf: width > 1380 ? 'auto' : 'center'
                                 }}
                             >
-                                <Text
+                                <TouchableOpacity
+                                    onPress={onGetAppPress}
                                     style={{
-                                        color: '#000',
-                                        fontFamily: FONTS.bold,
-                                        fontSize: FONT_SIZES.large
+                                        paddingHorizontal: SPACING.x_small,
+                                        paddingVertical: SPACING.xx_small,
+                                        flexDirection: 'row',
+                                        justifyContent: 'center',
+                                        alignItems: 'center'
                                     }}
                                 >
-                                    ZÍSKAT APLIKACI →
-                                </Text>
-                            </TouchableOpacity>
-                        </HoverableView>
+                                    <Text
+                                        style={{
+                                            color: '#000',
+                                            fontFamily: FONTS.bold,
+                                            fontSize: FONT_SIZES.large
+                                        }}
+                                    >
+                                        Získat tipy →
+                                    </Text>
+                                </TouchableOpacity>
+                            </HoverableView>
+
+                            <HoverableView
+                                hoveredBackgroundColor={'rgba(214, 214, 214, 0.37)'}
+                                backgroundColor={'rgba(214, 214, 214, 0.27)'}
+                                style={{
+                                    justifyContent: 'center',
+                                    alignItems: 'center',
+                                    borderRadius: 10,
+                                    width: 'fit-content',
+                                    alignSelf: width > 1380 ? 'auto' : 'center',
+                                    //borderWidth: 1,
+                                    //borderColor: COLORS.grey300
+                                }}
+                            >
+                                <TouchableOpacity
+                                    onPress={onGetAppPress}
+                                    style={{
+                                        paddingHorizontal: SPACING.x_small,
+                                        paddingVertical: SPACING.xx_small,
+                                        flexDirection: 'row',
+                                        justifyContent: 'center',
+                                        alignItems: 'center'
+                                    }}
+                                >
+                                    <Text
+                                        style={{
+                                            color: COLORS.white,
+                                            fontFamily: FONTS.regular,
+                                            fontSize: FONT_SIZES.large
+                                        }}
+                                    >
+                                        Jak to funguje
+                                    </Text>
+                                </TouchableOpacity>
+                            </HoverableView>
+                        </View>
+
                     </View>
+
                     <View
                         style={{
                             flex: 1,
@@ -163,7 +206,7 @@ const Hero = () => {
                             contentFit='contain'
                             source={require('../assets/images/hero_mobile_app4.png')}
                             style={{
-                                width:  width > 1380 ? width * 0.5 : width * 0.8,
+                                width: width > 1380 ? width * 0.5 : width * 0.8,
                                 maxWidth: 500,
                                 aspectRatio: 837.86 / 672.9
                             }}

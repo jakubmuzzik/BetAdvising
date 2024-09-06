@@ -114,7 +114,8 @@ const AboutUs = () => {
                             fontSize: FONT_SIZES.large,
                             color: COLORS.grey400,
                             marginTop: 10,
-                            maxWidth: 500
+                            maxWidth: 500,
+                            lineHeight: FONT_SIZES.large * 1.3
                         }}
                     >
                         Jsme tým profesionálních tipařů poskytujících přesné a spolehlivé tipy na sázení. S našimi radami můžete činit informovaná rozhodnutí a zvýšit své šance na výhru.

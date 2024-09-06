@@ -12,7 +12,7 @@ const LayoutWithHeader = ({ children }) => (
     <>
         <Header />
 
-        <View style={{ flex: 1, marginTop: normalize(70), backgroundColor: COLORS.primary, marginBottom: SPACING.large }}>
+        <View style={{ flex: 1, marginTop: normalize(65), backgroundColor: COLORS.primary, marginBottom: SPACING.large }}>
             {children}
         </View>
 

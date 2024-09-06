@@ -62,7 +62,7 @@ const Packages = () => {
                         //height: 200 * 1.4,
                         position: 'absolute',
                         //top: -120,
-                        opacity: 1
+                        opacity: .8
                     }}
                     contentFit='contain'
                 />
@@ -100,7 +100,7 @@ const Packages = () => {
                         marginBottom: 10
                     }}
                 >
-                    Jaké balíčky nabízíme
+                    Jaké balíčky nabízíme?
                 </Text>
                 <Text
                     style={{

@@ -8,6 +8,7 @@ import { SPACING } from '../constants'
 import { Image } from 'expo-image'
 import HoverableView from './HoverableView'
 import { MotiText } from 'moti'
+import CountInNumber from './animated/CountInNumber'
 
 const HeroBackground = () => (
     <ImageBackground
@@ -229,11 +230,12 @@ const Hero = () => {
                             alignItems: 'center'
                         }}
                     >
-                        <Text
-                            style={styles.heroStatsNumber}
-                        >
-                            30+
-                        </Text>
+                        <CountInNumber
+                            number={30}
+                            textStyle={styles.heroStatsNumber}
+                            trailingTextAfterFinish='+'
+                            step={2}
+                        />
                         <Text style={styles.heroStatsText}>
                             Aktivních klientů
                         </Text>
@@ -244,11 +246,12 @@ const Hero = () => {
                             alignItems: 'center'
                         }}
                     >
-                        <Text
-                            style={styles.heroStatsNumber}
-                        >
-                            100+
-                        </Text>
+                        <CountInNumber
+                            number={100}
+                            textStyle={styles.heroStatsNumber}
+                            trailingTextAfterFinish='+'
+                            duration={150}
+                        />
                         <Text style={styles.heroStatsText}>
                             Tipů každý měsíc
                         </Text>
@@ -259,11 +262,11 @@ const Hero = () => {
                             alignItems: 'center'
                         }}
                     >
-                        <Text
-                            style={styles.heroStatsNumber}
-                        >
-                            10 let
-                        </Text>
+                        <CountInNumber
+                            number={10}
+                            textStyle={styles.heroStatsNumber}
+                            trailingText=' let'
+                        />
                         <Text style={styles.heroStatsText}>
                             Zkušeností v sázení
                         </Text>

@@ -61,32 +61,32 @@ const Header = () => {
                     gap: SPACING.large
                 }}
             >
-                <HoverableText
+                {/* <HoverableText
                     text='DOMŮ'
                     hoveredColor={COLORS.accent}
                     textStyle={styles.headerMenuText}
                     onPress={onHomePress}
-                />
+                /> */}
                 <HoverableText
-                    text='O NÁS'
+                    text='O nás'
                     hoveredColor={COLORS.accent}
                     textStyle={styles.headerMenuText}
                     onPress={onHomePress}
                 />
                 <HoverableText
-                    text='JAK TO FUNGUJE'
+                    text='Jak to funguje'
                     hoveredColor={COLORS.accent}
                     textStyle={styles.headerMenuText}
                     onPress={onHomePress}
                 />
                 <HoverableText
-                    text='BALÍČKY'
+                    text='Balíčky'
                     hoveredColor={COLORS.accent}
                     textStyle={styles.headerMenuText}
                     onPress={onHomePress}
                 />
                 <HoverableText
-                    text='KONTAKT'
+                    text='Kontakt'
                     hoveredColor={COLORS.accent}
                     textStyle={styles.headerMenuText}
                     onPress={onHomePress}
@@ -98,9 +98,44 @@ const Header = () => {
     const renderRightHeader = () => {
 
         return (
-            <>
-                <HoverableView 
-                    hoveredBackgroundColor={COLORS.hoveredAccent} 
+            <View
+                style={{
+                    flexDirection: 'row',
+                    gap: SPACING.small
+                }}
+            >
+                <HoverableView
+                    hoveredBackgroundColor={'rgba(255, 255, 255, 0.2)'}
+                    backgroundColor={COLORS.whiteBackground}
+                    style={{
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        borderRadius: 10
+                    }}
+                >
+                    <TouchableOpacity
+                        onPress={onGetAppPress}
+                        style={{
+                            paddingHorizontal: SPACING.x_small,
+                            paddingVertical: SPACING.xx_small,
+                            flexDirection: 'row',
+                            justifyContent: 'center',
+                            alignItems: 'center'
+                        }}
+                    >
+                        <Text
+                            style={{
+                                color: COLORS.white,
+                                fontFamily: FONTS.regular,
+                                fontSize: FONT_SIZES.large
+                            }}
+                        >
+                            Přihlásit se
+                        </Text>
+                    </TouchableOpacity>
+                </HoverableView>
+                <HoverableView
+                    hoveredBackgroundColor={COLORS.hoveredAccent}
                     backgroundColor={COLORS.accent}
                     style={{ 
                         justifyContent: 'center', 
@@ -125,11 +160,11 @@ const Header = () => {
                                 fontSize: FONT_SIZES.large 
                             }}
                         >
-                            Získat tipy →
+                            Registrace
                         </Text>
                     </TouchableOpacity>
                 </HoverableView>
-            </>
+            </View>
         )
     }
 
@@ -164,8 +199,8 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         alignItems: 'center',
         paddingHorizontal: SPACING.page_horizontal,
-        backgroundColor: '#04081ba3',//'#1b0404bf',//'#1b0404a3',//COLORS.darkRedBackground,
-        height: normalize(70)
+        backgroundColor: '#020308a3',//'#1b0404bf',//'#1b0404a3',//COLORS.darkRedBackground,
+        height: normalize(65)
     },
     headerLarge: {
         //position: 'fixed',
@@ -177,8 +212,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         paddingHorizontal: SPACING.page_horizontal,
         paddingVertical: SPACING.x_small,
-        backgroundColor: '#04081ba3',//'#1b0404bf',//'#1b0404a3',// 'rgb(44 26 26 / 64%)',//'rgb(44 26 26 / 64%)',//COLORS.darkRedBackground,
-        height: normalize(70)
+        backgroundColor: '#020308a3',//'#1b0404bf',//'#1b0404a3',// 'rgb(44 26 26 / 64%)',//'rgb(44 26 26 / 64%)',//COLORS.darkRedBackground,
+        height: normalize(65)
     },
     headerLeftSmall: {
         flexGrow: 0,

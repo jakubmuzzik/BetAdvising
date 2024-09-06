@@ -15,7 +15,7 @@ const Packages = () => {
             }}
         >
             <Image
-                source={require('../assets/images/dot_grid.png')}
+                source={require('../assets/images/dot_grid2.png')}
                 style={{
                     width,
                     aspectRatio: 1824 / 623,

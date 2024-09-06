@@ -3,6 +3,7 @@ import { View, useWindowDimensions, Text, ImageBackground } from 'react-native'
 import { COLORS, FONT_SIZES, FONTS, SPACING } from '../constants'
 import { Image } from 'expo-image'
 import { normalize } from '../utils'
+import { LinearGradient } from 'expo-linear-gradient'
 
 const AboutUs = () => {
     const { width } = useWindowDimensions()
@@ -13,6 +14,34 @@ const AboutUs = () => {
             alignItems: 'center',
             zIndex: 2
         }}>
+            <LinearGradient
+                colors={[COLORS.primary, 'rgba(255,255,255,.05)', COLORS.primary]}
+                start={{ x: 0, y: 0 }}
+                end={{ x: 1, y: 0 }}
+                style={{
+                    position: 'absolute',
+                    width: width - SPACING.page_horizontal * 1.5,
+                    maxWidth: 1180,
+                    height: 500,
+                    top: -90,
+                    //borderTopWidth: 1,
+                    borderColor: COLORS.grey400,
+                }}
+            >
+                <LinearGradient
+                    colors={['rgba(255,255,255,0)', COLORS.grey400, 'rgba(255,255,255,.0)']}
+                    start={{ x: 0, y: 0 }}
+                    end={{ x: 1, y: 0 }}
+                    style={{
+                        height: 1
+                    }}
+                />
+                <LinearGradient
+                    colors={['rgba(255,255,255,0)', COLORS.primary]}
+                    style={{ position: 'absolute', bottom: 0, height: 100, right: 0, left: 0 }}
+                    locations={[0, 0.75]}
+                />
+            </LinearGradient>
             <View
                 style={{
                     alignItems: 'center',

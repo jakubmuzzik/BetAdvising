@@ -17,7 +17,7 @@ const Package = ({ name, coins, price, description }) => {
                     borderRadius: 10,
                     padding: SPACING.small,
                     //paddingBottom: 40,
-                    maxWidth: 250
+                    maxWidth: normalize(250)
                 }}
             >
                 <Text
@@ -25,7 +25,7 @@ const Package = ({ name, coins, price, description }) => {
                         fontFamily: FONTS.medium,
                         fontSize: FONT_SIZES.x_large,
                         color: COLORS.accent,
-                        marginBottom: 20
+                        marginBottom: 10
                     }}
                 >
                     {name}
@@ -69,8 +69,7 @@ const Package = ({ name, coins, price, description }) => {
                     style={{
                         fontFamily: FONTS.light,
                         fontSize: FONT_SIZES.medium,
-                        color: COLORS.grey400,
-                        marginBottom: 10
+                        color: COLORS.grey400
                     }}
                 >
                     {description}

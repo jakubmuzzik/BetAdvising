@@ -13,7 +13,7 @@ export default function App() {
 
   useEffect(() => {
     document.querySelector('body').style.overflowY = 'auto'
-    document.querySelector('body').style.backgroundColor = '#131C27'
+    document.querySelector('body').style.backgroundColor = '#0D131A'
     init()
   }, [])
 
@@ -29,6 +29,13 @@ export default function App() {
           'Roboto-Medium': require('./assets/fonts/Roboto-Medium.ttf'),
           'Roboto-Regular': require('./assets/fonts/Roboto-Regular.ttf'),
           'Roboto-Light': require('./assets/fonts/Roboto-Light.ttf'),
+          /*'Inter-Black' : require('./assets/fonts/Inter_18pt-Black.ttf'),
+          'Inter-ExtraBold' : require('./assets/fonts/Inter_18pt-ExtraBold.ttf'),
+          'Inter-Bold' : require('./assets/fonts/Inter_18pt-Bold.ttf'),
+          'Inter-Medium' : require('./assets/fonts/Inter_18pt-Medium.ttf'),
+          'Inter-Regular' : require('./assets/fonts/Inter_18pt-Regular.ttf'),
+          'Inter-Light' : require('./assets/fonts/Inter_18pt-Light.ttf'),
+          'Inter-Thin' : require('./assets/fonts/Inter_18pt-Thin.ttf'),*/
         })
       ])
     } catch (e) {

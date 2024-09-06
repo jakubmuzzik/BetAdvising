@@ -65,7 +65,7 @@ const Hero = () => {
                         <MotiText
                             style={{
                                 fontFamily: FONTS.medium,
-                                fontSize: normalize(50),//FONT_SIZES.heroHeading,
+                                fontSize: FONT_SIZES.heroHeading,//FONT_SIZES.heroHeading,
                                 lineHeight: 68,
                                 color: COLORS.white,
                                 marginBottom: SPACING.xx_small,

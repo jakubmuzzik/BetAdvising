@@ -23,7 +23,7 @@ const normalizeSize = (forSmallScreenSize, forMediumScreenSize, forLargeScreenSi
 export const COLORS = {
     accent: '#FBC10D',
     hoveredAccent: '#D8A30B',
-    primary: '#131C27',
+    primary: '#0D131A',//'#131C27',
     hoveredPrimary: '#1f2937',
     grey: '#6b6e7b',
     grey50: '#f9fafb',
@@ -48,12 +48,15 @@ export const FONTS = {
     bold: 'Roboto-Bold',
     medium: 'Roboto-Medium',
     regular: 'Roboto-Regular',
-    light: 'Roboto-Light',
-    headingExtraBold: 'OpenSans-ExtraBold',
-    headingBold: 'OpenSans-Bold',
-    headingSemiBold: 'OpenSans-SemiBold',
-    headingMedium: 'OpenSans-Medium',
-    headingRegular: 'OpenSans-Regular',
+    light: 'Roboto-Light'
+
+   /* black : 'Inter-Black',
+    extraBold : 'Inter-ExtraBold',
+    bold :  'Inter-Bold',
+    medium : 'Inter-Medium',
+    regular : 'Inter-Regular',
+    light : 'Inter-Light',
+    thin : 'Inter-Thin'*/
 }
 
 export const FONT_SIZES = {
@@ -62,10 +65,10 @@ export const FONT_SIZES = {
     medium: normalizeSize(12, 12, 14), //base
     large: normalizeSize(14, 14, 16), //paragraph
     x_large: normalizeSize(18, 18, 20),
-    h1: normalizeSize(34, 34, 38),
+    h1: normalizeSize(30, 34, 38),
     h2: normalizeSize(32, 32, 36),
     h3: normalizeSize(20, 20, 26),
-    heroHeading: normalizeSize(60, 60, 65),
+    heroHeading: normalizeSize(40, 45, 50),
 }
 
 export const SPACING = {

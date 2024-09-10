@@ -96,14 +96,15 @@ const Steps = () => {
                 }}
             >
                 <LinearGradient
-                    colors={[COLORS.accent, '#957308']}
+                    colors={['#957308', COLORS.accent]}
                     style={{
                         borderRadius: 17.5,
                         width: 35,
                         height: 35,
                         padding: 10,
                         justifyContent: 'center',
-                        alignItems: 'center'
+                        alignItems: 'center',
+                        boxShadow: '0px 0px 14px rgba(251, 193, 13, 0.15)'
                     }}
                 >
                     <Text
@@ -162,14 +163,15 @@ const Steps = () => {
                 }}
             >
                 <LinearGradient
-                    colors={[COLORS.accent, '#957308']}
+                    colors={['#957308', COLORS.accent]}
                     style={{
                         borderRadius: 17.5,
                         width: 35,
                         height: 35,
                         padding: 10,
                         justifyContent: 'center',
-                        alignItems: 'center'
+                        alignItems: 'center',
+                        boxShadow: '0px 0px 14px rgba(251, 193, 13, 0.15)'
                     }}
                 >
                     <Text
@@ -303,14 +305,15 @@ const Steps = () => {
                 }}
             >
                 <LinearGradient
-                    colors={[COLORS.accent, '#957308']}
+                    colors={['#957308', COLORS.accent]}
                     style={{
                         borderRadius: 17.5,
                         width: 35,
                         height: 35,
                         padding: 10,
                         justifyContent: 'center',
-                        alignItems: 'center'
+                        alignItems: 'center',
+                        boxShadow: '0px 0px 14px rgba(251, 193, 13, 0.15)'
                     }}
                 >
                     <Text
@@ -362,6 +365,7 @@ const Steps = () => {
                         borderRadius: 10,
                         width: 'fit-content',
                         marginTop: SPACING.large,
+                        boxShadow: '0px 0px 14px rgba(251, 193, 13, 0.35)'
                     }}
                 >
                     <TouchableOpacity
@@ -402,14 +406,15 @@ const Steps = () => {
                 }}
             >
                 <LinearGradient
-                    colors={[COLORS.accent, '#957308']}
+                    colors={['#957308', COLORS.accent]}
                     style={{
                         borderRadius: 17.5,
                         width: 35,
                         height: 35,
                         padding: 10,
                         justifyContent: 'center',
-                        alignItems: 'center'
+                        alignItems: 'center',
+                        boxShadow: '0px 0px 14px rgba(251, 193, 13, 0.15)'
                     }}
                 >
                     <Text
@@ -462,6 +467,7 @@ const Steps = () => {
                         borderRadius: 10,
                         width: 'fit-content',
                         marginTop: SPACING.large,
+                        boxShadow: '0px 0px 14px rgba(251, 193, 13, 0.35)'
                     }}
                 >
                     <TouchableOpacity
@@ -573,14 +579,15 @@ const Steps = () => {
                 }}
             >
                 <LinearGradient
-                    colors={[COLORS.accent, '#957308']}
+                    colors={['#957308', COLORS.accent]}
                     style={{
                         borderRadius: 17.5,
                         width: 35,
                         height: 35,
                         padding: 10,
                         justifyContent: 'center',
-                        alignItems: 'center'
+                        alignItems: 'center',
+                        boxShadow: '0px 0px 14px rgba(251, 193, 13, 0.15)'
                     }}
                 >
                     <Text
@@ -639,14 +646,15 @@ const Steps = () => {
                 }}
             >
                 <LinearGradient
-                    colors={[COLORS.accent, '#957308']}
+                    colors={['#957308', COLORS.accent]}
                     style={{
                         borderRadius: 17.5,
                         width: 35,
                         height: 35,
                         padding: 10,
                         justifyContent: 'center',
-                        alignItems: 'center'
+                        alignItems: 'center',
+                        boxShadow: '0px 0px 14px rgba(251, 193, 13, 0.15)'
                     }}
                 >
                     <Text
@@ -778,14 +786,15 @@ const Steps = () => {
                 }}
             >
                 <LinearGradient
-                    colors={[COLORS.accent, '#957308']}
+                    colors={['#957308', COLORS.accent]}
                     style={{
                         borderRadius: 17.5,
                         width: 35,
                         height: 35,
                         padding: 10,
                         justifyContent: 'center',
-                        alignItems: 'center'
+                        alignItems: 'center',
+                        boxShadow: '0px 0px 14px rgba(251, 193, 13, 0.15)'
                     }}
                 >
                     <Text
@@ -839,6 +848,7 @@ const Steps = () => {
                                 width: 'fit-content',
                                 borderWidth: 1,
                                 borderColor: COLORS.grey300,
+                                boxShadow: '0px 0px 10px rgba(255, 255, 255, 0.25)'
                             }}
                         >
                             <Text
@@ -869,14 +879,15 @@ const Steps = () => {
                 }}
             >
                 <LinearGradient
-                    colors={[COLORS.accent, '#957308']}
+                    colors={['#957308', COLORS.accent]}
                     style={{
                         borderRadius: 17.5,
                         width: 35,
                         height: 35,
                         padding: 10,
                         justifyContent: 'center',
-                        alignItems: 'center'
+                        alignItems: 'center',
+                        boxShadow: '0px 0px 14px rgba(251, 193, 13, 0.35)'
                     }}
                 >
                     <Text
@@ -929,6 +940,7 @@ const Steps = () => {
                                 width: 'fit-content',
                                 borderWidth: 1,
                                 borderColor: COLORS.grey300,
+                                boxShadow: '0px 0px 10px rgba(255, 255, 255, 0.25)'
                             }}
                         >
                             <Text
@@ -954,6 +966,7 @@ const Steps = () => {
                 paddingHorizontal: SPACING.page_horizontal,
                 width: '100%',
                 alignItems: 'center',
+                marginTop: normalize(200)
             }}
         >
             <View
@@ -963,7 +976,8 @@ const Steps = () => {
                     borderWidth: 1,
                     borderColor: COLORS.grey400,
                     backgroundColor: 'rgba(255,255,255,.05)',
-                    borderRadius: 10
+                    borderRadius: 10,
+                    boxShadow: '0px 0px 14px rgba(251, 193, 13, 0.15)'
                 }}
             >
                 <View style={{
@@ -1010,7 +1024,7 @@ const Steps = () => {
             </View>
             <LinearGradient
                 colors={['rgba(22,22,22,0)', COLORS.primary]}
-                style={{ position: 'absolute', bottom: -1, height: 200, right: 0, left: 0 }}
+                style={{ position: 'absolute', bottom: -10, height: 200, right: 0, left: 0 }}
                 locations={[0, 0.75]}
             />
         </View>

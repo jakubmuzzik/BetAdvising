@@ -20,7 +20,8 @@ const AboutUs = () => {
             style={{
                 width: '100%',
                 alignItems: 'center',
-                zIndex: 2
+                zIndex: 2,
+                marginTop: normalize(150)
             }}>
             <LinearGradient
                 colors={[COLORS.primary, 'rgba(255,255,255,.05)', COLORS.primary]}
@@ -31,7 +32,7 @@ const AboutUs = () => {
                     width: width - SPACING.page_horizontal * 1.5,
                     maxWidth: 1180,
                     height: 500,
-                    top: -90,
+                    top: -SPACING.x_large,
                     //borderTopWidth: 1,
                     borderColor: COLORS.grey400,
                 }}
@@ -108,7 +109,8 @@ const AboutUs = () => {
                             alignItems: 'center',
                             borderRadius: 10,
                             width: 'fit-content',
-                            marginTop: 20
+                            marginTop: 20,
+                            boxShadow: '0px 0px 8px rgba(255, 255, 255, 0.05)'
                         }}
                     >
                         <TouchableOpacity

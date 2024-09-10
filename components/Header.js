@@ -137,7 +137,8 @@ const Header = () => {
                     style={{
                         justifyContent: 'center',
                         alignItems: 'center',
-                        borderRadius: 10
+                        borderRadius: 10,
+                        boxShadow: '0px 0px 10px rgba(255, 255, 255, 0.05)'
                     }}
                 >
                     <TouchableOpacity
@@ -167,7 +168,8 @@ const Header = () => {
                     style={{
                         justifyContent: 'center',
                         alignItems: 'center',
-                        borderRadius: 10
+                        borderRadius: 10,
+                        boxShadow: '0px 0px 14px rgba(251, 193, 13, 0.35)'
                     }}
                 >
                     <TouchableOpacity

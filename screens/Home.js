@@ -10,17 +10,12 @@ import Packages from '../components/Packages'
 const Home = () => {
 
     return (
-        <View
-            style={{
-                gap: normalize(190),
-                flexDirection: 'column',
-            }}
-        >
+        <>
             <Hero />
             <AboutUs />
             <Steps />
             <Packages />
-        </View>
+        </>
     )
 }
 

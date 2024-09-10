@@ -92,7 +92,6 @@ const Hero = () => {
                         Získej přístup k nejlepším tipům na sázení od profesionálních tipařů. Začni s 200 kreditama zdarma.
                     </MotiText>
 
-
                     <View style={{
                         flexDirection: 'row',
                         gap: SPACING.medium,
@@ -105,7 +104,8 @@ const Hero = () => {
                                 justifyContent: 'center',
                                 alignItems: 'center',
                                 borderRadius: 10,
-                                width: 'fit-content'
+                                width: 'fit-content',
+                                boxShadow: '0px 0px 14px rgba(251, 193, 13, 0.35)'
                             }}
                         >
                             <TouchableOpacity
@@ -130,24 +130,24 @@ const Hero = () => {
                             </TouchableOpacity>
                         </HoverableView>
 
-                        <HoverableView
-                            hoveredBackgroundColor={'rgba(214, 214, 214, 0.37)'}
-                            backgroundColor={'rgba(214, 214, 214, 0.27)'}
+                        <Link
                             style={{
-                                justifyContent: 'center',
-                                alignItems: 'center',
-                                borderRadius: 10,
-                                width: 'fit-content'
+                                textDecoration: 'none',
                             }}
+                            to="#how-it-works"
                         >
-                            <TouchableOpacity
-                                onPress={onGetAppPress}
+                            <HoverableView
+                                hoveredBackgroundColor={'rgba(214, 214, 214, 0.37)'}
+                                backgroundColor={'rgba(214, 214, 214, 0.27)'}
                                 style={{
+                                    justifyContent: 'center',
+                                    alignItems: 'center',
+                                    borderRadius: 10,
+                                    width: 'fit-content',
                                     paddingHorizontal: SPACING.x_small,
                                     paddingVertical: SPACING.xx_small,
                                     flexDirection: 'row',
-                                    justifyContent: 'center',
-                                    alignItems: 'center'
+                                    boxShadow: '0px 0px 10px rgba(255, 255, 255, 0.1)'
                                 }}
                             >
                                 <Text
@@ -159,8 +159,8 @@ const Hero = () => {
                                 >
                                     Jak to funguje
                                 </Text>
-                            </TouchableOpacity>
-                        </HoverableView>
+                            </HoverableView>
+                        </Link>
                     </View>
                 </View>
             </ImageBackground>

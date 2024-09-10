@@ -13,7 +13,8 @@ const Packages = () => {
         <View
             dataSet={{ id: 'packages' }}
             style={{
-                width: '100%'
+                width: '100%',
+                marginTop: normalize(190)
             }}
         >
             {width < 1230 ? (

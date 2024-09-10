@@ -1,10 +1,6 @@
 import { useRef, useState } from 'react'
 import { Text, View } from "react-native"
 import { COLORS, FONT_SIZES, FONTS, SPACING } from "../../constants"
-import {
-    GoogleSignin,
-    statusCodes,
-} from '@react-native-google-signin/google-signin'
 import { supabase } from '../../supabase/config'
 import CustomButton from "../../components/elements/CustomButton"
 import { normalize, isValidEmail } from '../../utils'
@@ -12,12 +8,6 @@ import { Image } from 'expo-image'
 import { Feather, AntDesign } from '@expo/vector-icons'
 import CustomInput from '../../components/elements/CustomInput'
 import Animated, { LinearTransition, BounceIn } from 'react-native-reanimated'
-
-GoogleSignin.configure({
-    scopes: ['https://www.googleapis.com/auth/userinfo.email'],
-    webClientId: process.env.EXPO_PUBLIC_GOOGLE_WEB_CLIENT_ID || process.env.GOOGLE_WEB_CLIENT_ID,
-    iosClientId: process.env.EXPO_PUBLIC_GOOGLE_IOS_CLIENT_ID || process.env.GOOGLE_IOS_CLIENT_ID,
-})
 
 const Login = () => {
     const googleSignInButtonRef = useRef()

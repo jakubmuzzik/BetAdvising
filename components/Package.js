@@ -80,7 +80,7 @@ const Package = ({ name, coins, price, description }) => {
                 </View>
 
                 <HoverableView
-                    hoveredOpacity={0.8}
+                    hoveredBackgroundColor={'rgba(255, 255, 255, 0.2)'}
                     backgroundColor={COLORS.whiteBackground}
                     style={{
                         justifyContent: 'center',

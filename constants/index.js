@@ -25,6 +25,7 @@ export const COLORS = {
     hoveredAccent: '#D8A30B',
     primary: '#0D131A',//'#131C27',
     hoveredPrimary: '#1f2937',
+    secondary: '#191f26',
     grey: '#6b6e7b',
     grey50: '#f9fafb',
     grey100: '#f3f4f6',

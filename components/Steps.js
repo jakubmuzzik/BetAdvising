@@ -4,6 +4,7 @@ import { Image } from 'expo-image'
 import { normalize } from '../utils'
 import { LinearGradient } from 'expo-linear-gradient'
 import HoverableView from './HoverableView'
+import { Link } from 'react-router-dom'
 
 const Steps = () => {
     const { width } = useWindowDimensions()
@@ -819,26 +820,25 @@ const Steps = () => {
                 <View style={{
                     marginTop: SPACING.large
                 }}>
-                    <HoverableView
-                        hoveredOpacity={0.8}
-                        backgroundColor={COLORS.whiteBackground}
+                    <Link
                         style={{
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                            borderRadius: 10,
-                            width: 'fit-content',
-                            borderWidth: 1,
-                            borderColor: COLORS.grey300,
+                            textDecoration: 'none',
                         }}
+                        to="#packages"
                     >
-                        <TouchableOpacity
-                            //onPress={onGetAppPress}
+                        <HoverableView
+                            backgroundColor={COLORS.whiteBackground}
+                            hoveredBackgroundColor={'rgba(255, 255, 255, 0.2)'}
                             style={{
+                                justifyContent: 'center',
+                                alignItems: 'center',
                                 paddingHorizontal: SPACING.x_small,
                                 paddingVertical: SPACING.xx_small,
                                 flexDirection: 'row',
-                                justifyContent: 'center',
-                                alignItems: 'center'
+                                borderRadius: 10,
+                                width: 'fit-content',
+                                borderWidth: 1,
+                                borderColor: COLORS.grey300,
                             }}
                         >
                             <Text
@@ -850,8 +850,8 @@ const Steps = () => {
                             >
                                 Zobrazit balíčky →
                             </Text>
-                        </TouchableOpacity>
-                    </HoverableView>
+                        </HoverableView>
+                    </Link>
                 </View>
             </View>
         </View>
@@ -910,26 +910,25 @@ const Steps = () => {
                 <View style={{
                     marginTop: SPACING.large
                 }}>
-                    <HoverableView
-                        hoveredOpacity={0.8}
-                        backgroundColor={COLORS.whiteBackground}
+                    <Link
                         style={{
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                            borderRadius: 10,
-                            width: 'fit-content',
-                            borderWidth: 1,
-                            borderColor: COLORS.grey300,
+                            textDecoration: 'none',
                         }}
+                        to="#packages"
                     >
-                        <TouchableOpacity
-                            //onPress={onGetAppPress}
+                        <HoverableView
+                            backgroundColor={COLORS.whiteBackground}
+                            hoveredBackgroundColor={'rgba(255, 255, 255, 0.2)'}
                             style={{
+                                justifyContent: 'center',
+                                alignItems: 'center',
                                 paddingHorizontal: SPACING.x_small,
                                 paddingVertical: SPACING.xx_small,
                                 flexDirection: 'row',
-                                justifyContent: 'center',
-                                alignItems: 'center'
+                                borderRadius: 10,
+                                width: 'fit-content',
+                                borderWidth: 1,
+                                borderColor: COLORS.grey300,
                             }}
                         >
                             <Text
@@ -941,8 +940,8 @@ const Steps = () => {
                             >
                                 Zobrazit balíčky →
                             </Text>
-                        </TouchableOpacity>
-                    </HoverableView>
+                        </HoverableView>
+                    </Link>
                 </View>
             </View>
         </View>

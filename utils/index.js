@@ -22,4 +22,8 @@ export const getParam = (supportedValues, param, fallbackValue) => {
     const paramValid = supportedValues.some(value => value.toLowerCase() === decodedParam.toLocaleLowerCase())
     return paramValid ? decodedParam : fallbackValue
 }
-  
+
+export const isValidEmail = (email) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    return emailRegex.test(email)
+}

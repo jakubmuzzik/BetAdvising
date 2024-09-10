@@ -20,6 +20,8 @@ const normalizeSize = (forSmallScreenSize, forMediumScreenSize, forLargeScreenSi
     return isLargeScreen ? forLargeScreenSize : isMediumScreen ? forMediumScreenSize : forSmallScreenSize
 }
 
+export const CUSTOM_BUTTON_HEIGHT = normalizeSize(40, 40, 40)
+
 export const COLORS = {
     accent: '#FBC10D',
     hoveredAccent: '#D8A30B',
@@ -38,9 +40,13 @@ export const COLORS = {
     grey800: '#1f2937',
     grey900: '#111827',
     grey950: '#030712',
+    black: '#000',
     error: '#ff190c',
     errorBackground: 'rgba(255, 25, 12, .1)',
     whiteBackground: 'rgba(255,255,255,.1)',
+    whiteBackground2: 'rgba(255,255,255,.2)',
+    whiteBackground3: 'rgba(255,255,255,.3)',
+    whiteBackground4: 'rgba(255,255,255,.4)',
     white: '#FFF'
 }
 
@@ -61,11 +67,11 @@ export const FONTS = {
 }
 
 export const FONT_SIZES = {
-    x_small: normalizeSize(8, 8, 10),
-    small: normalizeSize(10, 10, 12), //span
-    medium: normalizeSize(12, 12, 14), //base
-    large: normalizeSize(14, 14, 16), //paragraph
-    x_large: normalizeSize(18, 18, 20),
+    x_small: normalizeSize(10, 10, 10),
+    small: normalizeSize(12, 12, 12), //span
+    medium: normalizeSize(14, 14, 14), //base
+    large: normalizeSize(16, 16, 16), //paragraph
+    x_large: normalizeSize(20, 20, 20),
     h1: normalizeSize(30, 34, 38),
     h2: normalizeSize(32, 32, 36),
     h3: normalizeSize(20, 20, 26),
@@ -73,16 +79,16 @@ export const FONT_SIZES = {
 }
 
 export const SPACING = {
-    xxx_small: normalizeSize(4, 6, 6),
-    xx_small: normalizeSize(8, 10, 10),
-    x_small: normalizeSize(11, 15, 15),
-    small:normalizeSize(15, 20, 20),
-    medium: normalizeSize(20, 25, 25),
-    large: normalizeSize(25, 30, 30),
-    x_large: normalizeSize(30, 35, 35),
-    xx_large: normalizeSize(35, 40, 40),
-    xxx_large: normalizeSize(40, 45, 45),
-    xxxx_large: normalizeSize(45, 50, 50),
-    xxxxx_large: normalizeSize(55, 60, 60),
+    xxx_small: normalizeSize(4, 8, 8),
+    xx_small: normalizeSize(8, 12, 12),
+    x_small: normalizeSize(12, 16, 16),
+    small:normalizeSize(16, 20, 20),
+    medium: normalizeSize(20, 24, 24),
+    large: normalizeSize(24, 28, 28),
+    x_large: normalizeSize(28, 32, 32),
+    xx_large: normalizeSize(32, 36, 36),
+    xxx_large: normalizeSize(36, 40, 40),
+    xxxx_large: normalizeSize(44, 48, 48),
+    xxxxx_large: normalizeSize(56, 60, 60),
     page_horizontal: normalizeSize(24, 40, 80)
 }

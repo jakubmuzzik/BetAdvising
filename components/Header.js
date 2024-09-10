@@ -25,14 +25,6 @@ const Header = () => {
         language: getParam(SUPPORTED_LANGUAGES, searchParams.get('language'), ''),
     }), [searchParams])
 
-    const onHomePress = () => {
-
-    }
-
-    const onGetAppPress = () => {
-
-    }
-
     const renderLeftHeader = () => {
 
         return (
@@ -123,7 +115,6 @@ const Header = () => {
     }
 
     const renderRightHeader = () => {
-
         return (
             <View
                 style={{
@@ -131,24 +122,22 @@ const Header = () => {
                     gap: SPACING.small
                 }}
             >
-                <HoverableView
-                    hoveredBackgroundColor={'rgba(255, 255, 255, 0.2)'}
-                    backgroundColor={COLORS.whiteBackground}
+                <Link
                     style={{
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        borderRadius: 10,
-                        boxShadow: '0px 0px 10px rgba(255, 255, 255, 0.05)'
+                        textDecoration: 'none',
                     }}
+                    to="/auth"
                 >
-                    <TouchableOpacity
-                        onPress={onGetAppPress}
+                    <HoverableView
+                        hoveredBackgroundColor={'rgba(255, 255, 255, 0.2)'}
+                        backgroundColor={COLORS.whiteBackground}
                         style={{
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            borderRadius: 10,
+                            boxShadow: '0px 0px 10px rgba(255, 255, 255, 0.05)',
                             paddingHorizontal: SPACING.x_small,
                             paddingVertical: SPACING.xx_small,
-                            flexDirection: 'row',
-                            justifyContent: 'center',
-                            alignItems: 'center'
                         }}
                     >
                         <Text
@@ -160,26 +149,24 @@ const Header = () => {
                         >
                             Přihlásit se
                         </Text>
-                    </TouchableOpacity>
-                </HoverableView>
-                <HoverableView
-                    hoveredBackgroundColor={COLORS.hoveredAccent}
-                    backgroundColor={COLORS.accent}
+                    </HoverableView>
+                </Link>
+                <Link
                     style={{
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        borderRadius: 10,
-                        boxShadow: '0px 0px 14px rgba(251, 193, 13, 0.35)'
+                        textDecoration: 'none',
                     }}
+                    to="/auth"
                 >
-                    <TouchableOpacity
-                        onPress={onGetAppPress}
+                    <HoverableView
+                        hoveredBackgroundColor={COLORS.hoveredAccent}
+                        backgroundColor={COLORS.accent}
                         style={{
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            borderRadius: 10,
+                            boxShadow: '0px 0px 14px rgba(251, 193, 13, 0.35)',
                             paddingHorizontal: SPACING.x_small,
                             paddingVertical: SPACING.xx_small,
-                            flexDirection: 'row',
-                            justifyContent: 'center',
-                            alignItems: 'center'
                         }}
                     >
                         <Text
@@ -191,8 +178,8 @@ const Header = () => {
                         >
                             Registrace
                         </Text>
-                    </TouchableOpacity>
-                </HoverableView>
+                    </HoverableView>
+                </Link>
             </View>
         )
     }

@@ -836,8 +836,8 @@ const Steps = () => {
                         to="#packages"
                     >
                         <HoverableView
-                            backgroundColor={COLORS.whiteBackground}
-                            hoveredBackgroundColor={'rgba(255, 255, 255, 0.2)'}
+                            backgroundColor={COLORS.whiteBackground2}
+                            hoveredBackgroundColor={COLORS.whiteBackground}
                             style={{
                                 justifyContent: 'center',
                                 alignItems: 'center',
@@ -846,9 +846,7 @@ const Steps = () => {
                                 flexDirection: 'row',
                                 borderRadius: 10,
                                 width: 'fit-content',
-                                borderWidth: 1,
-                                borderColor: COLORS.grey300,
-                                boxShadow: '0px 0px 10px rgba(255, 255, 255, 0.1)'
+                                boxShadow: '0px 0px 10px rgba(255, 255, 255, 0.05)'
                             }}
                         >
                             <Text
@@ -928,8 +926,8 @@ const Steps = () => {
                         to="#packages"
                     >
                         <HoverableView
-                            backgroundColor={COLORS.whiteBackground}
-                            hoveredBackgroundColor={'rgba(255, 255, 255, 0.2)'}
+                            backgroundColor={COLORS.whiteBackground2}
+                            hoveredBackgroundColor={COLORS.whiteBackground}
                             style={{
                                 justifyContent: 'center',
                                 alignItems: 'center',
@@ -938,9 +936,7 @@ const Steps = () => {
                                 flexDirection: 'row',
                                 borderRadius: 10,
                                 width: 'fit-content',
-                                borderWidth: 1,
-                                borderColor: COLORS.grey300,
-                                boxShadow: '0px 0px 10px rgba(255, 255, 255, 0.1)'
+                                boxShadow: '0px 0px 10px rgba(255, 255, 255, 0.05)'
                             }}
                         >
                             <Text

@@ -848,7 +848,7 @@ const Steps = () => {
                                 width: 'fit-content',
                                 borderWidth: 1,
                                 borderColor: COLORS.grey300,
-                                boxShadow: '0px 0px 10px rgba(255, 255, 255, 0.25)'
+                                boxShadow: '0px 0px 10px rgba(255, 255, 255, 0.1)'
                             }}
                         >
                             <Text
@@ -940,7 +940,7 @@ const Steps = () => {
                                 width: 'fit-content',
                                 borderWidth: 1,
                                 borderColor: COLORS.grey300,
-                                boxShadow: '0px 0px 10px rgba(255, 255, 255, 0.25)'
+                                boxShadow: '0px 0px 10px rgba(255, 255, 255, 0.1)'
                             }}
                         >
                             <Text

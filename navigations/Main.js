@@ -12,7 +12,7 @@ const LayoutWithHeader = ({ children }) => (
     <>
         <Header />
 
-        <View style={{ flex: 1, marginTop: normalize(65), backgroundColor: COLORS.primary, marginBottom: SPACING.large }}>
+        <View style={{ flex: 1, /*marginTop: normalize(65),*/ backgroundColor: COLORS.primary, marginBottom: SPACING.large }}>
             {children}
         </View>
 
@@ -35,6 +35,27 @@ const router = createBrowserRouter(createRoutesFromElements(
         } />
     </>
 ))
+
+router.subscribe(() => {
+    //window.scrollTo({ top: 0, left: 0, behavior: 'instant'}) 
+
+    const hash = window.location.hash
+
+    if (!hash) return
+
+    const hashValue = hash.replace('#', '')
+
+    const element = document.querySelector(`[data-id="${hashValue}"]`)
+
+    if (!element) return
+
+    const rect = element.getBoundingClientRect()
+
+    window.scrollTo({
+        top: window.scrollY + rect.top - 100, // Adjust -100 for custom offset
+        behavior: 'smooth'
+    });
+})
 
 const Main = () => {
 

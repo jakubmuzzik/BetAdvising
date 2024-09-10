@@ -1,32 +1,15 @@
 import React from 'react'
-import { StyleSheet, View } from 'react-native'
 import { COLORS, FONT_SIZES, FONTS } from '../constants'
 import { normalize } from '../utils'
-import { ImageBackground, Text, useWindowDimensions, TouchableOpacity } from 'react-native'
+import { StyleSheet, View, ImageBackground, Text, useWindowDimensions, TouchableOpacity } from 'react-native'
 import { LinearGradient } from 'expo-linear-gradient'
 import { SPACING } from '../constants'
 import { Image } from 'expo-image'
 import HoverableView from './HoverableView'
 import { MotiText } from 'moti'
 import CountInNumber from './animated/CountInNumber'
-
-const HeroBackground = () => (
-    <ImageBackground
-        source={require('../assets/images/hero.png')}
-        style={{
-            position: 'absolute',
-            width: '100%',
-            height: 500,
-            opacity: 0.9
-        }}
-        resizeMode='cover'
-    >
-        <LinearGradient
-            colors={['rgba(22,22,22,0)', COLORS.primary]}
-            style={{ position: 'absolute', bottom: 0, width: '100%', height: '50%', justifyContent: 'center', alignItems: 'center' }}
-        />
-    </ImageBackground>
-)
+import { Link } from 'react-router-dom'
+import { stripEmptyParams } from '../utils'
 
 const Hero = () => {
     const { width } = useWindowDimensions()
@@ -37,243 +20,150 @@ const Hero = () => {
 
     return (
         <>
-            <View
+            <ImageBackground
+                source={require('../assets/images/hero2.png')}
                 style={{
-                    flex: 1,
-                    alignItems: 'center',
-                    gap: SPACING.medium,
-                }}
-            >
-                <HeroBackground />
-
-                <View style={{
-                    paddingVertical: SPACING.xx_large,
-                    paddingHorizontal: SPACING.page_horizontal,
-                    flexDirection: width > 1380 ? 'row' : 'column',
-                    maxWidth: 1380,
-                    alignItems: 'center',
-                    justifyContent: 'center',
                     width: '100%',
-                    gap: SPACING.large,
-                    flexWrap: 'wrap'
-                }}>
-                    <View
+                    height: 580,
+                    justifyContent: 'flex-end',
+                    alignItems: 'center',
+                    borderBottomRightRadius: 10,
+                    borderBottomLeftRadius: 10,
+                    overflow: 'hidden',
+                }}
+                imageStyle={{
+                    opacity: 0.8
+                }}
+                resizeMode='cover'
+            >
+                <LinearGradient
+                    colors={['rgba(22,22,22,0)', COLORS.primary]}
+                    style={{ position: 'absolute', bottom: 0, width: '100%', height: '50%', justifyContent: 'center', alignItems: 'center' }}
+                />
+
+                <View style={{ paddingHorizontal: SPACING.page_horizontal, paddingBottom: normalize(50) }}>
+                    <MotiText
                         style={{
-                            flex: 1,
-                            justifyContent: 'center'
+                            fontFamily: FONTS.medium,
+                            fontSize: FONT_SIZES.heroHeading,//FONT_SIZES.heroHeading,
+                            //lineHeight: 68,
+                            color: COLORS.white,
+                            marginBottom: SPACING.xx_small,
+                            textAlign: 'center'
+                        }}
+                        from={{
+                            opacity: 0,
+                            transform: [{ translatey: 50 }],
+                        }}
+                        animate={{
+                            opacity: 1,
+                            transform: [{ translatey: 0 }],
+                        }}
+                        transition={{
+                            type: 'timing'
                         }}
                     >
-                        <MotiText
-                            style={{
-                                fontFamily: FONTS.medium,
-                                fontSize: FONT_SIZES.heroHeading,//FONT_SIZES.heroHeading,
-                                lineHeight: 68,
-                                color: COLORS.white,
-                                marginBottom: SPACING.xx_small,
-                                textAlign: width > 1380 ? 'left' : 'center',
-                                //whiteSpace: 'nowrap'
-                            }}
-                            from={{
-                                opacity: 0,
-                                transform: [{ translatex: 100 }],
-                            }}
-                            animate={{
-                                opacity: 1,
-                                transform: [{ translatex: 0 }],
-                            }}
-                            exit={{
-                                opacity: 0,
-                                transform: [{ translatex: 100 }],
-                            }}
-                            transition={{
-                                type: 'timing'
-                            }}
-                        >
-                            Sázkové <Text style={{ color: COLORS.accent }}>tipy</Text>, které <Text style={{ color: COLORS.accent }}>vítězí!</Text>
-                        </MotiText>
-                        <MotiText
-                            style={{
-                                fontFamily: FONTS.light,
-                                fontSize: FONT_SIZES.x_large,
-                                color: COLORS.grey300,
-                                marginBottom: SPACING.large,
-                                textAlign: width > 1380 ? 'left' : 'center',
-                                lineHeight: FONT_SIZES.x_large * 1.5
-                            }}
-                            from={{
-                                opacity: 0,
-                                transform: [{ translatex: 100 }],
-                            }}
-                            animate={{
-                                opacity: 1,
-                                transform: [{ translatex: 0 }],
-                            }}
-                            exit={{
-                                opacity: 0,
-                                transform: [{ translatex: 100 }],
-                            }}
-                            transition={{
-                                type: 'timing',
-                                delay: 100
-                            }}
-                        >
-                            Získej přístup k nejlepším tipům na sázení od profesionálních tipařů. Začni s 200 kreditama zdarma.
-                        </MotiText>
+                        Sázkové <Text style={{ color: COLORS.accent }}>tipy</Text>, které <Text style={{ color: COLORS.accent }}>vítězí!</Text>
+                    </MotiText>
 
-                        <View style={{
-                            flexDirection: 'row',
-                            gap: SPACING.medium
-                        }}>
-                            <HoverableView
-                                hoveredBackgroundColor={COLORS.hoveredAccent}
-                                backgroundColor={COLORS.accent}
-                                style={{
-                                    justifyContent: 'center',
-                                    alignItems: 'center',
-                                    borderRadius: 10,
-                                    width: 'fit-content',
-                                    alignSelf: width > 1380 ? 'auto' : 'center'
-                                }}
-                            >
-                                <TouchableOpacity
-                                    onPress={onGetAppPress}
-                                    style={{
-                                        paddingHorizontal: SPACING.x_small,
-                                        paddingVertical: SPACING.xx_small,
-                                        flexDirection: 'row',
-                                        justifyContent: 'center',
-                                        alignItems: 'center'
-                                    }}
-                                >
-                                    <Text
-                                        style={{
-                                            color: '#000',
-                                            fontFamily: FONTS.bold,
-                                            fontSize: FONT_SIZES.large
-                                        }}
-                                    >
-                                        Získat tipy →
-                                    </Text>
-                                </TouchableOpacity>
-                            </HoverableView>
-
-                            <HoverableView
-                                hoveredBackgroundColor={'rgba(214, 214, 214, 0.37)'}
-                                backgroundColor={'rgba(214, 214, 214, 0.27)'}
-                                style={{
-                                    justifyContent: 'center',
-                                    alignItems: 'center',
-                                    borderRadius: 10,
-                                    width: 'fit-content',
-                                    alignSelf: width > 1380 ? 'auto' : 'center',
-                                    //borderWidth: 1,
-                                    //borderColor: COLORS.grey300
-                                }}
-                            >
-                                <TouchableOpacity
-                                    onPress={onGetAppPress}
-                                    style={{
-                                        paddingHorizontal: SPACING.x_small,
-                                        paddingVertical: SPACING.xx_small,
-                                        flexDirection: 'row',
-                                        justifyContent: 'center',
-                                        alignItems: 'center'
-                                    }}
-                                >
-                                    <Text
-                                        style={{
-                                            color: COLORS.white,
-                                            fontFamily: FONTS.regular,
-                                            fontSize: FONT_SIZES.large
-                                        }}
-                                    >
-                                        Jak to funguje
-                                    </Text>
-                                </TouchableOpacity>
-                            </HoverableView>
-                        </View>
-
-                    </View>
-
-                    <View
+                    <MotiText
                         style={{
-                            flex: 1,
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                            //minWidth: 500
+                            fontFamily: FONTS.light,
+                            fontSize: FONT_SIZES.x_large,
+                            color: COLORS.grey300,
+                            marginBottom: SPACING.large,
+                            textAlign: 'center',
+                            lineHeight: FONT_SIZES.x_large * 1.5,
+                            maxWidth: 600,
+                        }}
+                        from={{
+                            opacity: 0,
+                            transform: [{ translatey: 30 }],
+                        }}
+                        animate={{
+                            opacity: 1,
+                            transform: [{ translatey: 0 }],
+                        }}
+                        transition={{
+                            type: 'timing',
+                            delay: 60
                         }}
                     >
-                        <Image
-                            contentFit='contain'
-                            source={require('../assets/images/hero_mobile_app4.png')}
-                            style={{
-                                width: width > 1380 ? width * 0.5 : width * 0.8,
-                                maxWidth: 500,
-                                aspectRatio: 837.86 / 672.9
-                            }}
-                        />
-                    </View>
-                </View>
+                        Získej přístup k nejlepším tipům na sázení od profesionálních tipařů. Začni s 200 kreditama zdarma.
+                    </MotiText>
 
-                <View
-                    style={{
+
+                    <View style={{
                         flexDirection: 'row',
-                        gap: normalize(120),
+                        gap: SPACING.medium,
                         justifyContent: 'center',
-                        flexWrap: 'wrap',
-                        paddingHorizontal: SPACING.page_horizontal,
-                    }}
-                >
-                    <View
-                        style={{
-                            justifyContent: 'center',
-                            alignItems: 'center'
-                        }}
-                    >
-                        <CountInNumber
-                            number={30}
-                            textStyle={styles.heroStatsNumber}
-                            trailingTextAfterFinish='+'
-                            step={2}
-                        />
-                        <Text style={styles.heroStatsText}>
-                            Aktivních klientů
-                        </Text>
-                    </View>
-                    <View
-                        style={{
-                            justifyContent: 'center',
-                            alignItems: 'center'
-                        }}
-                    >
-                        <CountInNumber
-                            number={100}
-                            textStyle={styles.heroStatsNumber}
-                            trailingTextAfterFinish='+'
-                            duration={150}
-                        />
-                        <Text style={styles.heroStatsText}>
-                            Tipů každý měsíc
-                        </Text>
-                    </View>
-                    <View
-                        style={{
-                            justifyContent: 'center',
-                            alignItems: 'center'
-                        }}
-                    >
-                        <CountInNumber
-                            number={10}
-                            textStyle={styles.heroStatsNumber}
-                            trailingText=' let'
-                        />
-                        <Text style={styles.heroStatsText}>
-                            Zkušeností v sázení
-                        </Text>
+                    }}>
+                        <HoverableView
+                            hoveredBackgroundColor={COLORS.hoveredAccent}
+                            backgroundColor={COLORS.accent}
+                            style={{
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                                borderRadius: 10,
+                                width: 'fit-content'
+                            }}
+                        >
+                            <TouchableOpacity
+                                onPress={onGetAppPress}
+                                style={{
+                                    paddingHorizontal: SPACING.x_small,
+                                    paddingVertical: SPACING.xx_small,
+                                    flexDirection: 'row',
+                                    justifyContent: 'center',
+                                    alignItems: 'center'
+                                }}
+                            >
+                                <Text
+                                    style={{
+                                        color: '#000',
+                                        fontFamily: FONTS.bold,
+                                        fontSize: FONT_SIZES.large
+                                    }}
+                                >
+                                    Získat tipy →
+                                </Text>
+                            </TouchableOpacity>
+                        </HoverableView>
+
+                        <HoverableView
+                            hoveredBackgroundColor={'rgba(214, 214, 214, 0.37)'}
+                            backgroundColor={'rgba(214, 214, 214, 0.27)'}
+                            style={{
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                                borderRadius: 10,
+                                width: 'fit-content'
+                            }}
+                        >
+                            <TouchableOpacity
+                                onPress={onGetAppPress}
+                                style={{
+                                    paddingHorizontal: SPACING.x_small,
+                                    paddingVertical: SPACING.xx_small,
+                                    flexDirection: 'row',
+                                    justifyContent: 'center',
+                                    alignItems: 'center'
+                                }}
+                            >
+                                <Text
+                                    style={{
+                                        color: COLORS.white,
+                                        fontFamily: FONTS.regular,
+                                        fontSize: FONT_SIZES.large
+                                    }}
+                                >
+                                    Jak to funguje
+                                </Text>
+                            </TouchableOpacity>
+                        </HoverableView>
                     </View>
                 </View>
-            </View>
-
+            </ImageBackground>
         </>
     )
 }

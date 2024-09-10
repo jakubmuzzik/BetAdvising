@@ -8,12 +8,15 @@ import { normalize, stripEmptyParams, getParam } from '../utils'
 import { COLORS, FONTS, FONT_SIZES, SPACING, SMALL_SCREEN_THRESHOLD, LARGE_SCREEN_THRESHOLD, SUPPORTED_LANGUAGES } from '../constants'
 import { useSearchParams } from 'react-router-dom'
 import { Image } from 'expo-image'
+import { useNavigate } from 'react-router-dom'
 
 import HoverableText from './HoverableText'
 
 const Header = () => {
     const [searchParams] = useSearchParams()
     const { width } = useWindowDimensions()
+
+    const navigate = useNavigate()
 
     const isSmallScreen = width < 800
     const isLargeScreen = width >= LARGE_SCREEN_THRESHOLD
@@ -45,7 +48,7 @@ const Header = () => {
                                 height: normalize(32),
                                 width: normalize(102)
                             }}
-                            tintColor= {COLORS.accent}
+                            tintColor={COLORS.accent}
                         />
                     </Link>
                 </View>
@@ -67,30 +70,54 @@ const Header = () => {
                     textStyle={styles.headerMenuText}
                     onPress={onHomePress}
                 /> */}
-                <HoverableText
-                    text='O nás'
-                    hoveredColor={COLORS.accent}
-                    textStyle={styles.headerMenuText}
-                    onPress={onHomePress}
-                />
-                <HoverableText
-                    text='Jak to funguje'
-                    hoveredColor={COLORS.accent}
-                    textStyle={styles.headerMenuText}
-                    onPress={onHomePress}
-                />
-                <HoverableText
-                    text='Balíčky'
-                    hoveredColor={COLORS.accent}
-                    textStyle={styles.headerMenuText}
-                    onPress={onHomePress}
-                />
-                <HoverableText
-                    text='Kontakt'
-                    hoveredColor={COLORS.accent}
-                    textStyle={styles.headerMenuText}
-                    onPress={onHomePress}
-                />
+                <Link
+                    style={{
+                        textDecoration: 'none',
+                    }}
+                    to="#about-us"
+                >
+                    <HoverableText
+                        text='O nás'
+                        hoveredColor={COLORS.accent}
+                        textStyle={styles.headerMenuText}
+                    />
+                </Link>
+                <Link
+                    style={{
+                        textDecoration: 'none',
+                    }}
+                    to="#how-it-works"
+                >
+                    <HoverableText
+                        text='Jak to funguje'
+                        hoveredColor={COLORS.accent}
+                        textStyle={styles.headerMenuText}
+                    />
+                </Link>
+                <Link
+                    style={{
+                        textDecoration: 'none',
+                    }}
+                    to="#packages"
+                >
+                    <HoverableText
+                        text='Balíčky'
+                        hoveredColor={COLORS.accent}
+                        textStyle={styles.headerMenuText}
+                    />
+                </Link>
+                <Link
+                    style={{
+                        textDecoration: 'none',
+                    }}
+                    to="#contact"
+                >
+                    <HoverableText
+                        text='Kontakt'
+                        hoveredColor={COLORS.accent}
+                        textStyle={styles.headerMenuText}
+                    />
+                </Link>
             </View>
         )
     }
@@ -137,9 +164,9 @@ const Header = () => {
                 <HoverableView
                     hoveredBackgroundColor={COLORS.hoveredAccent}
                     backgroundColor={COLORS.accent}
-                    style={{ 
-                        justifyContent: 'center', 
-                        alignItems: 'center', 
+                    style={{
+                        justifyContent: 'center',
+                        alignItems: 'center',
                         borderRadius: 10
                     }}
                 >
@@ -147,17 +174,17 @@ const Header = () => {
                         onPress={onGetAppPress}
                         style={{
                             paddingHorizontal: SPACING.x_small,
-                                    paddingVertical: SPACING.xx_small,
+                            paddingVertical: SPACING.xx_small,
                             flexDirection: 'row',
                             justifyContent: 'center',
                             alignItems: 'center'
                         }}
                     >
                         <Text
-                            style={{ 
-                                color: '#000', 
-                                fontFamily: FONTS.bold, 
-                                fontSize: FONT_SIZES.large 
+                            style={{
+                                color: '#000',
+                                fontFamily: FONTS.bold,
+                                fontSize: FONT_SIZES.large
                             }}
                         >
                             Registrace

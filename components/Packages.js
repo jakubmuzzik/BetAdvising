@@ -11,6 +11,7 @@ const Packages = () => {
 
     return (
         <View
+            dataSet={{ id: 'packages' }}
             style={{
                 width: '100%'
             }}
@@ -74,11 +75,12 @@ const Packages = () => {
                     //width: 250,
                     aspectRatio: 338 / 338,
                     height: width * 0.3,
+                    minHeight: 300,
                     maxHeight: 350,
                     position: 'absolute',
                     zIndex: 2,
                     top: -350,
-                    left: '30%',
+                    left: width < 500 ? '0%' : width < 1000 ? '10%' : '30%',
                     transform: [{ scaleX: -1 }]
                     //opacity: .7
                 }}

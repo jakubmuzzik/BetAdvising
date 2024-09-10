@@ -1,19 +1,27 @@
-import React from 'react'
-import { View, useWindowDimensions, Text, ImageBackground } from 'react-native'
+import React, { useRef, useEffect } from 'react'
+import { View, useWindowDimensions, Text, TouchableOpacity } from 'react-native'
 import { COLORS, FONT_SIZES, FONTS, SPACING } from '../constants'
 import { Image } from 'expo-image'
 import { normalize } from '../utils'
 import { LinearGradient } from 'expo-linear-gradient'
+import CountInNumber from './animated/CountInNumber'
+import HoverableView from './HoverableView'
 
 const AboutUs = () => {
     const { width } = useWindowDimensions()
 
+    //const numbersFontSize = width < 500 ? (width - SPACING.page_horizontal * 2) * 0.07 : (500 - SPACING.page_horizontal * 2) * 0.08
+
+    const onContactUsPress = () => { }
+
     return (
-        <View style={{
-            width: '100%',
-            alignItems: 'center',
-            zIndex: 2
-        }}>
+        <View
+            dataSet={{ id: 'about-us' }}
+            style={{
+                width: '100%',
+                alignItems: 'center',
+                zIndex: 2
+            }}>
             <LinearGradient
                 colors={[COLORS.primary, 'rgba(255,255,255,.05)', COLORS.primary]}
                 start={{ x: 0, y: 0 }}
@@ -56,39 +64,9 @@ const AboutUs = () => {
                 <View style={{
                     flexGrow: 1,
                     justifyContent: 'center',
-                    zIndex: 2,
                     width: width > 1380 ? width * 0.3 : width - SPACING.page_horizontal * 2,
-                    //alignItems: 'center'
+                    maxWidth: 500
                 }}>
-                    <Image
-                        source={require('../assets/images/about_us2.png')}
-                        style={{
-                            width: '100%',// width > 1380 ? width * 0.3 : width * 0.5,
-                            maxWidth: 500,
-                            aspectRatio: 748 / 574,
-                            alignSelf: 'center',
-                            zIndex: 2
-                        }}
-                        contentFit='cover'
-                    />
-                </View>
-                <View style={{
-                    flexGrow: 1,
-                    justifyContent: 'center',
-                    width: width > 1380 ? width * 0.3 : width - SPACING.page_horizontal * 2,
-                    maxWidth: 500,
-                    //alignItems: 'center'
-                }}>
-                    {/* <Image
-                        source={require('../assets/images/blurred_glow_primary.png')}
-                        style={{
-                            width: width * 0.3,
-                            height: width * 0.3,
-                            position: 'absolute',
-                            left: -60
-                        }}
-                        contentFit='contain'
-                    /> */}
                     <Text
                         style={{
                             fontFamily: FONTS.regular,
@@ -121,6 +99,142 @@ const AboutUs = () => {
                         Jsme tým profesionálních tipařů poskytujících přesné a spolehlivé tipy na sázení. S našimi radami můžete činit informovaná rozhodnutí a zvýšit své šance na výhru.
                         Jsme tým profesionálních tipařů poskytujících přesné a spolehlivé tipy na sázení. S našimi radami můžete činit informovaná rozhodnutí a zvýšit své šance na výhru.
                     </Text>
+
+                    <HoverableView
+                        hoveredBackgroundColor={'rgba(255, 255, 255, 0.2)'}
+                        backgroundColor={COLORS.whiteBackground}
+                        style={{
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            borderRadius: 10,
+                            width: 'fit-content',
+                            marginTop: 20
+                        }}
+                    >
+                        <TouchableOpacity
+                            onPress={onContactUsPress}
+                            style={{
+                                paddingHorizontal: SPACING.x_small,
+                                paddingVertical: SPACING.xx_small,
+                                flexDirection: 'row',
+                                justifyContent: 'center',
+                                alignItems: 'center',
+
+                            }}
+                        >
+                            <Text
+                                style={{
+                                    color: COLORS.white,
+                                    fontFamily: FONTS.regular,
+                                    fontSize: FONT_SIZES.large
+                                }}
+                            >
+                                Kontaktujte nás
+                            </Text>
+                        </TouchableOpacity>
+                    </HoverableView>
+
+                    {/* <View
+                        style={{
+                            flexDirection: 'row',
+                            gap: SPACING.medium,
+                            justifyContent: 'flex-start',
+                            marginTop: 40,
+                            flexWrap: 'wrap',
+                        }}
+                    >
+                        <View
+                            style={{
+                                justifyContent: 'center',
+                                //alignItems: 'center'
+                            }}
+                        >
+                            <CountInNumber
+                                number={30}
+                                textStyle={{
+                                    fontFamily: FONTS.regular,
+                                    fontSize: numbersFontSize,
+                                    color: COLORS.accent
+                                }}
+                                trailingTextAfterFinish='+'
+                                step={2}
+                            />
+                            <Text style={{
+                                fontFamily: FONTS.light,
+                                fontSize: FONT_SIZES.large,
+                                color: COLORS.grey400,
+                                marginTop: 5
+                            }}>
+                                Klientů
+                            </Text>
+                        </View>
+                        <View
+                            style={{
+                                justifyContent: 'center',
+                            }}
+                        >
+                            <CountInNumber
+                                number={20}
+                                textStyle={{
+                                    fontFamily: FONTS.regular,
+                                    fontSize: numbersFontSize,
+                                    color: COLORS.accent
+                                }}
+                                trailingTextAfterFinish='+'
+                                duration={150}
+                            />
+                            <Text style={{
+                                fontFamily: FONTS.light,
+                                fontSize: FONT_SIZES.large,
+                                color: COLORS.grey400,
+                                marginTop: 5
+                            }}>
+                                Tipů za měsíc
+                            </Text>
+                        </View>
+                        <View
+                            style={{
+                                justifyContent: 'center'
+                            }}
+                        >
+                            <CountInNumber
+                                number={10}
+                                textStyle={{
+                                    fontFamily: FONTS.regular,
+                                    fontSize: numbersFontSize,
+                                    color: COLORS.accent
+                                }}
+                                trailingText=' let'
+                            />
+                            <Text style={{
+                                fontFamily: FONTS.light,
+                                fontSize: FONT_SIZES.large,
+                                color: COLORS.grey400,
+                                marginTop: 5
+                            }}>
+                                Zkušeností
+                            </Text>
+                        </View>
+                    </View> */}
+                </View>
+                <View style={{
+                    flexGrow: 1,
+                    justifyContent: 'center',
+                    zIndex: 2,
+                    width: width > 1380 ? width * 0.3 : width - SPACING.page_horizontal * 2,
+                    //alignItems: 'center'
+                }}>
+                    <Image
+                        source={require('../assets/images/about_us2.png')}
+                        style={{
+                            width: '100%',
+                            maxWidth: 500,
+                            aspectRatio: 748 / 574,
+                            alignSelf: 'center',
+                            zIndex: 2
+                        }}
+                        contentFit='cover'
+                    />
                 </View>
             </View>
         </View>

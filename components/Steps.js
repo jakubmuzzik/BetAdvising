@@ -950,6 +950,7 @@ const Steps = () => {
 
     return (
         <View
+            dataSet={{ id: 'how-it-works' }}
             style={{
                 paddingHorizontal: SPACING.page_horizontal,
                 width: '100%',

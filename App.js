@@ -14,6 +14,7 @@ export default function App() {
   useEffect(() => {
     document.querySelector('body').style.overflowY = 'auto'
     document.querySelector('body').style.backgroundColor = '#0D131A'
+    console.log(document.querySelector('#about-us'))
     init()
   }, [])
 

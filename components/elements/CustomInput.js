@@ -23,7 +23,7 @@ const CustomInput = ({
     label,
     placeholder,
     labelStyle = {},
-    placeholderTextColor = COLORS.grey300,
+    placeholderTextColor = COLORS.grey400,
     inputStyle = {},
     containerStyle = { },
     leftIcon,
@@ -39,9 +39,9 @@ const CustomInput = ({
     numberOfLines,
     onPress,
     maxLength,
-    borderColor = 'transparent',//COLORS.grey300,
+    borderColor = COLORS.whiteBackground2,
     focusedBorderColor = COLORS.accent,
-    backgroundColor = COLORS.whiteBackground,
+    backgroundColor = COLORS.secondary2,
     focusedBackgroundColor = 'transparent',
 }) => {
     const inputRef = useRef()
@@ -94,7 +94,7 @@ const CustomInput = ({
     const labelStyles = useAnimatedStyle(() => {
         return {
             fontFamily: FONTS.medium, 
-            color: interpolateColor(isActive.value, [false, true], [labelStyle.color ?? COLORS.grey300, COLORS.grey300]),
+            color: labelStyle.color ?? COLORS.grey300,//interpolateColor(isActive.value, [false, true], [labelStyle.color ?? COLORS.grey300, COLORS.grey300]),
             ...labelStyle,
             fontSize: interpolate(isActive.value, [false, true], [fontSize, fontSize * 0.7]),
         }
@@ -109,7 +109,7 @@ const CustomInput = ({
                 borderRadius: 10,
                 borderColor: errorMessage ? COLORS.error : (isFocused) ? focusedBorderColor : borderColor,//COLORS.darkestBlue,
                 paddingHorizontal: horizontalPadding,
-                backgroundColor: errorMessage ? COLORS.errorBackground : (!value && !isFocused) ? COLORS.whiteBackground : (isFocused) ? focusedBackgroundColor : backgroundColor,//COLORS.darkestBlueBackground,
+                backgroundColor: errorMessage ? COLORS.errorBackground : isFocused ? focusedBackgroundColor : backgroundColor,
                 boxShadow: isFocused ? '0px 0px 14px rgba(251, 193, 13, 0.35)' : undefined,
             }}>
                 {leftIcon ?? undefined}
@@ -139,7 +139,7 @@ const CustomInput = ({
                         onChangeText={(val) => onChangeText(val)}
                         value={value}
                         style={{
-                            fontFamily: value ? FONTS.medium : FONTS.regular,
+                            fontFamily: value ? FONTS.regular : FONTS.light,
                             fontSize: FONT_SIZES.medium,
                             color: COLORS.white,
                             ...inputStyle,

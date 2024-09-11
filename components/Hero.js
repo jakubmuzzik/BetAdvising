@@ -7,11 +7,10 @@ import { SPACING } from '../constants'
 import { Image } from 'expo-image'
 import HoverableView from './HoverableView'
 import { MotiText } from 'moti'
-import CountInNumber from './animated/CountInNumber'
 import { Link } from 'react-router-dom'
-import { stripEmptyParams } from '../utils'
+import withSearchParams from './hoc/withSearchParams'
 
-const Hero = () => {
+const Hero = ({ searchParams }) => {
     const { width } = useWindowDimensions()
 
     const onGetAppPress = () => {
@@ -97,25 +96,23 @@ const Hero = () => {
                         gap: SPACING.medium,
                         justifyContent: 'center',
                     }}>
-                        <HoverableView
-                            hoveredBackgroundColor={COLORS.hoveredAccent}
-                            backgroundColor={COLORS.accent}
+                        <Link
                             style={{
-                                justifyContent: 'center',
-                                alignItems: 'center',
-                                borderRadius: 10,
-                                width: 'fit-content',
-                                boxShadow: '0px 0px 14px rgba(251, 193, 13, 0.35)'
+                                textDecoration: 'none',
                             }}
+                            to={{ pathname: '/auth', search: new URLSearchParams(searchParams).toString() }}
                         >
-                            <TouchableOpacity
-                                onPress={onGetAppPress}
+                            <HoverableView
+                                hoveredBackgroundColor={COLORS.hoveredAccent}
+                                backgroundColor={COLORS.accent}
                                 style={{
+                                    justifyContent: 'center',
+                                    alignItems: 'center',
+                                    borderRadius: 10,
+                                    width: 'fit-content',
+                                    boxShadow: '0px 0px 14px rgba(251, 193, 13, 0.35)',
                                     paddingHorizontal: SPACING.x_small,
                                     paddingVertical: SPACING.xx_small,
-                                    flexDirection: 'row',
-                                    justifyContent: 'center',
-                                    alignItems: 'center'
                                 }}
                             >
                                 <Text
@@ -127,14 +124,14 @@ const Hero = () => {
                                 >
                                     Získat tipy →
                                 </Text>
-                            </TouchableOpacity>
-                        </HoverableView>
+                            </HoverableView>
+                        </Link>
 
                         <Link
                             style={{
                                 textDecoration: 'none',
                             }}
-                            to="#how-it-works"
+                            to={{ hash: '#how-it-works', search: new URLSearchParams(searchParams).toString() }}
                         >
                             <HoverableView
                                 hoveredBackgroundColor={'rgba(214, 214, 214, 0.37)'}
@@ -168,7 +165,7 @@ const Hero = () => {
     )
 }
 
-export default Hero
+export default withSearchParams(Hero, ['language'])
 
 const styles = StyleSheet.create({
     heroStatsNumber: {

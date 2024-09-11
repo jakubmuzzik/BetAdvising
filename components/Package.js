@@ -10,7 +10,21 @@ const Package = ({ name, coins, price, description }) => {
 
     return (
         <>
-            <View
+        <LinearGradient
+                    style={{
+                        borderWidth: 1,
+                    borderColor: COLORS.grey400,
+                    //backgroundColor: '#1f2832',
+                    borderRadius: 10,
+                    padding: SPACING.small,
+                    //paddingBottom: 40,
+                    maxWidth: normalize(250),
+                    justifyContent: 'space-between'
+                    }}
+                    colors={[COLORS.secondary, COLORS.secondary2]}
+                    start={{ x: -0.7, y: 0 }}
+                >
+            {/* <View
                 style={{
                     borderWidth: 1,
                     borderColor: COLORS.grey400,
@@ -21,7 +35,7 @@ const Package = ({ name, coins, price, description }) => {
                     maxWidth: normalize(250),
                     justifyContent: 'space-between'
                 }}
-            >
+            > */}
                 <View>
                     <Text
                         style={{
@@ -113,12 +127,13 @@ const Package = ({ name, coins, price, description }) => {
                         </Text>
                     </TouchableOpacity>
                 </HoverableView>
-            </View>
+            {/* </View> */}
             {/* <LinearGradient
                 colors={['rgba(22,22,22,0)', COLORS.primary]}
                 style={{ position: 'absolute', bottom: -1, width: '100%', height: 80, right: 0, left: 0 }}
                 locations={[0, 0.75]}
             /> */}
+            </LinearGradient>
         </>
     )
 }

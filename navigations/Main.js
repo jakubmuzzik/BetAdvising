@@ -4,11 +4,17 @@ import { COLORS, SPACING } from '../constants'
 import { normalize } from '../utils'
 import { Route, createBrowserRouter, createRoutesFromElements, RouterProvider } from 'react-router-dom'
 import { supabase } from '../supabase/config'
+import { fetchUser, updateCurrentAuthUser } from '../redux/actions/user'
+import { connect } from 'react-redux'
+
+import RequireAuth from './RequireAuth'
+import Toast from '../components/Toast'
 
 import Home from '../screens/Home'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
 import Login from '../screens/auth/Login'
+import Tickets from '../screens/app/Tickets'
 
 const LayoutWithHeader = ({ children }) => (
     <>
@@ -32,6 +38,12 @@ const router = createBrowserRouter(createRoutesFromElements(
 
         <Route path='/auth' element={
             <Login />
+        } />
+
+        <Route path='/tickets' element={
+            <RequireAuth>
+                <Tickets />
+            </RequireAuth>
         } />
 
         <Route path='*' element={
@@ -63,10 +75,11 @@ router.subscribe(() => {
     });
 })
 
-const Main = () => {
+const Main = ({ fetchUser, updateCurrentAuthUser }) => {
     const [isLoggedIn, setIsLoggedIn] = useState(null)
 
     const hasLoadedRef = useRef(false)
+    const toastRef = useRef()
 
     useEffect(() => {
         const { subscription } = supabase.auth.onAuthStateChange((_event, session) => {
@@ -74,27 +87,19 @@ const Main = () => {
             console.log('session: ', session)
 
             if (_event === 'SIGNED_OUT') {
-                /*toastRef.current?.show({
+                toastRef?.show({
                     type: 'success',
                     text: "You've been logged out."
-                })*/
+                })
             }
 
             if (!session) {
                 setIsLoggedIn(false)
             } else {
-                if (_event === 'USER_UPDATED') {
-                   /* toastRef.current?.show({
-                        type: 'success',
-                        text: 'Your data has been successfully updated.'
-                    }) */
-                }
+                updateCurrentAuthUser(session.user)
 
-                //updateCurrentAuthUser(session.user)
-                //fetch only on page reloads and when already signed in
-                if (!hasLoadedRef.current && session.user.app_metadata.userrole !== 'ADMIN') {
-                    //fetchUser(session.user.id, session.user.user_metadata.user_type)
-                }
+                fetchUser(session.user.id)
+
                 setIsLoggedIn(true)
             }
 
@@ -111,10 +116,14 @@ const Main = () => {
     }
 
     return (
-        <View style={{ flexGrow: 1 }}>
-            <RouterProvider router={router} />
-        </View>
+        <>
+            <View style={{ flexGrow: 1 }}>
+                <RouterProvider router={router} />
+            </View>
+
+            <Toast ref={toastRef} root/>
+        </>
     )
 }
 
-export default Main
+export default connect(null, { fetchUser, updateCurrentAuthUser })(Main)

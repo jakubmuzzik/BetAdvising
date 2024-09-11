@@ -5,6 +5,9 @@ import { StatusBar } from 'expo-status-bar'
 import { SafeAreaProvider } from 'react-native-safe-area-context'
 import { COLORS } from './constants'
 import * as Font from 'expo-font'
+import { Provider } from 'react-redux'
+import initStore from './redux/store'
+const store = initStore()
 
 import Main from './navigations/Main'
 
@@ -59,9 +62,11 @@ export default function App() {
     <>
       <StatusBar style="auto" />
 
-      <SafeAreaProvider style={{ backgroundColor: COLORS.primary, /*overflowY: 'auto'*/ /* overscrollBehavior: 'none'*/ }}>
-        <Main />
-      </SafeAreaProvider>
+      <Provider store={store}>
+        <SafeAreaProvider style={{ backgroundColor: COLORS.primary, /*overflowY: 'auto'*/ /* overscrollBehavior: 'none'*/ }}>
+          <Main />
+        </SafeAreaProvider>
+      </Provider>
     </>
   )
 }

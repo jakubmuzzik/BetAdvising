@@ -5,8 +5,9 @@ import { normalize } from '../utils'
 import { LinearGradient } from 'expo-linear-gradient'
 import HoverableView from './HoverableView'
 import { Link } from 'react-router-dom'
+import withSearchParams from './hoc/withSearchParams'
 
-const Steps = () => {
+const Steps = ({ searchParams }) => {
     const { width } = useWindowDimensions()
 
     const renderFirstStepLarge = () => (
@@ -833,7 +834,7 @@ const Steps = () => {
                         style={{
                             textDecoration: 'none',
                         }}
-                        to="#packages"
+                        to={{ hash: '#packages', search: new URLSearchParams(searchParams).toString() }}
                     >
                         <HoverableView
                             backgroundColor={COLORS.whiteBackground2}
@@ -923,7 +924,7 @@ const Steps = () => {
                         style={{
                             textDecoration: 'none',
                         }}
-                        to="#packages"
+                        to={{ hash: '#packages', search: new URLSearchParams(searchParams).toString() }}
                     >
                         <HoverableView
                             backgroundColor={COLORS.whiteBackground2}
@@ -973,7 +974,8 @@ const Steps = () => {
                     borderColor: COLORS.grey400,
                     backgroundColor: 'rgba(255,255,255,.05)',
                     borderRadius: 10,
-                    boxShadow: '0px 0px 14px rgba(251, 193, 13, 0.15)'
+                    //boxShadow: '0px 0px 14px rgba(251, 193, 13, 0.15)'
+                    boxShadow: '0px 0px 10px rgba(255, 255, 255, 0.1)'
                 }}
             >
                 <View style={{
@@ -1027,7 +1029,7 @@ const Steps = () => {
     )
 }
 
-export default Steps
+export default withSearchParams(Steps, ['language'])
 
 const styles = StyleSheet.create({
     stepHeaderText: {

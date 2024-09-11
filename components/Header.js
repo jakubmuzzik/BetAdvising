@@ -9,21 +9,17 @@ import { COLORS, FONTS, FONT_SIZES, SPACING, SMALL_SCREEN_THRESHOLD, LARGE_SCREE
 import { useSearchParams } from 'react-router-dom'
 import { Image } from 'expo-image'
 import { useNavigate } from 'react-router-dom'
+import withSearchParams from './hoc/withSearchParams'
 
 import HoverableText from './HoverableText'
 
-const Header = () => {
-    const [searchParams] = useSearchParams()
+const Header = ({ searchParams }) => {    
     const { width } = useWindowDimensions()
 
     const navigate = useNavigate()
 
     const isSmallScreen = width < 800
     const isLargeScreen = width >= LARGE_SCREEN_THRESHOLD
-
-    const params = useMemo(() => ({
-        language: getParam(SUPPORTED_LANGUAGES, searchParams.get('language'), ''),
-    }), [searchParams])
 
     const renderLeftHeader = () => {
 
@@ -32,7 +28,7 @@ const Header = () => {
                 <View
                     style={{ height: normalize(50), justifyContent: 'center', marginRight: SPACING.x_small }}
                 >
-                    <Link to={{ pathname: '/', search: new URLSearchParams(stripEmptyParams(params)).toString() }}>
+                    <Link to={{ pathname: '/', search: new URLSearchParams(searchParams).toString() }}>
                         <Image
                             contentFit='contain'
                             source={require('../assets/logos/logo-header.png')}
@@ -66,7 +62,7 @@ const Header = () => {
                     style={{
                         textDecoration: 'none',
                     }}
-                    to="#about-us"
+                    to={{ hash: '#about-us', search: new URLSearchParams(searchParams).toString() }}
                 >
                     <HoverableText
                         text='O nás'
@@ -78,7 +74,7 @@ const Header = () => {
                     style={{
                         textDecoration: 'none',
                     }}
-                    to="#how-it-works"
+                    to={{ hash: '#how-it-works', search: new URLSearchParams(searchParams).toString() }}
                 >
                     <HoverableText
                         text='Jak to funguje'
@@ -90,7 +86,7 @@ const Header = () => {
                     style={{
                         textDecoration: 'none',
                     }}
-                    to="#packages"
+                    to={{ hash: '#packages', search: new URLSearchParams(searchParams).toString() }}
                 >
                     <HoverableText
                         text='Balíčky'
@@ -102,7 +98,7 @@ const Header = () => {
                     style={{
                         textDecoration: 'none',
                     }}
-                    to="#contact"
+                    to={{ hash: '#contact', search: new URLSearchParams(searchParams).toString() }}
                 >
                     <HoverableText
                         text='Kontakt'
@@ -126,7 +122,7 @@ const Header = () => {
                     style={{
                         textDecoration: 'none',
                     }}
-                    to="/auth"
+                    to={{ pathname: '/auth', search: new URLSearchParams(searchParams).toString() }}
                 >
                     <HoverableView
                         hoveredBackgroundColor={'rgba(255, 255, 255, 0.2)'}
@@ -155,7 +151,7 @@ const Header = () => {
                     style={{
                         textDecoration: 'none',
                     }}
-                    to="/auth"
+                    to={{ pathname: '/auth', search: new URLSearchParams(searchParams).toString() }}
                 >
                     <HoverableView
                         hoveredBackgroundColor={COLORS.hoveredAccent}
@@ -203,7 +199,7 @@ const Header = () => {
     )
 }
 
-export default Header
+export default withSearchParams(Header, ['language'])
 
 const styles = StyleSheet.create({
     headerSmall: {

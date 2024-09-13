@@ -2,7 +2,7 @@ import React from 'react'
 import { View, Text } from 'react-native'
 import { COLORS } from '../../constants'
 
-const Tickets = () => {
+const History = () => {
 
     return (
         <View
@@ -12,9 +12,9 @@ const Tickets = () => {
                 alignItems: 'center',
             }}
         >
-            <Text style={{ color: COLORS.white }}>Tickets</Text>
+            <Text style={{ color: COLORS.white }}>History</Text>
         </View>
     )
 }
 
-export default Tickets
+export default History

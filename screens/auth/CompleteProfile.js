@@ -67,6 +67,11 @@ const CompleteProfile = ({ toastRef, searchParams, currentAuthUser, logOut }) =>
             navigate(from, {
                 replace: true
             })
+
+            toastRef.current.show({
+                text: 'Profile completed successfully',
+                type: 'success'
+            })
         } catch (error) {
             console.error(error)
 

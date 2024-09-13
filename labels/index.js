@@ -1,4 +1,4 @@
-const DEFAULT_LANGUAGE = 'en'
+export const DEFAULT_LANGUAGE = 'en'
 const SUPPORTED_LANGUAGES = ['en', 'cs']
 
 const translateLabel = (language, label) => {
@@ -8,6 +8,8 @@ const translateLabel = (language, label) => {
 }
 
 export const translateLabels = (language, labels) => labels.reduce((out, label) => ({...out, [label] : translateLabel(language, label)}), {}) 
+
+export const LOG_IN = 'LOG_IN'
 
 const LABELS = {
     [LOG_IN]: {

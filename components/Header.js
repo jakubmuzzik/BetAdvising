@@ -10,13 +10,15 @@ import { useSearchParams } from 'react-router-dom'
 import { Image } from 'expo-image'
 import { useNavigate } from 'react-router-dom'
 import withSearchParams from './hoc/withSearchParams'
+import { connect } from 'react-redux'
+import { Avatar } from 'react-native-paper'
+import { MaterialIcons } from '@expo/vector-icons'
 
 import HoverableText from './elements/HoverableText'
+import CustomButton from './elements/CustomButton'
 
-const Header = ({ searchParams }) => {    
+const Header = ({ searchParams, currentAuthUser }) => {
     const { width } = useWindowDimensions()
-
-    const navigate = useNavigate()
 
     const isSmallScreen = width < 800
     const isLargeScreen = width >= LARGE_SCREEN_THRESHOLD
@@ -111,7 +113,46 @@ const Header = ({ searchParams }) => {
     }
 
     const renderRightHeader = () => {
-        return (
+
+        return currentAuthUser.id ? (
+            <Link
+                style={{
+                    textDecoration: 'none',
+                }}
+                to={{ pathname: '/tickets', search: new URLSearchParams(searchParams).toString() }}
+            >
+                <HoverableView
+                    hoveredBackgroundColor={COLORS.whiteBackground2}
+                    backgroundColor={COLORS.whiteBackground}
+                    style={{
+                        justifyContent: 'center',
+                        flexDirection: 'row',
+                        gap: SPACING.xx_small,
+                        alignItems: 'center',
+                        borderRadius: 10,
+                        width: 'fit-content',
+                        //boxShadow: '0px 0px 14px rgba(251, 193, 13, 0.35)',
+                        paddingHorizontal: SPACING.x_small,
+                        paddingVertical: SPACING.xx_small,
+                    }}
+                >
+                    {
+                        currentAuthUser.user_metadata?.profile_completed && <Avatar.Text size={normalize(28)} label={currentAuthUser.user_metadata.name[0]} style={{ backgroundColor: COLORS.accent }} labelStyle={{ fontFamily: FONTS.bold, fontSize: FONT_SIZES.large }} />
+                        
+                    }
+                    <Text
+                        style={{
+                            color: COLORS.white,
+                            fontFamily: FONTS.regular,
+                            fontSize: FONT_SIZES.large
+                        }}
+                    >
+                        {currentAuthUser.user_metadata?.profile_completed ? 'Do aplikace →' : 'Dokončit profil →'}
+                        
+                    </Text>
+                </HoverableView>
+            </Link>
+        ) : (
             <View
                 style={{
                     flexDirection: 'row',
@@ -172,7 +213,7 @@ const Header = ({ searchParams }) => {
                                 fontSize: FONT_SIZES.large
                             }}
                         >
-                            Registrace
+                            Registrace zdarma
                         </Text>
                     </HoverableView>
                 </Link>
@@ -199,7 +240,11 @@ const Header = ({ searchParams }) => {
     )
 }
 
-export default withSearchParams(Header, ['language'])
+const mapStateToProps = (store) => ({
+    currentAuthUser: store.userState.currentAuthUser
+})
+
+export default connect(mapStateToProps)(withSearchParams(Header, ['language']))
 
 const styles = StyleSheet.create({
     headerSmall: {

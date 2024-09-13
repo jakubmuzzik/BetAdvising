@@ -1,4 +1,4 @@
-import { CLEAR_DATA } from "../../actionTypes"
+import { CLEAR_DATA, TOGGLE_DRAWER } from "../../actionTypes"
 import { supabase } from "../../../supabase/config"
 
 export const logOut = () => async (dispatch, getState) => {
@@ -8,3 +8,7 @@ export const logOut = () => async (dispatch, getState) => {
 
     if (error) throw error
 }
+
+export const toggleDrawer = () => ({
+    type: TOGGLE_DRAWER
+})

@@ -12,17 +12,22 @@ import RequireAuth from './RequireAuth'
 import Toast from '../components/Toast'
 
 import Home from '../screens/Home'
-import Header from '../components/Header'
 import Footer from '../components/Footer'
 import Login from '../screens/auth/Login'
 import Tickets from '../screens/app/Tickets'
+import History from '../screens/app/History'
+import Credits from '../screens/app/Credits'
+import Support from '../screens/app/Support'
+import Account from '../screens/app/Account'
 
 import OTP from '../screens/auth/OTP'
 import CompleteProfile from '../screens/auth/CompleteProfile'
 
+import Header from '../components/Header'
 import AuthHeader from '../components/AuthHeader'
+import AppLayout from './AppLayout'
 
-const LayoutWithHeader = ({ children }) => (
+const MarketingLayout = ({ children }) => (
     <>
         <Header />
 
@@ -45,9 +50,9 @@ const AuthLayout = ({ children }) => (
 const router = createBrowserRouter(createRoutesFromElements(
     <>
         <Route path='/' element={
-            <LayoutWithHeader>
+            <MarketingLayout>
                 <Home />
-            </LayoutWithHeader>
+            </MarketingLayout>
         } />
 
         <Route path='/auth' element={
@@ -59,22 +64,31 @@ const router = createBrowserRouter(createRoutesFromElements(
             <Route path='otp' element={<OTP />} />
         </Route>
 
+        <Route element={
+            <RequireAuth>
+                <AppLayout>
+                    <Outlet />
+                </AppLayout>
+            </RequireAuth>
+        } >
+            <Route path='/tickets' element={<Tickets />} />
+            <Route path='/history' element={<History />} />
+            <Route path='/credits' element={<Credits />} />
+            <Route path='/support' element={<Support />} />
+            <Route path='/account' element={<Account />} />
+        </Route>
+
         <Route path='/complete-profile' element={
             <RequireAuth>
                 <CompleteProfile />
             </RequireAuth>
         } />
 
-        <Route path='/tickets' element={
-            <RequireAuth>
-                <Tickets />
-            </RequireAuth>
-        } />
 
         <Route path='*' element={
-            <LayoutWithHeader>
+            <MarketingLayout>
                 <Home />
-            </LayoutWithHeader>
+            </MarketingLayout>
         } />
     </>
 ))

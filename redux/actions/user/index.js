@@ -22,7 +22,7 @@ export const updateCurrentAuthUser = (currentAuthUser) => ({
 })
 
 export const fetchUser = (userId) => async (dispatch, getState) => {
-    /*const { data, error } = await supabase
+    const { data, error } = await supabase
         .from('users')
         .select('*')
         .eq('id', userId)
@@ -33,5 +33,5 @@ export const fetchUser = (userId) => async (dispatch, getState) => {
         return
     }
 
-    dispatch({ type: USER_STATE_CHANGE, data: data[0] })*/
+    dispatch({ type: USER_STATE_CHANGE, data: data[0] })
 }

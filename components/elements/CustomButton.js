@@ -10,6 +10,7 @@ import { SPACING, FONTS, FONT_SIZES, COLORS, CUSTOM_BUTTON_HEIGHT } from '../../
 import { LinearGradient } from 'expo-linear-gradient'
 import { ActivityIndicator } from 'react-native-paper'
 import Animated, { LinearTransition, useSharedValue, withTiming, useAnimatedStyle } from 'react-native-reanimated'
+import {isBrowser } from 'react-device-detect'
 
 const AnimatedTouchableOpacity = Animated.createAnimatedComponent(TouchableOpacity)
 
@@ -25,10 +26,12 @@ const CustomButton = forwardRef((props, ref) => {
         icon,
         disabled = false,
         activeOpacity=0.7,
-        animateOnPress=false
+        animateOnPress=false,
+        hoveredOpacity=0.9
     } = props
 
     const [isLoading, setIsLoading] = useState(false)
+    const [isHovered, setIsHovered] = useState(false)
 
     const transformValue = useSharedValue(1)
 
@@ -61,18 +64,23 @@ const CustomButton = forwardRef((props, ref) => {
     }
 
     return (
-        <AnimatedTouchableOpacity ref={ref} layout={LinearTransition}
+        <AnimatedTouchableOpacity 
+            ref={ref} 
+            layout={LinearTransition}
             style={[
                 styles.button,
                 {
                     ...additionalStyles,
-                    backgroundColor: Array.isArray(backgroundColors) ? 'transparent' : backgroundColors
+                    backgroundColor: Array.isArray(backgroundColors) ? 'transparent' : backgroundColors,
+                    opacity: disabled ? 0.5 : isHovered ? hoveredOpacity : 1
                 },
                 buttonAnimatedStyle
             ]}
             onPressOut={onButtonPress}
             onPressIn={onPressIn}
             activeOpacity={activeOpacity}
+            onMouseEnter={isBrowser ? () => setIsHovered(true) : undefined}
+            onMouseLeave={isBrowser ? () => setIsHovered(false) : undefined}
         >
             {Array.isArray(backgroundColors) && <LinearGradient
                 colors={backgroundColors}

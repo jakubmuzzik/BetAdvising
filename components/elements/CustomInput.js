@@ -15,6 +15,7 @@ import Animated, {
     useDerivedValue
 } from 'react-native-reanimated'
 import { COLORS, SPACING, FONTS, FONT_SIZES } from '../../constants'
+import {isBrowser } from 'react-device-detect'
 
 const VERTICAL_SPACING = SPACING.x_small
 
@@ -41,11 +42,13 @@ const CustomInput = ({
     maxLength,
     borderColor = COLORS.whiteBackground2,
     focusedBorderColor = COLORS.accent,
+    hoveredBorderColor = COLORS.accent,
     backgroundColor = COLORS.secondary2,
     focusedBackgroundColor = 'transparent',
 }) => {
     const inputRef = useRef()
 
+    const [isHovered, setIsHovered] = useState(false)
     const [isFocused, setIsFocused] = useState(false)
 
     const isActive = useSharedValue(value.length > 0 || isFocused)
@@ -101,13 +104,17 @@ const CustomInput = ({
     })
 
     return (
-        <View style={{ ...containerStyle }}>
+        <View 
+            style={{ ...containerStyle }}
+            onMouseEnter={isBrowser ? () => setIsHovered(true) : undefined}
+            onMouseLeave={isBrowser ? () => setIsHovered(false) : undefined}
+        >
             <View style={{
                 flexDirection: 'row',
                 alignItems: 'center',
                 borderWidth: 1,
                 borderRadius: 10,
-                borderColor: errorMessage ? COLORS.error : (isFocused) ? focusedBorderColor : borderColor,//COLORS.darkestBlue,
+                borderColor: errorMessage ? COLORS.error : isHovered ? hoveredBorderColor : isFocused ? focusedBorderColor : borderColor,//COLORS.darkestBlue,
                 paddingHorizontal: horizontalPadding,
                 backgroundColor: errorMessage ? COLORS.errorBackground : isFocused ? focusedBackgroundColor : backgroundColor,
                 boxShadow: isFocused ? '0px 0px 14px rgba(251, 193, 13, 0.35)' : undefined,

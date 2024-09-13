@@ -17,7 +17,15 @@ const RequireAuth = ({ children, currentAuthUser, searchParams }) => {
             to += '?language=' + searchParams.language
         }
 
-        return <Navigate to={to} state={{ from: location }} replace />
+        return <Navigate to={to} state={{ from: location.pathname }} replace />
+    } else if (isLoggedIn && !currentAuthUser.user_metadata?.profile_completed && location.pathname !== '/complete-profile') {
+        let to = '/complete-profile'
+
+        if (searchParams.language) {
+            to += '?language=' + searchParams.language
+        }
+
+        return <Navigate to={to} state={{ from: location.pathname }} replace />
     }
 
     return children

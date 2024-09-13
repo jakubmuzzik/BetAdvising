@@ -27,7 +27,6 @@ import { connect } from 'react-redux'
 const Toast = forwardRef(({ root=false, storeToastRef }, ref) => {
     useEffect(() => {
         if (root) {
-            console.log('STORING TOAST')
             storeToastRef(ref.current)
         }
     }, [ref])

@@ -2,7 +2,8 @@ import React, { useEffect, useState, useRef } from 'react'
 import { View } from 'react-native'
 import { COLORS, SPACING } from '../constants'
 import { normalize } from '../utils'
-import { Route, createBrowserRouter, createRoutesFromElements, RouterProvider } from 'react-router-dom'
+import { Image } from 'expo-image'
+import { Route, createBrowserRouter, createRoutesFromElements, RouterProvider, Redirect, Outlet } from 'react-router-dom'
 import { supabase } from '../supabase/config'
 import { fetchUser, updateCurrentAuthUser } from '../redux/actions/user'
 import { connect } from 'react-redux'
@@ -16,6 +17,11 @@ import Footer from '../components/Footer'
 import Login from '../screens/auth/Login'
 import Tickets from '../screens/app/Tickets'
 
+import OTP from '../screens/auth/OTP'
+import CompleteProfile from '../screens/auth/CompleteProfile'
+
+import AuthHeader from '../components/AuthHeader'
+
 const LayoutWithHeader = ({ children }) => (
     <>
         <Header />
@@ -28,6 +34,14 @@ const LayoutWithHeader = ({ children }) => (
     </>
 )
 
+const AuthLayout = ({ children }) => (
+    <>
+        <AuthHeader />
+
+        {children}
+    </>
+)
+
 const router = createBrowserRouter(createRoutesFromElements(
     <>
         <Route path='/' element={
@@ -37,7 +51,18 @@ const router = createBrowserRouter(createRoutesFromElements(
         } />
 
         <Route path='/auth' element={
-            <Login />
+            <AuthLayout>
+                <Outlet />
+            </AuthLayout>
+        } >
+            <Route index element={<Login />} />
+            <Route path='otp' element={<OTP />} />
+        </Route>
+
+        <Route path='/complete-profile' element={
+            <RequireAuth>
+                <CompleteProfile />
+            </RequireAuth>
         } />
 
         <Route path='/tickets' element={
@@ -87,7 +112,7 @@ const Main = ({ fetchUser, updateCurrentAuthUser }) => {
             console.log('session: ', session)
 
             if (_event === 'SIGNED_OUT') {
-                toastRef?.show({
+                toastRef.current?.show({
                     type: 'success',
                     text: "You've been logged out."
                 })

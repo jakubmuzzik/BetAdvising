@@ -17,7 +17,6 @@ export default function App() {
   useEffect(() => {
     document.querySelector('body').style.overflowY = 'auto'
     document.querySelector('body').style.backgroundColor = '#0D131A'
-    console.log(document.querySelector('#about-us'))
     init()
   }, [])
 
@@ -44,7 +43,7 @@ export default function App() {
       ])
     } catch (e) {
       // handle errors
-      console.log('error during init', e)
+      console.error('error during init', e)
     } finally {
       setIsLoading(false)
     }

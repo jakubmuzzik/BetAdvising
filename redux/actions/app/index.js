@@ -1,10 +1,10 @@
 import { CLEAR_DATA } from "../../actionTypes"
 import { supabase } from "../../../supabase/config"
 
-export const logOut = () => async (dispatch) => {
+export const logOut = () => async (dispatch, getState) => {
     const { error } = await supabase.auth.signOut()
-    if (error) {
-        return
-    }
+
     dispatch({ type: CLEAR_DATA })
+
+    if (error) throw error
 }

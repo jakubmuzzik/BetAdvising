@@ -72,7 +72,8 @@ const CustomButton = forwardRef((props, ref) => {
                 {
                     ...additionalStyles,
                     backgroundColor: Array.isArray(backgroundColors) ? 'transparent' : backgroundColors,
-                    opacity: disabled ? 0.5 : isHovered ? hoveredOpacity : 1
+                    opacity: disabled ? 0.5 : isHovered ? hoveredOpacity : 1,
+                    cursor: disabled ? 'not-allowed' : 'pointer'
                 },
                 buttonAnimatedStyle
             ]}

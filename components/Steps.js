@@ -3,7 +3,7 @@ import { SPACING, FONT_SIZES, FONTS, COLORS } from '../constants'
 import { Image } from 'expo-image'
 import { normalize } from '../utils'
 import { LinearGradient } from 'expo-linear-gradient'
-import HoverableView from './HoverableView'
+import HoverableView from './elements/HoverableView'
 import { Link } from 'react-router-dom'
 import withSearchParams from './hoc/withSearchParams'
 

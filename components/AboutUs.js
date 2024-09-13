@@ -5,7 +5,7 @@ import { Image } from 'expo-image'
 import { normalize } from '../utils'
 import { LinearGradient } from 'expo-linear-gradient'
 import CountInNumber from './animated/CountInNumber'
-import HoverableView from './HoverableView'
+import HoverableView from './elements/HoverableView'
 
 const AboutUs = () => {
     const { width } = useWindowDimensions()

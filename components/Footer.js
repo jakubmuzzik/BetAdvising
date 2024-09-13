@@ -2,7 +2,7 @@ import { View } from 'react-native'
 import { COLORS, SPACING, FONTS, FONT_SIZES } from '../constants'
 import { LinearGradient } from 'expo-linear-gradient'
 import { normalize } from '../utils'
-import HoverableText from './HoverableText'
+import HoverableText from './elements/HoverableText'
 
 const Footer = () => {
 

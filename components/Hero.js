@@ -5,7 +5,7 @@ import { StyleSheet, View, ImageBackground, Text, useWindowDimensions, Touchable
 import { LinearGradient } from 'expo-linear-gradient'
 import { SPACING } from '../constants'
 import { Image } from 'expo-image'
-import HoverableView from './HoverableView'
+import HoverableView from './elements/HoverableView'
 import { MotiText } from 'moti'
 import { Link } from 'react-router-dom'
 import withSearchParams from './hoc/withSearchParams'

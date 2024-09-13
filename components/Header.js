@@ -2,7 +2,7 @@ import React, { useMemo } from 'react'
 import { BlurView } from 'expo-blur'
 import { View, TouchableOpacity, useWindowDimensions, StyleSheet, Text } from 'react-native'
 import { Ionicons } from '@expo/vector-icons'
-import HoverableView from './HoverableView'
+import HoverableView from './elements/HoverableView'
 import { Link } from 'react-router-dom'
 import { normalize, stripEmptyParams, getParam } from '../utils'
 import { COLORS, FONTS, FONT_SIZES, SPACING, SMALL_SCREEN_THRESHOLD, LARGE_SCREEN_THRESHOLD, SUPPORTED_LANGUAGES } from '../constants'
@@ -11,7 +11,7 @@ import { Image } from 'expo-image'
 import { useNavigate } from 'react-router-dom'
 import withSearchParams from './hoc/withSearchParams'
 
-import HoverableText from './HoverableText'
+import HoverableText from './elements/HoverableText'
 
 const Header = ({ searchParams }) => {    
     const { width } = useWindowDimensions()

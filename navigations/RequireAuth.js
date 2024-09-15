@@ -10,6 +10,8 @@ const RequireAuth = ({ children, currentAuthUser, searchParams }) => {
 
     const isLoggedIn = currentAuthUser.id
 
+    console.log('isLoggedIn', isLoggedIn)
+
     if (!isLoggedIn) {        
         let to = '/auth'
         //need to hardcode => search param on Navigate component didn't work

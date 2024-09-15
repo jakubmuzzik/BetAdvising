@@ -77,19 +77,31 @@ const Tickets = ({ searchParams }) => {
     }
 
     const renderTabBar = (props) => (
-        <TabBar
-            {...props}
-            indicatorStyle={{ backgroundColor: COLORS.accent, left: SPACING.medium }}
-            style={{ backgroundColor: 'transparent', width: normalize(800), maxWidth: '100%', alignSelf: 'center', paddingHorizontal: SPACING.medium }}
-            tabStyle={{ width: 'auto' }}
-            scrollEnabled={true}
-            renderLabel={({ route, focused, color }) => (
-                <Text style={{ fontFamily: FONTS.medium, fontSize: FONT_SIZES.large, color: focused ? '#FFF' : 'rgba(255,255,255,0.7)' }}>
-                    {route.title}
-                </Text>
-            )}
-            onTabPress={onTabPress}
-        />
+        <View
+            style={{
+                flexDirection: 'row',
+                width: normalize(800),
+                maxWidth: '100%',
+                alignSelf: 'center',
+                paddingHorizontal: SPACING.medium,
+                justifyContent: 'space-between',
+                alignItems: 'center',
+            }}
+        >
+            <TabBar
+                {...props}
+                indicatorStyle={{ backgroundColor: COLORS.accent, }}
+                style={{ backgroundColor: 'transparent', }}
+                tabStyle={{ width: 'auto' }}
+                scrollEnabled={true}
+                renderLabel={({ route, focused, color }) => (
+                    <Text style={{ fontFamily: FONTS.medium, fontSize: FONT_SIZES.large, color: focused ? '#FFF' : 'rgba(255,255,255,0.7)' }}>
+                        {route.title}
+                    </Text>
+                )}
+                onTabPress={onTabPress}
+            />
+        </View>
     )
 
     return (

@@ -14,7 +14,7 @@ import { Navigate, useNavigate, useLocation } from 'react-router-dom'
 import { logOut } from '../../redux/actions/app'
 
 const CompleteProfile = ({ toastRef, searchParams, currentAuthUser, logOut }) => {
-    if (currentAuthUser?.profile_completed) {
+    if (currentAuthUser?.user_metadata?.profile_completed) {
         let to = '/tickets'
         //need to hardcode => search param on Navigate component didn't work
         if (searchParams.language) {

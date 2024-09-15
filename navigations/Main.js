@@ -88,7 +88,6 @@ const router = createBrowserRouter(createRoutesFromElements(
             </RequireAuth>
         } />
 
-
         <Route path='*' element={
             <MarketingLayout>
                 <Home />
@@ -139,9 +138,10 @@ const Main = ({ fetchUser, updateCurrentAuthUser }) => {
             if (!session) {
                 setIsLoggedIn(false)
             } else {
-                updateCurrentAuthUser(session.user)
-
-                fetchUser(session.user.id)
+                if (_event === 'SIGNED_IN' || _event === 'INITIAL_SESSION') {
+                    updateCurrentAuthUser(session.user)
+                    fetchUser(session.user.id)
+                }
 
                 setIsLoggedIn(true)
             }

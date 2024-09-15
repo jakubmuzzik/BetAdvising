@@ -66,7 +66,7 @@ const CustomButton = forwardRef((props, ref) => {
     return (
         <AnimatedTouchableOpacity 
             ref={ref} 
-            layout={LinearTransition}
+            //layout={LinearTransition}
             style={[
                 styles.button,
                 {

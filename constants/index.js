@@ -22,8 +22,11 @@ const normalizeSize = (forSmallScreenSize, forMediumScreenSize, forLargeScreenSi
 
 export const CUSTOM_BUTTON_HEIGHT = normalizeSize(40, 40, 40)
 
+export const SMALL_SCREEN_THRESHOLD_APP_HEADER = 700
+
 export const COLORS = {
     accent: '#FBC10D',
+    accent2: '#957308',
     hoveredAccent: '#D8A30B',
     primary: '#0D131A',//'#131C27',
     hoveredPrimary: '#1f2937',

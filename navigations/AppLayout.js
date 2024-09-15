@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react'
-import { Text, View, StyleSheet, TouchableOpacity, ScrollView } from 'react-native'
+import { Text, View, StyleSheet, TouchableOpacity, ScrollView, useWindowDimensions } from 'react-native'
 import Animated, {
     useSharedValue,
     useAnimatedStyle,
@@ -11,7 +11,7 @@ import { Image } from 'expo-image'
 import { normalize } from '../utils'
 import AppHeader from '../components/AppHeader'
 import { connect } from 'react-redux'
-import { SPACING, COLORS, FONTS, FONT_SIZES } from '../constants'
+import { SPACING, COLORS, FONTS, SMALL_SCREEN_THRESHOLD_APP_HEADER } from '../constants'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 import { useLocation, useNavigate, Link } from 'react-router-dom'
 import withSearchParams from '../components/hoc/withSearchParams'
@@ -79,6 +79,10 @@ const AppLayout = ({ children, toggleDrawer, searchParams }) => {
     const navigate = useNavigate()
     const location = useLocation()
 
+    const { width } = useWindowDimensions()
+
+    const isSmallScreen = width < SMALL_SCREEN_THRESHOLD_APP_HEADER
+
     useEffect(() => {
         if (!hasRendered.current) {
             hasRendered.current = true
@@ -105,7 +109,7 @@ const AppLayout = ({ children, toggleDrawer, searchParams }) => {
         <>
             <AppHeader />
 
-            <Drawer isOpen={isOpen} toggleLeftDrawer={toggleLeftDrawer}>
+            {isSmallScreen && <Drawer isOpen={isOpen} toggleLeftDrawer={toggleLeftDrawer}>
                 <Image
                     contentFit='contain'
                     source={require('../assets/logos/logo-header.png')}
@@ -153,9 +157,13 @@ const AppLayout = ({ children, toggleDrawer, searchParams }) => {
                         </TouchableOpacity>
                     ))}
                 </ScrollView>
-            </Drawer>
+            </Drawer>}
 
-            {children}
+            <View style={{
+                marginTop: normalize(65)
+            }}>
+                {children}
+            </View>
         </>
     )
 }

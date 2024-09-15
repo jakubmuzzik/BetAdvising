@@ -3,7 +3,7 @@ import { View } from 'react-native'
 import { COLORS, SPACING } from '../constants'
 import { normalize } from '../utils'
 import { Image } from 'expo-image'
-import { Route, createBrowserRouter, createRoutesFromElements, RouterProvider, Redirect, Outlet } from 'react-router-dom'
+import { Route, createBrowserRouter, createRoutesFromElements, RouterProvider, Navigate, Outlet } from 'react-router-dom'
 import { supabase } from '../supabase/config'
 import { fetchUser, updateCurrentAuthUser } from '../redux/actions/user'
 import { connect } from 'react-redux'
@@ -14,7 +14,7 @@ import Toast from '../components/Toast'
 import Home from '../screens/Home'
 import Footer from '../components/Footer'
 import Login from '../screens/auth/Login'
-import Tickets from '../screens/app/Tickets'
+import Tickets from './Tickets'
 import History from '../screens/app/History'
 import Credits from '../screens/app/Credits'
 import Support from '../screens/app/Support'
@@ -71,7 +71,11 @@ const router = createBrowserRouter(createRoutesFromElements(
                 </AppLayout>
             </RequireAuth>
         } >
-            <Route path='/tickets' element={<Tickets />} />
+            <Route path='/tickets' element={<Outlet />} >
+                <Route index element={<Navigate to="/tickets/offers" replace />} />
+                <Route path='offers' element={<Tickets />} />
+                <Route path='unlocked' element={<Tickets />} />
+            </Route>
             <Route path='/history' element={<History />} />
             <Route path='/credits' element={<Credits />} />
             <Route path='/support' element={<Support />} />

@@ -1,7 +1,7 @@
 import React, { useState, useLayoutEffect, useRef, useEffect, useCallback } from 'react'
 import { View, useWindowDimensions, StyleSheet, Text, Pressable, TouchableOpacity, TouchableWithoutFeedback, Modal } from 'react-native'
 import { BlurView } from 'expo-blur'
-import { COLORS, FONTS, FONT_SIZES, SPACING } from '../constants'
+import { COLORS, FONTS, FONT_SIZES, SPACING, SMALL_SCREEN_THRESHOLD_APP_HEADER } from '../constants'
 import { normalize } from '../utils'
 import { Link, useSearchParams, useLocation, useNavigate } from 'react-router-dom'
 import { TabView, SceneMap, TabBar } from 'react-native-tab-view'
@@ -27,7 +27,7 @@ const AppHeader = ({ searchParams, currentAuthUser, logOut, toggleDrawer, curren
     const languageDropdownRef = useRef()
     const languageDropdownModalRef = useRef()
 
-    const isSmallScreen = width < 700
+    const isSmallScreen = width < SMALL_SCREEN_THRESHOLD_APP_HEADER
     const isLargeScreen = width > 1000
 
     const [userDropdownVisible, setUserDropdownVisible] = useState(false)
@@ -44,20 +44,20 @@ const AppHeader = ({ searchParams, currentAuthUser, logOut, toggleDrawer, curren
             icon: (focused) => <MaterialCommunityIcons style={{ marginRight: 10 }} name="ticket-confirmation-outline" size={20} color={focused ? COLORS.white : 'rgba(255,255,255,0.7)'} />
         },
         {
+            path: '/credits',
+            title: 'Kredity',
+            key: 'credits',
+            icon: (focused) => <MaterialCommunityIcons style={{ marginRight: 10 }} name="hand-coin-outline" size={20} color={focused ? COLORS.white : 'rgba(255,255,255,0.7)'} />
+        },
+        {
             path: '/history',
             title: 'Historie',
             key: 'history',
             icon: (focused) => <MaterialCommunityIcons style={{ marginRight: 10 }} name="history" size={20} color={focused ? COLORS.white : 'rgba(255,255,255,0.7)'} />
         },
-        {
-            path: '/credits',
-            title: 'Kredity',
-            key: 'credits',
-            icon: (focused) => <MaterialCommunityIcons style={{ marginRight: 10 }} name="hand-coin-outline" size={20} color={focused ? COLORS.white : 'rgba(255,255,255,0.7)'} />
-        }
     ].map((route, index) => ({ ...route, index })))
 
-    const renderIndicator = routes.some(route => route.path === location.pathname)
+    const renderIndicator = routes.some(route => location.pathname.includes(route.path))
 
     //close modals when changing language
     useEffect(() => {
@@ -65,7 +65,7 @@ const AppHeader = ({ searchParams, currentAuthUser, logOut, toggleDrawer, curren
     }, [searchParams])
 
     useLayoutEffect(() => {
-        const newIndex = routes.find(route => route.path === location.pathname)?.index
+        const newIndex = routes.find(route => location.pathname.includes(route.path))?.index
         setIndex(newIndex ?? 0)
     }, [location])
 

@@ -1,21 +1,16 @@
-import React, { useMemo } from 'react'
+import React from 'react'
 import { BlurView } from 'expo-blur'
-import { View, TouchableOpacity, useWindowDimensions, StyleSheet, Text } from 'react-native'
-import { Ionicons } from '@expo/vector-icons'
+import { View, useWindowDimensions, StyleSheet, Text } from 'react-native'
 import HoverableView from './elements/HoverableView'
 import { Link } from 'react-router-dom'
-import { normalize, stripEmptyParams, getParam } from '../utils'
-import { COLORS, FONTS, FONT_SIZES, SPACING, SMALL_SCREEN_THRESHOLD, LARGE_SCREEN_THRESHOLD, SUPPORTED_LANGUAGES } from '../constants'
-import { useSearchParams } from 'react-router-dom'
+import { normalize } from '../utils'
+import { COLORS, FONTS, FONT_SIZES, SPACING, LARGE_SCREEN_THRESHOLD } from '../constants'
 import { Image } from 'expo-image'
-import { useNavigate } from 'react-router-dom'
 import withSearchParams from './hoc/withSearchParams'
 import { connect } from 'react-redux'
 import { Avatar } from 'react-native-paper'
-import { MaterialIcons } from '@expo/vector-icons'
 
 import HoverableText from './elements/HoverableText'
-import CustomButton from './elements/CustomButton'
 
 const Header = ({ searchParams, currentAuthUser }) => {
     const { width } = useWindowDimensions()

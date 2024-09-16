@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react'
-import { Text, View, StyleSheet, TouchableOpacity, ScrollView, useWindowDimensions } from 'react-native'
+import { Text, View, StyleSheet, TouchableOpacity, ScrollView, useWindowDimensions, Dimensions } from 'react-native'
 import Animated, {
     useSharedValue,
     useAnimatedStyle,
@@ -248,10 +248,11 @@ const styles = StyleSheet.create({
     drawer: {
         padding: 12,
         width: SIDEBAR_WIDTH,
-        height: '100%',
+        height: Dimensions.get('screen').height,
         position: 'absolute',
         left: 0,
-        zIndex: 2
+        zIndex: 2,
+        position: 'fixed'
     },
     drawerBackdrop: {
         ...StyleSheet.absoluteFillObject,

@@ -129,6 +129,7 @@ const TicketOffer = () => (
                         </View>
 
                         <CustomButton
+                            onPress={() => {}}
                             additionalStyles={{ marginTop: SPACING.medium, width: '100%' }}
                             textColor={COLORS.black}
                             backgroundColors={[COLORS.accent2, COLORS.accent, COLORS.accent, COLORS.accent2]}
@@ -169,6 +170,8 @@ const Offers = ({ searchParams }) => {
                 alignItems: 'center',
                 gap: SPACING.large
             }}>
+                <TicketOffer />
+                <TicketOffer />
                 <TicketOffer />
                 <TicketOffer />
                 <TicketOffer />

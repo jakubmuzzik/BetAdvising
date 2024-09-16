@@ -390,7 +390,7 @@ const AppHeader = ({ searchParams, currentAuthUser, logOut, toggleDrawer, curren
                         flexDirection: 'row',
                         gap: 20,
                         alignItems: 'center',
-                        marginRight: SPACING.small + SPACING.xx_small
+                        //marginRight: SPACING.small + SPACING.xx_small
                     }}
                 >
                     <Image
@@ -493,8 +493,29 @@ const AppHeader = ({ searchParams, currentAuthUser, logOut, toggleDrawer, curren
                             flexDirection: 'row',
                             alignItems: 'center',
                             justifyContent: 'center',
-                            paddingVertical: SPACING.xxx_small,
-                            paddingHorizontal: SPACING.xx_small
+                            paddingVertical: 8,
+                            paddingHorizontal: 12
+                        }}
+                    >
+                       <MaterialIcons name="notifications-none" size={23} color="white" />
+                    </TouchableOpacity>
+                </HoverableView>
+
+                <HoverableView
+                    hoveredBackgroundColor={COLORS.whiteBackground2}
+                    backgroundColor={COLORS.whiteBackground}
+                    style={{ marginLeft: SPACING.small, borderRadius: 20, justifyContent: 'center' }}
+                >
+                    <TouchableOpacity
+                        ref={userDropdownRef}
+                        onPress={toggleUserDropdown}
+                        activeOpacity={0.8}
+                        style={{
+                            flexDirection: 'row',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            paddingVertical: 8,
+                            paddingHorizontal: 12
                         }}
                     >
                         <Avatar.Text

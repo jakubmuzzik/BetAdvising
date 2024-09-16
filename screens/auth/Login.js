@@ -39,7 +39,7 @@ const Login = ({ searchParams, toastRef, fetchUser }) => {
         return <Navigate to={to} replace />
     }
 
-    let from = location.state?.from || "/tickets"
+    let from = location.state?.from || "/offers"
 
     const onGoogleSignupPress = async () => {
         googleSignInButtonRef.current.setIsLoading(true)

@@ -3,7 +3,7 @@ import withSearchParams from './hoc/withSearchParams'
 import { View } from 'react-native'
 import { Image } from 'expo-image'
 import { Link } from 'react-router-dom'
-import { COLORS, SPACING } from '../constants'
+import { COLORS, SPACING, HEADER_HEIGHT } from '../constants'
 import { normalize } from '../utils'
 
 const AuthHeader = ({ searchParams }) => {
@@ -11,7 +11,7 @@ const AuthHeader = ({ searchParams }) => {
     return (
         <>
             <View style={{
-                height: normalize(65),
+                height: HEADER_HEIGHT,
                 width: '100%',
                 alignItems: 'flex-start',
                 justifyContent: 'center',

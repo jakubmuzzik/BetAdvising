@@ -14,8 +14,8 @@ import Toast from '../components/Toast'
 import Home from '../screens/Home'
 import Footer from '../components/Footer'
 import Login from '../screens/auth/Login'
-import Tickets from './Tickets'
-import History from '../screens/app/History'
+import Unlocked from '../screens/app/tickets/Unlocked'
+import Offers from '../screens/app/tickets/Offers'
 import Credits from '../screens/app/Credits'
 import Support from '../screens/app/Support'
 import Account from '../screens/app/Account'
@@ -71,12 +71,8 @@ const router = createBrowserRouter(createRoutesFromElements(
                 </AppLayout>
             </RequireAuth>
         } >
-            <Route path='/tickets' element={<Outlet />} >
-                <Route index element={<Navigate to="/tickets/offers" replace />} />
-                <Route path='offers' element={<Tickets />} />
-                <Route path='unlocked' element={<Tickets />} />
-            </Route>
-            <Route path='/history' element={<History />} />
+            <Route path='/offers' element={<Offers />} />
+            <Route path='/unlocked' element={<Unlocked />} />
             <Route path='/credits' element={<Credits />} />
             <Route path='/support' element={<Support />} />
             <Route path='/account' element={<Account />} />

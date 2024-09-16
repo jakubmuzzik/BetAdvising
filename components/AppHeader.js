@@ -1,7 +1,7 @@
 import React, { useState, useLayoutEffect, useRef, useEffect, useCallback } from 'react'
 import { View, useWindowDimensions, StyleSheet, Text, Pressable, TouchableOpacity, TouchableWithoutFeedback, Modal } from 'react-native'
 import { BlurView } from 'expo-blur'
-import { COLORS, FONTS, FONT_SIZES, SPACING, SMALL_SCREEN_THRESHOLD_APP_HEADER } from '../constants'
+import { COLORS, FONTS, FONT_SIZES, SPACING, SMALL_SCREEN_THRESHOLD_APP_HEADER, HEADER_HEIGHT } from '../constants'
 import { normalize } from '../utils'
 import { Link, useSearchParams, useLocation, useNavigate } from 'react-router-dom'
 import { TabView, SceneMap, TabBar } from 'react-native-tab-view'
@@ -38,22 +38,23 @@ const AppHeader = ({ searchParams, currentAuthUser, logOut, toggleDrawer, curren
     const [index, setIndex] = useState(0)
     const [routes, setRoutes] = useState([
         {
-            path: '/tickets',
-            title: 'Tikety',
-            key: 'tickets',
+            path: '/offers',
+            title: 'Nabídky',
+            key: 'offers',
             icon: (focused) => <MaterialCommunityIcons style={{ marginRight: 10 }} name="ticket-confirmation-outline" size={20} color={focused ? COLORS.white : 'rgba(255,255,255,0.7)'} />
+        },
+
+        {
+            path: '/unlocked',
+            title: 'Odemčené',
+            key: 'unlocked',
+            icon: (focused) => <MaterialCommunityIcons style={{ marginRight: 10 }} name="history" size={20} color={focused ? COLORS.white : 'rgba(255,255,255,0.7)'} />
         },
         {
             path: '/credits',
             title: 'Kredity',
             key: 'credits',
             icon: (focused) => <MaterialCommunityIcons style={{ marginRight: 10 }} name="hand-coin-outline" size={20} color={focused ? COLORS.white : 'rgba(255,255,255,0.7)'} />
-        },
-        {
-            path: '/history',
-            title: 'Historie',
-            key: 'history',
-            icon: (focused) => <MaterialCommunityIcons style={{ marginRight: 10 }} name="history" size={20} color={focused ? COLORS.white : 'rgba(255,255,255,0.7)'} />
         },
     ].map((route, index) => ({ ...route, index })))
 
@@ -255,16 +256,16 @@ const AppHeader = ({ searchParams, currentAuthUser, logOut, toggleDrawer, curren
                                 </TouchableOpacity>
                             </HoverableView>
 
-                            <TouchableOpacity onPress={onGetSupportPress}>
+                            {/* <TouchableOpacity onPress={onGetSupportPress}>
                                 <HoverableView style={{ gap: 5, flexDirection: 'row', paddingHorizontal: SPACING.xx_small, paddingVertical: SPACING.xx_small, alignItems: 'center' }} hoveredBackgroundColor={COLORS.secondary}>
                                     <MaterialIcons name="help-outline" size={17} color={COLORS.grey300} />
                                     <Text style={{ fontFamily: FONTS.medium, fontSize: FONT_SIZES.medium, color: COLORS.grey300 }}>
                                         Podpora
                                     </Text>
                                 </HoverableView>
-                            </TouchableOpacity>
+                            </TouchableOpacity> */}
 
-                            <HoverableView style={{ gap: 5, flexDirection: 'row', paddingHorizontal: SPACING.xx_small, paddingVertical: SPACING.xx_small, alignItems: 'center' }} hoveredBackgroundColor={COLORS.secondary}>
+                            {/* <HoverableView style={{ gap: 5, flexDirection: 'row', paddingHorizontal: SPACING.xx_small, paddingVertical: SPACING.xx_small, alignItems: 'center' }} hoveredBackgroundColor={COLORS.secondary}>
                                 <MaterialIcons name="language" size={17} color={COLORS.grey300} />
                                 <Text style={{ fontFamily: FONTS.medium, fontSize: FONT_SIZES.medium, color: COLORS.grey300 }}>
                                     Language:
@@ -282,7 +283,7 @@ const AppHeader = ({ searchParams, currentAuthUser, logOut, toggleDrawer, curren
                                     <Picker.Item label="Čeština" value="cs" />
                                     <Picker.Item label="English" value="en" />
                                 </Picker>
-                            </HoverableView>
+                            </HoverableView> */}
 
                             <View style={{ height: 0.5, width: '100%', backgroundColor: COLORS.grey400, marginVertical: SPACING.xxx_small }} />
 
@@ -339,10 +340,11 @@ const AppHeader = ({ searchParams, currentAuthUser, logOut, toggleDrawer, curren
             </>
         ) : (
             <>
-                <View
+            <View />
+                {/* <View
                     style={{ height: normalize(50), justifyContent: 'center', marginRight: SPACING.x_small }}
                 >
-                    <Link to={{ pathname: '/tickets', search: new URLSearchParams(searchParams).toString() }}>
+                    <Link to={{ pathname: '/offers', search: new URLSearchParams(searchParams).toString() }}>
                         <Image
                             contentFit='contain'
                             source={require('../assets/logos/logo-header.png')}
@@ -360,7 +362,7 @@ const AppHeader = ({ searchParams, currentAuthUser, logOut, toggleDrawer, curren
                     navigationState={{ index, routes }}
                     renderScene={() => undefined}
                     onIndexChange={setIndex}
-                />
+                /> */}
             </>
         )
     )
@@ -550,7 +552,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         paddingHorizontal: SPACING.page_horizontal,
         backgroundColor: '#020308a3',//'#1b0404bf',//'#1b0404a3',//COLORS.darkRedBackground,
-        height: normalize(65)
+        height: HEADER_HEIGHT
     },
     headerLarge: {
         //position: 'fixed',
@@ -563,7 +565,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: SPACING.page_horizontal,
         paddingVertical: SPACING.x_small,
         backgroundColor: '#020308a3',//'#1b0404bf',//'#1b0404a3',// 'rgb(44 26 26 / 64%)',//'rgb(44 26 26 / 64%)',//COLORS.darkRedBackground,
-        height: normalize(65)
+        height: HEADER_HEIGHT
     },
     dropdownOverlay: {
         width: '100%',

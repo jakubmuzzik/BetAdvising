@@ -16,7 +16,15 @@ import HoverableView from '../../../components/elements/HoverableView'
 const Unlocked = ({ searchParams }) => {
 
     return (
-        null
+        <View
+            style={{
+                flex: 1,
+                justifyContent: 'center',
+                alignItems: 'center',
+            }}
+        >
+            <Text style={{ color: COLORS.white }}>Unlocked</Text>
+        </View>
     )
 }
 

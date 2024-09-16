@@ -15,7 +15,7 @@ import { logOut } from '../../redux/actions/app'
 
 const CompleteProfile = ({ toastRef, searchParams, currentAuthUser, logOut }) => {
     if (currentAuthUser?.user_metadata?.profile_completed) {
-        let to = '/tickets'
+        let to = '/offers'
         //need to hardcode => search param on Navigate component didn't work
         if (searchParams.language) {
             to += '?language=' + searchParams.language
@@ -35,7 +35,7 @@ const CompleteProfile = ({ toastRef, searchParams, currentAuthUser, logOut }) =>
 
     const [showErrorMessage, setShowErrorMessage] = useState(false)
 
-    let from = location.state?.from || "/tickets"
+    let from = location.state?.from || "/offers"
 
     const onCompleteProfilePress = async () => {
         if (!firstName || !lastName) {
@@ -58,7 +58,7 @@ const CompleteProfile = ({ toastRef, searchParams, currentAuthUser, logOut }) =>
                 throw authUpdateError
             }
 
-            from = from === '/complete-profile' ? '/tickets' : from
+            from = from === '/complete-profile' ? '/offers' : from
 
             if (searchParams.language) {
                 from += '?language=' + searchParams.language

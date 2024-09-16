@@ -4,7 +4,7 @@ import { View, useWindowDimensions, StyleSheet, Text } from 'react-native'
 import HoverableView from './elements/HoverableView'
 import { Link } from 'react-router-dom'
 import { normalize } from '../utils'
-import { COLORS, FONTS, FONT_SIZES, SPACING, LARGE_SCREEN_THRESHOLD } from '../constants'
+import { COLORS, FONTS, FONT_SIZES, SPACING, LARGE_SCREEN_THRESHOLD, HEADER_HEIGHT } from '../constants'
 import { Image } from 'expo-image'
 import withSearchParams from './hoc/withSearchParams'
 import { connect } from 'react-redux'
@@ -114,7 +114,7 @@ const Header = ({ searchParams, currentAuthUser }) => {
                 style={{
                     textDecoration: 'none',
                 }}
-                to={{ pathname: '/tickets', search: new URLSearchParams(searchParams).toString() }}
+                to={{ pathname: '/offers', search: new URLSearchParams(searchParams).toString() }}
             >
                 <HoverableView
                     hoveredBackgroundColor={COLORS.whiteBackground2}
@@ -252,7 +252,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         paddingHorizontal: SPACING.page_horizontal,
         backgroundColor: '#020308a3',//'#1b0404bf',//'#1b0404a3',//COLORS.darkRedBackground,
-        height: normalize(65)
+        height: HEADER_HEIGHT
     },
     headerLarge: {
         //position: 'fixed',
@@ -265,7 +265,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: SPACING.page_horizontal,
         paddingVertical: SPACING.x_small,
         backgroundColor: '#020308a3',//'#1b0404bf',//'#1b0404a3',// 'rgb(44 26 26 / 64%)',//'rgb(44 26 26 / 64%)',//COLORS.darkRedBackground,
-        height: normalize(65)
+        height: HEADER_HEIGHT
     },
     headerLeftSmall: {
         flexGrow: 0,

@@ -13,7 +13,8 @@ const Tickets = ({ searchParams }) => {
 
     return (
         <View style={{
-            alignItems: 'center'
+            alignItems: 'center',
+            marginTop: normalize(65)
         }}>
             <View
                 style={{

@@ -70,6 +70,7 @@ const TicketOffer = () => (
                         style={{
                             padding: 50,
                             borderRadius: 10,
+                            width: 350,
                             alignItems: 'center',
                             justifyContent: 'center',
                             backgroundColor: COLORS.secondary,
@@ -143,13 +144,13 @@ const Offers = ({ searchParams }) => {
     return (
         <View
             style={{
-                width: normalize(800),
+                //width: normalize(800),
                 maxWidth: '100%',
                 height: '100%',
                 alignSelf: 'center',
                 paddingHorizontal: SPACING.medium,
-                marginTop: SPACING.xx_large,
-                backgroundColor: COLORS.primary
+                paddingTop: SPACING.xx_large,
+                backgroundColor: COLORS.primary,
                 //alignItems: 'center',
             }}
         >

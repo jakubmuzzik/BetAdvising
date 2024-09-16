@@ -178,8 +178,8 @@ const SideBar = ({ toggleDrawer, searchParams }) => {
                             style={{
                                 flexDirection: 'row',
                                 alignItems: 'center',
-                                paddingHorizontal: SPACING.xx_small,
-                                paddingVertical: SPACING.xxx_small,
+                                paddingHorizontal: 12,
+                                paddingVertical: 8,
                                 alignItems: 'center',
                                 justifyContent: 'flex-start',
                             }}
@@ -246,7 +246,7 @@ export default connect(mapStateToProps)(withSearchParams(SideBar, ['language']))
 
 const styles = StyleSheet.create({
     drawer: {
-        padding: SPACING.xx_small,
+        padding: 12,
         width: SIDEBAR_WIDTH,
         height: '100%',
         position: 'absolute',

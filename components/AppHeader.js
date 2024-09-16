@@ -1,7 +1,7 @@
 import React, { useState, useLayoutEffect, useRef, useEffect, useCallback } from 'react'
 import { View, useWindowDimensions, StyleSheet, Text, Pressable, TouchableOpacity, TouchableWithoutFeedback, Modal } from 'react-native'
 import { BlurView } from 'expo-blur'
-import { COLORS, FONTS, FONT_SIZES, SPACING, SMALL_SCREEN_THRESHOLD_APP_HEADER, HEADER_HEIGHT } from '../constants'
+import { COLORS, FONTS, FONT_SIZES, SPACING, SMALL_SCREEN_THRESHOLD_APP_HEADER, HEADER_HEIGHT, SIDEBAR_WIDTH } from '../constants'
 import { normalize } from '../utils'
 import { Link, useSearchParams, useLocation, useNavigate } from 'react-router-dom'
 import { TabView, SceneMap, TabBar } from 'react-native-tab-view'
@@ -339,8 +339,22 @@ const AppHeader = ({ searchParams, currentAuthUser, logOut, toggleDrawer, curren
                 </TouchableOpacity>
             </>
         ) : (
-            <>
-            <View />
+                <>
+                    <View
+                        style={{
+                            marginLeft: SIDEBAR_WIDTH
+                        }}
+                    >
+                        {/* <Text
+                            style={{
+                                fontFamily: FONTS.bold,
+                                fontSize: FONT_SIZES.large,
+                                color: COLORS.white,
+                            }}
+                        >
+                            Nabidky
+                        </Text> */}
+                    </View>
                 {/* <View
                     style={{ height: normalize(50), justifyContent: 'center', marginRight: SPACING.x_small }}
                 >

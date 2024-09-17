@@ -189,7 +189,8 @@ const SideBar = ({ toggleDrawer, searchParams }) => {
                             <Text
                                 style={{
                                     color: COLORS.white,
-                                    fontFamily: FONTS.regular
+                                    fontFamily: FONTS.regular,
+                                    fontSize: FONT_SIZES.large
                                 }}
                             >
                                 {route.title}

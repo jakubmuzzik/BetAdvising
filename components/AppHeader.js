@@ -38,18 +38,18 @@ const AppHeader = ({ searchParams, currentAuthUser, logOut, toggleDrawer, curren
     const [index, setIndex] = useState(0)
     const [routes, setRoutes] = useState([
         {
-            path: '/offers',
-            title: 'Nabídky',
-            key: 'offers',
+            path: '/tickets',
+            title: 'Tikety',
+            key: 'tickets',
             icon: (focused) => <MaterialCommunityIcons style={{ marginRight: 10 }} name="ticket-confirmation-outline" size={20} color={focused ? COLORS.white : 'rgba(255,255,255,0.7)'} />
         },
 
-        {
-            path: '/unlocked',
-            title: 'Odemčené',
-            key: 'unlocked',
-            icon: (focused) => <MaterialCommunityIcons style={{ marginRight: 10 }} name="history" size={20} color={focused ? COLORS.white : 'rgba(255,255,255,0.7)'} />
-        },
+        // {
+        //     path: '/unlocked',
+        //     title: 'Odemčené',
+        //     key: 'unlocked',
+        //     icon: (focused) => <MaterialCommunityIcons style={{ marginRight: 10 }} name="history" size={20} color={focused ? COLORS.white : 'rgba(255,255,255,0.7)'} />
+        // },
         {
             path: '/credits',
             title: 'Kredity',
@@ -340,25 +340,10 @@ const AppHeader = ({ searchParams, currentAuthUser, logOut, toggleDrawer, curren
             </>
         ) : (
                 <>
-                    <View
-                        style={{
-                            marginLeft: SIDEBAR_WIDTH
-                        }}
-                    >
-                        {/* <Text
-                            style={{
-                                fontFamily: FONTS.bold,
-                                fontSize: FONT_SIZES.large,
-                                color: COLORS.white,
-                            }}
-                        >
-                            Nabidky
-                        </Text> */}
-                    </View>
-                {/* <View
+                <View
                     style={{ height: normalize(50), justifyContent: 'center', marginRight: SPACING.x_small }}
                 >
-                    <Link to={{ pathname: '/offers', search: new URLSearchParams(searchParams).toString() }}>
+                    <Link to={{ pathname: '/tickets', search: new URLSearchParams(searchParams).toString() }}>
                         <Image
                             contentFit='contain'
                             source={require('../assets/logos/logo-header.png')}
@@ -376,7 +361,7 @@ const AppHeader = ({ searchParams, currentAuthUser, logOut, toggleDrawer, curren
                     navigationState={{ index, routes }}
                     renderScene={() => undefined}
                     onIndexChange={setIndex}
-                /> */}
+                />
             </>
         )
     )

@@ -17,7 +17,7 @@ const OTP = ({ toastRef, searchParams }) => {
     const navigate = useNavigate()
 
     let email = location.state?.email || ''
-    let from = location.state?.from || '/offers'
+    let from = location.state?.from || '/tickets'
 
     const [otp, setOtp] = useState('')
     const [showErrorMessage, setShowErrorMessage] = useState(false)

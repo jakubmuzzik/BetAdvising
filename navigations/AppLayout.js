@@ -13,11 +13,10 @@ const AppLayout = ({ children }) => {
         <>
             <AppHeader />
 
-            <SideBar />
+            {isSmallScreen && <SideBar />}
 
             <View style={{
                 marginTop: HEADER_HEIGHT,
-                marginLeft: isSmallScreen ? 0 : SIDEBAR_WIDTH,
                 backgroundColor: COLORS.primary,
             }}>
                 {children}

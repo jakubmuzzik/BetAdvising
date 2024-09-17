@@ -19,14 +19,9 @@ import { Picker } from '@react-native-picker/picker'
 
 const ROUTES = [
     {
-        path: '/offers',
-        title: 'Nabídky',
+        path: '/tickets',
+        title: 'Tikety',
         icon: (focused) => <MaterialCommunityIcons style={{ marginRight: 10 }} name="ticket-confirmation-outline" size={17} color={focused ? COLORS.white : 'rgba(255,255,255,0.7)'} />
-    },
-    {
-        path: '/unlocked',
-        title: 'Odemčené',
-        icon: (focused) => <MaterialCommunityIcons style={{ marginRight: 10 }} name="history" size={17} color={focused ? COLORS.white : 'rgba(255,255,255,0.7)'} />
     },
     {
         path: '/credits',
@@ -73,38 +68,38 @@ const Drawer = ({ isOpen, toggleLeftDrawer, duration = 500, children }) => {
     )
 }
 
-const SideBarWrapper = ({ children, isOpen, toggleLeftDrawer }) => {
-    const { width } = useWindowDimensions()
+// const SideBarWrapper = ({ children, isOpen, toggleLeftDrawer }) => {
+//     const { width } = useWindowDimensions()
 
-    const isSmallScreen = width < SMALL_SCREEN_THRESHOLD_APP_HEADER
+//     const isSmallScreen = width < SMALL_SCREEN_THRESHOLD_APP_HEADER
 
-    if (isSmallScreen) {
-        return (
-            <Drawer isOpen={isOpen} toggleLeftDrawer={toggleLeftDrawer}>
-                {children}
-            </Drawer>
-        )
-    } else {
-        return (
-            <View
-                style={{
-                    position: 'fixed',
-                    height: '100%',
-                    //marginTop: HEADER_HEIGHT,
-                    width: SIDEBAR_WIDTH,
-                    padding: SPACING.xx_small,
-                    paddingTop: 0,
-                    borderRightWidth: 1,
-                    borderRightColor: COLORS.whiteBackground2,
-                    backgroundColor: COLORS.primary,
-                    zIndex: 2
-                }}
-            >
-                {children}
-            </View>
-        )
-    }
-}
+//     if (isSmallScreen) {
+//         return (
+//             <Drawer isOpen={isOpen} toggleLeftDrawer={toggleLeftDrawer}>
+//                 {children}
+//             </Drawer>
+//         )
+//     } else {
+//         return (
+//             <View
+//                 style={{
+//                     position: 'fixed',
+//                     height: '100%',
+//                     //marginTop: HEADER_HEIGHT,
+//                     width: SIDEBAR_WIDTH,
+//                     padding: SPACING.xx_small,
+//                     paddingTop: 0,
+//                     borderRightWidth: 1,
+//                     borderRightColor: COLORS.whiteBackground2,
+//                     backgroundColor: COLORS.primary,
+//                     zIndex: 2
+//                 }}
+//             >
+//                 {children}
+//             </View>
+//         )
+//     }
+// }
 
 const SideBar = ({ toggleDrawer, searchParams }) => {
     const isOpen = useSharedValue(false)
@@ -136,7 +131,7 @@ const SideBar = ({ toggleDrawer, searchParams }) => {
     }
 
     return (
-        <SideBarWrapper isOpen={isOpen} toggleLeftDrawer={toggleLeftDrawer}>
+        <Drawer isOpen={isOpen} toggleLeftDrawer={toggleLeftDrawer}>
             <View
                 style={{
                     height: HEADER_HEIGHT,
@@ -235,7 +230,7 @@ const SideBar = ({ toggleDrawer, searchParams }) => {
                     <Picker.Item label="English" value="en" />
                 </Picker>
             </View>
-        </SideBarWrapper>
+        </Drawer>
     )
 }
 

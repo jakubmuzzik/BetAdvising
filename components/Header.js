@@ -114,7 +114,7 @@ const Header = ({ searchParams, currentAuthUser }) => {
                 style={{
                     textDecoration: 'none',
                 }}
-                to={{ pathname: '/offers', search: new URLSearchParams(searchParams).toString() }}
+                to={{ pathname: '/tickets', search: new URLSearchParams(searchParams).toString() }}
             >
                 <HoverableView
                     hoveredBackgroundColor={COLORS.whiteBackground2}

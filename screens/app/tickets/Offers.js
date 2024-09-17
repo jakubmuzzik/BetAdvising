@@ -140,10 +140,11 @@ const TicketOffer = () => (
     </View>
 )
 
-const Offers = ({ searchParams }) => {
+const Offers = ({ searchParams, setTabHeight }) => {
 
     return (
         <View
+            onLayout={(event) => setTabHeight(event.nativeEvent.layout.height)}
             style={{
                 //width: normalize(800),
                 maxWidth: '100%',

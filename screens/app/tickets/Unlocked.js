@@ -13,10 +13,11 @@ import { supabase } from '../../../supabase/config'
 import withSearchParams from '../../../components/hoc/withSearchParams'
 import HoverableView from '../../../components/elements/HoverableView'
 
-const Unlocked = ({ searchParams }) => {
+const Unlocked = ({ setTabHeight }) => {
 
     return (
         <View
+            onLayout={(event) => setTabHeight(event.nativeEvent.layout.height)}
             style={{
                 flex: 1,
                 justifyContent: 'center',

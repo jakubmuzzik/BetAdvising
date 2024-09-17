@@ -1,30 +1,56 @@
 import React, { useState, useRef, useEffect } from 'react'
 import { View, TouchableOpacity, Text } from 'react-native'
 import { COLORS, FONT_SIZES, FONTS, SPACING } from '../../constants'
-import Animated, { useAnimatedStyle, withTiming, useSharedValue, useDerivedValue, interpolate } from 'react-native-reanimated'
+import Animated, { useAnimatedStyle, withTiming, useSharedValue, interpolate, useDerivedValue } from 'react-native-reanimated'
 
-const FilledTabView = ({ 
-    containerStyle={}, 
-    tabItemStyle={}, 
-    labelStyle={},
-    tabItemsGap= 0,//SPACING.large,
-    labelActiveColor= COLORS.white,
-    labelInactiveColor= COLORS.grey400,
-    itemPaddingVertical= SPACING.xx_small,
-    itemPaddingHorizontal= SPACING.x_small,
+const Indicator = ({ measures, activeIndex }) => {
+    const indicatorAnimatedStyle = useAnimatedStyle(() => {
+        return {
+            width: withTiming(measures[activeIndex].width - 10),
+            height: measures[activeIndex].height - 10,
+            transform: [
+                {
+                    translateX: withTiming(measures[activeIndex].x + 5)
+                }
+            ]
+        }
+    }, [activeIndex])
+
+    return (
+        <Animated.View
+            style={[
+                {
+                    position: 'absolute',
+                    left: 0,
+                    backgroundColor: COLORS.secondary2,
+                    borderRadius: 10
+                },
+                indicatorAnimatedStyle
+            ]}
+        />
+    )
+}
+
+const FilledTabView = ({
+    containerStyle = {},
+    tabItemStyle = {},
+    labelStyle = {},
+    tabItemsGap = 0,//SPACING.large,
+    labelActiveColor = COLORS.white,
+    labelInactiveColor = COLORS.grey400,
+    itemPaddingVertical = SPACING.xx_small,
+    itemPaddingHorizontal = SPACING.x_small,
     tabs,
     activeIndex
 }) => {
-    const [measures, setMeasures] = useState(tabs.map(() => ({ x: 0, y: 0, width: 0, height: 0 })))
+    const [measures, setMeasures] = useState([])
     const containerRef = useRef()
-
-    const indicatorPosition = useSharedValue(0)
 
     useEffect(() => {
         const m = []
         tabs.forEach((tab) => {
             tab.ref.current.measureLayout(
-                containerRef.current, 
+                containerRef.current,
                 (x, y, width, height) => {
                     m.push({ x, y, width, height })
                 }
@@ -33,26 +59,6 @@ const FilledTabView = ({
 
         setMeasures(m)
     }, [])
-
-    useEffect(() => {
-        if (measures.length === 0) {
-            return
-        }
-        
-        indicatorPosition.value = withTiming(measures[activeIndex].x, { duration: 300 })
-    }, [activeIndex, measures])
-    
-    const indicatorAnimatedStyle = useAnimatedStyle(() => {
-        return {
-            width: interpolate(activeIndex, measures.map((measure, index) => index), measures.map(measure => measure.width - 10)), //derivedMeasures.value[activeIndex]?.width - 10, 
-            height: measures[activeIndex]?.height - 10,
-            transform: [
-                {
-                    translateX: indicatorPosition.value + 5
-                }
-            ]
-        }
-    })
 
     return (
         <View
@@ -65,17 +71,7 @@ const FilledTabView = ({
                 ...containerStyle
             }}
         >
-            {measures.length > 0 && <Animated.View
-                style={[
-                    {
-                        position: 'absolute',
-                        left: 0,
-                        backgroundColor: COLORS.secondary2,
-                        borderRadius: 10
-                    },
-                    indicatorAnimatedStyle
-                ]}
-            />}
+            {measures.length > 0 && <Indicator measures={measures} activeIndex={activeIndex} />}
 
             {tabs.map((tab) => (
                 <TouchableOpacity
@@ -94,7 +90,7 @@ const FilledTabView = ({
                     }}
                 >
                     {tab.icon && tab.icon(tab.index === activeIndex)}
-                    <Text 
+                    <Text
                         style={{
                             color: tab.index === activeIndex ? labelActiveColor : labelInactiveColor,
                             fontFamily: FONTS.medium,

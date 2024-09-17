@@ -265,7 +265,7 @@ const AppHeader = ({ searchParams, currentAuthUser, logOut, toggleDrawer, curren
                                 </HoverableView>
                             </TouchableOpacity> */}
 
-                            {/* <HoverableView style={{ gap: 5, flexDirection: 'row', paddingHorizontal: SPACING.xx_small, paddingVertical: SPACING.xx_small, alignItems: 'center' }} hoveredBackgroundColor={COLORS.secondary}>
+                            <HoverableView style={{ gap: 5, flexDirection: 'row', paddingHorizontal: SPACING.xx_small, paddingVertical: SPACING.xx_small, alignItems: 'center' }} hoveredBackgroundColor={COLORS.secondary}>
                                 <MaterialIcons name="language" size={17} color={COLORS.grey300} />
                                 <Text style={{ fontFamily: FONTS.medium, fontSize: FONT_SIZES.medium, color: COLORS.grey300 }}>
                                     Language:
@@ -283,7 +283,7 @@ const AppHeader = ({ searchParams, currentAuthUser, logOut, toggleDrawer, curren
                                     <Picker.Item label="Čeština" value="cs" />
                                     <Picker.Item label="English" value="en" />
                                 </Picker>
-                            </HoverableView> */}
+                            </HoverableView> 
 
                             <View style={{ height: 0.5, width: '100%', backgroundColor: COLORS.grey400, marginVertical: SPACING.xxx_small }} />
 

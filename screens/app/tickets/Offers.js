@@ -1,5 +1,5 @@
 import React, { useState, useMemo, useEffect, useCallback } from 'react'
-import { View, Text } from 'react-native'
+import { View, Text, useWindowDimensions } from 'react-native'
 import { FONTS, FONT_SIZES, SPACING, COLORS, SUPPORTED_LANGUAGES } from '../../../constants'
 import { normalize, calculateTimeDifference } from '../../../utils'
 import { LinearGradient } from 'expo-linear-gradient'
@@ -153,6 +153,9 @@ const Divider = ({ isLast }) => {
 }
 
 const Offers = ({ searchParams, setTabHeight }) => {
+    const { width } = useWindowDimensions()
+
+    const isSmallScreen = width < 700
 
     return (
         <View
@@ -176,21 +179,37 @@ const Offers = ({ searchParams, setTabHeight }) => {
                         //width: 800
                     }}
                 >
-                    <TimeLeft startDate={offer.first_match_date} />
+                    {!isSmallScreen && <TimeLeft startDate={offer.first_match_date} />}
                     <Divider isLast={index === OFFERS.length - 1} />
 
                     {offer.tickets.length > 0 ? (
-                        <UnlockedTicket
-                            key={offer.id}
-                            ticket={offer.tickets[0]}
-                            isLast={index === OFFERS.length - 1}
-                        />
+                        <View 
+                            key={offer.id} 
+                            style={{
+                                gap: SPACING.medium,
+                                flexGrow: 1
+                            }}
+                        >
+                            {isSmallScreen && <TimeLeft startDate={offer.first_match_date} />}
+                            <UnlockedTicket
+                                ticket={offer.tickets[0]}
+                                isLast={index === OFFERS.length - 1}
+                            />
+                        </View>
                     ) : (
-                        <LockedTicket
+                        <View
                             key={offer.id}
-                            ticket={offer}
-                            isLast={index === OFFERS.length - 1}
-                        />
+                            style={{
+                                gap: SPACING.medium,
+                                flexGrow: 1
+                            }}
+                        >
+                            {isSmallScreen && <TimeLeft startDate={offer.first_match_date} />}
+                            <LockedTicket
+                                ticket={offer}
+                                isLast={index === OFFERS.length - 1}
+                            />
+                        </View>
                     )}
                 </View>
             ))}

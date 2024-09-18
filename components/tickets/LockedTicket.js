@@ -392,6 +392,7 @@ const LockedTicket = ({ ticket, searchParams, toastRef }) => {
                         width: cardLayout.width,
                         height: cardLayout.height,
                         right: 0,
+                        bottom: 0
                     }
                 ]}>
 

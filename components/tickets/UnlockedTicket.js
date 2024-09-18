@@ -2,7 +2,7 @@ import React from 'react'
 import { View, Text } from 'react-native'
 import { FONTS, FONT_SIZES, SPACING, COLORS } from '../../constants'
 import { MaterialIcons, MaterialCommunityIcons, FontAwesome } from '@expo/vector-icons'
-import { getEventDate } from '../../utils'
+import { getEventDate, getEventTime } from '../../utils'
 
 import withSearchParams from '../hoc/withSearchParams'
 
@@ -106,7 +106,7 @@ const Match = ({ match }) => (
                         marginBottom: 4
                     }}
                 >
-                    {getEventDate(match.start_date, false, true)}
+                    {getEventDate(match.start_date, false, true)}, {getEventTime(match.start_date)}
                 </Text>
                 <Text
                     style={{

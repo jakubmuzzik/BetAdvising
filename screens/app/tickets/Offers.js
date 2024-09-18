@@ -3,7 +3,7 @@ import { View, Text, useWindowDimensions } from 'react-native'
 import { FONTS, FONT_SIZES, SPACING, COLORS, SUPPORTED_LANGUAGES } from '../../../constants'
 import { normalize, calculateTimeDifference } from '../../../utils'
 import { LinearGradient } from 'expo-linear-gradient'
-import { MaterialIcons } from '@expo/vector-icons'
+import { MaterialIcons, FontAwesome } from '@expo/vector-icons'
 
 import withSearchParams from '../../../components/hoc/withSearchParams'
 
@@ -119,7 +119,7 @@ const TimeLeft = ({ startDate }) => {
     )
 }
 
-const Divider = ({ isLast }) => {
+const Divider = ({ isLast, isLocked }) => {
     const [contentHeight, setContentHeight] = useState(0)
 
     return (
@@ -136,7 +136,7 @@ const Divider = ({ isLast }) => {
                     zIndex: 2
                 }}
             >
-                <MaterialIcons name='lock-open' size={18} color={COLORS.white} />
+                {isLocked ? <FontAwesome name="lock" size={18} color={COLORS.white} /> : <FontAwesome name="unlock" size={18} color={COLORS.white} />}
             </LinearGradient>
             {!isLast && <LinearGradient
                 colors={[COLORS.whiteBackground2, COLORS.whiteBackground2, COLORS.whiteBackground2]}
@@ -180,7 +180,7 @@ const Offers = ({ searchParams, setTabHeight }) => {
                     }}
                 >
                     {!isSmallScreen && <TimeLeft startDate={offer.first_match_date} />}
-                    <Divider isLast={index === OFFERS.length - 1} />
+                    <Divider isLast={index === OFFERS.length - 1} isLocked={offer.tickets.length === 0} />
 
                     {offer.tickets.length > 0 ? (
                         <View 

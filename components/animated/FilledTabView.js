@@ -38,8 +38,8 @@ const FilledTabView = ({
     tabItemsGap = 0,//SPACING.large,
     labelActiveColor = COLORS.white,
     labelInactiveColor = COLORS.grey400,
-    itemPaddingVertical = SPACING.xx_small,
-    itemPaddingHorizontal = SPACING.x_small,
+    itemPaddingVertical = 12,
+    itemPaddingHorizontal = 16,
     tabs,
     activeIndex
 }) => {
@@ -84,8 +84,8 @@ const FilledTabView = ({
                         alignItems: 'center',
                         justifyContent: 'center',
                         flex: 1,
-                        paddingVertical: SPACING.xx_small,
-                        paddingHorizontal: SPACING.x_small,
+                        paddingVertical: 12,
+                        paddingHorizontal: 16,
                         ...tabItemStyle
                     }}
                 >

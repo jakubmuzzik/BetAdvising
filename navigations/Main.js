@@ -136,9 +136,12 @@ const Main = ({ fetchUser, updateCurrentAuthUser }) => {
             if (!session) {
                 setIsLoggedIn(false)
             } else {
-                if (_event === 'SIGNED_IN' || _event === 'INITIAL_SESSION') {
+                if (_event === 'SIGNED_IN' || _event === 'INITIAL_SESSION' || _event === 'USER_UPDATED') {
                     updateCurrentAuthUser(session.user)
-                    fetchUser(session.user.id)
+
+                    if (session.user.user_metadata?.profile_completed) {
+                        fetchUser(session.user.id)
+                    }
                 }
 
                 setIsLoggedIn(true)

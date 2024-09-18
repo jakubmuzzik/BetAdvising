@@ -68,14 +68,14 @@ const CompleteProfile = ({ toastRef, searchParams, currentAuthUser, logOut }) =>
                 replace: true
             })
 
-            toastRef.current.show({
+            toastRef?.show({
                 text: 'Profile completed successfully',
                 type: 'success'
             })
         } catch (error) {
             console.error(error)
 
-            toastRef.current.show({
+            toastRef?.show({
                 text: 'Failed to complete your profile. Please try again later.',
                 type: 'error'
             })

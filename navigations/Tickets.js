@@ -60,17 +60,6 @@ const Tickets = ({ searchParams }) => {
         })
     }
 
-    const onTabPress2 = ({ route, preventDefault }) => {
-        preventDefault()
-
-        setIndex(routes.indexOf(route))
-
-        navigate({
-            pathname: route.path,
-            search: new URLSearchParams(searchParams).toString()
-        })
-    }
-
     const onTabPress = (route) => {
         setIndex(route.index)
 
@@ -128,16 +117,6 @@ const Tickets = ({ searchParams }) => {
 
     return (
         <View style={{ backgroundColor: COLORS.primary, paddingVertical: SPACING.large }}>
-            {/* <View style={{ width: normalize(800), maxWidth: '100%', alignSelf: 'center', marginTop: SPACING.small, paddingHorizontal: SPACING.medium }}>
-                <View style={{ flexDirection: 'row', marginBottom: SPACING.large }}>
-                    <Text
-                        style={{ fontFamily: FONTS.bold, fontSize: FONT_SIZES.h1, color: '#FFF' }}
-                    >
-                        Tikety
-                    </Text>
-                </View>
-            </View> */}
-
             <TabView
                 renderTabBar={renderTabBar}
                 swipeEnabled={false}
@@ -145,14 +124,15 @@ const Tickets = ({ searchParams }) => {
                 renderScene={renderScene}
                 onIndexChange={setIndex}
                 sceneContainerStyle={{
-                    width: normalize(800),
+                    width: normalize(1000),
                     maxWidth: '100%',
                     alignSelf: 'center',
                     paddingHorizontal: SPACING.medium,
                 }}
                 //initialLayout={{ width: Dimensions.get('window').width, height: Dimensions.get('window').height }}
                 //lazy={({ route }) => route.key !== 'settings'}
-                lazy
+                //lazy
+                lazy={({ route }) => route.key !== 'settings'}
                 renderLazyPlaceholder={renderLazyPlaceholder}
             />
         </View>

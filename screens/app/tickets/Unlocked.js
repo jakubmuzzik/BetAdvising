@@ -19,7 +19,6 @@ const Unlocked = ({ setTabHeight }) => {
         <View
             onLayout={(event) => setTabHeight(event.nativeEvent.layout.height)}
             style={{
-                flex: 1,
                 justifyContent: 'center',
                 alignItems: 'center',
             }}

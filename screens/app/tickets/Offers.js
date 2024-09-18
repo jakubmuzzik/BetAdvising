@@ -9,136 +9,79 @@ import withSearchParams from '../../../components/hoc/withSearchParams'
 import HoverableView from '../../../components/elements/HoverableView'
 import CustomButton from '../../../components/elements/CustomButton'
 
-const TicketOffer = () => (
-    <View
-        style={{
-            flexDirection: 'row',
-            gap: SPACING.large,
-        }}
-    >
-        <View>
-            <Text
-                style={{
-                    fontFamily: FONTS.medium,
-                    fontSize: FONT_SIZES.medium,
-                    color: COLORS.grey400
-                }}
-            >
-                Zbývá:
-            </Text>
-            <Text
-                style={{
-                    fontFamily: FONTS.medium,
-                    fontSize: FONT_SIZES.x_large,
-                    color: COLORS.white,
-                    marginTop: 4
-                }}
-            >
-                3 hod 15 min
-            </Text>
-        </View>
-        <View>
-            <LinearGradient
-                colors={[COLORS.secondary, COLORS.secondary2]}
-                style={{
-                    borderRadius: 17.5,
-                    width: 35,
-                    height: 35,
-                    padding: 10,
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    zIndex: 2
-                }}
-            >
-                <MaterialIcons name="lock" size={18} color={COLORS.white} />
-            </LinearGradient>
-            <LinearGradient
-                colors={[COLORS.secondary, COLORS.secondary2, COLORS.secondary]}
-                style={{
-                    borderRadius: 17.5,
-                    width: 1,
-                    flex: 1,
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    alignSelf: 'center',
-                    marginTop: -50
-                    //height: 200
-                }}
-            />
-        </View>
-        <View
-            style={{
-                padding: 50,
-                borderRadius: 10,
-                width: 350,
-                alignItems: 'center',
-                justifyContent: 'center',
-                backgroundColor: COLORS.secondary,
-                borderWidth: 1,
-                borderColor: COLORS.whiteBackground2,
-            }}
-        >
-            <View
-                style={{
-                    flexDirection: 'row',
-                    gap: SPACING.large,
-                }}
-            >
-                <View>
-                    <Text
-                        style={{
-                            fontFamily: FONTS.medium,
-                            fontSize: FONT_SIZES.medium,
-                            color: COLORS.grey400
-                        }}
-                    >
-                        Kurz
-                    </Text>
-                    <Text
-                        style={{
-                            fontFamily: FONTS.medium,
-                            fontSize: FONT_SIZES.x_large,
-                            color: COLORS.white,
-                            marginTop: 4
-                        }}
-                    >
-                        2.5
-                    </Text>
-                </View>
-                <View>
-                    <Text
-                        style={{
-                            fontFamily: FONTS.medium,
-                            fontSize: FONT_SIZES.medium,
-                            color: COLORS.grey400
-                        }}
-                    >
-                        Typ
-                    </Text>
-                    <Text
-                        style={{
-                            fontFamily: FONTS.medium,
-                            fontSize: FONT_SIZES.x_large,
-                            color: COLORS.white,
-                            marginTop: 4
-                        }}
-                    >
-                        AKO
-                    </Text>
-                </View>
-            </View>
+import UnlockedTicket from '../../../components/tickets/UnlockedTicket'
+import LockedTicket from '../../../components/tickets/LockedTicket'
 
-            <CustomButton
-                onPress={() => { }}
-                additionalStyles={{ marginTop: SPACING.medium, width: '100%' }}
-                textColor={COLORS.black}
-                backgroundColors={[COLORS.accent2, COLORS.accent, COLORS.accent, COLORS.accent2]}
-                buttonText='Odemknout'
-                textStyles={{ fontFamily: FONTS.medium }}
-            />
-        </View>
-    </View>
-)
+const OFFERS = [
+    {
+        id: 1,
+        type: 'AKO',
+        name: '#35',
+        odd: 2.5,
+        stake: 4500,
+        //3 hours from now
+        first_match_date: new Date(Date.now() + 3 * 60 * 60 * 1000),
+        match_count: 3,
+        tickets: []
+    },
+    {
+        id: 2,
+        type: 'AKO',
+        name: '#34',
+        odd: 2.5,
+        stake: 2400,
+        //3 hours from now
+        first_match_date: new Date(Date.now() + 3 * 60 * 60 * 1000),
+        tickets: [
+            {
+                type: 'AKO',
+                name: '#34',
+                odd: 3.0,
+                stake: 100,
+                result: 'win',
+                //3 hours from now
+                first_match_date: new Date(Date.now() + 3 * 60 * 60 * 1000),
+                ticket_entries: [
+                    {
+                        id: 1,
+                        sport: 'Football',
+                        start_date: new Date(Date.now() + 3 * 60 * 60 * 1000),
+                        team_home: 'Manchester United',
+                        team_away: 'Chelsea',
+                        tip: 'Výsledek zápasu: 1',
+                        odd: 1.5,
+                        league: 'Premier League',
+                        // pending / win / lose / cancelled
+                        result: 'win',
+                    },
+                    {
+                        id: 2,
+                        sport: 'Football',
+                        start_date: new Date(Date.now() + 3 * 60 * 60 * 1000),
+                        team_home: 'Manchester United',
+                        team_away: 'Chelsea',
+                        tip: 'Výsledek zápasu: 1',
+                        odd: 1.5,
+                        league: 'Premier League',
+                        // pending / win / lose / cancelled
+                        result: 'win',
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        id: 3,
+        type: 'Single',
+        name: '#33',
+        odd: 3.5,
+        stake: 1000,
+        //3 hours from now
+        first_match_date: new Date(Date.now() + 3 * 60 * 60 * 1000),
+        match_count: 1,
+        tickets: []
+    },
+]
 
 const Offers = ({ searchParams, setTabHeight }) => {
 
@@ -148,7 +91,6 @@ const Offers = ({ searchParams, setTabHeight }) => {
             style={{
                 //width: normalize(800),
                 maxWidth: '100%',
-                height: '100%',
                 alignSelf: 'center',
                 paddingHorizontal: SPACING.medium,
                 paddingTop: SPACING.xx_large,
@@ -156,26 +98,23 @@ const Offers = ({ searchParams, setTabHeight }) => {
                 //alignItems: 'center',
             }}
         >
-            {/* <Text
-                style={{
-                    fontFamily: FONTS.bold,
-                    fontSize: FONT_SIZES.h3,
-                    color: COLORS.white,
-                    marginBottom: SPACING.large
-                }}
-            >
-                Nabídky
-            </Text> */}
-
             <View style={{
                 alignItems: 'center',
                 gap: SPACING.large
             }}>
-                <TicketOffer />
-                <TicketOffer />
-                <TicketOffer />
-                <TicketOffer />
-                <TicketOffer />
+                {OFFERS.map((offer, index) => (
+                    offer.tickets.length > 0 ? (
+                        <UnlockedTicket
+                            key={offer.id}
+                            ticket={offer.tickets[0]}
+                        />
+                    ) : (
+                        <LockedTicket
+                            key={offer.id}
+                            ticket={offer}
+                        />
+                    )
+                ))}
             </View>
         </View>
     )

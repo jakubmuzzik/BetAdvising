@@ -1,5 +1,7 @@
 import { isSmallScreen } from "../constants"
 
+const DAY_NAMES = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+
 export const normalize = (size, inverse = false) => {
     return isSmallScreen ? size - 5 * (inverse ? -1 : 1) : size
 }
@@ -27,3 +29,62 @@ export const isValidEmail = (email) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
     return emailRegex.test(email)
 }
+
+export const calculateTimeDifference = (date1, date2) => {
+    // Get timestamps for both dates
+    const startDate = new Date(date1)
+    const endDate = new Date(date2)
+
+    // Calculate the difference in milliseconds
+    const differenceInMilliseconds = endDate - startDate
+
+    // Convert milliseconds to days, hours, minutes, and seconds
+    const millisecondsInOneDay = 24 * 60 * 60 * 1000
+    const millisecondsInOneHour = 60 * 60 * 1000
+    const millisecondsInOneMinute = 60 * 1000
+    const millisecondsInOneSecond = 1000
+
+    const days = Math.floor(differenceInMilliseconds / millisecondsInOneDay)
+    const hours = Math.floor(
+        (differenceInMilliseconds % millisecondsInOneDay) / millisecondsInOneHour
+    )
+    const minutes = Math.floor(
+        (differenceInMilliseconds % millisecondsInOneHour) / millisecondsInOneMinute
+    )
+    const seconds = Math.floor(
+        (differenceInMilliseconds % millisecondsInOneMinute) / millisecondsInOneSecond
+    )
+
+    return {
+        days: days,
+        hours: hours,
+        minutes: minutes,
+        seconds: seconds,
+    }
+}
+
+export const getEventDate = (timestamp, getDayName = false, getYear = false) => {
+    if (!timestamp) {
+      return ''
+    }
+  
+    let out = ''
+  
+    const dateTime = new Date(timestamp)
+  
+    out += getDayName ? DAY_NAMES[dateTime.getDay()] + ', ' : ''
+    out += dateTime.getDate() + '. ' + (dateTime.getMonth() + 1) + '.'
+    out += getYear ? ' ' + dateTime.getFullYear() : ''
+  
+    return out
+  }
+  
+  export const getEventTime = (timestamp) => {
+    if (!timestamp) {
+      return ''
+    }
+  
+    const dateTime = new Date(timestamp)
+  
+    return dateTime.getHours() + ':' + (dateTime.getMinutes() < 10 ? '0' + dateTime.getMinutes() : dateTime.getMinutes())
+  }

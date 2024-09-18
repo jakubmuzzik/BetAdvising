@@ -1,14 +1,65 @@
 import React, { useState } from 'react'
-import { View, Text } from 'react-native'
+import { View, Text, StyleSheet } from 'react-native'
 import { FONTS, FONT_SIZES, SPACING, COLORS } from '../../constants'
 import { MaterialIcons, MaterialCommunityIcons, FontAwesome } from '@expo/vector-icons'
 import { BlurView } from 'expo-blur'
-
+import Animated, { FadeInDown, useAnimatedStyle, useSharedValue, interpolate, withTiming, useAnimatedProps, BounceIn } from 'react-native-reanimated'
 
 import CustomButton from '../elements/CustomButton'
 import withSearchParams from '../hoc/withSearchParams'
 
 import ConfirmationModal from '../modal/ConfirmationModal'
+import { connect } from 'react-redux'
+
+import UnlockedTicket from './UnlockedTicket'
+
+const TICKET = {
+    type: 'AKO',
+    name: '#34',
+    odd: 3.0,
+    stake: 100,
+    result: 'win',
+    //3 hours from now
+    first_match_date: new Date(Date.now() + 3 * 60 * 60 * 1000),
+    ticket_entries: [
+        {
+            id: 1,
+            sport: 'Football',
+            start_date: new Date(Date.now() + 3 * 60 * 60 * 1000),
+            team_home: 'Manchester United',
+            team_away: 'Chelsea',
+            tip: 'Výsledek zápasu: 1',
+            odd: 1.5,
+            league: 'Premier League',
+            // pending / win / lose / cancelled
+            result: 'win',
+        },
+        {
+            id: 2,
+            sport: 'Football',
+            start_date: new Date(Date.now() + 3 * 60 * 60 * 1000),
+            team_home: 'Manchester United',
+            team_away: 'Chelsea',
+            tip: 'Výsledek zápasu: 1',
+            odd: 1.5,
+            league: 'Premier League',
+            // pending / win / lose / cancelled
+            result: 'win',
+        },
+        {
+            id: 3,
+            sport: 'Football',
+            start_date: new Date(Date.now() + 3 * 60 * 60 * 1000),
+            team_home: 'Manchester United',
+            team_away: 'Chelsea',
+            tip: 'Výsledek zápasu: 1',
+            odd: 1.5,
+            league: 'Premier League',
+            // pending / win / lose / cancelled
+            result: 'win',
+        }
+    ]
+}
 
 const TicketHeader = ({ name, type }) => (
     <View
@@ -248,35 +299,104 @@ const TicketFooter = ({ odd, stake }) => (
     </View>
 )
 
-const LockedTicket = ({ ticket, searchParams }) => {
+const LockedTicket = ({ ticket, searchParams, toastRef }) => {
+    const [cardLayout, setCardLayout] = useState({ width: 0, height: 0 })
     const [confirmUnlockVisible, setConfirmUnlockVisible] = useState(false)
 
+    const isFlipped = useSharedValue(false)
+
+    const isDirectionX = true
+    const duration = 500
+
+    const regularCardAnimatedStyle = useAnimatedStyle(() => {
+        const spinValue = interpolate(Number(isFlipped.value), [0, 1], [0, 180])
+        const rotateValue = withTiming(`${spinValue}deg`, { duration })
+
+        return {
+            transform: [
+                isDirectionX ? { rotateX: rotateValue } : { rotateY: rotateValue },
+            ],
+        }
+    })
+
+    const flippedCardAnimatedStyle = useAnimatedStyle(() => {
+        const spinValue = interpolate(Number(isFlipped.value), [0, 1], [180, 360])
+        const rotateValue = withTiming(`${spinValue}deg`, { duration })
+
+        return {
+            transform: [
+                isDirectionX ? { rotateX: rotateValue } : { rotateY: rotateValue },
+            ],
+        }
+    })
+
+    const flippedCardAnimatedProps = useAnimatedProps(() => {
+        return {
+            pointerEvents: isFlipped.value ? 'auto' : 'none',
+        }
+    })
+
     const onUnlockPress = () => {
-        console.log('unlock')
         setConfirmUnlockVisible(true)
     }
 
-    const unlock = async () => {
-        //load ticket
+    const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms))
 
-        
+    const unlock = async () => {
+        try {
+            await delay(1000)
+
+            isFlipped.value = !isFlipped.value
+
+            toastRef?.show({
+                text: 'Ticket has been unlocked',
+                type: 'success'
+            })
+        } catch(e) {
+            toastRef?.show({
+                text: 'Failed to unlock ticket',
+                type: 'error'
+            })
+        }
     }
 
     return (
         <>
-            <View
-                style={{
-                    borderRadius: 10,
-                    backgroundColor: COLORS.secondary,
-                    borderWidth: 1,
-                    borderColor: COLORS.whiteBackground2,
-                    flexGrow: 1
-                }}
-            >
-                <TicketHeader type={ticket.type} name={ticket.name} />
-                <TicketBody ticket={ticket} onUnlockPress={onUnlockPress}/>
-                <TicketFooter odd={ticket.odd} stake={ticket.stake} />
-            </View>
+            <Animated.View
+                style={[
+                    styles.regularCard,
+                    regularCardAnimatedStyle,
+                ]}>
+                <View
+                    onLayout={(event) => setCardLayout({ width: event.nativeEvent.layout.width, height: event.nativeEvent.layout.height })}
+                    style={{
+                        borderRadius: 10,
+                        backgroundColor: COLORS.secondary,
+                        borderWidth: 1,
+                        borderColor: COLORS.whiteBackground2,
+                        flexGrow: 1
+                    }}
+                >
+                    <TicketHeader type={ticket.type} name={ticket.name} />
+                    <TicketBody ticket={ticket} onUnlockPress={onUnlockPress} />
+                    <TicketFooter odd={ticket.odd} stake={ticket.stake} />
+                </View>
+            </Animated.View>
+
+            <Animated.View
+                animatedProps={flippedCardAnimatedProps}
+                style={[
+                    styles.flippedCard,
+                    flippedCardAnimatedStyle,
+                    {
+                        width: cardLayout.width,
+                        height: cardLayout.height,
+                        right: 0,
+                    }
+                ]}>
+
+                <UnlockedTicket ticket={TICKET} />
+            </Animated.View>
 
 
             <ConfirmationModal
@@ -295,4 +415,22 @@ const LockedTicket = ({ ticket, searchParams }) => {
     )
 }
 
-export default withSearchParams(LockedTicket, ['language'])
+const mapStateToProps = (store) => ({
+    toastRef: store.appState.toastRef
+})
+
+export default connect(mapStateToProps)(withSearchParams(LockedTicket, ['language']))
+
+const styles = StyleSheet.create({
+    regularCard: {
+        zIndex: 1,
+        overflow: 'hidden',
+        flexGrow: 1
+    },
+    flippedCard: {
+        position: 'absolute',
+        backfaceVisibility: 'hidden',
+        zIndex: 2,
+        overflow: 'hidden'
+    },
+})

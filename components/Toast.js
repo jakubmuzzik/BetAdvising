@@ -216,7 +216,7 @@ const styles = StyleSheet.create({
     },
     toastText: {
         //marginLeft: SPACING.xx_small,
-        fontSize: FONT_SIZES.medium,
+        fontSize: FONT_SIZES.large,
         fontFamily: FONTS.medium
     },
     toastIcon: {

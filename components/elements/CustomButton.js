@@ -9,10 +9,7 @@ import {
 import { SPACING, FONTS, FONT_SIZES, COLORS, CUSTOM_BUTTON_HEIGHT } from '../../constants'
 import { LinearGradient } from 'expo-linear-gradient'
 import { ActivityIndicator } from 'react-native-paper'
-import Animated, { LinearTransition, useSharedValue, withTiming, useAnimatedStyle } from 'react-native-reanimated'
 import {isBrowser } from 'react-device-detect'
-
-const AnimatedTouchableOpacity = Animated.createAnimatedComponent(TouchableOpacity)
 
 const CustomButton = forwardRef((props, ref) => {
     const { 
@@ -26,20 +23,11 @@ const CustomButton = forwardRef((props, ref) => {
         icon,
         disabled = false,
         activeOpacity=0.7,
-        animateOnPress=false,
         hoveredOpacity=0.9
     } = props
 
     const [isLoading, setIsLoading] = useState(false)
     const [isHovered, setIsHovered] = useState(false)
-
-    const transformValue = useSharedValue(1)
-
-    const buttonAnimatedStyle = useAnimatedStyle(() => {
-        return {
-            transform: [{ scale: transformValue.value }]
-        }
-    })
 
     useImperativeHandle(ref, () => ({
         setIsLoading,
@@ -47,10 +35,6 @@ const CustomButton = forwardRef((props, ref) => {
     }))
 
     const onButtonPress = () => {
-        if (animateOnPress) {
-            transformValue.value = withTiming(1)
-        }
-        
         if (disabled || isLoading) {
             return
         }
@@ -58,14 +42,8 @@ const CustomButton = forwardRef((props, ref) => {
         onPress()
     }
 
-    const onPressIn = () => {
-        if (animateOnPress) {
-            transformValue.value = withTiming(0.9)
-        }
-    }
-
     return (
-        <AnimatedTouchableOpacity 
+        <TouchableOpacity 
             ref={ref} 
             //layout={LinearTransition}
             style={[
@@ -75,11 +53,9 @@ const CustomButton = forwardRef((props, ref) => {
                     backgroundColor: Array.isArray(backgroundColors) ? 'transparent' : backgroundColors,
                     opacity: disabled ? 0.5 : isHovered ? hoveredOpacity : 1,
                     cursor: disabled ? 'not-allowed' : 'pointer'
-                },
-                buttonAnimatedStyle
+                }
             ]}
-            onPressOut={onButtonPress}
-            onPressIn={onPressIn}
+            onPress={onButtonPress}
             activeOpacity={activeOpacity}
             onMouseEnter={isBrowser ? () => setIsHovered(true) : undefined}
             onMouseLeave={isBrowser ? () => setIsHovered(false) : undefined}
@@ -98,7 +74,7 @@ const CustomButton = forwardRef((props, ref) => {
                     </View>  
                 )
             }
-        </AnimatedTouchableOpacity>
+        </TouchableOpacity>
     )
 })
 

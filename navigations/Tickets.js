@@ -79,13 +79,13 @@ const Tickets = ({ searchParams }) => {
         switch (route.key) {
             case 'offers':
                 return (
-                    <View style={{ width: normalize(800), maxWidth: '100%', height: routes[index].height, alignSelf: 'center' }}>
+                    <View style={{ maxWidth: '100%', height: routes[index].height, alignSelf: 'center' }}>
                         <Offers setTabHeight={(height) => setTabHeight(height, route.index)} />
                     </View>
                 )
             case 'unlocked':
                 return (
-                    <View style={{ width: normalize(800), maxWidth: '100%', height: routes[index].height, alignSelf: 'center' }}>
+                    <View style={{ maxWidth: '100%', height: routes[index].height, alignSelf: 'center' }}>
                         <Unlocked setTabHeight={(height) => setTabHeight(height, route.index)} />
                     </View>
                 )

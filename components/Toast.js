@@ -211,8 +211,8 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
     },
     toastHeaderText: {
-        fontSize: FONT_SIZES.medium,
-        fontFamily: FONTS.bold
+        fontSize: FONT_SIZES.large,
+        fontFamily: FONTS.medium
     },
     toastText: {
         //marginLeft: SPACING.xx_small,

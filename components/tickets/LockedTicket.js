@@ -1,78 +1,14 @@
 import React, { useState } from 'react'
 import { View, Text } from 'react-native'
 import { FONTS, FONT_SIZES, SPACING, COLORS } from '../../constants'
-import { LinearGradient } from 'expo-linear-gradient'
-import { MaterialIcons, MaterialCommunityIcons, FontAwesome, AntDesign, FontAwesome5 } from '@expo/vector-icons'
+import { MaterialIcons, MaterialCommunityIcons, FontAwesome } from '@expo/vector-icons'
 import { BlurView } from 'expo-blur'
+
+
 import CustomButton from '../elements/CustomButton'
 import withSearchParams from '../hoc/withSearchParams'
-import { calculateTimeDifference } from '../../utils'
 
-const TimeLeft = ({ startDate }) => {
-
-    const timeLeft = calculateTimeDifference(new Date(), startDate) 
-
-    //contains calculated time left using current time and startDate
-    return (
-        <View>
-            <Text
-                style={{
-                    fontFamily: FONTS.medium,
-                    fontSize: FONT_SIZES.medium,
-                    color: COLORS.grey400
-                }}
-            >
-                Zbývá:
-            </Text>
-            <Text
-                style={{
-                    fontFamily: FONTS.medium,
-                    fontSize: FONT_SIZES.x_large,
-                    color: COLORS.white,
-                    marginTop: 4
-                }}
-            >
-                {timeLeft.days > 0 ? `${timeLeft.days}d ` : ''}
-                {timeLeft.hours > 0 ? `${timeLeft.hours}h ` : ''}
-                {timeLeft.minutes > 0 ? `${timeLeft.minutes}m ` : ''}
-                {timeLeft.seconds > 0 ? `${timeLeft.seconds}s ` : ''}
-            </Text>
-        </View>
-    )
-}
-
-const Divider = ({ height }) => {
-
-    return (
-        <View>
-            <LinearGradient
-                colors={[COLORS.secondary, COLORS.secondary2]}
-                style={{
-                    borderRadius: 17.5,
-                    width: 35,
-                    height: 35,
-                    padding: 10,
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    zIndex: 2
-                }}
-            >
-                <MaterialIcons name='lock-open' size={18} color={COLORS.white} />
-            </LinearGradient>
-            <LinearGradient
-                colors={[COLORS.whiteBackground2, COLORS.whiteBackground2, COLORS.whiteBackground2]}
-                style={{
-                    width: 1,
-                    height: height,
-                    position: 'absolute',
-                    top: -20,
-                    left: 17.5,
-                    height: height + 30
-                }}
-            />
-        </View>
-    )
-}
+import ConfirmationModal from '../modal/ConfirmationModal'
 
 const TicketHeader = ({ name, type }) => (
     <View
@@ -206,7 +142,7 @@ const Match = () => (
     </View>
 )
 
-const TicketBody = ({ ticket }) => (
+const TicketBody = ({ ticket, onUnlockPress }) => (
     <View style={{
         padding: SPACING.small,
         backgroundColor: COLORS.secondary2,
@@ -231,15 +167,15 @@ const TicketBody = ({ ticket }) => (
             }}
         >
             <CustomButton
-                onPress={() => { }}
+                onPress={onUnlockPress}
                 additionalStyles={{ marginTop: SPACING.medium }}
                 textColor={COLORS.black}
                 backgroundColors={[COLORS.accent2, COLORS.accent, COLORS.accent, COLORS.accent2]}
                 buttonText='Odemknout'
-                textStyles={{ fontFamily: FONTS.medium }}
+                textStyles={{ fontSize: FONT_SIZES.large, fontFamily: FONTS.bold }}
             />
         </BlurView>
-        
+
         {
             new Array(ticket.match_count).fill(null, 0).map((_, index) => (<Match key={index} />))
         }
@@ -313,22 +249,21 @@ const TicketFooter = ({ odd, stake }) => (
 )
 
 const LockedTicket = ({ ticket, searchParams }) => {
-    const [contentHeight, setContentHeight] = useState(0)
+    const [confirmUnlockVisible, setConfirmUnlockVisible] = useState(false)
+
+    const onUnlockPress = () => {
+        console.log('unlock')
+        setConfirmUnlockVisible(true)
+    }
+
+    const unlock = async () => {
+        //load ticket
+
+        
+    }
 
     return (
-        <View
-            onLayout={(event) => setContentHeight(event.nativeEvent.layout.height)}
-            style={{
-                flexDirection: 'row',
-                gap: SPACING.large,
-                maxWidth: '100%',
-                width: 900
-            }}
-        >
-            <TimeLeft startDate={ticket.first_match_date} />
-
-            <Divider height={contentHeight} />
-
+        <>
             <View
                 style={{
                     borderRadius: 10,
@@ -339,10 +274,24 @@ const LockedTicket = ({ ticket, searchParams }) => {
                 }}
             >
                 <TicketHeader type={ticket.type} name={ticket.name} />
-                <TicketBody ticket={ticket} />
+                <TicketBody ticket={ticket} onUnlockPress={onUnlockPress}/>
                 <TicketFooter odd={ticket.odd} stake={ticket.stake} />
             </View>
-        </View>
+
+
+            <ConfirmationModal
+                visible={confirmUnlockVisible}
+                headerText='Unlock ticket'
+                text={'Are you sure you want to unlock this ticket with ' + ticket.price + ' credits?'} 
+                onCancel={() => setConfirmUnlockVisible(false)}
+                onConfirm={unlock}
+                headerErrorText='Error'
+                errorText='Failed to unlock ticket.'
+                confirmLabel='Unlock'
+                confirmButtonColor={[COLORS.accent2, COLORS.accent, COLORS.accent, COLORS.accent2]}
+                confirmButtonTextColor={COLORS.black}
+            />
+        </>
     )
 }
 

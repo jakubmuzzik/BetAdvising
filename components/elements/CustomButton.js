@@ -42,7 +42,8 @@ const CustomButton = forwardRef((props, ref) => {
     })
 
     useImperativeHandle(ref, () => ({
-        setIsLoading
+        setIsLoading,
+        isLoading
     }))
 
     const onButtonPress = () => {

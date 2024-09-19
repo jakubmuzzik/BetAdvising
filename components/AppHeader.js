@@ -91,6 +91,8 @@ const AppHeader = ({ searchParams, currentAuthUser, logOut, toggleDrawer, curren
             pathname: '/account',
             search: new URLSearchParams(searchParams).toString()
         })
+
+        setUserDropdownVisible(false)
     }
 
     const toggleUserDropdown = useCallback(() => {

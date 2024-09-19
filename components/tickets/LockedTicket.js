@@ -305,7 +305,7 @@ const LockedTicket = ({ ticket, searchParams, toastRef }) => {
 
     const isFlipped = useSharedValue(false)
 
-    const isDirectionX = true
+    const isDirectionX = false
     const duration = 500
 
     const regularCardAnimatedStyle = useAnimatedStyle(() => {

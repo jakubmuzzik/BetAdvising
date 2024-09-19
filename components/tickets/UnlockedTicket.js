@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text } from 'react-native'
+import { View, Text, useWindowDimensions } from 'react-native'
 import { FONTS, FONT_SIZES, SPACING, COLORS } from '../../constants'
 import { MaterialIcons, MaterialCommunityIcons, FontAwesome } from '@expo/vector-icons'
 import { getEventDate, getEventTime } from '../../utils'
@@ -47,7 +47,7 @@ const TicketHeader = ({ name, type }) => (
     </View>
 )
 
-const Match = ({ match }) => (
+const Match = ({ match, width }) => (
     <View
         style={{
             flex: 1
@@ -58,7 +58,9 @@ const Match = ({ match }) => (
                 marginBottom: 10,
                 flexDirection: 'row',
                 justifyContent: 'space-between',
-                alignItems: 'center'
+                alignItems: 'center',
+                flexShrink: 1,
+                gap: 10
             }}
         >
             <View
@@ -66,16 +68,18 @@ const Match = ({ match }) => (
                     flexDirection: 'row',
                     alignItems: 'center',
                     gap: SPACING.xx_small,
-
+                    flexShrink: 1
                 }}
             >
                 <FontAwesome name="soccer-ball-o" size={18} color={COLORS.grey300} />
                 <Text
                     style={{
                         fontFamily: FONTS.medium,
-                        fontSize: FONT_SIZES.large,
+                        fontSize: width < 420 ? FONT_SIZES.medium : FONT_SIZES.large,
                         color: COLORS.white,
+                        flexShrink: 1
                     }}
+                    //numberOfLines={1}
                 >
                     {match.team_home} - {match.team_away}
                 </Text>
@@ -143,19 +147,23 @@ const Match = ({ match }) => (
     </View>
 )
 
-const TicketBody = ({ ticket }) => (
-    <View style={{
-        padding: SPACING.small,
-        backgroundColor: COLORS.secondary2,
-        borderTopWidth: 1,
-        borderColor: COLORS.whiteBackground2,
-        gap: SPACING.medium
-    }}>
-        {ticket.ticket_entries.map((match) => (
-            <Match key={match.id} match={match} />
-        ))}
-    </View>
-)
+const TicketBody = ({ ticket }) => {
+    const { width } = useWindowDimensions()
+
+    return (
+        <View style={{
+            padding: SPACING.small,
+            backgroundColor: COLORS.secondary2,
+            borderTopWidth: 1,
+            borderColor: COLORS.whiteBackground2,
+            gap: SPACING.medium
+        }}>
+            {ticket.ticket_entries.map((match) => (
+                <Match key={match.id} match={match} width={width}/>
+            ))}
+        </View>
+    )
+}
 
 const TicketFooter = ({ odd, result }) => (
     <View

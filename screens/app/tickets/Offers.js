@@ -83,12 +83,21 @@ const OFFERS = [
         first_match_date: new Date(Date.now() + 3 * 60 * 60 * 1000),
         match_count: 1,
         tickets: []
-    },
+    }
 ]
 
 const TimeLeft = ({ startDate }) => {
+    const [timeLeft, setTimeLeft] = useState(calculateTimeDifference(new Date(), startDate))
 
-    const timeLeft = calculateTimeDifference(new Date(), startDate) 
+    useEffect(() => {
+        // Update timeLeft every second
+        const timer = setInterval(() => {
+            setTimeLeft(calculateTimeDifference(new Date(), startDate))
+        }, 1000)
+
+        // Cleanup interval on component unmount
+        return () => clearInterval(timer)
+    }, [startDate])
 
     //contains calculated time left using current time and startDate
     return (
@@ -113,7 +122,7 @@ const TimeLeft = ({ startDate }) => {
                 {timeLeft.days > 0 ? `${timeLeft.days}d ` : ''}
                 {timeLeft.hours > 0 ? `${timeLeft.hours}h ` : ''}
                 {timeLeft.minutes > 0 ? `${timeLeft.minutes}m ` : ''}
-                {timeLeft.seconds > 0 ? `${timeLeft.seconds}s ` : ''}
+                {`${timeLeft.seconds}s`}
             </Text>
         </View>
     )
@@ -164,7 +173,7 @@ const Offers = ({ searchParams, setTabHeight }) => {
                 width: 900,
                 maxWidth: '100%',
                 alignSelf: 'center',
-                paddingHorizontal: SPACING.medium,
+                //paddingHorizontal: SPACING.medium,
                 paddingTop: SPACING.xx_large,
                 backgroundColor: COLORS.primary,
                 gap: GAP
@@ -173,10 +182,10 @@ const Offers = ({ searchParams, setTabHeight }) => {
         >
             {OFFERS.map((offer, index) => (
                 <View
+                    key={offer.id} 
                     style={{
                         flexDirection: 'row',
-                        gap: SPACING.small,
-                        //width: 800
+                        gap: SPACING.small
                     }}
                 >
                     {!isSmallScreen && <TimeLeft startDate={offer.first_match_date} />}
@@ -184,10 +193,9 @@ const Offers = ({ searchParams, setTabHeight }) => {
 
                     {offer.tickets.length > 0 ? (
                         <View 
-                            key={offer.id} 
                             style={{
                                 gap: SPACING.medium,
-                                flexGrow: 1
+                                flex: 1
                             }}
                         >
                             {isSmallScreen && <TimeLeft startDate={offer.first_match_date} />}
@@ -198,10 +206,9 @@ const Offers = ({ searchParams, setTabHeight }) => {
                         </View>
                     ) : (
                         <View
-                            key={offer.id}
                             style={{
                                 gap: SPACING.medium,
-                                flexGrow: 1
+                                flex: 1
                             }}
                         >
                             {isSmallScreen && <TimeLeft startDate={offer.first_match_date} />}

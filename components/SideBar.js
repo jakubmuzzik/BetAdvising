@@ -37,7 +37,7 @@ const Drawer = ({ isOpen, toggleLeftDrawer, duration = 500, children }) => {
     )
 
     const sheetStyle = useAnimatedStyle(() => ({
-        transform: [{ translateX: progress.value * 2 * width.value }],
+        transform: [{ translateX: progress.value * (width.value + 10) }],
     }))
 
     const backgroundColorSheetStyle = {
@@ -45,7 +45,7 @@ const Drawer = ({ isOpen, toggleLeftDrawer, duration = 500, children }) => {
     }
 
     const backdropStyle = useAnimatedStyle(() => ({
-        opacity: 1 - progress.value,
+        opacity: 1 + progress.value,
         zIndex: isOpen.value
             ? 2
             : withDelay(duration, withTiming(-1, { duration: 0 })),
@@ -164,7 +164,7 @@ const SideBar = ({ toggleDrawer, searchParams }) => {
                         style={{
                             borderRadius: 5,
                         }}
-                        backgroundColor={location.pathname === route.path ? COLORS.whiteBackground : 'transparent'}
+                        backgroundColor={location.pathname.includes(route.path) ? COLORS.whiteBackground : 'transparent'}
                         hoveredBackgroundColor={'rgba(255,255,255,0.05)'}
                     >
                         <TouchableOpacity
@@ -244,7 +244,8 @@ const styles = StyleSheet.create({
     drawer: {
         padding: 12,
         width: SIDEBAR_WIDTH,
-        height: Dimensions.get('screen').height,
+        maxWidth: '80%',
+        height: Dimensions.get('window').height,
         position: 'absolute',
         left: 0,
         zIndex: 2,

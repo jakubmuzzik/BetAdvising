@@ -18,6 +18,7 @@ const AppLayout = ({ children }) => {
             <View style={{
                 marginTop: HEADER_HEIGHT,
                 backgroundColor: COLORS.primary,
+                paddingBottom: 20
             }}>
                 {children}
             </View>

@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useEffect, useCallback } from 'react'
+import React, { useState, useMemo, useEffect, useRef } from 'react'
 import { View, Text, useWindowDimensions } from 'react-native'
 import { FONTS, FONT_SIZES, SPACING, COLORS, SUPPORTED_LANGUAGES } from '../../../constants'
 import { normalize, calculateTimeDifference } from '../../../utils'
@@ -20,7 +20,7 @@ const OFFERS = [
         odd: 2.5,
         stake: 4500,
         //3 hours from now
-        first_match_date: new Date(Date.now() + 3 * 60 * 60 * 1000),
+        first_match_date: new Date(Date.now() + 3 * 60 * 60 * 8000),
         match_count: 3,
         tickets: [],
         price: 100
@@ -86,7 +86,7 @@ const OFFERS = [
     }
 ]
 
-const TimeLeft = ({ startDate }) => {
+const TimeLeft = ({ startDate, width, onTimeLeftLayout=() => {}}) => {
     const [timeLeft, setTimeLeft] = useState(calculateTimeDifference(new Date(), startDate))
 
     useEffect(() => {
@@ -99,9 +99,11 @@ const TimeLeft = ({ startDate }) => {
         return () => clearInterval(timer)
     }, [startDate])
 
-    //contains calculated time left using current time and startDate
     return (
-        <View>
+        <View
+            onLayout={(event) => onTimeLeftLayout(event)}
+            style={width != null ? { width } : null}
+        >
             <Text
                 style={{
                     fontFamily: FONTS.medium,
@@ -121,7 +123,7 @@ const TimeLeft = ({ startDate }) => {
             >
                 {timeLeft.days > 0 ? `${timeLeft.days}d ` : ''}
                 {timeLeft.hours > 0 ? `${timeLeft.hours}h ` : ''}
-                {timeLeft.minutes > 0 ? `${timeLeft.minutes}m ` : ''}
+                {timeLeft.minutes > 0 || timeLeft.hours > 0 ? `${timeLeft.minutes}m ` : ''}
                 {`${timeLeft.seconds}s`}
             </Text>
         </View>
@@ -166,11 +168,27 @@ const Offers = ({ searchParams, setTabHeight }) => {
 
     const isSmallScreen = width < 700
 
+    const currentWidestTimeLeft = useRef(0)
+
+    const [timeLeftWidth, setTimeLeftWidth] = useState()
+
+    const onTimeLeftLayout = (event, index) => {
+        const { width } = event.nativeEvent.layout
+        
+        if (width > currentWidestTimeLeft.current) {
+            currentWidestTimeLeft.current = width
+        }
+
+        if (index === OFFERS.length - 1) {
+            setTimeLeftWidth(currentWidestTimeLeft.current)
+        }
+    }
+
     return (
         <View
             onLayout={(event) => setTabHeight(event.nativeEvent.layout.height)}
             style={{
-                width: 900,
+                width: 850,
                 maxWidth: '100%',
                 alignSelf: 'center',
                 //paddingHorizontal: SPACING.medium,
@@ -182,17 +200,17 @@ const Offers = ({ searchParams, setTabHeight }) => {
         >
             {OFFERS.map((offer, index) => (
                 <View
-                    key={offer.id} 
+                    key={offer.id}
                     style={{
                         flexDirection: 'row',
                         gap: SPACING.small
                     }}
                 >
-                    {!isSmallScreen && <TimeLeft startDate={offer.first_match_date} />}
+                    {!isSmallScreen && <TimeLeft onTimeLeftLayout={(event) => onTimeLeftLayout(event, index)} width={timeLeftWidth} startDate={offer.first_match_date} />}
                     <Divider isLast={index === OFFERS.length - 1} isLocked={offer.tickets.length === 0} />
 
                     {offer.tickets.length > 0 ? (
-                        <View 
+                        <View
                             style={{
                                 gap: SPACING.medium,
                                 flex: 1

@@ -18,6 +18,7 @@ import Tickets from './Tickets'
 import Credits from '../screens/app/Credits'
 import Support from '../screens/app/Support'
 import Account from '../screens/app/Account'
+import Notifications from '../screens/app/Notifications'
 
 import OTP from '../screens/auth/OTP'
 import CompleteProfile from '../screens/auth/CompleteProfile'
@@ -78,6 +79,7 @@ const router = createBrowserRouter(createRoutesFromElements(
             <Route path='/credits' element={<Credits />} />
             <Route path='/support' element={<Support />} />
             <Route path='/account' element={<Account />} />
+            <Route path='/notifications' element={<Notifications />} />
         </Route>
 
         <Route path='/complete-profile' element={

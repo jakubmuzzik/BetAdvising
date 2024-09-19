@@ -15,6 +15,7 @@ import { Avatar } from 'react-native-paper'
 import { MotiView } from 'moti'
 import { Picker } from '@react-native-picker/picker'
 import { logOut, toggleDrawer } from '../redux/actions/app'
+import HoverableText from './elements/HoverableText'
 
 const AppHeader = ({ searchParams, currentAuthUser, logOut, toggleDrawer, currentUser }) => {
     const { width } = useWindowDimensions()
@@ -26,6 +27,8 @@ const AppHeader = ({ searchParams, currentAuthUser, logOut, toggleDrawer, curren
     const userDropdownModalRef = useRef()
     const languageDropdownRef = useRef()
     const languageDropdownModalRef = useRef()
+    const notificationsDropdownRef = useRef()
+    const notificationsDropdownModalRef = useRef()
 
     const isSmallScreen = width < SMALL_SCREEN_THRESHOLD_APP_HEADER
     const isLargeScreen = width > 1000
@@ -34,6 +37,8 @@ const AppHeader = ({ searchParams, currentAuthUser, logOut, toggleDrawer, curren
     const [languageDropdownVisible, setLanguageDropdownVisible] = useState(false)
     const [dropdownTop, setDropdownTop] = useState(-1000)
     const [languageDropdownRight, setLanguageDropdownRight] = useState(-1000)
+    const [notificationsDropdownVisible, setNotificationsDropdownVisible] = useState(false)
+    const [notificationsDropdownRight, setNotificationsDropdownRight] = useState(-1000)
 
     const [index, setIndex] = useState(0)
     const [routes, setRoutes] = useState([
@@ -96,6 +101,10 @@ const AppHeader = ({ searchParams, currentAuthUser, logOut, toggleDrawer, curren
         languageDropdownVisible ? setLanguageDropdownRight(false) : openLanguageDropdown()
     }
 
+    const toggleNotificationsDropdown = () => {
+        notificationsDropdownVisible ? setNotificationsDropdownVisible(false) : openNotificationsDropdown()
+    }
+
     const openLanguageDropdown = () => {
         languageDropdownRef.current.measureLayout(
             languageDropdownModalRef.current,
@@ -125,6 +134,26 @@ const AppHeader = ({ searchParams, currentAuthUser, logOut, toggleDrawer, curren
         setUserDropdownVisible(true)
     }
 
+    const openNotificationsDropdown = () => {
+        console.log('openNotificationsDropdown')
+        notificationsDropdownRef.current.measureLayout(
+            notificationsDropdownModalRef.current,
+            (left, top, width, height) => {
+                setDropdownTop(top + height + 20)
+            },
+        )
+
+        if (userDropdownRef.current) {
+            userDropdownRef.current.measure((_fx, _fy, _w, h, _px, py) => {
+                setNotificationsDropdownRight(_w + SPACING.page_horizontal + SPACING.xx_small)
+            })
+        } else {
+            setNotificationsDropdownRight(SPACING.page_horizontal)
+        }
+
+        setNotificationsDropdownVisible(true)
+    }
+
     const onLogoutPress = async () => {
         try {
             await logOut()
@@ -146,6 +175,14 @@ const AppHeader = ({ searchParams, currentAuthUser, logOut, toggleDrawer, curren
     const onBuyCreditsPress = () => {
         navigate({
             pathname: '/credits',
+            search: new URLSearchParams(searchParams).toString()
+        })
+    }
+
+    const onViewAllNotificationsPress = () => {
+        setNotificationsDropdownVisible(false)
+        navigate({
+            pathname: '/notifications',
             search: new URLSearchParams(searchParams).toString()
         })
     }
@@ -215,6 +252,128 @@ const AppHeader = ({ searchParams, currentAuthUser, logOut, toggleDrawer, curren
             </Modal>
         )
     }
+
+    const renderNotificationsModal = () => (
+        <Modal ref={notificationsDropdownModalRef} visible={notificationsDropdownVisible} transparent animationType="none">
+            <TouchableOpacity
+                style={styles.dropdownOverlay}
+                onPress={() => setNotificationsDropdownVisible(false)}
+            >
+                <TouchableWithoutFeedback>
+                    <MotiView
+                        from={{
+                            opacity: 0,
+                            transform: [{ scaleY: 0.8 }, { translateY: -10 }],
+                        }}
+                        animate={{
+                            opacity: 1,
+                            transform: [{ scaleY: 1 }, { translateY: 0 }],
+                        }}
+                        transition={{
+                            type: 'timing',
+                            duration: 100,
+                        }}
+                        style={[styles.dropdown, { top: dropdownTop, right: notificationsDropdownRight, marginRight: 0, overflow: 'hidden' }]}
+                    >
+                        {/* <HoverableView hoveredBackgroundColor={COLORS.secondary}>
+                            <Link style={{ textDecoration: 'none' }} to={{ pathname: location.pathname, search: new URLSearchParams({ ...searchParams, language: 'cs' }).toString() }}>
+                                <View style={{ padding: SPACING.xx_small, flexDirection: 'row', alignItems: 'center' }}>
+                                    <Image
+                                        contentFit='contain'
+                                        source={require('../assets/flags/cz.png')}
+                                        style={{
+                                            width: SPACING.small,
+                                            height: SPACING.x_small,
+                                            marginRight: SPACING.xx_small,
+                                        }}
+                                    />
+                                    <Text style={{ fontFamily: FONTS.regular, fontSize: FONT_SIZES.medium, color: COLORS.white }}>Čeština</Text>
+                                </View>
+                            </Link>
+                        </HoverableView>
+                        <HoverableView hoveredBackgroundColor={COLORS.secondary}>
+                            <Link style={{ textDecoration: 'none' }} to={{ pathname: location.pathname, search: new URLSearchParams({ ...searchParams, language: 'en' }).toString() }} >
+                                <View style={{ padding: SPACING.xx_small, flexDirection: 'row', alignItems: 'center' }}>
+                                    <Image
+                                        contentFit='contain'
+                                        source={require('../assets/flags/us.png')}
+                                        style={{
+                                            width: SPACING.small,
+                                            height: SPACING.x_small,
+                                            marginRight: SPACING.xx_small,
+                                        }}
+                                    />
+                                    <Text style={{ fontFamily: FONTS.regular, fontSize: FONT_SIZES.medium, color: COLORS.white }}>English</Text>
+                                </View>
+                            </Link>
+                        </HoverableView> */}
+                        <View
+                            style={{
+                                width: 300,
+                                maxWidth: width - notificationsDropdownRight - SPACING.medium
+                            }}
+                        >
+                             <Text
+                                style={{
+                                    fontSize: FONT_SIZES.large,
+                                    fontFamily: FONTS.medium,
+                                    color: COLORS.white,
+                                    marginBottom: 3,
+                                    paddingHorizontal: SPACING.x_small,
+                                    paddingTop: SPACING.xx_small,
+                                    paddingBottom: SPACING.x_small,
+                                }}
+                            >
+                                Notifications
+                            </Text>
+
+                            <Text
+                                style={{
+                                    fontSize: FONT_SIZES.medium,
+                                    fontFamily: FONTS.medium,
+                                    color: COLORS.grey400,
+                                    padding: SPACING.x_small,
+                                    textAlign: 'center'
+                                }}
+                            >
+                                No new notifications
+                            </Text>
+
+                            <View style={{ height: 0.5, width: '100%', backgroundColor: COLORS.grey400, marginVertical: SPACING.xxx_small }} />
+
+                            <HoverableView hoveredBackgroundColor={COLORS.secondary}>
+                                <TouchableOpacity
+                                    onPress={onViewAllNotificationsPress}
+                                    style={{ padding: SPACING.xx_small }}
+                                    activeOpacity={0.8}
+                                >
+                                    <Text style={{ textAlign: 'center', fontFamily: FONTS.medium, fontSize: FONT_SIZES.medium, color: COLORS.grey200 }}>
+                                        View all 
+                                    </Text>
+                                </TouchableOpacity>
+                            </HoverableView>
+
+                                {/* <TouchableOpacity
+                                    onPress={onViewAllNotificationsPress}
+                                >
+                                    <HoverableText
+                                        hoveredColor={COLORS.white}
+                                        text='View all'
+                                        textStyle={{
+                                            fontSize: FONT_SIZES.medium,
+                                            fontFamily: FONTS.medium,
+                                            color: COLORS.grey200,
+                                            marginTop: SPACING.small,
+                                            textAlign: 'center'
+                                        }}
+                                    />
+                                </TouchableOpacity> */}
+                        </View>
+                    </MotiView>
+                </TouchableWithoutFeedback>
+            </TouchableOpacity>
+        </Modal>
+    )
 
     const renderUserModal = () => {
         return (
@@ -471,8 +630,8 @@ const AppHeader = ({ searchParams, currentAuthUser, logOut, toggleDrawer, curren
                     style={{ marginLeft: SPACING.small, borderRadius: 20, justifyContent: 'center' }}
                 >
                     <TouchableOpacity
-                        ref={userDropdownRef}
-                        onPress={toggleUserDropdown}
+                        ref={notificationsDropdownRef}
+                        onPress={toggleNotificationsDropdown}
                         activeOpacity={0.8}
                         style={{
                             flexDirection: 'row',
@@ -529,7 +688,8 @@ const AppHeader = ({ searchParams, currentAuthUser, logOut, toggleDrawer, curren
                 <View style={{ flexDirection: 'row' }}>
                     {renderRightHeader()}
                     {renderUserModal()}
-                    {renderLanguageModal()}
+                    {/* {renderLanguageModal()} */}
+                    {renderNotificationsModal()}
                 </View>
             </View>
         </BlurView>

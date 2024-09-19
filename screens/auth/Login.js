@@ -15,7 +15,7 @@ import { fetchUser } from '../../redux/actions/user'
 import { connect } from 'react-redux'
 import { useNavigate, useLocation, useSearchParams, Navigate } from 'react-router-dom'
 import * as Linking from 'expo-linking'
-import { stripEmptyParams } from '../../utils'
+import { useAnimatedShake } from '../../components/hooks/useAnimatedShake'
 
 const Login = ({ searchParams, toastRef, fetchUser }) => {
     const googleSignInButtonRef = useRef()
@@ -27,6 +27,8 @@ const Login = ({ searchParams, toastRef, fetchUser }) => {
     const location = useLocation()
     const [urlSearchParams] = useSearchParams()
     const navigate = useNavigate()
+
+    const { shake, rStyle, isShaking } = useAnimatedShake()
 
     //urlSearchParams contains from when redirected from google sign in
     if (urlSearchParams.get('from')) {
@@ -69,6 +71,7 @@ const Login = ({ searchParams, toastRef, fetchUser }) => {
 
     const onEmailSignupPress = async () => {
         if (!email || !isValidEmail(email)) {
+            shake()
             setShowErrorMessage(true)
             return
         }
@@ -200,20 +203,24 @@ const Login = ({ searchParams, toastRef, fetchUser }) => {
                         errorMessage={showErrorMessage ? (!email ? 'Enter your email address' : !isValidEmail(email) ? 'Invalid email address' : undefined) : undefined}
                     />
 
-                    <CustomButton ref={emailSignupButton}
-                        onPress={onEmailSignupPress}
-                        additionalStyles={{ borderWidth: 1, borderColor: COLORS.white, marginTop: SPACING.x_small, width: '100%' }}
-                        textColor={COLORS.black}
-                        backgroundColors={COLORS.white}
-                        buttonText='Continue with Email'
-                        textStyles={{ fontFamily: FONTS.medium }}
-                        icon={<Feather
-                            style={{ marginRight: SPACING.xx_small }}
-                            name="mail"
-                            size={normalize(17)}
-                            color={COLORS.black}
-                        />}
-                    />
+                    <Animated.View
+                        style={rStyle}
+                    >
+                        <CustomButton ref={emailSignupButton}
+                            onPress={onEmailSignupPress}
+                            additionalStyles={{ borderWidth: 1, borderColor: COLORS.white, marginTop: SPACING.x_small, width: '100%' }}
+                            textColor={COLORS.black}
+                            backgroundColors={COLORS.white}
+                            buttonText='Continue with Email'
+                            textStyles={{ fontFamily: FONTS.medium }}
+                            icon={<Feather
+                                style={{ marginRight: SPACING.xx_small }}
+                                name="mail"
+                                size={normalize(17)}
+                                color={COLORS.black}
+                            />}
+                        />
+                    </Animated.View>
 
                     <Text
                         style={{

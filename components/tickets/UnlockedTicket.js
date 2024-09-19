@@ -3,6 +3,7 @@ import { View, Text, useWindowDimensions } from 'react-native'
 import { FONTS, FONT_SIZES, SPACING, COLORS } from '../../constants'
 import { MaterialIcons, MaterialCommunityIcons, FontAwesome } from '@expo/vector-icons'
 import { getEventDate, getEventTime } from '../../utils'
+import { Image } from 'expo-image'
 
 import withSearchParams from '../hoc/withSearchParams'
 
@@ -88,9 +89,23 @@ const Match = ({ match, width }) => (
             <View>
                 {
                     match.result === 'pending' ? <MaterialIcons name="question-mark" size={FONT_SIZES.x_large} color={COLORS.white} />
-                    : match.result === 'wing' ? <MaterialIcons name="question-mark" size={FONT_SIZES.x_large} color={COLORS.white} />
-                    : match.result === 'lose' ? <MaterialIcons name="question-mark" size={FONT_SIZES.x_large} color={COLORS.white} />
-                    : <MaterialIcons name="question-mark" size={FONT_SIZES.x_large} color={COLORS.white} />
+                        : match.result === 'win' ? <Image
+                            source={require('../../assets/images/SuccessIcon.png')}
+                            style={{
+                                width: 18,
+                                height: 18
+                            }}
+                            contentFit="contain"
+                        />
+                            : match.result === 'lose' ? <Image
+                                source={require('../../assets/images/ErrorIcon.png')}
+                                style={{
+                                    width: 18,
+                                    height: 18
+                                }}
+                                contentFit="contain"
+                            />
+                                : <MaterialCommunityIcons name="cancel" size={18} color={COLORS.white} />
                 }
             </View>
         </View>
@@ -217,10 +232,24 @@ const TicketFooter = ({ odd, result }) => (
                 }}
             >
                 {
-                    result === 'pending' ? <MaterialIcons name="question-mark" size={FONT_SIZES.large} color={COLORS.white} />
-                    : result === 'wing' ? <MaterialIcons name="question-mark" size={FONT_SIZES.large} color={COLORS.white} />
-                    : result === 'lose' ? <MaterialIcons name="question-mark" size={FONT_SIZES.large} color={COLORS.white} />
-                    : <MaterialIcons name="question-mark" size={FONT_SIZES.large} color={COLORS.white} />
+                    result === 'pending' ? <MaterialIcons name="question-mark" size={FONT_SIZES.x_large} color={COLORS.white} />
+                        : result === 'win' ? <Image
+                            source={require('../../assets/images/SuccessIcon.png')}
+                            style={{
+                                width: 18,
+                                height: 18
+                            }}
+                            contentFit="contain"
+                        />
+                            : result === 'lose' ? <Image
+                                source={require('../../assets/images/ErrorIcon.png')}
+                                style={{
+                                    width: 18,
+                                    height: 18
+                                }}
+                                contentFit="contain"
+                            />
+                                : <MaterialCommunityIcons name="cancel" size={18} color={COLORS.white} />
                 }
             </View>
         </View>
@@ -240,7 +269,14 @@ const UnlockedTicket = ({ ticket, searchParams }) => {
         >
             <TicketHeader type={ticket.type} name={ticket.name} />
             <TicketBody ticket={ticket} />
-            <TicketFooter odd={ticket.odd} stake={ticket.result} />
+            <TicketFooter
+                odd={ticket.ticket_entries.reduce((acc, curr) => acc * curr.odd, 1)}
+                result={
+                    ticket.ticket_entries.some(ticket => ticket.result === 'lose' || ticket.result === 'cancelled') ? 'lose'
+                        : ticket.ticket_entries.every(ticket => ticket.result === 'win') ? 'win'
+                            : 'pending'
+                }
+            />
         </View>
     )
 }

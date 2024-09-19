@@ -2,7 +2,7 @@ import React, { useState, useMemo } from 'react'
 import { View, Text } from 'react-native'
 import { FONT_SIZES, COLORS, FONTS, SPACING } from '../../constants'
 import { normalize } from '../../utils'
-import { MaterialCommunityIcons } from '@expo/vector-icons'
+import { Octicons } from '@expo/vector-icons'
 
 import HoverableView from '../../components/elements/HoverableView'
 
@@ -151,16 +151,19 @@ const Notifications = () => {
                         marginTop: SPACING.xx_large
                     }}
                 >
-                    <Text
-                        style={{
-                            color: COLORS.white,
-                            fontSize: FONT_SIZES.x_large,
-                            fontFamily: FONTS.medium,
-                            marginBottom: SPACING.small
-                        }}
-                    >
-                        Nové
-                    </Text>
+                    <View style={{ flexDirection: 'row' }}>
+                        <Octicons name="dot-fill" size={20} color={COLORS.accent} style={{ marginRight: SPACING.xx_small }} />
+                        <Text
+                            style={{
+                                color: COLORS.white,
+                                fontSize: FONT_SIZES.x_large,
+                                fontFamily: FONTS.medium,
+                                marginBottom: SPACING.small
+                            }}
+                        >
+                            Nové
+                        </Text>
+                    </View>
 
                     <View style={{
                         borderRadius: 10,
@@ -182,7 +185,7 @@ const Notifications = () => {
                 >
                     <Text
                         style={{
-                            color: COLORS.white,
+                            color: COLORS.grey200,
                             fontSize: FONT_SIZES.x_large,
                             fontFamily: FONTS.medium,
                             marginBottom: SPACING.small

@@ -6,7 +6,7 @@ import Hero from '../components/Hero'
 import AboutUs from '../components/AboutUs'
 import Steps from '../components/Steps'
 import Packages from '../components/Packages'
-import ContactUs from '../components/ContactUs'
+import FAQ from '../components/FAQ'
 
 const Home = () => {
 
@@ -16,7 +16,7 @@ const Home = () => {
             <AboutUs />
             <Steps />
             <Packages />
-            <ContactUs />
+            <FAQ />
         </>
     )
 }

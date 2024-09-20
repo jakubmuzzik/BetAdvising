@@ -3,6 +3,7 @@ import { View, Text, TouchableOpacity, useWindowDimensions } from "react-native"
 import { SPACING, FONTS, FONT_SIZES, COLORS } from "../constants"
 import { normalize } from "../utils"
 import HoverableView from "./elements/HoverableView"
+import { Link } from "react-router-dom"
 
 const FooterCTA = ({ searchParams }) => {
     const { width } = useWindowDimensions()
@@ -57,24 +58,28 @@ const FooterCTA = ({ searchParams }) => {
                     Zaregistruje se a získejte přístup k našim exkluzivním sázkařským tipům ještě dnes.
                 </Text>
 
-                <HoverableView
-                    hoveredBackgroundColor={COLORS.hoveredAccent}
-                    backgroundColor={COLORS.accent}
+                <Link
                     style={{
-                        alignSelf: 'center',
-                        borderRadius: 10,
-                        width: 'fit-content',
+                        textDecoration: 'none',
                         marginTop: SPACING.large,
-                        boxShadow: '0px 0px 14px rgba(251, 193, 13, 0.35)'
+                        alignSelf: 'center'
                     }}
+                    to={{ pathname: '/auth', search: new URLSearchParams(searchParams).toString() }}
                 >
-                    <TouchableOpacity
-                        onPress={() => { }}
+                    <HoverableView
+                        hoveredOpacity={0.85}
+                        backgroundColor={[COLORS.accent2, COLORS.accent, COLORS.accent, COLORS.accent2]}
                         style={{
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            borderRadius: 10,
+                            width: 'fit-content',
+                            boxShadow: '0px 0px 14px rgba(251, 193, 13, 0.35)',
                             paddingHorizontal: SPACING.x_small,
                             paddingVertical: SPACING.xx_small,
-
                         }}
+                        withCustomButtonHeight
+                        withHoverableArrow
                     >
                         <Text
                             style={{
@@ -83,10 +88,10 @@ const FooterCTA = ({ searchParams }) => {
                                 fontSize: FONT_SIZES.large
                             }}
                         >
-                            Zaregistrovat se →
+                            Zaregistrovat se
                         </Text>
-                    </TouchableOpacity>
-                </HoverableView>
+                    </HoverableView>
+                </Link>
             </View>
 
 

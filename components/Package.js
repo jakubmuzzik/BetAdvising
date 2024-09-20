@@ -12,7 +12,7 @@ const Package = ({ name, coins, price, description }) => {
         <BlurView
             style={{
                 borderWidth: 1,
-                borderColor: COLORS.grey400,
+                borderColor: COLORS.whiteBackground2,
                 borderRadius: 10,
                 padding: SPACING.small,
                 maxWidth: normalize(250),

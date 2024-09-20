@@ -45,6 +45,8 @@ const Accordion = ({ headerText, bodyText, headerTextStyle, bodyTextStyle, backg
             style={{
                 backgroundColor,
                 borderRadius: 10,
+                borderWidth: 1,
+                borderColor: COLORS.whiteBackground2,
             }}
             //layout={LinearTransition}
         >

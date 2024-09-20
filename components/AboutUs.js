@@ -4,10 +4,13 @@ import { COLORS, FONT_SIZES, FONTS, SPACING } from '../constants'
 import { Image } from 'expo-image'
 import { normalize } from '../utils'
 import { LinearGradient } from 'expo-linear-gradient'
+import { Link } from 'react-router-dom'
 import CountInNumber from './animated/CountInNumber'
 import HoverableView from './elements/HoverableView'
 
-const AboutUs = () => {
+import withSearchParams from './hoc/withSearchParams'
+
+const AboutUs = ({ searchParams }) => {
     const { width } = useWindowDimensions()
 
     //const numbersFontSize = width < 500 ? (width - SPACING.page_horizontal * 2) * 0.07 : (500 - SPACING.page_horizontal * 2) * 0.08
@@ -101,6 +104,12 @@ const AboutUs = () => {
                         Jsme tým profesionálních tipařů poskytujících přesné a spolehlivé tipy na sázení. S našimi radami můžete činit informovaná rozhodnutí a zvýšit své šance na výhru.
                     </Text>
 
+                    <Link
+                    style={{
+                        textDecoration: 'none',
+                    }}
+                    to={{ hash: '#contact', search: new URLSearchParams(searchParams).toString() }}
+                >
                     <HoverableView
                         hoveredBackgroundColor={'rgba(255, 255, 255, 0.2)'}
                         backgroundColor={COLORS.whiteBackground}
@@ -131,10 +140,11 @@ const AboutUs = () => {
                                     fontSize: FONT_SIZES.large
                                 }}
                             >
-                                Kontaktujte nás
+                                Zobrazit více
                             </Text>
                         </TouchableOpacity>
                     </HoverableView>
+                    </Link>
 
                     {/* <View
                         style={{
@@ -243,4 +253,4 @@ const AboutUs = () => {
     )
 }
 
-export default AboutUs
+export default withSearchParams(AboutUs, ['language'])

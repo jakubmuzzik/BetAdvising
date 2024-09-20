@@ -90,9 +90,9 @@ export const FONT_SIZES = {
 }
 
 export const SPACING = {
-    xxx_small: normalizeSize(8, 8, 8),
-    xx_small: normalizeSize(12, 12, 12),
-    x_small: normalizeSize(16, 16, 16),
+    xxx_small: normalizeSize(6, 8, 8),
+    xx_small: normalizeSize(10, 12, 12),
+    x_small: normalizeSize(14, 16, 16),
     small:normalizeSize(16, 20, 20),
     medium: normalizeSize(20, 24, 24),
     large: normalizeSize(24, 28, 28),

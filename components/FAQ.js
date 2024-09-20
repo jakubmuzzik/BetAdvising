@@ -13,6 +13,7 @@ const FAQ = () => {
 
     return (
         <View
+            dataSet={{ id: 'contact' }}
             style={{
                 flexDirection: isSmallScreen ? 'column' : 'row',
                 //flexWrap: 'wrap',
@@ -75,7 +76,7 @@ const FAQ = () => {
                 style={{
                     flexGrow: 1,
                     flexShrink: 1,
-                    gap: SPACING.large,
+                    gap: SPACING.medium,
                 }}
             >
                 <Accordion 
@@ -83,12 +84,12 @@ const FAQ = () => {
                     bodyText='Pro vytvoření účtu klikněte na tlačítko "Registrace" v pravém horním rohu.Pro vytvoření účtu klikněte na tlačítko "Registrace" v pravém horním rohu.Pro vytvoření účtu klikněte na tlačítko "Registrace" v pravém horním rohu.Pro vytvoření účtu klikněte na tlačítko "Registrace" v pravém horním rohu.'
                     headerTextStyle={{
                         fontFamily: FONTS.medium,
-                        fontSize: FONT_SIZES.x_large,
+                        fontSize: FONT_SIZES.large,
                         color: COLORS.white
                     }}
                     bodyTextStyle={{
                         fontFamily: FONTS.light,
-                        fontSize: FONT_SIZES.large,
+                        fontSize: FONT_SIZES.medium,
                         color: COLORS.grey300
                     }}
                     backgroundColor={COLORS.secondary}
@@ -98,12 +99,12 @@ const FAQ = () => {
                     bodyText='Pro vytvoření účtu klikněte na tlačítko "Registrace" v pravém horním rohu.Pro vytvoření účtu klikněte na tlačítko "Registrace" v pravém horním rohu.Pro vytvoření účtu klikněte na tlačítko "Registrace" v pravém horním rohu.Pro vytvoření účtu klikněte na tlačítko "Registrace" v pravém horním rohu.'
                     headerTextStyle={{
                         fontFamily: FONTS.medium,
-                        fontSize: FONT_SIZES.x_large,
+                        fontSize: FONT_SIZES.large,
                         color: COLORS.white
                     }}
                     bodyTextStyle={{
                         fontFamily: FONTS.light,
-                        fontSize: FONT_SIZES.large,
+                        fontSize: FONT_SIZES.medium,
                         color: COLORS.grey300
                     }}
                     backgroundColor={COLORS.secondary}
@@ -113,12 +114,12 @@ const FAQ = () => {
                     bodyText='Pro vytvoření účtu klikněte na tlačítko "Registrace" v pravém horním rohu.Pro vytvoření účtu klikněte na tlačítko "Registrace" v pravém horním rohu.Pro vytvoření účtu klikněte na tlačítko "Registrace" v pravém horním rohu.Pro vytvoření účtu klikněte na tlačítko "Registrace" v pravém horním rohu.'
                     headerTextStyle={{
                         fontFamily: FONTS.medium,
-                        fontSize: FONT_SIZES.x_large,
+                        fontSize: FONT_SIZES.large,
                         color: COLORS.white
                     }}
                     bodyTextStyle={{
                         fontFamily: FONTS.light,
-                        fontSize: FONT_SIZES.large,
+                        fontSize: FONT_SIZES.medium,
                         color: COLORS.grey300
                     }}
                     backgroundColor={COLORS.secondary}
@@ -128,12 +129,12 @@ const FAQ = () => {
                     bodyText='Pro vytvoření účtu klikněte na tlačítko "Registrace" v pravém horním rohu.Pro vytvoření účtu klikněte na tlačítko "Registrace" v pravém horním rohu.Pro vytvoření účtu klikněte na tlačítko "Registrace" v pravém horním rohu.Pro vytvoření účtu klikněte na tlačítko "Registrace" v pravém horním rohu.'
                     headerTextStyle={{
                         fontFamily: FONTS.medium,
-                        fontSize: FONT_SIZES.x_large,
+                        fontSize: FONT_SIZES.large,
                         color: COLORS.white
                     }}
                     bodyTextStyle={{
                         fontFamily: FONTS.light,
-                        fontSize: FONT_SIZES.large,
+                        fontSize: FONT_SIZES.medium,
                         color: COLORS.grey300
                     }}
                     backgroundColor={COLORS.secondary}
@@ -143,12 +144,12 @@ const FAQ = () => {
                     bodyText='Pro vytvoření účtu klikněte na tlačítko "Registrace" v pravém horním rohu.Pro vytvoření účtu klikněte na tlačítko "Registrace" v pravém horním rohu.Pro vytvoření účtu klikněte na tlačítko "Registrace" v pravém horním rohu.Pro vytvoření účtu klikněte na tlačítko "Registrace" v pravém horním rohu.'
                     headerTextStyle={{
                         fontFamily: FONTS.medium,
-                        fontSize: FONT_SIZES.x_large,
+                        fontSize: FONT_SIZES.large,
                         color: COLORS.white
                     }}
                     bodyTextStyle={{
                         fontFamily: FONTS.light,
-                        fontSize: FONT_SIZES.large,
+                        fontSize: FONT_SIZES.medium,
                         color: COLORS.grey300
                     }}
                     backgroundColor={COLORS.secondary}

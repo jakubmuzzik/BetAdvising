@@ -105,45 +105,50 @@ const AboutUs = ({ searchParams }) => {
                     </Text>
 
                     <Link
-                    style={{
-                        textDecoration: 'none',
-                    }}
-                    to={{ hash: '#contact', search: new URLSearchParams(searchParams).toString() }}
-                >
-                    <HoverableView
-                        hoveredBackgroundColor={'rgba(255, 255, 255, 0.2)'}
-                        backgroundColor={COLORS.whiteBackground}
                         style={{
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                            borderRadius: 10,
-                            width: 'fit-content',
-                            marginTop: 20,
-                            boxShadow: '0px 0px 8px rgba(255, 255, 255, 0.05)'
+                            textDecoration: 'none',
+                            width: 'fit-content'
                         }}
+                        to={{ hash: '#contact', search: new URLSearchParams(searchParams).toString() }}
                     >
-                        <TouchableOpacity
-                            onPress={onContactUsPress}
+                        <HoverableView
+                            hoveredOpacity={0.8}
+                            //backgroundColor={COLORS.whiteBackground}
                             style={{
-                                paddingHorizontal: SPACING.x_small,
-                                paddingVertical: SPACING.xx_small,
-                                flexDirection: 'row',
                                 justifyContent: 'center',
                                 alignItems: 'center',
-
+                                borderRadius: 10,
+                                width: 'fit-content',
+                                marginTop: 20,
+                                //boxShadow: '0px 0px 8px rgba(255, 255, 255, 0.05)',
+                                borderWidth: 1,
+                                borderColor: COLORS.accent,
+                                boxShadow: '0px 0px 14px rgba(251, 193, 13, 0.25)',
                             }}
+                            withCustomButtonHeight
                         >
-                            <Text
+                            <TouchableOpacity
+                                onPress={onContactUsPress}
                                 style={{
-                                    color: COLORS.white,
-                                    fontFamily: FONTS.regular,
-                                    fontSize: FONT_SIZES.large
+                                    paddingHorizontal: SPACING.x_small,
+                                    paddingVertical: SPACING.xx_small,
+                                    flexDirection: 'row',
+                                    justifyContent: 'center',
+                                    alignItems: 'center',
+
                                 }}
                             >
-                                Zobrazit více
-                            </Text>
-                        </TouchableOpacity>
-                    </HoverableView>
+                                <Text
+                                    style={{
+                                        color: COLORS.white,
+                                        fontFamily: FONTS.regular,
+                                        fontSize: FONT_SIZES.large
+                                    }}
+                                >
+                                    Zobrazit více
+                                </Text>
+                            </TouchableOpacity>
+                        </HoverableView>
                     </Link>
 
                     {/* <View

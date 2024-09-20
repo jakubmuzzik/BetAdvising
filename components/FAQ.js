@@ -80,7 +80,7 @@ const FAQ = () => {
                 }}
             >
                 <Accordion 
-                    headerText='Jak si mohu vytvořit účet?'
+                    headerText='Kolik stojí odemčení jednoho tipu?'
                     bodyText='Pro vytvoření účtu klikněte na tlačítko "Registrace" v pravém horním rohu.Pro vytvoření účtu klikněte na tlačítko "Registrace" v pravém horním rohu.Pro vytvoření účtu klikněte na tlačítko "Registrace" v pravém horním rohu.Pro vytvoření účtu klikněte na tlačítko "Registrace" v pravém horním rohu.'
                     headerTextStyle={{
                         fontFamily: FONTS.medium,

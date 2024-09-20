@@ -31,7 +31,7 @@ const MarketingLayout = ({ children }) => (
     <>
         <Header />
 
-        <View style={{ flex: 1, /*marginTop: normalize(65),*/ backgroundColor: COLORS.primary, marginBottom: SPACING.large }}>
+        <View style={{ flex: 1, /*marginTop: normalize(65),*/ backgroundColor: COLORS.primary }}>
             {children}
         </View>
 

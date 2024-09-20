@@ -9,6 +9,7 @@ import HoverableView from './elements/HoverableView'
 import { MotiText } from 'moti'
 import { Link } from 'react-router-dom'
 import withSearchParams from './hoc/withSearchParams'
+import CustomButton from './elements/CustomButton'
 
 const Hero = ({ searchParams }) => {
     const { width } = useWindowDimensions()
@@ -103,8 +104,8 @@ const Hero = ({ searchParams }) => {
                             to={{ pathname: '/auth', search: new URLSearchParams(searchParams).toString() }}
                         >
                             <HoverableView
-                                hoveredBackgroundColor={COLORS.hoveredAccent}
-                                backgroundColor={COLORS.accent}
+                                hoveredOpacity={0.85}
+                                backgroundColor={[COLORS.accent2, COLORS.accent, COLORS.accent, COLORS.accent2]}
                                 style={{
                                     justifyContent: 'center',
                                     alignItems: 'center',
@@ -114,6 +115,8 @@ const Hero = ({ searchParams }) => {
                                     paddingHorizontal: SPACING.x_small,
                                     paddingVertical: SPACING.xx_small,
                                 }}
+                                withCustomButtonHeight
+                                withHoverableArrow
                             >
                                 <Text
                                     style={{
@@ -122,7 +125,7 @@ const Hero = ({ searchParams }) => {
                                         fontSize: FONT_SIZES.large
                                     }}
                                 >
-                                    Získat tipy →
+                                    Získat tipy
                                 </Text>
                             </HoverableView>
                         </Link>
@@ -134,8 +137,6 @@ const Hero = ({ searchParams }) => {
                             to={{ hash: '#how-it-works', search: new URLSearchParams(searchParams).toString() }}
                         >
                             <HoverableView
-                                hoveredBackgroundColor={'rgba(214, 214, 214, 0.37)'}
-                                backgroundColor={'rgba(214, 214, 214, 0.27)'}
                                 style={{
                                     justifyContent: 'center',
                                     alignItems: 'center',
@@ -144,8 +145,13 @@ const Hero = ({ searchParams }) => {
                                     paddingHorizontal: SPACING.x_small,
                                     paddingVertical: SPACING.xx_small,
                                     flexDirection: 'row',
-                                    boxShadow: '0px 0px 10px rgba(255, 255, 255, 0.1)'
+                                    //boxShadow: '0px 0px 10px rgba(255, 255, 255, 0.1)',
+                                    boxShadow: '0px 0px 14px rgba(251, 193, 13, 0.25)',
+                                    borderWidth: 1,
+                                    borderColor: COLORS.accent
                                 }}
+                                withCustomButtonHeight
+                                hoveredOpacity={0.8}
                             >
                                 <Text
                                     style={{

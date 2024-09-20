@@ -58,7 +58,8 @@ const Accordion = ({ headerText, bodyText, headerTextStyle, bodyTextStyle, backg
                     borderRadius: 10,
                     padding: SPACING.medium,
                 }}
-                rippleColor={COLORS.accent + '10'}
+                //rippleColor={COLORS.accent + '10'}
+                rippleColor='rgba(251, 193, 13, 0.1)'
             >
                 <>
                     <Text style={headerTextStyle}>

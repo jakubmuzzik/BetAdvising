@@ -357,27 +357,27 @@ const Steps = ({ searchParams }) => {
                 >
                     Zaregistrujte se a získejte zdarma 200 kreditů, které můžete využít na odemykání tipů.
                 </Text>
-                <HoverableView
-                    hoveredBackgroundColor={COLORS.hoveredAccent}
-                    backgroundColor={COLORS.accent}
+                <Link
                     style={{
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        borderRadius: 10,
-                        width: 'fit-content',
+                        textDecoration: 'none',
                         marginTop: SPACING.large,
-                        boxShadow: '0px 0px 14px rgba(251, 193, 13, 0.35)'
                     }}
+                    to={{ pathname: '/auth', search: new URLSearchParams(searchParams).toString() }}
                 >
-                    <TouchableOpacity
-                        onPress={() => { }}
+                    <HoverableView
+                        hoveredOpacity={0.85}
+                        backgroundColor={[COLORS.accent2, COLORS.accent, COLORS.accent, COLORS.accent2]}
                         style={{
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            borderRadius: 10,
+                            width: 'fit-content',
+                            boxShadow: '0px 0px 14px rgba(251, 193, 13, 0.35)',
                             paddingHorizontal: SPACING.x_small,
                             paddingVertical: SPACING.xx_small,
-                            flexDirection: 'row',
-                            justifyContent: 'center',
-                            alignItems: 'center'
                         }}
+                        withCustomButtonHeight
+                        withHoverableArrow
                     >
                         <Text
                             style={{
@@ -386,10 +386,10 @@ const Steps = ({ searchParams }) => {
                                 fontSize: FONT_SIZES.large
                             }}
                         >
-                            Zaregistrovat se →
+                            Zaregistrovat se
                         </Text>
-                    </TouchableOpacity>
-                </HoverableView>
+                    </HoverableView>
+                </Link>
             </View>
         </View>
     )
@@ -449,7 +449,7 @@ const Steps = ({ searchParams }) => {
                     paddingBottom: normalize(100)
                 }}
             >
-                 <Text
+                <Text
                     style={styles.stepHeaderText}
                 >
                     Zaregistrujte se a získejte 200 kreditů zdarma
@@ -459,27 +459,27 @@ const Steps = ({ searchParams }) => {
                 >
                     Zaregistrujte se a získejte zdarma 200 kreditů, které můžete využít na odemykání tipů.
                 </Text>
-                <HoverableView
-                    hoveredBackgroundColor={COLORS.hoveredAccent}
-                    backgroundColor={COLORS.accent}
+                <Link
                     style={{
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        borderRadius: 10,
-                        width: 'fit-content',
+                        textDecoration: 'none',
                         marginTop: SPACING.large,
-                        boxShadow: '0px 0px 14px rgba(251, 193, 13, 0.35)'
                     }}
+                    to={{ pathname: '/auth', search: new URLSearchParams(searchParams).toString() }}
                 >
-                    <TouchableOpacity
-                        onPress={() => { }}
+                    <HoverableView
+                        hoveredOpacity={0.85}
+                        backgroundColor={[COLORS.accent2, COLORS.accent, COLORS.accent, COLORS.accent2]}
                         style={{
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            borderRadius: 10,
+                            width: 'fit-content',
+                            boxShadow: '0px 0px 14px rgba(251, 193, 13, 0.35)',
                             paddingHorizontal: SPACING.x_small,
                             paddingVertical: SPACING.xx_small,
-                            flexDirection: 'row',
-                            justifyContent: 'center',
-                            alignItems: 'center'
                         }}
+                        withCustomButtonHeight
+                        withHoverableArrow
                     >
                         <Text
                             style={{
@@ -488,10 +488,10 @@ const Steps = ({ searchParams }) => {
                                 fontSize: FONT_SIZES.large
                             }}
                         >
-                            Zaregistrovat se →
+                            Zaregistrovat se
                         </Text>
-                    </TouchableOpacity>
-                </HoverableView>
+                    </HoverableView>
+                </Link>
             </View>
         </View>
     )
@@ -808,7 +808,7 @@ const Steps = ({ searchParams }) => {
                         4
                     </Text>
                 </LinearGradient>
-                
+
             </View>
             <View
                 style={{
@@ -837,27 +837,32 @@ const Steps = ({ searchParams }) => {
                         to={{ hash: '#packages', search: new URLSearchParams(searchParams).toString() }}
                     >
                         <HoverableView
-                            backgroundColor={COLORS.whiteBackground2}
-                            hoveredBackgroundColor={COLORS.whiteBackground}
                             style={{
                                 justifyContent: 'center',
                                 alignItems: 'center',
+                                borderRadius: 10,
+                                width: 'fit-content',
                                 paddingHorizontal: SPACING.x_small,
                                 paddingVertical: SPACING.xx_small,
                                 flexDirection: 'row',
-                                borderRadius: 10,
-                                width: 'fit-content',
-                                boxShadow: '0px 0px 10px rgba(255, 255, 255, 0.05)'
+                                //boxShadow: '0px 0px 10px rgba(255, 255, 255, 0.1)',
+                                boxShadow: '0px 0px 14px rgba(251, 193, 13, 0.25)',
+                                borderWidth: 1,
+                                borderColor: COLORS.accent
                             }}
+                            withCustomButtonHeight
+                            withHoverableArrow
+                            arrowColor={COLORS.white}
+                            hoveredOpacity={0.8}
                         >
                             <Text
                                 style={{
-                                    color: COLORS.grey300,
+                                    color: COLORS.white,
                                     fontFamily: FONTS.regular,
-                                    fontSize: FONT_SIZES.medium
+                                    fontSize: FONT_SIZES.large
                                 }}
                             >
-                                Zobrazit balíčky →
+                                Zobrazit balíčky
                             </Text>
                         </HoverableView>
                     </Link>
@@ -927,27 +932,32 @@ const Steps = ({ searchParams }) => {
                         to={{ hash: '#packages', search: new URLSearchParams(searchParams).toString() }}
                     >
                         <HoverableView
-                            backgroundColor={COLORS.whiteBackground2}
-                            hoveredBackgroundColor={COLORS.whiteBackground}
                             style={{
                                 justifyContent: 'center',
                                 alignItems: 'center',
+                                borderRadius: 10,
+                                width: 'fit-content',
                                 paddingHorizontal: SPACING.x_small,
                                 paddingVertical: SPACING.xx_small,
                                 flexDirection: 'row',
-                                borderRadius: 10,
-                                width: 'fit-content',
-                                boxShadow: '0px 0px 10px rgba(255, 255, 255, 0.05)'
+                                //boxShadow: '0px 0px 10px rgba(255, 255, 255, 0.1)',
+                                boxShadow: '0px 0px 14px rgba(251, 193, 13, 0.25)',
+                                borderWidth: 1,
+                                borderColor: COLORS.accent
                             }}
+                            withCustomButtonHeight
+                            withHoverableArrow
+                            arrowColor={COLORS.white}
+                            hoveredOpacity={0.8}
                         >
                             <Text
                                 style={{
-                                    color: COLORS.grey300,
+                                    color: COLORS.white,
                                     fontFamily: FONTS.regular,
-                                    fontSize: FONT_SIZES.medium
+                                    fontSize: FONT_SIZES.large
                                 }}
                             >
-                                Zobrazit balíčky →
+                                Zobrazit balíčky
                             </Text>
                         </HoverableView>
                     </Link>

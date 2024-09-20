@@ -16,7 +16,7 @@ const Footer = () => {
             style={{ 
                 padding: SPACING.large,
                 //height: 200,
-                marginTop: normalize(100),
+               // marginTop: normalize(100),
                 alignItems: 'center', justifyContent: 'center', flexWrap: 'wrap', flexDirection: 'row'
             }}
         >

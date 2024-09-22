@@ -115,39 +115,28 @@ const AboutUs = ({ searchParams }) => {
                             hoveredOpacity={0.8}
                             //backgroundColor={COLORS.whiteBackground}
                             style={{
-                                justifyContent: 'center',
-                                alignItems: 'center',
                                 borderRadius: 10,
                                 width: 'fit-content',
                                 marginTop: 20,
-                                //boxShadow: '0px 0px 8px rgba(255, 255, 255, 0.05)',
                                 borderWidth: 1,
                                 borderColor: COLORS.accent,
-                                //boxShadow: '0px 0px 14px rgba(251, 193, 13, 0.25)',
+                                paddingHorizontal: SPACING.x_small,
+                                paddingVertical: SPACING.xx_small,
+                                flexDirection: 'row',
+                                justifyContent: 'center',
+                                alignItems: 'center',
                             }}
                             withCustomButtonHeight
                         >
-                            <TouchableOpacity
-                                onPress={onContactUsPress}
+                            <Text
                                 style={{
-                                    paddingHorizontal: SPACING.x_small,
-                                    paddingVertical: SPACING.xx_small,
-                                    flexDirection: 'row',
-                                    justifyContent: 'center',
-                                    alignItems: 'center',
-
+                                    color: COLORS.white,
+                                    fontFamily: FONTS.regular,
+                                    fontSize: FONT_SIZES.large
                                 }}
                             >
-                                <Text
-                                    style={{
-                                        color: COLORS.white,
-                                        fontFamily: FONTS.regular,
-                                        fontSize: FONT_SIZES.large
-                                    }}
-                                >
-                                    Zobrazit více
-                                </Text>
-                            </TouchableOpacity>
+                                Zobrazit více
+                            </Text>
                         </HoverableView>
                     </Link>
 

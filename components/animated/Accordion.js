@@ -84,7 +84,6 @@ const Accordion = ({ headerText, bodyText, headerTextStyle, bodyTextStyle, backg
             >
                 <View
                     onLayout={(event) => {
-                        console.log(event.nativeEvent.layout.height)
                         height.value = event.nativeEvent.layout.height
                     }}
                     style={{

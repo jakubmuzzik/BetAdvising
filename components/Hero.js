@@ -96,6 +96,7 @@ const Hero = ({ searchParams }) => {
                         flexDirection: 'row',
                         gap: SPACING.medium,
                         justifyContent: 'center',
+                        flexWrap: 'wrap',
                     }}>
                         <Link
                             style={{

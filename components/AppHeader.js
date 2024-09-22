@@ -17,6 +17,21 @@ import { Picker } from '@react-native-picker/picker'
 import { logOut, toggleDrawer } from '../redux/actions/app'
 import HoverableText from './elements/HoverableText'
 
+const ROUTES = [
+    {
+        path: '/tickets',
+        title: 'Tikety',
+        key: 'tickets',
+        icon: (focused) => <MaterialCommunityIcons style={{ marginRight: 10 }} name="ticket-confirmation-outline" size={20} color={focused ? COLORS.white : 'rgba(255,255,255,0.7)'} />
+    },
+    {
+        path: '/credits',
+        title: 'Kredity',
+        key: 'credits',
+        icon: (focused) => <MaterialCommunityIcons style={{ marginRight: 10 }} name="hand-coin-outline" size={20} color={focused ? COLORS.white : 'rgba(255,255,255,0.7)'} />
+    },
+]
+
 const AppHeader = ({ searchParams, currentAuthUser, logOut, toggleDrawer, currentUser }) => {
     const { width } = useWindowDimensions()
 
@@ -41,27 +56,14 @@ const AppHeader = ({ searchParams, currentAuthUser, logOut, toggleDrawer, curren
     const [notificationsDropdownRight, setNotificationsDropdownRight] = useState(-1000)
 
     const [index, setIndex] = useState(0)
-    const [routes, setRoutes] = useState([
-        {
-            path: '/tickets',
-            title: 'Tikety',
-            key: 'tickets',
-            icon: (focused) => <MaterialCommunityIcons style={{ marginRight: 10 }} name="ticket-confirmation-outline" size={20} color={focused ? COLORS.white : 'rgba(255,255,255,0.7)'} />
-        },
-
-        // {
-        //     path: '/unlocked',
-        //     title: 'Odemčené',
-        //     key: 'unlocked',
-        //     icon: (focused) => <MaterialCommunityIcons style={{ marginRight: 10 }} name="history" size={20} color={focused ? COLORS.white : 'rgba(255,255,255,0.7)'} />
-        // },
-        {
-            path: '/credits',
-            title: 'Kredity',
-            key: 'credits',
-            icon: (focused) => <MaterialCommunityIcons style={{ marginRight: 10 }} name="hand-coin-outline" size={20} color={focused ? COLORS.white : 'rgba(255,255,255,0.7)'} />
-        },
-    ].map((route, index) => ({ ...route, index })))
+    const [routes, setRoutes] = useState(
+        (currentAuthUser.app_metadata.userrole === 'ADMIN' ? [...ROUTES, {
+            path: '/admin',
+            title: 'Admin',
+            key: 'admin',
+            icon: (focused) => <MaterialCommunityIcons style={{ marginRight: 10 }} name="book-edit" size={20} color={focused ? COLORS.white : 'rgba(255,255,255,0.7)'} />
+        }] : ROUTES).map((route, index) => ({ ...route, index }))
+    )
 
     const renderIndicator = routes.some(route => location.pathname.includes(route.path))
 

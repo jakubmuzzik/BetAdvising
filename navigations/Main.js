@@ -27,6 +27,9 @@ import Header from '../components/Header'
 import AuthHeader from '../components/AuthHeader'
 import AppLayout from './AppLayout'
 
+import Admin from './Admin'
+import RequireAdminUser from './RequireAdminUser'
+
 const MarketingLayout = ({ children }) => (
     <>
         <Header />
@@ -86,6 +89,19 @@ const router = createBrowserRouter(createRoutesFromElements(
             <Route path='/credits' element={<Credits />} />
             <Route path='/support' element={<Support />} />
             <Route path='/notifications' element={<Notifications />} />
+        </Route>
+
+        <Route path='/admin' element={
+            <RequireAdminUser>
+                <AppLayout>
+                    <Outlet />
+                </AppLayout>
+            </RequireAdminUser>
+        } >
+            <Route index element={<Admin />} />
+            <Route path='open-tickets' element={<Admin />} />
+            <Route path='closed-tickets' element={<Admin />} />
+            <Route path='new-ticket' element={<Admin />} />
         </Route>
 
         <Route path='/complete-profile' element={

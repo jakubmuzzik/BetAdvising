@@ -45,6 +45,7 @@ const CustomInput = ({
     hoveredBorderColor = COLORS.accent,
     backgroundColor = COLORS.secondary2,
     focusedBackgroundColor = 'transparent',
+    onKeyPress = () => {}
 }) => {
     const inputRef = useRef()
 
@@ -165,6 +166,7 @@ const CustomInput = ({
                         editable={!onPress}
                         pointerEvents={onPress ? 'none' : 'auto'}
                         maxLength={maxLength}
+                        onKeyPress={onKeyPress}
                     />
                 </TouchableOpacity>
 

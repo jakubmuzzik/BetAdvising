@@ -200,6 +200,7 @@ const Login = ({ searchParams, toastRef, fetchUser }) => {
                             </Animated.View>
                             : null
                         }
+                        onKeyPress={onEmailSignupPress}
                         errorMessage={showErrorMessage ? (!email ? 'Enter your email address' : !isValidEmail(email) ? 'Invalid email address' : undefined) : undefined}
                     />
 

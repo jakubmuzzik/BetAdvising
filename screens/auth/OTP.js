@@ -155,6 +155,7 @@ const OTP = ({ toastRef, searchParams }) => {
                         containerStyle={{ width: '100%', marginTop: SPACING.x_large }}
                         errorMessage={showErrorMessage  && !otp ? 'Enter the verification code' : undefined}
                         keyboardType='numeric'
+                        onKeyPress={onContinuePress}
                     />
 
                     <CustomButton ref={continueButtonRef}

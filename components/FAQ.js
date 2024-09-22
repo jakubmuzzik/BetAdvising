@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text, useWindowDimensions } from 'react-native'
+import { View, Text, useWindowDimensions, StyleSheet } from 'react-native'
 import { COLORS, FONT_SIZES, FONTS, SPACING } from '../constants'
 import { normalize } from '../utils'
 import * as Linking from 'expo-linking'
@@ -82,76 +82,36 @@ const FAQ = () => {
                 <Accordion 
                     headerText='Kolik stojí odemčení jednoho tipu?'
                     bodyText='Pro vytvoření účtu klikněte na tlačítko "Registrace" v pravém horním rohu.Pro vytvoření účtu klikněte na tlačítko "Registrace" v pravém horním rohu.Pro vytvoření účtu klikněte na tlačítko "Registrace" v pravém horním rohu.Pro vytvoření účtu klikněte na tlačítko "Registrace" v pravém horním rohu.'
-                    headerTextStyle={{
-                        fontFamily: FONTS.medium,
-                        fontSize: FONT_SIZES.large,
-                        color: COLORS.white
-                    }}
-                    bodyTextStyle={{
-                        fontFamily: FONTS.light,
-                        fontSize: FONT_SIZES.medium,
-                        color: COLORS.grey300
-                    }}
+                    headerTextStyle={styles.accordionHeader}
+                    bodyTextStyle={styles.accordionBody}
                     backgroundColor={COLORS.secondary}
                 />
                 <Accordion 
                     headerText='Jak si mohu vytvořit účet?'
                     bodyText='Pro vytvoření účtu klikněte na tlačítko "Registrace" v pravém horním rohu.Pro vytvoření účtu klikněte na tlačítko "Registrace" v pravém horním rohu.Pro vytvoření účtu klikněte na tlačítko "Registrace" v pravém horním rohu.Pro vytvoření účtu klikněte na tlačítko "Registrace" v pravém horním rohu.'
-                    headerTextStyle={{
-                        fontFamily: FONTS.medium,
-                        fontSize: FONT_SIZES.large,
-                        color: COLORS.white
-                    }}
-                    bodyTextStyle={{
-                        fontFamily: FONTS.light,
-                        fontSize: FONT_SIZES.medium,
-                        color: COLORS.grey300
-                    }}
+                    headerTextStyle={styles.accordionHeader}
+                    bodyTextStyle={styles.accordionBody}
                     backgroundColor={COLORS.secondary}
                 />
                 <Accordion 
                     headerText='Jak si mohu vytvořit účet?'
                     bodyText='Pro vytvoření účtu klikněte na tlačítko "Registrace" v pravém horním rohu.Pro vytvoření účtu klikněte na tlačítko "Registrace" v pravém horním rohu.Pro vytvoření účtu klikněte na tlačítko "Registrace" v pravém horním rohu.Pro vytvoření účtu klikněte na tlačítko "Registrace" v pravém horním rohu.'
-                    headerTextStyle={{
-                        fontFamily: FONTS.medium,
-                        fontSize: FONT_SIZES.large,
-                        color: COLORS.white
-                    }}
-                    bodyTextStyle={{
-                        fontFamily: FONTS.light,
-                        fontSize: FONT_SIZES.medium,
-                        color: COLORS.grey300
-                    }}
+                    headerTextStyle={styles.accordionHeader}
+                    bodyTextStyle={styles.accordionBody}
                     backgroundColor={COLORS.secondary}
                 />
                 <Accordion 
                     headerText='Jak si mohu vytvořit účet?'
                     bodyText='Pro vytvoření účtu klikněte na tlačítko "Registrace" v pravém horním rohu.Pro vytvoření účtu klikněte na tlačítko "Registrace" v pravém horním rohu.Pro vytvoření účtu klikněte na tlačítko "Registrace" v pravém horním rohu.Pro vytvoření účtu klikněte na tlačítko "Registrace" v pravém horním rohu.'
-                    headerTextStyle={{
-                        fontFamily: FONTS.medium,
-                        fontSize: FONT_SIZES.large,
-                        color: COLORS.white
-                    }}
-                    bodyTextStyle={{
-                        fontFamily: FONTS.light,
-                        fontSize: FONT_SIZES.medium,
-                        color: COLORS.grey300
-                    }}
+                    headerTextStyle={styles.accordionHeader}
+                    bodyTextStyle={styles.accordionBody}
                     backgroundColor={COLORS.secondary}
                 />
                 <Accordion 
                     headerText='Jak si mohu vytvořit účet?'
                     bodyText='Pro vytvoření účtu klikněte na tlačítko "Registrace" v pravém horním rohu.Pro vytvoření účtu klikněte na tlačítko "Registrace" v pravém horním rohu.Pro vytvoření účtu klikněte na tlačítko "Registrace" v pravém horním rohu.Pro vytvoření účtu klikněte na tlačítko "Registrace" v pravém horním rohu.'
-                    headerTextStyle={{
-                        fontFamily: FONTS.medium,
-                        fontSize: FONT_SIZES.large,
-                        color: COLORS.white
-                    }}
-                    bodyTextStyle={{
-                        fontFamily: FONTS.light,
-                        fontSize: FONT_SIZES.medium,
-                        color: COLORS.grey300
-                    }}
+                    headerTextStyle={styles.accordionHeader}
+                    bodyTextStyle={styles.accordionBody}
                     backgroundColor={COLORS.secondary}
                 />
             </View>
@@ -160,3 +120,17 @@ const FAQ = () => {
 }
 
 export default FAQ
+
+const styles = StyleSheet.create({
+    accordionHeader: {
+        fontFamily: FONTS.medium,
+        fontSize: FONT_SIZES.large,
+        color: COLORS.white
+    },
+    accordionBody: {
+        fontFamily: FONTS.light,
+        fontSize: FONT_SIZES.medium,
+        color: COLORS.grey300,
+        lineHeight: FONT_SIZES.medium * 1.5
+    }
+})

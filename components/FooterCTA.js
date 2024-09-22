@@ -74,7 +74,7 @@ const FooterCTA = ({ searchParams }) => {
                             alignItems: 'center',
                             borderRadius: 10,
                             width: 'fit-content',
-                            boxShadow: '0px 0px 14px rgba(251, 193, 13, 0.35)',
+                            //boxShadow: '0px 0px 14px rgba(251, 193, 13, 0.35)',
                             paddingHorizontal: SPACING.x_small,
                             paddingVertical: SPACING.xx_small,
                         }}

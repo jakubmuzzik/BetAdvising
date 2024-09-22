@@ -346,7 +346,7 @@ const AppHeader = ({ searchParams, currentAuthUser, logOut, toggleDrawer, curren
                             <HoverableView hoveredBackgroundColor={COLORS.secondary}>
                                 <TouchableOpacity
                                     onPress={onViewAllNotificationsPress}
-                                    style={{ padding: SPACING.xx_small }}
+                                    style={{ padding: SPACING.xx_small, width: '100%' }}
                                     activeOpacity={0.8}
                                 >
                                     <Text style={{ textAlign: 'center', fontFamily: FONTS.medium, fontSize: FONT_SIZES.medium, color: COLORS.grey200 }}>
@@ -582,7 +582,7 @@ const AppHeader = ({ searchParams, currentAuthUser, logOut, toggleDrawer, curren
                                 paddingHorizontal: SPACING.x_small,
                                 paddingVertical: SPACING.xx_small,
                                 flexDirection: 'row',
-                                boxShadow: '0px 0px 10px rgba(251, 193, 13, 0.15)',
+                                //boxShadow: '0px 0px 10px rgba(251, 193, 13, 0.15)',
                                 borderWidth: 1,
                                 borderColor: COLORS.accent
                             }}

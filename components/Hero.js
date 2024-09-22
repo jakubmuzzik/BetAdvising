@@ -111,10 +111,11 @@ const Hero = ({ searchParams }) => {
                                     alignItems: 'center',
                                     borderRadius: 10,
                                     width: 'fit-content',
-                                    boxShadow: '0px 0px 14px rgba(251, 193, 13, 0.35)',
+                                    //boxShadow: '0px 0px 14px rgba(251, 193, 13, 0.35)',
                                     paddingHorizontal: SPACING.x_small,
                                     paddingVertical: SPACING.xx_small,
                                 }}
+                                //hoveredBoxShadow='0px 0px 14px rgba(251, 193, 13, 0.25)'
                                 withCustomButtonHeight
                                 withHoverableArrow
                             >
@@ -146,7 +147,7 @@ const Hero = ({ searchParams }) => {
                                     paddingVertical: SPACING.xx_small,
                                     flexDirection: 'row',
                                     //boxShadow: '0px 0px 10px rgba(255, 255, 255, 0.1)',
-                                    boxShadow: '0px 0px 14px rgba(251, 193, 13, 0.25)',
+                                    //boxShadow: '0px 0px 14px rgba(251, 193, 13, 0.25)',
                                     borderWidth: 1,
                                     borderColor: COLORS.accent
                                 }}

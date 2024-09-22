@@ -167,7 +167,7 @@ const Header = ({ searchParams, currentAuthUser }) => {
                             justifyContent: 'center',
                             alignItems: 'center',
                             borderRadius: 10,
-                            boxShadow: '0px 0px 10px rgba(255, 255, 255, 0.05)',
+                            //boxShadow: '0px 0px 10px rgba(255, 255, 255, 0.05)',
                             paddingHorizontal: SPACING.x_small,
                             paddingVertical: SPACING.xx_small,
                         }}
@@ -196,7 +196,7 @@ const Header = ({ searchParams, currentAuthUser }) => {
                             justifyContent: 'center',
                             alignItems: 'center',
                             borderRadius: 10,
-                            boxShadow: '0px 0px 14px rgba(251, 193, 13, 0.35)',
+                            //boxShadow: '0px 0px 14px rgba(251, 193, 13, 0.35)',
                             paddingHorizontal: SPACING.x_small,
                             paddingVertical: SPACING.xx_small,
                         }}

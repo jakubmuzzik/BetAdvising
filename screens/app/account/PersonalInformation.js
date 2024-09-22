@@ -97,7 +97,7 @@ const styles = StyleSheet.create({
     section: {
         marginTop: SPACING.large,
         padding: SPACING.small,
-        borderRadius: 20,
+        borderRadius: 10,
         backgroundColor: COLORS.secondary,
         borderWidth: 1,
         borderColor: COLORS.whiteBackground2

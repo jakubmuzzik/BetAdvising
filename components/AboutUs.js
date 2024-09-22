@@ -123,7 +123,7 @@ const AboutUs = ({ searchParams }) => {
                                 //boxShadow: '0px 0px 8px rgba(255, 255, 255, 0.05)',
                                 borderWidth: 1,
                                 borderColor: COLORS.accent,
-                                boxShadow: '0px 0px 14px rgba(251, 193, 13, 0.25)',
+                                //boxShadow: '0px 0px 14px rgba(251, 193, 13, 0.25)',
                             }}
                             withCustomButtonHeight
                         >

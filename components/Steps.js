@@ -105,7 +105,7 @@ const Steps = ({ searchParams }) => {
                         padding: 10,
                         justifyContent: 'center',
                         alignItems: 'center',
-                        boxShadow: '0px 0px 14px rgba(251, 193, 13, 0.15)'
+                        //boxShadow: '0px 0px 14px rgba(251, 193, 13, 0.15)'
                     }}
                 >
                     <Text
@@ -372,7 +372,7 @@ const Steps = ({ searchParams }) => {
                             alignItems: 'center',
                             borderRadius: 10,
                             width: 'fit-content',
-                            boxShadow: '0px 0px 14px rgba(251, 193, 13, 0.35)',
+                            //boxShadow: '0px 0px 14px rgba(251, 193, 13, 0.35)',
                             paddingHorizontal: SPACING.x_small,
                             paddingVertical: SPACING.xx_small,
                         }}
@@ -474,7 +474,7 @@ const Steps = ({ searchParams }) => {
                             alignItems: 'center',
                             borderRadius: 10,
                             width: 'fit-content',
-                            boxShadow: '0px 0px 14px rgba(251, 193, 13, 0.35)',
+                            //boxShadow: '0px 0px 14px rgba(251, 193, 13, 0.35)',
                             paddingHorizontal: SPACING.x_small,
                             paddingVertical: SPACING.xx_small,
                         }}
@@ -846,7 +846,7 @@ const Steps = ({ searchParams }) => {
                                 paddingVertical: SPACING.xx_small,
                                 flexDirection: 'row',
                                 //boxShadow: '0px 0px 10px rgba(255, 255, 255, 0.1)',
-                                boxShadow: '0px 0px 14px rgba(251, 193, 13, 0.25)',
+                                //boxShadow: '0px 0px 14px rgba(251, 193, 13, 0.25)',
                                 borderWidth: 1,
                                 borderColor: COLORS.accent
                             }}
@@ -941,7 +941,7 @@ const Steps = ({ searchParams }) => {
                                 paddingVertical: SPACING.xx_small,
                                 flexDirection: 'row',
                                 //boxShadow: '0px 0px 10px rgba(255, 255, 255, 0.1)',
-                                boxShadow: '0px 0px 14px rgba(251, 193, 13, 0.25)',
+                                //boxShadow: '0px 0px 14px rgba(251, 193, 13, 0.25)',
                                 borderWidth: 1,
                                 borderColor: COLORS.accent
                             }}
@@ -981,7 +981,7 @@ const Steps = ({ searchParams }) => {
                     maxWidth: 1680,
                     flex: 1,
                     borderWidth: 1,
-                    borderColor: COLORS.grey400,
+                    borderColor: COLORS.whiteBackground2,
                     backgroundColor: 'rgba(255,255,255,.05)',
                     borderRadius: 10,
                     //boxShadow: '0px 0px 14px rgba(251, 193, 13, 0.15)'

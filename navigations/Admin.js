@@ -4,6 +4,7 @@ import { FONTS, FONT_SIZES, SPACING, COLORS } from '../constants'
 import { normalize } from '../utils'
 import { MotiText, AnimatePresence, MotiView } from 'moti'
 import { useLocation, useNavigate, useSearchParams } from 'react-router-dom'
+import Animated, { FadeInLeft, FadeInRight, FadeOutRight } from 'react-native-reanimated'
 
 import { connect } from 'react-redux'
 
@@ -14,6 +15,8 @@ const { height: initialHeight } = Dimensions.get('window')
 import withSearchParams from '../components/hoc/withSearchParams'
 import AdminDashboard from '../screens/admin/AdminDashboard'
 import CustomButton from '../components/elements/CustomButton'
+
+import NewTicket from '../redux/actions/admin/NewTicket'
 
 const Admin = ({ searchParams }) => {
     const [index, setIndex] = useState(0)
@@ -67,14 +70,14 @@ const Admin = ({ searchParams }) => {
         switch (route.key) {
             case 'admin':
                 return (
-                    <View style={{ marginTop: SPACING.large }}>
+                    <View style={{ paddingHorizontal: SPACING.medium, marginTop: SPACING.large,  width: normalize(800), maxWidth: '100%', alignSelf: 'center' }}>
                         <AdminDashboard />
                     </View>
                 )
             case 'new-ticket':
                 return (
-                    <View style={{ marginTop: SPACING.large }}>
-                        {/* <NewLadies /> */}
+                    <View style={{ paddingHorizontal: SPACING.page_horizontal, marginTop: SPACING.large, maxWidth: '100%', alignSelf: 'center'}}>
+                        <NewTicket />
                     </View>
                 )
             case 'open-tickets':
@@ -141,14 +144,19 @@ const Admin = ({ searchParams }) => {
                             </MotiText>
                         ))}
                     </AnimatePresence>
-                    {index === 0 && <CustomButton
-                        onPress={onNewTicketPress}
-                        additionalStyles={{ alignSelf: 'flex-end' }}
-                        textColor={COLORS.black}
-                        backgroundColors={[COLORS.accent2, COLORS.accent, COLORS.accent, COLORS.accent2]}
-                        buttonText='New Ticket'
-                        textStyles={{ fontSize: FONT_SIZES.large, fontFamily: FONTS.bold }}
-                    />}
+                    {index === 0 && <Animated.View
+                        entering={FadeInRight}
+                        exiting={FadeOutRight}
+                    >
+                        <CustomButton
+                            onPress={onNewTicketPress}
+                            additionalStyles={{ alignSelf: 'flex-end' }}
+                            textColor={COLORS.black}
+                            backgroundColors={[COLORS.accent2, COLORS.accent, COLORS.accent, COLORS.accent2]}
+                            buttonText='New Ticket'
+                            textStyles={{ fontSize: FONT_SIZES.large, fontFamily: FONTS.bold }}
+                        />
+                    </Animated.View>}
                 </View>
             </View>
 

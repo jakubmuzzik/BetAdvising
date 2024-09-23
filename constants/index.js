@@ -103,3 +103,15 @@ export const SPACING = {
     xxxxx_large: normalizeSize(56, 60, 60),
     page_horizontal: normalizeSize(24, 40, 80)
 }
+
+export const SPORTS = [
+    'Fotbal',
+    'Basketbal',
+    'Házená',
+    'Volejbal',
+    'Tenis',
+    'Stolní tenis',
+    'Badminton',
+    'Florbal',
+    'Hokej'
+]

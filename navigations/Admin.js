@@ -19,6 +19,8 @@ import CustomButton from '../components/elements/CustomButton'
 import NewTicket from '../redux/actions/admin/NewTicket'
 
 const Admin = ({ searchParams }) => {
+    const { width: windowWidth } = useWindowDimensions()
+
     const [index, setIndex] = useState(0)
     const [routes] = useState([
         { key: 'admin', title: 'Admin Dashboard', pathname: '/admin', navigationPaths: [] },
@@ -70,14 +72,14 @@ const Admin = ({ searchParams }) => {
         switch (route.key) {
             case 'admin':
                 return (
-                    <View style={{ paddingHorizontal: SPACING.medium, marginTop: SPACING.large,  width: normalize(800), maxWidth: '100%', alignSelf: 'center' }}>
+                    <View style={{  marginTop: SPACING.large,  width: normalize(800), maxWidth: '100%', alignSelf: 'center' }}>
                         <AdminDashboard />
                     </View>
                 )
             case 'new-ticket':
                 return (
-                    <View style={{ paddingHorizontal: SPACING.page_horizontal, marginTop: SPACING.large, maxWidth: '100%', alignSelf: 'center'}}>
-                        <NewTicket />
+                    <View style={{ paddingHorizontal: SPACING.medium, width: normalize(800), marginTop: SPACING.large, maxWidth: '100%', alignSelf: 'center'}}>
+                        <NewTicket offsetX={windowWidth * route.index}/>
                     </View>
                 )
             case 'open-tickets':

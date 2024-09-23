@@ -764,7 +764,7 @@ const styles = StyleSheet.create({
         marginRight: SPACING.page_horizontal,
         borderRadius: 10,
         borderWidth: 1,
-        borderColor: COLORS.lightGrey,
+        borderColor: COLORS.whiteBackground2,
         paddingVertical: SPACING.xxx_small,
         shadowColor: "#000",
         shadowColor: "#000",

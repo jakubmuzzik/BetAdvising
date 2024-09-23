@@ -89,7 +89,7 @@ const AdminDashboard = ({
             marginRight: marginRight,
             flexDirection: 'column',
             padding: SPACING.x_small,
-            borderRadius: 15,
+            borderRadius: 10,
             backgroundColor: COLORS.secondary,
             borderWidth: 1,
             borderColor: COLORS.whiteBackground2
@@ -133,8 +133,8 @@ const AdminDashboard = ({
     return (
         <View style={{ width: normalize(800), maxWidth: '100%', alignSelf: 'center', paddingHorizontal: SPACING.medium }}>
             <View style={{ flexDirection: 'row', marginBottom: SPACING.xx_small }}>
-                {renderNewDataCard(newTicketsCount, 'Open Tickets', '/admin/open-tickets', SPACING.xx_small, <MaterialIcons name="meeting-room" size={25} color="white" />)}
-                {renderNewDataCard(closedTicketsCount, 'Closed Tickets', '/admin/closed-tickets', 0, <Entypo name="mask" size={25} color={COLORS.white} />)}
+                {renderNewDataCard(newTicketsCount, 'Open Tickets', '/admin/open-tickets', SPACING.xx_small, <MaterialIcons name="timelapse" size={25} color="white" />)}
+                {renderNewDataCard(closedTicketsCount, 'Closed Tickets', '/admin/closed-tickets', 0, <MaterialIcons name="check-circle" size={25} color={COLORS.white} />)}
             </View>
         </View>
     )

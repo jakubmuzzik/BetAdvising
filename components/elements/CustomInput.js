@@ -45,7 +45,8 @@ const CustomInput = ({
     hoveredBorderColor = COLORS.accent,
     backgroundColor = COLORS.secondary2,
     focusedBackgroundColor = 'transparent',
-    onKeyPress = () => {}
+    cursor = 'text',
+    onSubmitEditing = () => {}
 }) => {
     const inputRef = useRef()
 
@@ -131,7 +132,7 @@ const CustomInput = ({
                         paddingHorizontal: horizontalPadding,
                         paddingVertical: verticalPadding,
                         flex: 1,
-                        cursor: 'text'
+                        cursor
                     }}
                 >
                     <Animated.View style={labelContainerStyles}>
@@ -166,7 +167,7 @@ const CustomInput = ({
                         editable={!onPress}
                         pointerEvents={onPress ? 'none' : 'auto'}
                         maxLength={maxLength}
-                        onKeyPress={onKeyPress}
+                        onSubmitEditing={onSubmitEditing}
                     />
                 </TouchableOpacity>
 

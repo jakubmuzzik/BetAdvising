@@ -981,7 +981,7 @@ const Steps = ({ searchParams }) => {
                     maxWidth: 1680,
                     flex: 1,
                     borderWidth: 1,
-                    borderColor: COLORS.whiteBackground2,
+                    borderColor: COLORS.grey400,
                     backgroundColor: 'rgba(255,255,255,.05)',
                     borderRadius: 10,
                     //boxShadow: '0px 0px 14px rgba(251, 193, 13, 0.15)'

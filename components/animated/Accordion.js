@@ -41,63 +41,63 @@ const Accordion = ({ headerText, bodyText, headerTextStyle, bodyTextStyle, backg
     }
 
     return (
-        <Animated.View
+        <TouchableRipple
             style={{
                 backgroundColor,
                 borderRadius: 10,
                 borderWidth: 1,
                 borderColor: COLORS.whiteBackground2,
             }}
-            //layout={LinearTransition}
+            onPress={onAccordionPress}
+            rippleColor='rgba(251, 193, 13, 0.1)'
         >
-            <TouchableRipple
-                onPress={onAccordionPress}
-                style={{
-                    flexDirection: 'row',
-                    justifyContent: 'space-between',
-                    alignItems: 'center',
-                    backgroundColor: backgroundColor,
-                    borderRadius: 10,
-                    padding: SPACING.medium,
-                }}
-                //rippleColor={COLORS.accent + '10'}
-                rippleColor='rgba(251, 193, 13, 0.1)'
-            >
-                <>
-                    <Text style={headerTextStyle}>
-                        {headerText}
-                    </Text>
-                    <Animated.View
-                        style={animatedChevronStyle}
-                    >
-                    <MaterialCommunityIcons
-                        name="chevron-down"
-                        size={20}
-                        color={COLORS.grey300}
-                    />
-                    </Animated.View>
-                </>
-            </TouchableRipple>
-            <Animated.View
-                
-                style={[bodyStyle, { overflow: 'hidden' }]}
-            >
+            <>
                 <View
-                    onLayout={(event) => {
-                        height.value = event.nativeEvent.layout.height
-                    }}
                     style={{
-                        position: 'absolute',
+                        flexDirection: 'row',
+                        justifyContent: 'space-between',
+                        alignItems: 'center',
+                        backgroundColor: backgroundColor,
+                        borderRadius: 10,
                         padding: SPACING.medium,
-                        paddingTop: 0,
                     }}
                 >
-                    <Text style={bodyTextStyle}>
-                        {bodyText}
-                    </Text>
+                    <>
+                        <Text style={headerTextStyle}>
+                            {headerText}
+                        </Text>
+                        <Animated.View
+                            style={animatedChevronStyle}
+                        >
+                            <MaterialCommunityIcons
+                                name="chevron-down"
+                                size={20}
+                                color={COLORS.grey300}
+                            />
+                        </Animated.View>
+                    </>
                 </View>
-            </Animated.View>
-        </Animated.View>
+                <Animated.View
+
+                    style={[bodyStyle, { overflow: 'hidden' }]}
+                >
+                    <View
+                        onLayout={(event) => {
+                            height.value = event.nativeEvent.layout.height
+                        }}
+                        style={{
+                            position: 'absolute',
+                            padding: SPACING.medium,
+                            paddingTop: 0,
+                        }}
+                    >
+                        <Text style={bodyTextStyle}>
+                            {bodyText}
+                        </Text>
+                    </View>
+                </Animated.View>
+            </>
+        </TouchableRipple>
     )
 }
 

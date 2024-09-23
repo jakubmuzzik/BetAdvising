@@ -5,8 +5,9 @@ import { normalize } from '../utils'
 import { Image } from 'expo-image'
 import Package from './Package'
 import { LinearGradient } from 'expo-linear-gradient'
+import withSearchParams from './hoc/withSearchParams'
 
-const Packages = () => {
+const Packages = ({ searchParams }) => {
     const { width } = useWindowDimensions()
 
     return (
@@ -141,6 +142,7 @@ const Packages = () => {
                         coins={item.coins}
                         price={item.price}
                         description={item.description}
+                        searchParams={searchParams}
                     />
                 )}
             />
@@ -189,4 +191,4 @@ const Packages = () => {
     )
 }
 
-export default Packages
+export default withSearchParams(Packages, ['language'])

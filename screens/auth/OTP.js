@@ -12,6 +12,8 @@ import { connect } from 'react-redux'
 import HoverableText from '../../components/elements/HoverableText'
 import withSearchParams from '../../components/hoc/withSearchParams'
 
+import { useAnimatedShake } from '../../components/hooks/useAnimatedShake'
+
 const OTP = ({ toastRef, searchParams }) => {
     const location = useLocation()
     const navigate = useNavigate()
@@ -25,9 +27,12 @@ const OTP = ({ toastRef, searchParams }) => {
     const continueButtonRef = useRef()
     const resendButtonRef = useRef()
 
+    const { shake, rStyle } = useAnimatedShake()
+
     const onContinuePress = async () => {
         if (!otp || otp.length !== 6) {
             setShowErrorMessage(true)
+            shake()
             return
         }
 
@@ -56,6 +61,7 @@ const OTP = ({ toastRef, searchParams }) => {
             })
 
             setOtp('')
+            shake()
         } finally {
             continueButtonRef.current.setIsLoading(false)
         }
@@ -144,7 +150,7 @@ const OTP = ({ toastRef, searchParams }) => {
                             marginTop: SPACING.xx_small
                         }}
                     >
-                        We have sent a verification code to your email
+                        We have sent a verification code to {email ? email : 'your email'}
                     </Text>
 
                     <CustomInput
@@ -158,16 +164,19 @@ const OTP = ({ toastRef, searchParams }) => {
                         onSubmitEditing={onContinuePress}
                     />
 
-                    <CustomButton ref={continueButtonRef}
-                        onPress={onContinuePress}
-                        additionalStyles={{ borderWidth: 1, borderColor: COLORS.white, marginTop: SPACING.medium, width: '100%' }}
-                        textColor={COLORS.black}
-                        backgroundColors={COLORS.white}
-                        buttonText='Continue'
-                        textStyles={{ fontFamily: FONTS.medium }}
-                        disabled={otp.length !== 6}
-                    />
-
+                    <Animated.View
+                        style={[rStyle, { width: '100%' }]}
+                    >
+                        <CustomButton ref={continueButtonRef}
+                            onPress={onContinuePress}
+                            additionalStyles={{ borderWidth: 1, borderColor: COLORS.white, marginTop: SPACING.medium, width: '100%' }}
+                            textColor={COLORS.black}
+                            backgroundColors={COLORS.white}
+                            buttonText='Continue'
+                            textStyles={{ fontFamily: FONTS.medium }}
+                            disabled={otp.length !== 6}
+                        />
+                    </Animated.View>
                     <CustomButton ref={resendButtonRef}
                         onPress={onResendPress}
                         additionalStyles={{ borderWidth: 1, borderColor: COLORS.whiteBackground2, marginTop: SPACING.xx_small, width: '100%' }}

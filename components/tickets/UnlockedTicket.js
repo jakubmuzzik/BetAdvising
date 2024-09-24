@@ -147,7 +147,7 @@ const Match = ({ match, width, id, showEditButtons, offsetX, actions }) => {
                             icon="dots-horizontal"
                             iconColor="#FFF"
                             containerColor={COLORS.grey600 + 'B3'}
-                            size={18}
+                            size={10}
                             onPress={() => actionsDropdownRef.current?.onDropdownPress()}
                         />
                     </DropdownSelect>

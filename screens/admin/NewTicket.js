@@ -104,7 +104,7 @@ const Match = ({ setTicketEntries, match, index, onRowDeletePress, offsetX }) =>
                 borderWidth: 1,
                 borderRadius: 10,
                 borderColor: COLORS.whiteBackground2,
-                //backgroundColor: COLORS.secondary2,
+                backgroundColor: COLORS.secondary,
                 padding: SPACING.small,
                 gap: SPACING.small
             }}
@@ -514,6 +514,16 @@ const NewTicket = ({ offsetX, toastRef, setTabHeight }) => {
         <View
         onLayout={(event) => setTabHeight(event.nativeEvent.layout.height)}
         >
+            <Text
+                    style={{
+                        color: COLORS.white,
+                        fontSize: FONT_SIZES.h3,
+                        fontFamily: FONTS.medium,
+                        marginBottom: SPACING.small
+                    }}
+                >
+                    Informace o tiketu
+                </Text>
             <View
                 style={{
                     borderWidth: 1,
@@ -524,23 +534,14 @@ const NewTicket = ({ offsetX, toastRef, setTabHeight }) => {
                     marginBottom: SPACING.medium
                 }}
             >
-                <Text
-                    style={{
-                        color: COLORS.white,
-                        fontSize: FONT_SIZES.h3,
-                        fontFamily: FONTS.medium,
-                        marginBottom: SPACING.large
-                    }}
-                >
-                    Informace o tiketu
-                </Text>
+                
                 <View style={{
                     flexDirection: 'row',
                     gap: SPACING.medium,
                 }}>
                     <View
                         style={{
-                            width: 'fit-content'
+                            flex: 1
                         }}
                     >
                         <CustomInput
@@ -559,7 +560,7 @@ const NewTicket = ({ offsetX, toastRef, setTabHeight }) => {
                     </View>
                     <View
                         style={{
-                            width: 'fit-content'
+                            flex: 1
                         }}
                     >
                         <CustomInput
@@ -579,26 +580,29 @@ const NewTicket = ({ offsetX, toastRef, setTabHeight }) => {
                 </View>
             </View>
 
-            <View
-                style={{
-                    borderWidth: 1,
-                    borderRadius: 10,
-                    borderColor: COLORS.whiteBackground2,
-                    backgroundColor: COLORS.secondary,
-                    padding: SPACING.small
-                }}
-            >
-
-                <Text
+            <Text
                     style={{
                         color: COLORS.white,
                         fontSize: FONT_SIZES.h3,
                         fontFamily: FONTS.medium,
-                        marginBottom: SPACING.large
+                        marginBottom: SPACING.small,
+                        marginTop: SPACING.medium
                     }}
                 >
                     Zápasy
                 </Text>
+
+            <View
+                style={{
+                    //borderWidth: 1,
+                    //borderRadius: 10,
+                    //borderColor: COLORS.whiteBackground2,
+                    //backgroundColor: COLORS.secondary,
+                    //padding: SPACING.small
+                }}
+            >
+
+                
 
                 <View
                     style={{

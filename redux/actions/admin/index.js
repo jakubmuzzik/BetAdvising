@@ -28,7 +28,8 @@ export const fetchOpenTickets = () => async (dispatch, getState) => {
         const { data=[], error } = await supabase
             .from('tickets')
             .select(TICKETS_QUERY)
-            .gte('start_date', new Date().toISOString())
+            //.gte('start_date', new Date().toISOString())
+            .eq('result', 'pending')
             .order('start_date', { ascending: true })
             .range(from, Number(from) + Number(MAX_TICKETS_ROWS_PER_QUERY) - 1)
 
@@ -60,8 +61,9 @@ export const fetchClosedTickets = () => async (dispatch, getState) => {
         const { data=[], error } = await supabase
             .from('tickets')
             .select(TICKETS_QUERY)
-            .lte('start_date', new Date().toISOString())
-            .order('start_date', { ascending: true })
+            //.lte('start_date', new Date().toISOString())
+            .neq('result', 'pending')
+            .order('closed_date', { ascending: false })
             .range(from, Number(from) + Number(MAX_TICKETS_ROWS_PER_QUERY) - 1)
 
         if (error) throw error
@@ -90,7 +92,7 @@ export const fetchOpenTicketsCount = (attemptsLeft=API_RETRY_LIMIT) => async (di
         const { count, error } = await supabase
             .from('tickets')
             .select('id', { count: 'exact', head: true })
-            .gte('start_date', new Date().toISOString())
+            .eq('result', 'pending')
 
         if (error) throw error
 
@@ -113,7 +115,7 @@ export const fetchClosedTicketsCount = (attemptsLeft=API_RETRY_LIMIT) => async (
         const { count, error } = await supabase
             .from('tickets')
             .select('id', { count: 'exact', head: true })
-            .lte('start_date', new Date().toISOString())
+            .neq('result', 'pending')
 
         if (error) throw error
 
@@ -129,4 +131,48 @@ export const fetchClosedTicketsCount = (attemptsLeft=API_RETRY_LIMIT) => async (
             return null
         }
     }
+}
+
+export const closeOpenTicketInRedux = (ticketId, result) => (dispatch, getState) => {
+    const openTickets = getState().adminState.openTickets.filter((ticket) => ticket.id !== ticketId)
+
+    const toClose = getState().adminState.openTickets.find((ticket) => ticket.id === ticketId)
+
+    dispatch({
+        type: OPEN_TICKETS_STATE_CHANGE,
+        openTickets
+    })
+
+    dispatch({
+        type: CLOSED_TICKETS_STATE_CHANGE,
+        closedTickets: [{
+            ...toClose,
+            result,
+            closed_date: new Date()
+        }].concat(getState().adminState.closedTickets ?? [])
+    })
+
+    const openTicketsCount = getState().adminState.openTicketsCount
+
+    if (openTicketsCount != null && openTicketsCount > 0) {
+        dispatch(setOpenTicketsCount(openTicketsCount - 1))
+    }
+
+    const closedTicketsCount = getState().adminState.closedTicketsCount
+
+    if (closedTicketsCount != null && closedTicketsCount >= 0) {
+        dispatch(setClosedTicketsCount(closedTicketsCount + 1))
+    }
+}
+
+export const updateTicketEntryInRedux = (ticketEntryId, result) => (dispatch, getState) => {
+    let openTicketsToUpdate = JSON.parse(JSON.stringify(getState().adminState.openTickets))
+
+    openTicketsToUpdate.find(ticket => ticket.ticket_entries.find(ticketEntry => ticketEntry.id === ticketEntryId).result = result)
+
+
+    dispatch({
+        type: OPEN_TICKETS_STATE_CHANGE,
+        openTickets: openTicketsToUpdate
+    })
 }

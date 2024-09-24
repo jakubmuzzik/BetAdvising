@@ -95,7 +95,7 @@ const TicketHeader = ({ name, type }) => (
                         color: COLORS.white
                     }}
                 >
-                    Tiket {name}
+                    Tiket #{name}
                 </Text>
             </View>
         </View>
@@ -420,7 +420,7 @@ const mapStateToProps = (store) => ({
     toastRef: store.appState.toastRef
 })
 
-export default connect(mapStateToProps)(withSearchParams(LockedTicket, ['language']))
+export default connect(mapStateToProps)(LockedTicket)
 
 const styles = StyleSheet.create({
     regularCard: {

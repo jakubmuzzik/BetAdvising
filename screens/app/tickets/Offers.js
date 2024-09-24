@@ -218,6 +218,7 @@ const Offers = ({ searchParams, setTabHeight }) => {
                         >
                             {isSmallScreen && <TimeLeft startDate={offer.first_match_date} />}
                             <UnlockedTicket
+                                searchParams={searchParams}
                                 ticket={offer.tickets[0]}
                                 isLast={index === OFFERS.length - 1}
                             />
@@ -231,6 +232,7 @@ const Offers = ({ searchParams, setTabHeight }) => {
                         >
                             {isSmallScreen && <TimeLeft startDate={offer.first_match_date} />}
                             <LockedTicket
+                                searchParams={searchParams}
                                 ticket={offer}
                                 isLast={index === OFFERS.length - 1}
                             />

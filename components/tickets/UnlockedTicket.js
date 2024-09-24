@@ -1,54 +1,79 @@
-import React from 'react'
+import React, { useRef } from 'react'
 import { View, Text, useWindowDimensions } from 'react-native'
 import { FONTS, FONT_SIZES, SPACING, COLORS } from '../../constants'
 import { MaterialIcons, MaterialCommunityIcons, FontAwesome } from '@expo/vector-icons'
 import { getEventDate, getEventTime } from '../../utils'
 import { Image } from 'expo-image'
+import { IconButton } from 'react-native-paper'
 
-import withSearchParams from '../hoc/withSearchParams'
+import DropdownSelect from '../elements/DropdownSelect'
 
-const TicketHeader = ({ name, type }) => (
-    <View
-        style={{
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            padding: SPACING.x_small
-        }}
-    >
+const TicketHeader = ({ name, id, type, showEditButtons, offsetX, actions }) => {
+    const actionsDropdownRef = useRef()
+
+    return (
         <View
             style={{
                 flexDirection: 'row',
-                gap: SPACING.xx_small,
-                alignItems: 'center',
+                justifyContent: 'space-between',
+                padding: SPACING.x_small
             }}
         >
-            <MaterialCommunityIcons name="ticket-confirmation" size={30} color={COLORS.grey200} />
-            <View>
-                <Text
-                    style={{
-                        fontFamily: FONTS.medium,
-                        fontSize: FONT_SIZES.small,
-                        color: COLORS.grey400,
-                        marginBottom: 2
-                    }}
-                >
-                    {type}
-                </Text>
-                <Text
-                    style={{
-                        fontFamily: FONTS.medium,
-                        fontSize: FONT_SIZES.large,
-                        color: COLORS.white
-                    }}
-                >
-                    Tiket {name}
-                </Text>
+            <View
+                style={{
+                    flexDirection: 'row',
+                    gap: SPACING.xx_small,
+                    alignItems: 'center',
+                }}
+            >
+                <MaterialCommunityIcons name="ticket-confirmation" size={30} color={COLORS.grey200} />
+                <View>
+                    <Text
+                        style={{
+                            fontFamily: FONTS.medium,
+                            fontSize: FONT_SIZES.small,
+                            color: COLORS.grey400,
+                            marginBottom: 2
+                        }}
+                    >
+                        {type}
+                    </Text>
+                    <Text
+                        style={{
+                            fontFamily: FONTS.medium,
+                            fontSize: FONT_SIZES.large,
+                            color: COLORS.white
+                        }}
+                    >
+                        Tiket #{name}
+                    </Text>
+                </View>
             </View>
-        </View>
-    </View>
-)
 
-const Match = ({ match, width }) => (
+            {showEditButtons && (
+                <DropdownSelect
+                    ref={actionsDropdownRef}
+                    offsetX={offsetX}
+                    values={actions.map(action => action.label)}
+                    setText={(text) => actions.find(action => action.label === text).onPress(id)}
+                >
+                    <IconButton
+                        icon="dots-horizontal"
+                        iconColor="#FFF"
+                        containerColor={COLORS.grey600 + 'B3'}
+                        size={18}
+                        onPress={() => actionsDropdownRef.current?.onDropdownPress()}
+                    />
+                </DropdownSelect>
+            )}
+        </View>
+    )
+}
+
+const Match = ({ match, width, id, showEditButtons, offsetX, actions }) => {
+    const actionsDropdownRef = useRef()
+
+    return (
     <View
         style={{
             flex: 1
@@ -80,13 +105,17 @@ const Match = ({ match, width }) => (
                         color: COLORS.white,
                         flexShrink: 1
                     }}
-                    //numberOfLines={1}
+                //numberOfLines={1}
                 >
                     {match.home} - {match.away}
                 </Text>
             </View>
 
-            <View>
+            <View style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                gap: 10
+            }}>
                 {
                     match.result === 'pending' ? <MaterialIcons name="question-mark" size={FONT_SIZES.x_large} color={COLORS.white} />
                         : match.result === 'win' ? <Image
@@ -107,6 +136,22 @@ const Match = ({ match, width }) => (
                             />
                                 : <MaterialCommunityIcons name="cancel" size={18} color={COLORS.white} />
                 }
+                {showEditButtons && (
+                    <DropdownSelect
+                        ref={actionsDropdownRef}
+                        offsetX={offsetX}
+                        values={actions.map(action => action.label)}
+                        setText={(text) => actions.find(action => action.label === text).onPress(id)}
+                    >
+                        <IconButton
+                            icon="dots-horizontal"
+                            iconColor="#FFF"
+                            containerColor={COLORS.grey600 + 'B3'}
+                            size={18}
+                            onPress={() => actionsDropdownRef.current?.onDropdownPress()}
+                        />
+                    </DropdownSelect>
+                )}
             </View>
         </View>
         <View
@@ -160,9 +205,10 @@ const Match = ({ match, width }) => (
             </Text>
         </View>
     </View>
-)
+    )
+}
 
-const TicketBody = ({ ticket }) => {
+const TicketBody = ({ ticket, showEditButtons, offsetX, actions }) => {
     const { width } = useWindowDimensions()
 
     return (
@@ -174,7 +220,7 @@ const TicketBody = ({ ticket }) => {
             gap: SPACING.medium
         }}>
             {ticket.ticket_entries.map((match) => (
-                <Match key={match.id} match={match} width={width}/>
+                <Match key={match.id} match={match} width={width} id={match.id} showEditButtons={showEditButtons} offsetX={offsetX} actions={actions} />
             ))}
         </View>
     )
@@ -256,7 +302,7 @@ const TicketFooter = ({ odd, result }) => (
     </View>
 )
 
-const UnlockedTicket = ({ ticket, searchParams }) => {
+const UnlockedTicket = ({ ticket, searchParams, showEditButtons, offsetX, ticketEntryActions, ticketActions }) => {
     return (
         <View
             style={{
@@ -267,18 +313,14 @@ const UnlockedTicket = ({ ticket, searchParams }) => {
                 flexGrow: 1
             }}
         >
-            <TicketHeader type={ticket.type} name={ticket.name} />
-            <TicketBody ticket={ticket} />
+            <TicketHeader type={ticket.ticket_entries.length > 1 ? 'AKO' : 'Single'} id={ticket.id} name={ticket.name} showEditButtons={showEditButtons} offsetX={offsetX} actions={ticketActions}/>
+            <TicketBody ticket={ticket} showEditButtons={showEditButtons} offsetX={offsetX} actions={ticketEntryActions}/>
             <TicketFooter
                 odd={ticket.ticket_entries.reduce((acc, curr) => acc * curr.odd, 1)}
-                result={
-                    ticket.ticket_entries.some(ticket => ticket.result === 'lose' || ticket.result === 'cancelled') ? 'lose'
-                        : ticket.ticket_entries.every(ticket => ticket.result === 'win') ? 'win'
-                            : 'pending'
-                }
+                result={ticket.result}
             />
         </View>
     )
 }
 
-export default withSearchParams(UnlockedTicket, ['language'])
+export default UnlockedTicket

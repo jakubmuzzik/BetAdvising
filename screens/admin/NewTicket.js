@@ -271,7 +271,7 @@ const Match = ({ setTicketEntries, match, index, onRowDeletePress, offsetX }) =>
                     errorMessage={match.oddsErrorMessage}
                     onChangeText={text => {
                         setTicketEntries(entries => {
-                            entries[index].odds = text.replace(/[^0-9]/g, '')
+                            entries[index].odds = text.replace(/[^0-9.]/g, '')
                             return [...entries]
                         })
                     }}
@@ -511,9 +511,10 @@ const NewTicket = ({ offsetX, toastRef, setTabHeight }) => {
     }
 
     return (
-        <>
+        <View
+        onLayout={(event) => setTabHeight(event.nativeEvent.layout.height)}
+        >
             <View
-                onLayout={(event) => setTabHeight(event.nativeEvent.layout.height)}
                 style={{
                     borderWidth: 1,
                     borderRadius: 10,
@@ -642,7 +643,7 @@ const NewTicket = ({ offsetX, toastRef, setTabHeight }) => {
                     backgroundColors={[COLORS.accent2, COLORS.accent, COLORS.accent, COLORS.accent2]}
                 />
             </View>
-        </>
+        </View>
     )
 }
 

@@ -3,21 +3,25 @@ import { View, Text, useWindowDimensions, FlatList } from 'react-native'
 import { FONTS, FONT_SIZES, SPACING, COLORS, SUPPORTED_LANGUAGES } from '../../constants'
 import { normalize, calculateTimeDifference } from '../../utils'
 import { LinearGradient } from 'expo-linear-gradient'
-import { MaterialIcons, FontAwesome } from '@expo/vector-icons'
+import { MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons'
 import { fetchClosedTickets } from '../../redux/actions/admin'
 import { ActivityIndicator } from 'react-native-paper'
 import Animated, { FlipInEasyX } from 'react-native-reanimated'
 import { MAX_TICKETS_ROWS_PER_QUERY } from '../../redux/actions/admin'
 import ContentLoader, { Rect } from "react-content-loader/native"
+import { Image } from 'expo-image'
 
 import UnlockedTicket from '../../components/tickets/UnlockedTicket'
 import { connect } from 'react-redux'
+import withSearchParams from '../../components/hoc/withSearchParams'
 
 const GAP = normalize(60)
 
 
 const Divider = ({ isLast, result }) => {
     const [contentHeight, setContentHeight] = useState(0)
+
+    console.log('result', result)
 
     return (
         <View onLayout={(event) => setContentHeight(event.nativeEvent.layout.height)} >
@@ -81,7 +85,7 @@ const Skeleton = () => (
     </ContentLoader>
 )
 
-const ClosedTickets = ({ fetchClosedTickets, setTabHeight, toastRef, closedTickets }) => {
+const ClosedTickets = ({ fetchClosedTickets, setTabHeight, toastRef, closedTickets, searchParams }) => {
     const { width } = useWindowDimensions()
 
     const isSmallScreen = width < 700
@@ -136,11 +140,7 @@ const ClosedTickets = ({ fetchClosedTickets, setTabHeight, toastRef, closedTicke
             {/* {!isSmallScreen && <TimeLeft onTimeLeftLayout={(event) => onTimeLeftLayout(event, index)} width={timeLeftWidth} startDate={offer.start_date} />} */}
             <Divider
                 isLast={index === closedTickets.length - 1}
-                result={
-                    offer.ticket_entries.some(ticket => ticket.result === 'lose' || ticket.result === 'cancelled') ? 'lose'
-                        : offer.ticket_entries.every(ticket => ticket.result === 'win') ? 'win'
-                            : 'pending'
-                }
+                result={offer.result}
             />
 
             <View
@@ -151,6 +151,7 @@ const ClosedTickets = ({ fetchClosedTickets, setTabHeight, toastRef, closedTicke
             >
                 {isSmallScreen && <TimeLeft startDate={offer.start_date} />}
                 <UnlockedTicket
+                    searchParams={searchParams}
                     ticket={offer}
                     isLast={index === closedTickets.length - 1}
                 />
@@ -201,4 +202,4 @@ const mapStateToProps = (store) => ({
     closedTickets: store.adminState.closedTickets
 })
 
-export default connect(mapStateToProps, { fetchClosedTickets })(ClosedTickets)
+export default connect(mapStateToProps, { fetchClosedTickets })( withSearchParams(ClosedTickets, ['language']))

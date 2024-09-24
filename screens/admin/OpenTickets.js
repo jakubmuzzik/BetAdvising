@@ -12,10 +12,16 @@ import ContentLoader, { Rect } from "react-content-loader/native"
 
 import UnlockedTicket from '../../components/tickets/UnlockedTicket'
 import { connect } from 'react-redux'
+import withSearchParams from '../../components/hoc/withSearchParams'
+
+import { supabase } from '../../supabase/config'
+import { closeOpenTicketInRedux, updateTicketEntryInRedux } from '../../redux/actions/admin'
+
+import ConfirmationModal from '../../components/modal/ConfirmationModal'
 
 const GAP = normalize(60)
 
-const TimeLeft = ({ startDate, width, onTimeLeftLayout=() => {}}) => {
+const TimeLeft = ({ startDate, width, onTimeLeftLayout = () => { } }) => {
     const [timeLeft, setTimeLeft] = useState(calculateTimeDifference(new Date(), startDate))
 
     useEffect(() => {
@@ -76,7 +82,7 @@ const Divider = ({ isLast }) => {
                     zIndex: 2
                 }}
             >
-               <MaterialIcons name="question-mark" size={FONT_SIZES.x_large} color={COLORS.white} />
+                <MaterialIcons name="question-mark" size={FONT_SIZES.x_large} color={COLORS.white} />
             </LinearGradient>
             {!isLast && <LinearGradient
                 colors={[COLORS.whiteBackground2, COLORS.whiteBackground2, COLORS.whiteBackground2]}
@@ -105,7 +111,7 @@ const Skeleton = () => (
     </ContentLoader>
 )
 
-const OpenTickets = ({ fetchOpenTickets, setTabHeight, toastRef, openTickets }) => {
+const OpenTickets = ({ fetchOpenTickets, setTabHeight, toastRef, openTickets, searchParams, offsetX, closeOpenTicketInRedux, updateTicketEntryInRedux }) => {
     const { width } = useWindowDimensions()
 
     const isSmallScreen = width < 700
@@ -116,6 +122,9 @@ const OpenTickets = ({ fetchOpenTickets, setTabHeight, toastRef, openTickets }) 
     const [timeLeftWidth, setTimeLeftWidth] = useState()
     const [refreshing, setRefreshing] = useState(false)
 
+    const [ticketToWin, setTicketToWin] = useState()
+    const [ticketToLose, setTicketToLose] = useState()
+
     useEffect(() => {
         if (openTickets == null) {
             fetchOpenTickets()
@@ -124,9 +133,124 @@ const OpenTickets = ({ fetchOpenTickets, setTabHeight, toastRef, openTickets }) 
         openTickets
     ])
 
+    const allTicketEntriesResulted = (ticketId) => {
+        return openTickets.find(ticket => ticket.id === ticketId).ticket_entries.every(ticketEntry => ticketEntry.result != 'pending')
+    }
+
+    const updateTicketResult = async (ticketId, result) => {
+        try {
+            const { error } = await supabase
+                .from('tickets')
+                .update({ result })
+                .eq('id', ticketId)
+
+            if (error) throw error
+
+            closeOpenTicketInRedux(ticketId, result)
+
+            toastRef?.show({
+                type: 'success',
+                text: 'Ticket result updated to: ' + result
+            })
+        } catch (e) {
+            console.error(e)
+            toastRef?.show({
+                type: 'error',
+                text: 'Failed to update ticket'
+            })
+        }
+    }
+
+    const updateTicketEntryResult = async (ticketEntryId, result) => {
+        try {
+            const { error } = await supabase
+                .from('ticket_entries')
+                .update({ result })
+                .eq('id', ticketEntryId)
+
+            if (error) throw error
+
+            updateTicketEntryInRedux(ticketEntryId, result)
+
+            toastRef?.show({
+                type: 'success',
+                text: 'Ticket entry updated'
+            })
+        } catch (e) {
+            console.error(e)
+            toastRef?.show({
+                type: 'error',
+                text: 'Failed to update ticket entry'
+            })
+        }
+    }
+
+    const wonTicketPress = async (ticketId) => {
+        if (!allTicketEntriesResulted(ticketId)) {
+            toastRef?.show({
+                type: 'error',
+                text: 'Not all ticket entries have been resulted yet'
+            })
+            return
+        }
+
+        setTicketToWin(ticketId)
+    }
+
+    const loseTicketPress = async (ticketId) => {
+        if (!allTicketEntriesResulted(ticketId)) {
+            toastRef?.show({
+                type: 'error',
+                text: 'Not all ticket entries have been resulted yet'
+            })
+            return
+        }
+
+        setTicketToLose(ticketId)
+    }
+
+    const wonTicketEntryPress = async (ticketEntryId) => {
+        updateTicketEntryResult(ticketEntryId, 'win')
+    }
+
+    const loseTicketEntryPress = (ticketEntryId) => {
+        updateTicketEntryResult(ticketEntryId, 'lose')
+    }
+
+    const cancelTicketEntryPress = (ticketEntryId) => {
+        updateTicketEntryResult(ticketEntryId, 'cancelled')
+    }
+
+
+    const ticketEntryActions = [
+        {
+            label: 'Won',
+            onPress: wonTicketEntryPress
+        },
+        {
+            label: 'Lost',
+            onPress: loseTicketEntryPress
+        },
+        {
+            label: 'Cancelled',
+            onPress: cancelTicketEntryPress
+        }
+    ]
+
+    const ticketActions = [
+        {
+            label: 'Won',
+            onPress: wonTicketPress
+        },
+        {
+            label: 'Lost',
+            onPress: loseTicketPress
+        }
+    ]
+
     const onTimeLeftLayout = (event, index) => {
         const { width } = event.nativeEvent.layout
-        
+
         if (width > currentWidestTimeLeft.current) {
             currentWidestTimeLeft.current = width
         }
@@ -168,6 +292,11 @@ const OpenTickets = ({ fetchOpenTickets, setTabHeight, toastRef, openTickets }) 
             >
                 {isSmallScreen && <TimeLeft startDate={offer.start_date} />}
                 <UnlockedTicket
+                    offsetX={offsetX}
+                    ticketEntryActions={ticketEntryActions}
+                    ticketActions={ticketActions}
+                    showEditButtons
+                    searchParams={searchParams}
                     ticket={offer}
                     isLast={index === openTickets.length - 1}
                 />
@@ -191,7 +320,7 @@ const OpenTickets = ({ fetchOpenTickets, setTabHeight, toastRef, openTickets }) 
             <FlatList
                 contentContainerStyle={{ gap: GAP }}
                 keyExtractor={(item) => item.id}
-                data={openTickets == null ? new Array(10).fill(null, 0).map((_, index) => ({ id: index }))  : openTickets}
+                data={openTickets == null ? new Array(10).fill(null, 0).map((_, index) => ({ id: index })) : openTickets}
                 renderItem={({ item, index }) => openTickets == null ? <Skeleton /> : renderItem(item, index)}
                 onEndReached={onEndReached}
                 ListFooterComponent={() => refreshing && (
@@ -209,6 +338,29 @@ const OpenTickets = ({ fetchOpenTickets, setTabHeight, toastRef, openTickets }) 
                 refreshing={refreshing}
             />
 
+            <ConfirmationModal
+                visible={!!ticketToWin}
+                headerText='Vyhrát ticket'
+                text='Opravdu chcete vyhrát tento ticket?'
+                onCancel={() => setTicketToWin(undefined)}
+                onConfirm={() => updateTicketResult(ticketToWin, 'win')}
+                headerErrorText='Error'
+                confirmLabel='Vyhrát'
+                confirmButtonColor={['green', 'green']}
+                errorText='Failed to win ticket.'
+            />
+
+            <ConfirmationModal
+                visible={!!ticketToLose}
+                headerText='Prohrát ticket'
+                text='Opravdu chcete prohrát tento ticket?'
+                onCancel={() => setTicketToLose(undefined)}
+                onConfirm={() => updateTicketResult(ticketToLose, 'lose')}
+                headerErrorText='Error'
+                confirmLabel='Prohrát'
+                confirmButtonColor={[COLORS.error, COLORS.error]}
+                errorText='Failed to lose ticket.'
+            />
         </View>
     )
 }
@@ -218,4 +370,4 @@ const mapStateToProps = (store) => ({
     openTickets: store.adminState.openTickets
 })
 
-export default connect(mapStateToProps, { fetchOpenTickets })(OpenTickets)
+export default connect(mapStateToProps, { fetchOpenTickets, closeOpenTicketInRedux, updateTicketEntryInRedux })(withSearchParams(OpenTickets, ['language']))

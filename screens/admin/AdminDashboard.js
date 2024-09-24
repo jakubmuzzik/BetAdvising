@@ -56,7 +56,7 @@ const AdminDashboard = ({
             borderColor: COLORS.whiteBackground2
         }}
             onPress={() => onDataCountCardPress(pathToNavigate)}
-            rippleColor="rgba(220, 46, 46, .10)"
+            rippleColor='rgba(251, 193, 13, 0.1)'
         >
             <>
                 <View style={{ justifyContent: 'space-between', flexDirection: 'row', alignItems: 'center', marginBottom: SPACING.small }}>

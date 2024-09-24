@@ -4,7 +4,7 @@ import { FONTS, FONT_SIZES, SPACING, COLORS, SUPPORTED_LANGUAGES } from '../../c
 import { normalize, calculateTimeDifference } from '../../utils'
 import { LinearGradient } from 'expo-linear-gradient'
 import { MaterialIcons, FontAwesome } from '@expo/vector-icons'
-import { fetchOpenTickets } from '../../redux/actions/admin'
+import { fetchClosedTickets } from '../../redux/actions/admin'
 import { ActivityIndicator } from 'react-native-paper'
 import Animated, { FlipInEasyX } from 'react-native-reanimated'
 import { MAX_TICKETS_ROWS_PER_QUERY } from '../../redux/actions/admin'
@@ -15,51 +15,8 @@ import { connect } from 'react-redux'
 
 const GAP = normalize(60)
 
-const TimeLeft = ({ startDate, width, onTimeLeftLayout=() => {}}) => {
-    const [timeLeft, setTimeLeft] = useState(calculateTimeDifference(new Date(), startDate))
 
-    useEffect(() => {
-        // Update timeLeft every second
-        const timer = setInterval(() => {
-            setTimeLeft(calculateTimeDifference(new Date(), startDate))
-        }, 1000)
-
-        // Cleanup interval on component unmount
-        return () => clearInterval(timer)
-    }, [startDate])
-
-    return (
-        <View
-            onLayout={(event) => onTimeLeftLayout(event)}
-            style={width != null ? { width } : null}
-        >
-            <Text
-                style={{
-                    fontFamily: FONTS.medium,
-                    fontSize: FONT_SIZES.medium,
-                    color: COLORS.grey400
-                }}
-            >
-                Zbývá:
-            </Text>
-            <Text
-                style={{
-                    fontFamily: FONTS.medium,
-                    fontSize: FONT_SIZES.x_large,
-                    color: COLORS.white,
-                    marginTop: 4
-                }}
-            >
-                {timeLeft.days > 0 ? `${timeLeft.days}d ` : ''}
-                {timeLeft.hours > 0 ? `${timeLeft.hours}h ` : ''}
-                {timeLeft.minutes > 0 || timeLeft.hours > 0 ? `${timeLeft.minutes}m ` : ''}
-                {`${timeLeft.seconds}s`}
-            </Text>
-        </View>
-    )
-}
-
-const Divider = ({ isLast }) => {
+const Divider = ({ isLast, result }) => {
     const [contentHeight, setContentHeight] = useState(0)
 
     return (
@@ -76,7 +33,26 @@ const Divider = ({ isLast }) => {
                     zIndex: 2
                 }}
             >
-               <MaterialIcons name="question-mark" size={FONT_SIZES.x_large} color={COLORS.white} />
+                {
+                    result === 'pending' ? <MaterialIcons name="question-mark" size={FONT_SIZES.x_large} color={COLORS.white} />
+                        : result === 'win' ? <Image
+                            source={require('../../assets/images/SuccessIcon.png')}
+                            style={{
+                                width: 18,
+                                height: 18
+                            }}
+                            contentFit="contain"
+                        />
+                            : result === 'lose' ? <Image
+                                source={require('../../assets/images/ErrorIcon.png')}
+                                style={{
+                                    width: 18,
+                                    height: 18
+                                }}
+                                contentFit="contain"
+                            />
+                                : <MaterialCommunityIcons name="cancel" size={18} color={COLORS.white} />
+                }
             </LinearGradient>
             {!isLast && <LinearGradient
                 colors={[COLORS.whiteBackground2, COLORS.whiteBackground2, COLORS.whiteBackground2]}
@@ -105,7 +81,7 @@ const Skeleton = () => (
     </ContentLoader>
 )
 
-const OpenTickets = ({ fetchOpenTickets, setTabHeight, toastRef, openTickets }) => {
+const ClosedTickets = ({ fetchClosedTickets, setTabHeight, toastRef, closedTickets }) => {
     const { width } = useWindowDimensions()
 
     const isSmallScreen = width < 700
@@ -117,32 +93,32 @@ const OpenTickets = ({ fetchOpenTickets, setTabHeight, toastRef, openTickets }) 
     const [refreshing, setRefreshing] = useState(false)
 
     useEffect(() => {
-        if (openTickets == null) {
-            fetchOpenTickets()
+        if (closedTickets == null) {
+            fetchClosedTickets()
         }
     }, [
-        openTickets
+        closedTickets
     ])
 
     const onTimeLeftLayout = (event, index) => {
         const { width } = event.nativeEvent.layout
-        
+
         if (width > currentWidestTimeLeft.current) {
             currentWidestTimeLeft.current = width
         }
 
-        if (index === openTickets.length - 1) {
+        if (index === closedTickets.length - 1) {
             setTimeLeftWidth(currentWidestTimeLeft.current)
         }
     }
 
     const onEndReached = async () => {
-        if (allTicketsLoaded.current || openTickets == null || refreshing || openTickets.length < MAX_TICKETS_ROWS_PER_QUERY) {
+        if (allTicketsLoaded.current || closedTickets == null || refreshing || closedTickets.length < MAX_TICKETS_ROWS_PER_QUERY) {
             return
         }
 
         setRefreshing(true)
-        const newOpenTickets = await fetchOpenTickets()
+        const newOpenTickets = await fetchClosedTickets()
         if (newOpenTickets == null || newOpenTickets?.length === 0) {
             allTicketsLoaded.current = true
         }
@@ -157,8 +133,15 @@ const OpenTickets = ({ fetchOpenTickets, setTabHeight, toastRef, openTickets }) 
                 gap: SPACING.small
             }}
         >
-            {!isSmallScreen && <TimeLeft onTimeLeftLayout={(event) => onTimeLeftLayout(event, index)} width={timeLeftWidth} startDate={offer.start_date} />}
-            <Divider isLast={index === openTickets.length - 1} />
+            {/* {!isSmallScreen && <TimeLeft onTimeLeftLayout={(event) => onTimeLeftLayout(event, index)} width={timeLeftWidth} startDate={offer.start_date} />} */}
+            <Divider
+                isLast={index === closedTickets.length - 1}
+                result={
+                    offer.ticket_entries.some(ticket => ticket.result === 'lose' || ticket.result === 'cancelled') ? 'lose'
+                        : offer.ticket_entries.every(ticket => ticket.result === 'win') ? 'win'
+                            : 'pending'
+                }
+            />
 
             <View
                 style={{
@@ -169,7 +152,7 @@ const OpenTickets = ({ fetchOpenTickets, setTabHeight, toastRef, openTickets }) 
                 {isSmallScreen && <TimeLeft startDate={offer.start_date} />}
                 <UnlockedTicket
                     ticket={offer}
-                    isLast={index === openTickets.length - 1}
+                    isLast={index === closedTickets.length - 1}
                 />
             </View>
         </View>
@@ -191,8 +174,8 @@ const OpenTickets = ({ fetchOpenTickets, setTabHeight, toastRef, openTickets }) 
             <FlatList
                 contentContainerStyle={{ gap: GAP }}
                 keyExtractor={(item) => item.id}
-                data={openTickets == null ? new Array(10).fill(null, 0).map((_, index) => ({ id: index }))  : openTickets}
-                renderItem={({ item, index }) => openTickets == null ? <Skeleton /> : renderItem(item, index)}
+                data={closedTickets == null ? new Array(10).fill(null, 0).map((_, index) => ({ id: index })) : closedTickets}
+                renderItem={({ item, index }) => closedTickets == null ? <Skeleton /> : renderItem(item, index)}
                 onEndReached={onEndReached}
                 ListFooterComponent={() => refreshing && (
                     <ActivityIndicator
@@ -203,7 +186,7 @@ const OpenTickets = ({ fetchOpenTickets, setTabHeight, toastRef, openTickets }) 
                 )}
                 ListEmptyComponent={() => !refreshing && (
                     <Animated.Text entering={FlipInEasyX} style={{ textAlign: 'center', fontFamily: FONTS.medium, color: COLORS.grey400, fontSize: FONT_SIZES.xx_large, }}>
-                        No open tickets
+                        No closed tickets
                     </Animated.Text>
                 )}
                 refreshing={refreshing}
@@ -215,7 +198,7 @@ const OpenTickets = ({ fetchOpenTickets, setTabHeight, toastRef, openTickets }) 
 
 const mapStateToProps = (store) => ({
     toastRef: store.appState.toastRef,
-    openTickets: store.adminState.openTickets
+    closedTickets: store.adminState.closedTickets
 })
 
-export default connect(mapStateToProps, { fetchOpenTickets })(OpenTickets)
+export default connect(mapStateToProps, { fetchClosedTickets })(ClosedTickets)

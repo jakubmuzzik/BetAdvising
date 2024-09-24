@@ -18,6 +18,7 @@ import CustomButton from '../components/elements/CustomButton'
 
 import NewTicket from '../screens/admin/NewTicket'
 import OpenTickets from '../screens/admin/OpenTickets'
+import ClosedTickets from '../screens/admin/ClosedTickets'
 
 const Admin = ({ searchParams }) => {
     const { width: windowWidth } = useWindowDimensions()
@@ -98,8 +99,8 @@ const Admin = ({ searchParams }) => {
                 )
             case 'closed-tickets':
                 return (
-                    <View style={{ marginTop: SPACING.large }}>
-                        {/* <NewPhotos index={route.index} /> */}
+                    <View style={{ maxWidth: '100%', height: routes[index].height, alignSelf: 'center' }}>
+                        <ClosedTickets setTabHeight={(height) => setTabHeight(height, route.index)} offsetX={windowWidth * route.index}/>
                     </View>
                 )
             default:

@@ -9,6 +9,8 @@ import { supabase } from '../../../supabase/config'
 
 export const MAX_TICKETS_ROWS_PER_QUERY = 50
 
+const TICKETS_QUERY = '*, ticket_entries(*)'
+
 export const setOpenTicketsCount = (openTicketsCount) => ({
     type: OPEN_TICKETS_COUNT_CHANGE,
     openTicketsCount
@@ -25,7 +27,7 @@ export const fetchOpenTickets = () => async (dispatch, getState) => {
 
         const { data=[], error } = await supabase
             .from('tickets')
-            .select('*')
+            .select(TICKETS_QUERY)
             .gte('start_date', new Date().toISOString())
             .order('start_date', { ascending: true })
             .range(from, Number(from) + Number(MAX_TICKETS_ROWS_PER_QUERY) - 1)
@@ -57,7 +59,7 @@ export const fetchClosedTickets = () => async (dispatch, getState) => {
 
         const { data=[], error } = await supabase
             .from('tickets')
-            .select('*')
+            .select(TICKETS_QUERY)
             .lte('start_date', new Date().toISOString())
             .order('start_date', { ascending: true })
             .range(from, Number(from) + Number(MAX_TICKETS_ROWS_PER_QUERY) - 1)

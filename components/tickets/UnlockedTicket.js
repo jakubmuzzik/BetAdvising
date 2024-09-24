@@ -82,7 +82,7 @@ const Match = ({ match, width }) => (
                     }}
                     //numberOfLines={1}
                 >
-                    {match.team_home} - {match.team_away}
+                    {match.home} - {match.away}
                 </Text>
             </View>
 

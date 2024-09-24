@@ -10,6 +10,10 @@ import HoverableView from '../../components/elements/HoverableView'
 import DropdownSelect from '../../components/elements/DropdownSelect'
 import { connect } from 'react-redux'
 
+import { useNavigate } from 'react-router-dom'
+
+import withSearchParams from '../../components/hoc/withSearchParams'
+
 const DEFAULT_TICKET_ENTRIES = [
     { sport: '', league: '', home: '', away: '', date: '', time: '', tip: '', odds: '' }
 ]
@@ -281,11 +285,13 @@ const Match = ({ setTicketEntries, match, index, onRowDeletePress, offsetX }) =>
     )
 }
 
-const NewTicket = ({ offsetX, toastRef, setTabHeight }) => {
+const NewTicket = ({ offsetX, toastRef, setTabHeight, searchParams }) => {
     const saveButtonRef = useRef()
 
     const [ticket, setTicket] = useState(DEFAULT_TICKET)
     const [ticketEntries, setTicketEntries] = useState(DEFAULT_TICKET_ENTRIES)
+
+    const navigate = useNavigate()
 
     const onAddMatchPress = () => {
         setTicketEntries(entries => {
@@ -431,7 +437,7 @@ const NewTicket = ({ offsetX, toastRef, setTabHeight }) => {
                     start_date: formattedEntries.sort((a, b) => a.start_date - b.start_date)[0].start_date,
                 })
                 .select('id, name')
-            
+
             if (error) {
                 toastRef?.show({
                     text: 'Could not save ticket',
@@ -501,9 +507,11 @@ const NewTicket = ({ offsetX, toastRef, setTabHeight }) => {
                 type: 'success'
             })
 
-            setTicket({...DEFAULT_TICKET})
-            setTicketEntries([...DEFAULT_TICKET_ENTRIES])
-        } catch(e) {
+            navigate({
+                pathname: '/admin',
+                search: new URLSearchParams(searchParams).toString() 
+            })
+        } catch (e) {
             console.error(e)
         } finally {
             saveButtonRef.current.setIsLoading(false)
@@ -512,18 +520,18 @@ const NewTicket = ({ offsetX, toastRef, setTabHeight }) => {
 
     return (
         <View
-        onLayout={(event) => setTabHeight(event.nativeEvent.layout.height)}
+            onLayout={(event) => setTabHeight(event.nativeEvent.layout.height)}
         >
             <Text
-                    style={{
-                        color: COLORS.white,
-                        fontSize: FONT_SIZES.h3,
-                        fontFamily: FONTS.medium,
-                        marginBottom: SPACING.small
-                    }}
-                >
-                    Informace o tiketu
-                </Text>
+                style={{
+                    color: COLORS.white,
+                    fontSize: FONT_SIZES.h3,
+                    fontFamily: FONTS.medium,
+                    marginBottom: SPACING.small
+                }}
+            >
+                Informace o tiketu
+            </Text>
             <View
                 style={{
                     borderWidth: 1,
@@ -534,7 +542,7 @@ const NewTicket = ({ offsetX, toastRef, setTabHeight }) => {
                     marginBottom: SPACING.medium
                 }}
             >
-                
+
                 <View style={{
                     flexDirection: 'row',
                     gap: SPACING.medium,
@@ -581,16 +589,16 @@ const NewTicket = ({ offsetX, toastRef, setTabHeight }) => {
             </View>
 
             <Text
-                    style={{
-                        color: COLORS.white,
-                        fontSize: FONT_SIZES.h3,
-                        fontFamily: FONTS.medium,
-                        marginBottom: SPACING.small,
-                        marginTop: SPACING.medium
-                    }}
-                >
-                    Zápasy
-                </Text>
+                style={{
+                    color: COLORS.white,
+                    fontSize: FONT_SIZES.h3,
+                    fontFamily: FONTS.medium,
+                    marginBottom: SPACING.small,
+                    marginTop: SPACING.medium
+                }}
+            >
+                Zápasy
+            </Text>
 
             <View
                 style={{
@@ -602,7 +610,7 @@ const NewTicket = ({ offsetX, toastRef, setTabHeight }) => {
                 }}
             >
 
-                
+
 
                 <View
                     style={{
@@ -656,4 +664,4 @@ const mapStateToProps = (store) => ({
 })
 
 
-export default connect(mapStateToProps)(NewTicket)
+export default connect(mapStateToProps)(withSearchParams(NewTicket, ['language']))

@@ -37,6 +37,7 @@ export const COLORS = {
     secondary2: '#1f2832',
     hoveredSecondary: '#2b3745',
     hoveredSecondary2: '#2b3745',
+    lightGrey: '#323232',
     grey: '#6b6e7b',
     grey50: '#f9fafb',
     grey100: '#f3f4f6',

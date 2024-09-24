@@ -7,7 +7,7 @@ import {
 import { API_RETRY_LIMIT } from '../../../constants'
 import { supabase } from '../../../supabase/config'
 
-const MAX_TICKETS_ROWS_PER_QUERY = 50
+export const MAX_TICKETS_ROWS_PER_QUERY = 50
 
 export const setOpenTicketsCount = (openTicketsCount) => ({
     type: OPEN_TICKETS_COUNT_CHANGE,
@@ -25,7 +25,7 @@ export const fetchOpenTickets = () => async (dispatch, getState) => {
 
         const { data=[], error } = await supabase
             .from('tickets')
-            .select(SAVED_EVENTS_QUERY)
+            .select('*')
             .gte('start_date', new Date().toISOString())
             .order('start_date', { ascending: true })
             .range(from, Number(from) + Number(MAX_TICKETS_ROWS_PER_QUERY) - 1)
@@ -57,7 +57,7 @@ export const fetchClosedTickets = () => async (dispatch, getState) => {
 
         const { data=[], error } = await supabase
             .from('tickets')
-            .select(SAVED_EVENTS_QUERY)
+            .select('*')
             .lte('start_date', new Date().toISOString())
             .order('start_date', { ascending: true })
             .range(from, Number(from) + Number(MAX_TICKETS_ROWS_PER_QUERY) - 1)

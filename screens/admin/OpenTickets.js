@@ -1,10 +1,14 @@
 import React, { useState, useMemo, useEffect, useRef } from 'react'
-import { View, Text, useWindowDimensions } from 'react-native'
+import { View, Text, useWindowDimensions, FlatList } from 'react-native'
 import { FONTS, FONT_SIZES, SPACING, COLORS, SUPPORTED_LANGUAGES } from '../../constants'
 import { normalize, calculateTimeDifference } from '../../utils'
 import { LinearGradient } from 'expo-linear-gradient'
 import { MaterialIcons, FontAwesome } from '@expo/vector-icons'
 import { fetchOpenTickets } from '../../redux/actions/admin'
+import { ActivityIndicator } from 'react-native-paper'
+import Animated, { FlipInEasyX } from 'react-native-reanimated'
+import { MAX_TICKETS_ROWS_PER_QUERY } from '../../redux/actions/admin'
+import ContentLoader, { Rect } from "react-content-loader/native"
 
 import UnlockedTicket from '../../components/tickets/UnlockedTicket'
 import { connect } from 'react-redux'
@@ -138,14 +142,29 @@ const Divider = ({ isLast }) => {
     )
 }
 
+const Skeleton = () => (
+    <ContentLoader
+        speed={2}
+        height={400}
+        width={750}
+        style={{ borderRadius: 10, alignSelf: 'center' }}
+        backgroundColor={COLORS.secondary}
+        foregroundColor={COLORS.secondary2}
+    >
+        <Rect x="0" y="0" rx="0" ry="0" width="100%" height={400} />
+    </ContentLoader>
+)
+
 const OpenTickets = ({ fetchOpenTickets, setTabHeight, toastRef, openTickets }) => {
     const { width } = useWindowDimensions()
 
     const isSmallScreen = width < 700
 
     const currentWidestTimeLeft = useRef(0)
+    const allTicketsLoaded = useRef(false)
 
     const [timeLeftWidth, setTimeLeftWidth] = useState()
+    const [refreshing, setRefreshing] = useState(false)
 
     useEffect(() => {
         if (openTickets == null) {
@@ -167,6 +186,45 @@ const OpenTickets = ({ fetchOpenTickets, setTabHeight, toastRef, openTickets }) 
         }
     }
 
+    const onEndReached = async () => {
+        if (allTicketsLoaded.current || openTickets == null || refreshing || openTickets.length < MAX_TICKETS_ROWS_PER_QUERY) {
+            return
+        }
+
+        setRefreshing(true)
+        const newOpenTickets = await fetchOpenTickets()
+        if (newOpenTickets == null || newOpenTickets?.length === 0) {
+            allTicketsLoaded.current = true
+        }
+        setRefreshing(false)
+    }
+
+    const renderItem = (offer, index) => (
+        <View
+            key={offer.id}
+            style={{
+                flexDirection: 'row',
+                gap: SPACING.small
+            }}
+        >
+            {!isSmallScreen && <TimeLeft onTimeLeftLayout={(event) => onTimeLeftLayout(event, index)} width={timeLeftWidth} startDate={offer.first_match_date} />}
+            <Divider isLast={index === OFFERS.length - 1} isLocked={offer.tickets.length === 0} />
+
+            <View
+                style={{
+                    gap: SPACING.medium,
+                    flex: 1
+                }}
+            >
+                {isSmallScreen && <TimeLeft startDate={offer.first_match_date} />}
+                <UnlockedTicket
+                    ticket={offer.tickets[0]}
+                    isLast={index === OFFERS.length - 1}
+                />
+            </View>
+        </View>
+    )
+
     return (
         <View
             onLayout={(event) => setTabHeight(event.nativeEvent.layout.height)}
@@ -177,36 +235,30 @@ const OpenTickets = ({ fetchOpenTickets, setTabHeight, toastRef, openTickets }) 
                 //paddingHorizontal: SPACING.medium,
                 paddingTop: SPACING.xx_large,
                 backgroundColor: COLORS.primary,
-                gap: GAP
                 //alignItems: 'center',
             }}
         >
-            {openTickets == null && <Text>Loading...</Text>}
-            {openTickets != null && openTickets.map((offer, index) => (
-                <View
-                    key={offer.id}
-                    style={{
-                        flexDirection: 'row',
-                        gap: SPACING.small
-                    }}
-                >
-                    {!isSmallScreen && <TimeLeft onTimeLeftLayout={(event) => onTimeLeftLayout(event, index)} width={timeLeftWidth} startDate={offer.first_match_date} />}
-                    <Divider isLast={index === OFFERS.length - 1} isLocked={offer.tickets.length === 0} />
+            <FlatList
+                contentContainerStyle={{ gap: GAP }}
+                keyExtractor={(item) => item.id}
+                data={openTickets == null ? new Array(10).fill(null, 0).map((_, index) => ({ id: index }))  : openTickets}
+                renderItem={({ item, index }) => openTickets == null ? <Skeleton /> : renderItem(item, index)}
+                onEndReached={onEndReached}
+                ListFooterComponent={() => refreshing && (
+                    <ActivityIndicator
+                        size='small'
+                        color={COLORS.darkBlue}
+                        style={{ padding: SPACING.medium }}
+                    />
+                )}
+                ListEmptyComponent={() => !refreshing && (
+                    <Animated.Text entering={FlipInEasyX} style={{ textAlign: 'center', fontFamily: FONTS.medium, color: COLORS.grey400, fontSize: FONT_SIZES.xx_large, }}>
+                        No open tickets
+                    </Animated.Text>
+                )}
+                refreshing={refreshing}
+            />
 
-                    <View
-                        style={{
-                            gap: SPACING.medium,
-                            flex: 1
-                        }}
-                    >
-                        {isSmallScreen && <TimeLeft startDate={offer.first_match_date} />}
-                        <UnlockedTicket
-                            ticket={offer.tickets[0]}
-                            isLast={index === OFFERS.length - 1}
-                        />
-                    </View>
-                </View>
-            ))}
         </View>
     )
 }

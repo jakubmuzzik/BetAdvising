@@ -16,17 +16,18 @@ import withSearchParams from '../components/hoc/withSearchParams'
 import AdminDashboard from '../screens/admin/AdminDashboard'
 import CustomButton from '../components/elements/CustomButton'
 
-import NewTicket from '../redux/actions/admin/NewTicket'
+import NewTicket from '../screens/admin/NewTicket'
+import OpenTickets from '../screens/admin/OpenTickets'
 
 const Admin = ({ searchParams }) => {
     const { width: windowWidth } = useWindowDimensions()
 
     const [index, setIndex] = useState(0)
-    const [routes] = useState([
-        { key: 'admin', title: 'Admin Dashboard', pathname: '/admin', navigationPaths: [] },
-        { key: 'new-ticket', title: 'New Ticket', pathname: '/admin/new-ticket', navigationPaths: ['New Ticket'] },
-        { key: 'open-tickets', title: 'Open Tickets', pathname: '/admin/open-tickets', navigationPaths: ['Open Tickets'] },
-        { key: 'closed-tickets', title: 'Closed Tickets', pathname: '/admin/closed-tickets', navigationPaths: ['Closed Tickets'] },
+    const [routes, setRoutes] = useState([
+        { key: 'admin', title: 'Admin Dashboard', pathname: '/admin', navigationPaths: [], height: '100%',  },
+        { key: 'new-ticket', title: 'New Ticket', pathname: '/admin/new-ticket', navigationPaths: ['New Ticket'], height: '100%',  },
+        { key: 'open-tickets', title: 'Open Tickets', pathname: '/admin/open-tickets', navigationPaths: ['Open Tickets'], height: '100%',  },
+        { key: 'closed-tickets', title: 'Closed Tickets', pathname: '/admin/closed-tickets', navigationPaths: ['Closed Tickets'], height: '100%',  },
     ]
     .map((route, index) => ({ ...route, index })))
 
@@ -64,6 +65,13 @@ const Admin = ({ searchParams }) => {
         })
     }
 
+    const setTabHeight = (height, index) => {
+        setRoutes(r => {
+            r[index].height = height
+            return [...r]
+        })
+    }
+
     const renderPagesScene = ({ route }) => {
         if (Math.abs(index - routes.indexOf(route)) > 0) {
             return <View />
@@ -72,20 +80,20 @@ const Admin = ({ searchParams }) => {
         switch (route.key) {
             case 'admin':
                 return (
-                    <View style={{  marginTop: SPACING.large,  width: normalize(800), maxWidth: '100%', alignSelf: 'center' }}>
+                    <View style={{  marginTop: SPACING.large, height: routes[index].height, width: normalize(800), maxWidth: '100%', alignSelf: 'center' }}>
                         <AdminDashboard />
                     </View>
                 )
             case 'new-ticket':
                 return (
-                    <View style={{ paddingHorizontal: SPACING.medium, width: normalize(800), marginTop: SPACING.large, maxWidth: '100%', alignSelf: 'center'}}>
-                        <NewTicket offsetX={windowWidth * route.index}/>
+                    <View style={{ paddingHorizontal: SPACING.medium, height: routes[index].height, width: normalize(800), marginTop: SPACING.large, maxWidth: '100%', alignSelf: 'center'}}>
+                        <NewTicket setTabHeight={(height) => setTabHeight(height, route.index)} offsetX={windowWidth * route.index}/>
                     </View>
                 )
             case 'open-tickets':
                 return (
-                    <View style={{ marginTop: SPACING.large }}>
-                        {/* <NewEstablishments /> */}
+                    <View style={{ maxWidth: '100%', height: routes[index].height, alignSelf: 'center' }}>
+                        <OpenTickets setTabHeight={(height) => setTabHeight(height, route.index)} offsetX={windowWidth * route.index}/>
                     </View>
                 )
             case 'closed-tickets':

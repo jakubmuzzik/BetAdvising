@@ -28,7 +28,7 @@ const Login = ({ searchParams, toastRef, fetchUser }) => {
     const [urlSearchParams] = useSearchParams()
     const navigate = useNavigate()
 
-    const { shake, rStyle, isShaking } = useAnimatedShake()
+    const { shake, rStyle } = useAnimatedShake()
 
     //urlSearchParams contains from when redirected from google sign in
     if (urlSearchParams.get('from')) {

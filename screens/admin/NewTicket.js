@@ -1,14 +1,25 @@
 import React, { useState, useRef } from 'react'
 import { View, StyleSheet, Text, TouchableOpacity } from 'react-native'
-import { COLORS, FONT_SIZES, FONTS, SPACING, SPORTS } from '../../../constants'
+import { COLORS, FONT_SIZES, FONTS, SPACING, SPORTS } from '../../constants'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
-import { supabase } from '../../../supabase/config'
+import { supabase } from '../../supabase/config'
 
-import CustomInput from '../../../components/elements/CustomInput'
-import CustomButton from '../../../components/elements/CustomButton'
-import HoverableView from '../../../components/elements/HoverableView'
-import DropdownSelect from '../../../components/elements/DropdownSelect'
+import CustomInput from '../../components/elements/CustomInput'
+import CustomButton from '../../components/elements/CustomButton'
+import HoverableView from '../../components/elements/HoverableView'
+import DropdownSelect from '../../components/elements/DropdownSelect'
 import { connect } from 'react-redux'
+
+const DEFAULT_TICKET_ENTRIES = [
+    { sport: '', league: '', home: '', away: '', date: '', time: '', tip: '', odds: '' }
+]
+
+const DEFAULT_TICKET = {
+    price: '',
+    priceErrorMessage: undefined,
+    stake: '',
+    stakeErrorMessage: undefined,
+}
 
 const Match = ({ setTicketEntries, match, index, onRowDeletePress, offsetX }) => {
     const onDateChange = (val, attr) => {
@@ -270,18 +281,11 @@ const Match = ({ setTicketEntries, match, index, onRowDeletePress, offsetX }) =>
     )
 }
 
-const NewTicket = ({ offsetX, toastRef }) => {
+const NewTicket = ({ offsetX, toastRef, setTabHeight }) => {
     const saveButtonRef = useRef()
 
-    const [ticket, setTicket] = useState({
-        price: '',
-        priceErrorMessage: undefined,
-        stake: '',
-        stakeErrorMessage: undefined,
-    })
-    const [ticketEntries, setTicketEntries] = useState([
-        { sport: '', league: '', home: '', away: '', date: '', time: '', tip: '', odds: '' }
-    ])
+    const [ticket, setTicket] = useState(DEFAULT_TICKET)
+    const [ticketEntries, setTicketEntries] = useState(DEFAULT_TICKET_ENTRIES)
 
     const onAddMatchPress = () => {
         setTicketEntries(entries => {
@@ -409,11 +413,22 @@ const NewTicket = ({ offsetX, toastRef }) => {
         try {
             saveButtonRef.current.setIsLoading(true)
 
+            let formattedEntries = ticketEntries.map(entry => ({
+                sport: entry.sport,
+                league: entry.league,
+                home: entry.home,
+                away: entry.away,
+                start_date: convertStringsToDateTime(entry.date, entry.time),
+                tip: entry.tip,
+                odd: entry.odds
+            }))
+
             const { data, error } = await supabase
                 .from('tickets')
                 .insert({
                     price: ticket.price,
-                    stake: ticket.stake
+                    stake: ticket.stake,
+                    start_date: formattedEntries.sort((a, b) => a.start_date - b.start_date)[0].start_date,
                 })
                 .select('id, name')
             
@@ -429,14 +444,8 @@ const NewTicket = ({ offsetX, toastRef }) => {
             const ticketId = data[0].id
             const ticketName = data[0].name
 
-            const formattedEntries = ticketEntries.map(entry => ({
-                sport: entry.sport,
-                league: entry.league,
-                home: entry.home,
-                away: entry.away,
-                start_date: convertStringsToDateTime(entry.date, entry.time),
-                tip: entry.tip,
-                odd: entry.odds,
+            formattedEntries = formattedEntries.map(entry => ({
+                ...entry,
                 ticket: ticketId
             }))
 
@@ -491,6 +500,9 @@ const NewTicket = ({ offsetX, toastRef }) => {
                 text: 'Ticket created successfully',
                 type: 'success'
             })
+
+            setTicket({...DEFAULT_TICKET})
+            setTicketEntries([...DEFAULT_TICKET_ENTRIES])
         } catch(e) {
             console.error(e)
         } finally {
@@ -501,6 +513,7 @@ const NewTicket = ({ offsetX, toastRef }) => {
     return (
         <>
             <View
+                onLayout={(event) => setTabHeight(event.nativeEvent.layout.height)}
                 style={{
                     borderWidth: 1,
                     borderRadius: 10,

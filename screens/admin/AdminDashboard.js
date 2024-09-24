@@ -8,7 +8,7 @@ import { MaterialIcons, Entypo } from '@expo/vector-icons'
 import ContentLoader, { Rect } from "react-content-loader/native"
 import { TouchableRipple } from 'react-native-paper'
 
-import { setNewTicketsCount, setClosedTicketsCount } from '../../redux/actions/admin'
+import { fetchClosedTicketsCount, fetchOpenTicketsCount } from '../../redux/actions/admin'
 
 import { supabase } from '../../supabase/config'
 
@@ -16,65 +16,26 @@ import withSearchParams from '../../components/hoc/withSearchParams'
 
 const AdminDashboard = ({
     toastRef,
-    newTicketsCount,
+    openTicketsCount,
     closedTicketsCount,
-    setNewTicketsCount,
-    setClosedTicketsCount,
+    fetchClosedTicketsCount, 
+    fetchOpenTicketsCount,
     searchParams
 }) => {
     const navigate = useNavigate()
 
     useEffect(() => {
-        if (newTicketsCount == null) {
-            fetchNewTicketsCount()
+        if (openTicketsCount == null) {
+            fetchOpenTicketsCount()
         }
 
         if (closedTicketsCount == null) {
             fetchClosedTicketsCount()
         }
     }, [
-        newTicketsCount,
+        openTicketsCount,
         closedTicketsCount
     ])
-
-    const fetchNewTicketsCount = async () => {
-        try {
-            const query = supabase
-                .from('ladies')
-                .select('*', { count: 'exact', head: true })
-                //.match({ status: IN_REVIEW })
-
-            const { count } = await query
-
-            setNewTicketsCount(count ?? 0)
-        } catch (error) {
-            console.error(error)
-            toastRef.show({
-                type: 'error',
-                text: error.message
-            })
-        }
-    }
-
-    const fetchClosedTicketsCount = async () => {
-        try {
-            const query = supabase
-                .from('establishments')
-                .select('*', { count: 'exact', head: true })
-                //.match({ status: IN_REVIEW })
-
-            const { count } = await query
-
-            setClosedTicketsCount(count ?? 0)
-        } catch (error) {
-            console.error(error)
-            toastRef.show({
-                type: 'error',
-                text: error.message
-            })
-        }
-
-    }
 
     const onDataCountCardPress = (pathToNavigate) => {
         navigate({
@@ -133,7 +94,7 @@ const AdminDashboard = ({
     return (
         <View style={{ width: normalize(800), maxWidth: '100%', alignSelf: 'center', paddingHorizontal: SPACING.medium }}>
             <View style={{ flexDirection: 'row', marginBottom: SPACING.xx_small }}>
-                {renderNewDataCard(newTicketsCount, 'Open Tickets', '/admin/open-tickets', SPACING.xx_small, <MaterialIcons name="timelapse" size={25} color="white" />)}
+                {renderNewDataCard(openTicketsCount, 'Open Tickets', '/admin/open-tickets', SPACING.xx_small, <MaterialIcons name="timelapse" size={25} color="white" />)}
                 {renderNewDataCard(closedTicketsCount, 'Closed Tickets', '/admin/closed-tickets', 0, <MaterialIcons name="check-circle" size={25} color={COLORS.white} />)}
             </View>
         </View>
@@ -142,8 +103,8 @@ const AdminDashboard = ({
 
 const mapStateToProps = (store) => ({
     toastRef: store.appState.toastRef,
-    newTicketsCount: store.adminState.newTicketsCount,
+    openTicketsCount: store.adminState.openTicketsCount,
     closedTicketsCount: store.adminState.closedTicketsCount
 })
 
-export default connect(mapStateToProps, { setNewTicketsCount, setClosedTicketsCount })(withSearchParams(AdminDashboard, ['language']))
+export default connect(mapStateToProps, { fetchClosedTicketsCount, fetchOpenTicketsCount })(withSearchParams(AdminDashboard, ['language']))

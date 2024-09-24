@@ -115,3 +115,5 @@ export const SPORTS = [
     'Florbal',
     'Hokej'
 ]
+
+export const API_RETRY_LIMIT = 3

@@ -2,11 +2,13 @@ import React, { useState, useRef } from 'react'
 import { View, StyleSheet, Text, TouchableOpacity } from 'react-native'
 import { COLORS, FONT_SIZES, FONTS, SPACING, SPORTS } from '../../../constants'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
+import { supabase } from '../../../supabase/config'
 
 import CustomInput from '../../../components/elements/CustomInput'
 import CustomButton from '../../../components/elements/CustomButton'
 import HoverableView from '../../../components/elements/HoverableView'
 import DropdownSelect from '../../../components/elements/DropdownSelect'
+import { connect } from 'react-redux'
 
 const Match = ({ setTicketEntries, match, index, onRowDeletePress, offsetX }) => {
     const onDateChange = (val, attr) => {
@@ -75,7 +77,7 @@ const Match = ({ setTicketEntries, match, index, onRowDeletePress, offsetX }) =>
             case 1:
                 return str
             case 2:
-                return str 
+                return str
             case 3:
                 return str[0] + str[1] + ':' + str[2]
             case 4:
@@ -91,7 +93,7 @@ const Match = ({ setTicketEntries, match, index, onRowDeletePress, offsetX }) =>
                 borderWidth: 1,
                 borderRadius: 10,
                 borderColor: COLORS.whiteBackground2,
-                backgroundColor: COLORS.secondary2,
+                //backgroundColor: COLORS.secondary2,
                 padding: SPACING.small,
                 gap: SPACING.small
             }}
@@ -109,7 +111,7 @@ const Match = ({ setTicketEntries, match, index, onRowDeletePress, offsetX }) =>
                     style={{
                         color: COLORS.white,
                         fontSize: FONT_SIZES.xx_large,
-                        fontFamily: FONTS.medium                        
+                        fontFamily: FONTS.medium
                     }}
                 >
                     Zápas č. {index + 1}
@@ -241,11 +243,11 @@ const Match = ({ setTicketEntries, match, index, onRowDeletePress, offsetX }) =>
                     containerStyle={{ flex: 1 }}
                     placeholder='Výsledek zápasu: 1'
                     label='Typ'
-                    value={match.type}
+                    value={match.tip}
                     errorMessage={match.typeErrorMessage}
                     onChangeText={text => {
                         setTicketEntries(entries => {
-                            entries[index].type = text
+                            entries[index].tip = text
                             return [...entries]
                         })
                     }}
@@ -258,7 +260,7 @@ const Match = ({ setTicketEntries, match, index, onRowDeletePress, offsetX }) =>
                     errorMessage={match.oddsErrorMessage}
                     onChangeText={text => {
                         setTicketEntries(entries => {
-                            entries[index].odds = text
+                            entries[index].odds = text.replace(/[^0-9]/g, '')
                             return [...entries]
                         })
                     }}
@@ -268,18 +270,22 @@ const Match = ({ setTicketEntries, match, index, onRowDeletePress, offsetX }) =>
     )
 }
 
-const NewTicket = ({ offsetX }) => {
+const NewTicket = ({ offsetX, toastRef }) => {
+    const saveButtonRef = useRef()
+
     const [ticket, setTicket] = useState({
         price: '',
-        priceErrorMessage: undefined
+        priceErrorMessage: undefined,
+        stake: '',
+        stakeErrorMessage: undefined,
     })
     const [ticketEntries, setTicketEntries] = useState([
-        { sport: '', league: '', home: '', away: '', date: '', time: '', type: '', odds: '' }
+        { sport: '', league: '', home: '', away: '', date: '', time: '', tip: '', odds: '' }
     ])
 
     const onAddMatchPress = () => {
         setTicketEntries(entries => {
-            return [...entries, { sport: '', league: '', home: '', away: '', date: '', time: '', type: '', odds: '' }]
+            return [...entries, { sport: '', league: '', home: '', away: '', date: '', time: '', tip: '', odds: '' }]
         })
     }
 
@@ -288,6 +294,21 @@ const NewTicket = ({ offsetX }) => {
             d.splice(index, 1)
             return [...d]
         })
+    }
+
+    const convertStringsToDateTime = (dateStr, timeStr) => {
+        // Extract day, month, and year from date string
+        const day = parseInt(dateStr.substring(0, 2), 10)
+        const month = parseInt(dateStr.substring(2, 4), 10) - 1 // Months are 0-based in JS Date
+        const year = parseInt(dateStr.substring(4, 8), 10)
+
+        // Extract hours and minutes from time string
+        const hours = parseInt(timeStr.substring(0, 2), 10)
+        const minutes = parseInt(timeStr.substring(2, 4), 10)
+
+        // Create a Date object
+        const dateObj = new Date(year, month, day, hours, minutes)
+        return dateObj
     }
 
     const onSavePress = async () => {
@@ -304,7 +325,7 @@ const NewTicket = ({ offsetX }) => {
                 current.leagueErrorMessage = 'League is required'
                 out = false
             } else {
-                current.leagueErrorMessage = '' 
+                current.leagueErrorMessage = ''
             }
 
             if (!current.home) {
@@ -313,7 +334,7 @@ const NewTicket = ({ offsetX }) => {
             } else {
                 current.homeErrorMessage = ''
             }
-            
+
             if (!current.away) {
                 current.awayErrorMessage = 'Away is required'
                 out = false
@@ -335,7 +356,7 @@ const NewTicket = ({ offsetX }) => {
                 current.timeErrorMessage = ''
             }
 
-            if (!current.type) {
+            if (!current.tip) {
                 current.typeErrorMessage = 'Type is required'
                 out = false
             } else {
@@ -349,21 +370,34 @@ const NewTicket = ({ offsetX }) => {
                 current.oddsErrorMessage = ''
             }
 
-            updatedTicketEntries = {...updatedTicketEntries, ...current}
+            updatedTicketEntries = { ...updatedTicketEntries, ...current }
 
             return out
         }, true)
-        
+
         if (!ticket.price) {
             isValid = false
             setTicket(t => {
                 t.priceErrorMessage = 'Price is required'
-                return {...t}
+                return { ...t }
             })
         } else {
             setTicket(t => {
-                t.priceErrorMessage = ''
-                return {...t}
+                t.priceErrorMessage = undefined
+                return { ...t }
+            })
+        }
+
+        if (!ticket.stake) {
+            isValid = false
+            setTicket(t => {
+                t.stakeErrorMessage = 'Stake is required'
+                return { ...t }
+            })
+        } else {
+            setTicket(t => {
+                t.stakeErrorMessage = undefined
+                return { ...t }
             })
         }
 
@@ -371,95 +405,222 @@ const NewTicket = ({ offsetX }) => {
             setTicketEntries([...ticketEntries])
             return
         }
+
+        try {
+            saveButtonRef.current.setIsLoading(true)
+
+            const { data, error } = await supabase
+                .from('tickets')
+                .insert({
+                    price: ticket.price,
+                    stake: ticket.stake
+                })
+                .select('id, name')
+            
+            if (error) {
+                toastRef?.show({
+                    text: 'Could not save ticket',
+                    type: 'error'
+                })
+
+                throw error
+            }
+
+            const ticketId = data[0].id
+            const ticketName = data[0].name
+
+            const formattedEntries = ticketEntries.map(entry => ({
+                sport: entry.sport,
+                league: entry.league,
+                home: entry.home,
+                away: entry.away,
+                start_date: convertStringsToDateTime(entry.date, entry.time),
+                tip: entry.tip,
+                odd: entry.odds,
+                ticket: ticketId
+            }))
+
+            const { error: entriesError } = await supabase
+                .from('ticket_entries')
+                .insert(formattedEntries)
+
+            if (entriesError) {
+                toastRef?.show({
+                    text: 'Could not save ticket entries',
+                    type: 'error'
+                })
+
+                throw entriesError
+            }
+
+            const hashedTicketEntries = formattedEntries.map(entry => ({
+                ...Object.keys(entry).reduce((out, current) => {
+                    if (current === 'start_date' || current === 'ticket') {
+                        return out
+                    }
+
+                    out[current] = entry[current].length //createRandomString(entry[current].length)
+
+                    return out
+                }, {})
+            }))
+
+            console.log(hashedTicketEntries)
+
+            const { error: hashedEntriesError } = await supabase
+                .from('ticket_offers')
+                .insert({
+                    ticket: ticketId,
+                    name: ticketName,
+                    odd: formattedEntries.reduce((out, current) => out * current.odd, 1),
+                    stake: ticket.stake,
+                    start_date: formattedEntries.sort((a, b) => a.start_date - b.start_date)[0].start_date,
+                    data: hashedTicketEntries
+                })
+
+            if (hashedEntriesError) {
+                toastRef?.show({
+                    text: 'Could not save hashed ticket entries',
+                    type: 'error'
+                })
+
+                throw hashedEntriesError
+            }
+
+            toastRef?.show({
+                text: 'Ticket created successfully',
+                type: 'success'
+            })
+        } catch(e) {
+            console.error(e)
+        } finally {
+            saveButtonRef.current.setIsLoading(false)
+        }
     }
 
     return (
-        <View
-            style={{
-                borderWidth: 1,
-                borderRadius: 10,
-                borderColor: COLORS.whiteBackground2,
-                backgroundColor: COLORS.secondary,
-                padding: SPACING.small
-            }}
-        >
-            <Text
-                style={{
-                    color: COLORS.white,
-                    fontSize: FONT_SIZES.h3,
-                    fontFamily: FONTS.medium,
-                    marginBottom: SPACING.small
-                }}
-            >
-                Informace o tiketu
-            </Text>
+        <>
             <View
                 style={{
-                    width: 'fit-content'
+                    borderWidth: 1,
+                    borderRadius: 10,
+                    borderColor: COLORS.whiteBackground2,
+                    backgroundColor: COLORS.secondary,
+                    padding: SPACING.small,
+                    marginBottom: SPACING.medium
                 }}
             >
-                <CustomInput
-                    placeholder='100'
-                    label='Cena'
-                    value={ticket.price}
-                    errorMessage={ticket.priceErrorMessage}
-                    onChangeText={text => {
-                        setTicket((t) => {
-                            t.price = text
-                            return {...t}
-                        })
+                <Text
+                    style={{
+                        color: COLORS.white,
+                        fontSize: FONT_SIZES.h3,
+                        fontFamily: FONTS.medium,
+                        marginBottom: SPACING.large
                     }}
-                    keyboardType='numeric'
-                />
-            </View>
-
-            <View style={{ height: 1, backgroundColor: COLORS.whiteBackground2, width: '100%', marginVertical: SPACING.medium }} />
-
-            <Text
-                style={{
-                    color: COLORS.white,
-                    fontSize: FONT_SIZES.h3,
-                    fontFamily: FONTS.medium,
-                    marginBottom: SPACING.small
-                }}
-            >
-                Zápasy
-            </Text>
-
-            <View
-                style={{
+                >
+                    Informace o tiketu
+                </Text>
+                <View style={{
+                    flexDirection: 'row',
                     gap: SPACING.medium,
-                }}
-            >
-                {ticketEntries.map((entry, index) => (
-                    <Match key={index} offsetX={offsetX} setTicketEntries={setTicketEntries} match={entry} index={index} onRowDeletePress={onRowDeletePress}/>
-                ))}
+                }}>
+                    <View
+                        style={{
+                            width: 'fit-content'
+                        }}
+                    >
+                        <CustomInput
+                            placeholder='100'
+                            label='Cena'
+                            value={ticket.price}
+                            errorMessage={ticket.priceErrorMessage}
+                            onChangeText={text => {
+                                setTicket((t) => {
+                                    t.price = text
+                                    return { ...t }
+                                })
+                            }}
+                            keyboardType='numeric'
+                        />
+                    </View>
+                    <View
+                        style={{
+                            width: 'fit-content'
+                        }}
+                    >
+                        <CustomInput
+                            placeholder='100'
+                            label='Kolik jsme vsadili'
+                            value={ticket.stake}
+                            errorMessage={ticket.stakeErrorMessage}
+                            onChangeText={text => {
+                                setTicket((t) => {
+                                    t.stake = text
+                                    return { ...t }
+                                })
+                            }}
+                            keyboardType='numeric'
+                        />
+                    </View>
+                </View>
             </View>
 
             <View
                 style={{
-                    marginTop: SPACING.medium,
-                    width: 'fit-content',
+                    borderWidth: 1,
+                    borderRadius: 10,
+                    borderColor: COLORS.whiteBackground2,
+                    backgroundColor: COLORS.secondary,
+                    padding: SPACING.small
                 }}
             >
-                <CustomButton
-                    onPress={onAddMatchPress}
-                    textColor={COLORS.white}
-                    buttonText='Přidat zápas'
-                    textStyles={{ fontSize: FONT_SIZES.large, fontFamily: FONTS.regular, }}
-                    additionalStyles={{ borderWidth: 1, borderColor: COLORS.white, borderRadius: 20 }}
-                />
-            </View>
 
-            <View style={{ height: 1, backgroundColor: COLORS.whiteBackground2, width: '100%', marginVertical: SPACING.medium }} />
+                <Text
+                    style={{
+                        color: COLORS.white,
+                        fontSize: FONT_SIZES.h3,
+                        fontFamily: FONTS.medium,
+                        marginBottom: SPACING.large
+                    }}
+                >
+                    Zápasy
+                </Text>
+
+                <View
+                    style={{
+                        gap: SPACING.medium,
+                    }}
+                >
+                    {ticketEntries.map((entry, index) => (
+                        <Match key={index} offsetX={offsetX} setTicketEntries={setTicketEntries} match={entry} index={index} onRowDeletePress={onRowDeletePress} />
+                    ))}
+                </View>
+
+                <View
+                    style={{
+                        marginTop: SPACING.medium,
+                        width: 'fit-content',
+                    }}
+                >
+                    <CustomButton
+                        onPress={onAddMatchPress}
+                        textColor={COLORS.white}
+                        buttonText='Přidat zápas'
+                        textStyles={{ fontSize: FONT_SIZES.large, fontFamily: FONTS.regular, }}
+                        additionalStyles={{ borderWidth: 1, borderColor: COLORS.white, borderRadius: 20 }}
+                    />
+                </View>
+            </View>
 
             <View
                 style={{
                     alignSelf: 'flex-end',
                     width: 'fit-content',
+                    marginTop: SPACING.medium
                 }}
             >
                 <CustomButton
+                    ref={saveButtonRef}
                     onPress={onSavePress}
                     textColor={COLORS.black}
                     buttonText='Vytvořit tiket'
@@ -468,8 +629,13 @@ const NewTicket = ({ offsetX }) => {
                     backgroundColors={[COLORS.accent2, COLORS.accent, COLORS.accent, COLORS.accent2]}
                 />
             </View>
-        </View>
+        </>
     )
 }
 
-export default NewTicket
+const mapStateToProps = (store) => ({
+    toastRef: store.appState.toastRef
+})
+
+
+export default connect(mapStateToProps)(NewTicket)

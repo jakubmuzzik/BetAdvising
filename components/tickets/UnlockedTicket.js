@@ -219,7 +219,7 @@ const TicketBody = ({ ticket, showEditButtons, offsetX, actions }) => {
             borderColor: COLORS.whiteBackground2,
             gap: SPACING.medium
         }}>
-            {ticket.ticket_entries.map((match) => (
+            {ticket.ticket_entries?.map((match) => (
                 <Match key={match.id} match={match} width={width} ticketId={ticket.id} id={match.id} showEditButtons={showEditButtons} offsetX={offsetX} actions={actions} />
             ))}
         </View>
@@ -303,6 +303,7 @@ const TicketFooter = ({ odd, result }) => (
 )
 
 const UnlockedTicket = ({ ticket, searchParams, showEditButtons, offsetX, ticketEntryActions, ticketActions }) => {
+
     return (
         <View
             style={{
@@ -313,10 +314,10 @@ const UnlockedTicket = ({ ticket, searchParams, showEditButtons, offsetX, ticket
                 flexGrow: 1
             }}
         >
-            <TicketHeader type={ticket.ticket_entries.length > 1 ? 'AKO' : 'Single'} id={ticket.id} name={ticket.name} showEditButtons={showEditButtons} offsetX={offsetX} actions={ticketActions}/>
+            <TicketHeader type={ticket.ticket_entries?.length > 1 ? 'AKO' : 'Single'} id={ticket.id} name={ticket.name} showEditButtons={showEditButtons} offsetX={offsetX} actions={ticketActions}/>
             <TicketBody ticket={ticket} showEditButtons={showEditButtons} offsetX={offsetX} actions={ticketEntryActions}/>
             <TicketFooter
-                odd={ticket.ticket_entries.reduce((acc, curr) => acc * curr.odd, 1)}
+                odd={ticket.ticket_entries?.reduce((acc, curr) => acc * curr.odd, 1)}
                 result={ticket.result}
             />
         </View>

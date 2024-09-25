@@ -1,65 +1,18 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState, useRef, useLayoutEffect } from 'react'
 import { View, Text, StyleSheet } from 'react-native'
 import { FONTS, FONT_SIZES, SPACING, COLORS } from '../../constants'
 import { MaterialIcons, MaterialCommunityIcons, FontAwesome } from '@expo/vector-icons'
 import { BlurView } from 'expo-blur'
 import Animated, { FadeInDown, useAnimatedStyle, useSharedValue, interpolate, withTiming, useAnimatedProps, BounceIn } from 'react-native-reanimated'
-
+import  { createRandomString, getEventDate, getEventTime } from '../../utils'
 import CustomButton from '../elements/CustomButton'
 import withSearchParams from '../hoc/withSearchParams'
+import { unlockTicket } from '../../redux/actions/user'
 
 import ConfirmationModal from '../modal/ConfirmationModal'
 import { connect } from 'react-redux'
 
 import UnlockedTicket from './UnlockedTicket'
-
-const TICKET = {
-    type: 'AKO',
-    name: '#34',
-    odd: 3.0,
-    stake: 100,
-    result: 'win',
-    //3 hours from now
-    first_match_date: new Date(Date.now() + 3 * 60 * 60 * 1000),
-    ticket_entries: [
-        {
-            id: 1,
-            sport: 'Football',
-            start_date: new Date(Date.now() + 3 * 60 * 60 * 1000),
-            team_home: 'Manchester United',
-            team_away: 'Chelsea',
-            tip: 'Výsledek zápasu: 1',
-            odd: 1.5,
-            league: 'Premier League',
-            // pending / win / lose / cancelled
-            result: 'win',
-        },
-        {
-            id: 2,
-            sport: 'Football',
-            start_date: new Date(Date.now() + 3 * 60 * 60 * 1000),
-            team_home: 'Manchester United',
-            team_away: 'Chelsea',
-            tip: 'Výsledek zápasu: 1',
-            odd: 1.5,
-            league: 'Premier League',
-            // pending / win / lose / cancelled
-            result: 'win',
-        },
-        {
-            id: 3,
-            sport: 'Football',
-            start_date: new Date(Date.now() + 3 * 60 * 60 * 1000),
-            team_home: 'Manchester United',
-            team_away: 'Chelsea',
-            tip: 'Výsledek zápasu: 1',
-            odd: 1.5,
-            league: 'Premier League',
-            // pending / win / lose / cancelled
-            result: 'win',
-        }
-    ]
-}
 
 const TicketHeader = ({ name, type }) => (
     <View
@@ -102,7 +55,7 @@ const TicketHeader = ({ name, type }) => (
     </View>
 )
 
-const Match = () => (
+const Match = ({data}) => (
     <View
         style={{
             flex: 1
@@ -132,7 +85,7 @@ const Match = () => (
                         color: COLORS.white,
                     }}
                 >
-                    FC Barcelona - Real Madrid
+                    {createRandomString(data.home)} - {createRandomString(data.away)}
                 </Text>
             </View>
 
@@ -156,7 +109,7 @@ const Match = () => (
                         marginBottom: 4
                     }}
                 >
-                    12. 5. 2021 20:00
+                    {getEventDate(new Date(), false, true)}, {getEventTime(new Date())}
                 </Text>
                 <Text
                     style={{
@@ -166,7 +119,7 @@ const Match = () => (
                         marginBottom: 4
                     }}
                 >
-                    Výsledek zápasu: 1
+                    {createRandomString(data.tip)}
                 </Text>
                 <Text
                     style={{
@@ -175,7 +128,7 @@ const Match = () => (
                         color: COLORS.grey300
                     }}
                 >
-                    Fotbal / La Liga
+                    {createRandomString(data.league)}
                 </Text>
             </View>
 
@@ -187,13 +140,13 @@ const Match = () => (
                     textAlign: 'right'
                 }}
             >
-                2.89
+                {createRandomString(data.odd)}
             </Text>
         </View>
     </View>
 )
 
-const TicketBody = ({ ticket, onUnlockPress }) => (
+const TicketBody = ({ offer, onUnlockPress }) => (
     <View style={{
         padding: SPACING.small,
         backgroundColor: COLORS.secondary2,
@@ -227,9 +180,7 @@ const TicketBody = ({ ticket, onUnlockPress }) => (
             />
         </BlurView>
 
-        {
-            new Array(ticket.match_count).fill(null, 0).map((_, index) => (<Match key={index} />))
-        }
+        {offer.data.map((match, index) => <Match key={index} data={match}/>)}
     </View>
 )
 
@@ -299,9 +250,13 @@ const TicketFooter = ({ odd, stake }) => (
     </View>
 )
 
-const LockedTicket = ({ ticket, searchParams, toastRef }) => {
+const LockedTicket = ({ offer, searchParams, toastRef, unlockTicket }) => {
     const [cardLayout, setCardLayout] = useState({ width: 0, height: 0 })
     const [confirmUnlockVisible, setConfirmUnlockVisible] = useState(false)
+
+    //need to hold the data in state because of the reanimated interpolation when user unlocks the ticket
+    //cant put it to redux because of the same reason
+    const [offerData, setOfferData] = useState(JSON.parse(JSON.stringify(offer)))
 
     const isFlipped = useSharedValue(false)
 
@@ -340,23 +295,35 @@ const LockedTicket = ({ ticket, searchParams, toastRef }) => {
         setConfirmUnlockVisible(true)
     }
 
-    const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms))
-
     const unlock = async () => {
         try {
-            await delay(1000)
+            const newOfferData = await unlockTicket(offerData.id, offerData.ticket)
 
-            isFlipped.value = !isFlipped.value
+            setOfferData(newOfferData)
+
+            //wait for the setOfferData to finish
+            setTimeout(() => isFlipped.value = !isFlipped.value)
 
             toastRef?.show({
                 text: 'Ticket has been unlocked',
                 type: 'success'
             })
         } catch(e) {
-            toastRef?.show({
-                text: 'Failed to unlock ticket',
-                type: 'error'
-            })
+            console.error(e)
+
+            const message = e.message || 'Failed to unlock ticket'
+
+            if (message.includes('User does not have enough credits')) {
+                toastRef?.show({
+                    text: 'Nemáte dostatek kreditů. Prosím dobijte si váš kreditový účet.',
+                    type: 'warning'
+                })
+            } else {
+                toastRef?.show({
+                    text: 'Failed to unlock ticket',
+                    type: 'error'
+                })
+            }
         }
     }
 
@@ -377,9 +344,9 @@ const LockedTicket = ({ ticket, searchParams, toastRef }) => {
                         flexGrow: 1
                     }}
                 >
-                    <TicketHeader type={ticket.type} name={ticket.name} />
-                    <TicketBody ticket={ticket} onUnlockPress={onUnlockPress} />
-                    <TicketFooter odd={ticket.odd} stake={ticket.stake} />
+                    <TicketHeader type={offerData.data.length === 1 ? 'Single' : 'AKO'} name={offerData.name} />
+                    <TicketBody offer={offerData} onUnlockPress={onUnlockPress} />
+                    <TicketFooter odd={offerData.odd} stake={offerData.stake} />
                 </View>
             </Animated.View>
 
@@ -396,14 +363,14 @@ const LockedTicket = ({ ticket, searchParams, toastRef }) => {
                     }
                 ]}>
 
-                <UnlockedTicket ticket={TICKET} />
+                {offerData.ticket_data && <UnlockedTicket ticket={offerData.ticket_data} />}
             </Animated.View>
 
 
             <ConfirmationModal
                 visible={confirmUnlockVisible}
                 headerText='Unlock ticket'
-                text={'Are you sure you want to unlock this ticket with ' + ticket.price + ' credits?'} 
+                text={'Are you sure you want to unlock this ticket with ' + offerData.price + ' credits?'} 
                 onCancel={() => setConfirmUnlockVisible(false)}
                 onConfirm={unlock}
                 headerErrorText='Error'
@@ -420,7 +387,7 @@ const mapStateToProps = (store) => ({
     toastRef: store.appState.toastRef
 })
 
-export default connect(mapStateToProps)(LockedTicket)
+export default connect(mapStateToProps, { unlockTicket })(LockedTicket)
 
 const styles = StyleSheet.create({
     regularCard: {

@@ -1,12 +1,16 @@
 import {
     USER_STATE_CHANGE,
     USER_AUTH_STATE_CHANGE,
-    CLEAR_DATA
+    CLEAR_DATA,
+    OFFERS_STATE_CHANGE,
+    UNLOCKED_STATE_CHANGE
 } from '../actionTypes'
 
 const INITIAL_STATE = {
     currentUser: {},
-    currentAuthUser: {}
+    currentAuthUser: {},
+    offers: null,
+    unlocked: null
 }
 
 export const user = (state = INITIAL_STATE, action) => {
@@ -27,6 +31,16 @@ export const user = (state = INITIAL_STATE, action) => {
         case CLEAR_DATA:
             return {
                 ...INITIAL_STATE
+            }
+        case OFFERS_STATE_CHANGE:
+            return {
+                ...state,
+                offers: action.offers
+            }
+        case UNLOCKED_STATE_CHANGE:
+            return {
+                ...state,
+                unlocked: action.unlocked
             }
         default:
             return state;

@@ -1,90 +1,82 @@
-import React, { useState, useMemo, useEffect, useRef } from 'react'
-import { View, Text, useWindowDimensions } from 'react-native'
-import { FONTS, FONT_SIZES, SPACING, COLORS, SUPPORTED_LANGUAGES } from '../../../constants'
+import React, { useState, useEffect, useRef } from 'react'
+import { View, Text, useWindowDimensions, FlatList } from 'react-native'
+import { FONTS, FONT_SIZES, SPACING, COLORS } from '../../../constants'
 import { normalize, calculateTimeDifference } from '../../../utils'
 import { LinearGradient } from 'expo-linear-gradient'
-import { MaterialIcons, FontAwesome } from '@expo/vector-icons'
+import { FontAwesome } from '@expo/vector-icons'
+import ContentLoader, { Rect } from "react-content-loader/native"
+import Animated, { FlipInEasyX } from 'react-native-reanimated'
+import { MAX_TICKETS_ROWS_PER_QUERY } from '../../../redux/actions/admin'
 
 import withSearchParams from '../../../components/hoc/withSearchParams'
 
 import UnlockedTicket from '../../../components/tickets/UnlockedTicket'
 import LockedTicket from '../../../components/tickets/LockedTicket'
+import { connect } from 'react-redux'
+import { fetchOffers } from '../../../redux/actions/user'
 
 const GAP = normalize(60)
 
-const OFFERS = [
-    {
-        id: 1,
-        type: 'AKO',
-        name: '#35',
-        odd: 2.5,
-        stake: 4500,
-        //3 hours from now
-        first_match_date: new Date(Date.now() + 3 * 60 * 60 * 8000),
-        match_count: 3,
-        tickets: [],
-        price: 100
-    },
-    {
-        id: 2,
-        type: 'AKO',
-        name: '#34',
-        odd: 2.5,
-        stake: 2400,
-        price: 100,
-        //3 hours from now
-        first_match_date: new Date(Date.now() + 3 * 60 * 60 * 1000),
-        tickets: [
-            {
-                type: 'AKO',
-                name: '#34',
-                odd: 3.0,
-                stake: 100,
-                result: 'win',
-                //3 hours from now
-                first_match_date: new Date(Date.now() + 3 * 60 * 60 * 1000),
-                ticket_entries: [
-                    {
-                        id: 1,
-                        sport: 'Football',
-                        start_date: new Date(Date.now() + 3 * 60 * 60 * 1000),
-                        team_home: 'Manchester United',
-                        team_away: 'Chelsea',
-                        tip: 'Výsledek zápasu: 1',
-                        odd: 1.5,
-                        league: 'Premier League',
-                        // pending / win / lose / cancelled
-                        result: 'win',
-                    },
-                    {
-                        id: 2,
-                        sport: 'Football',
-                        start_date: new Date(Date.now() + 3 * 60 * 60 * 1000),
-                        team_home: 'Manchester United',
-                        team_away: 'Chelsea',
-                        tip: 'Výsledek zápasu: 1',
-                        odd: 1.5,
-                        league: 'Premier League',
-                        // pending / win / lose / cancelled
-                        result: 'win',
-                    }
-                ]
-            }
-        ]
-    },
-    {
-        id: 3,
-        type: 'Single',
-        name: '#33',
-        odd: 3.5,
-        stake: 1000,
-        price: 100,
-        //3 hours from now
-        first_match_date: new Date(Date.now() + 3 * 60 * 60 * 1000),
-        match_count: 1,
-        tickets: []
-    }
-]
+const Skeleton = ({ timeLeftWidth, isSmallScreen }) => (
+    <View
+        style={{
+            flexDirection: 'row',
+            gap: SPACING.small,
+            width: 850,
+                maxWidth: '100%',
+                alignSelf: 'center',
+        }}
+    >
+        {!isSmallScreen && <ContentLoader
+            speed={2}
+            height={50}
+            width={timeLeftWidth}
+            style={{ borderRadius: 10 }}
+            backgroundColor={COLORS.secondary}
+            foregroundColor={COLORS.secondary2}
+        >
+            <Rect x="0" y="0" rx="0" ry="0" width="100%" height={50} />
+        </ContentLoader>}
+
+        <View>
+            <LinearGradient
+                colors={[COLORS.secondary, COLORS.secondary2]}
+                style={{
+                    borderRadius: 17.5,
+                    width: 35,
+                    height: 35,
+                    padding: 10,
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    zIndex: 2
+                }}
+            >
+                <FontAwesome name="lock" size={18} color={COLORS.white} />
+            </LinearGradient>
+            <LinearGradient
+                colors={[COLORS.whiteBackground2, COLORS.whiteBackground2, COLORS.whiteBackground2]}
+                style={{
+                    width: 1,
+                    position: 'absolute',
+                    //top: -20,
+                    left: 17.5,
+                    height: 400 + GAP,
+                }}
+            />
+        </View>
+
+        <ContentLoader
+            speed={2}
+            height={400}
+            //width={750}
+            style={{ borderRadius: 10, alignSelf: 'center', flexGrow: 1 }}
+            backgroundColor={COLORS.secondary}
+            foregroundColor={COLORS.secondary2}
+        >
+            <Rect x="0" y="0" rx="0" ry="0" width={850} height={400} />
+        </ContentLoader>
+    </View>
+)
 
 const TimeLeft = ({ startDate, width, onTimeLeftLayout=() => {}}) => {
     const [timeLeft, setTimeLeft] = useState(calculateTimeDifference(new Date(), startDate))
@@ -163,14 +155,53 @@ const Divider = ({ isLast, isLocked }) => {
     )
 }
 
-const Offers = ({ searchParams, setTabHeight }) => {
+const Offers = ({ searchParams, setTabHeight, fetchOffers, offers }) => {
     const { width } = useWindowDimensions()
 
     const isSmallScreen = width < 700
 
     const currentWidestTimeLeft = useRef(0)
+    const allTicketsLoaded = useRef(false)
 
     const [timeLeftWidth, setTimeLeftWidth] = useState()
+    const [refreshing, setRefreshing] = useState(false)
+
+    useEffect(() => {
+        if (offers == null) {
+            fetchOffers()
+        }
+    }, [
+        offers
+    ])
+
+    useEffect(() => {
+        const handleScroll = () => {
+            const scrollPosition = window.scrollY + window.innerHeight
+
+            if (scrollPosition >= document.body.scrollHeight) {
+                onEndReached()
+            }
+        }
+
+        document.addEventListener("scroll", handleScroll)
+
+        return () => {
+            document.removeEventListener('scroll', handleScroll)
+        }
+    }, [])
+
+    const onEndReached = async () => {
+        if (allTicketsLoaded.current || offers == null || refreshing || offers.length < MAX_TICKETS_ROWS_PER_QUERY) {
+            return
+        }
+
+        setRefreshing(true)
+        const newOffers = await fetchOffers()
+        if (newOffers == null || newOffers?.length === 0) {
+            allTicketsLoaded.current = true
+        }
+        setRefreshing(false)
+    }
 
     const onTimeLeftLayout = (event, index) => {
         const { width } = event.nativeEvent.layout
@@ -179,10 +210,53 @@ const Offers = ({ searchParams, setTabHeight }) => {
             currentWidestTimeLeft.current = width
         }
 
-        if (index === OFFERS.length - 1) {
+        if (index === offers.length - 1) {
             setTimeLeftWidth(currentWidestTimeLeft.current)
         }
     }
+
+    const renderItem = (offer, index) => (
+        <View
+            key={offer.id}
+            style={{
+                flexDirection: 'row',
+                gap: SPACING.small
+            }}
+        >
+            {!isSmallScreen && <TimeLeft onTimeLeftLayout={(event) => onTimeLeftLayout(event, index)} width={timeLeftWidth} startDate={offer.start_date} />}
+            <Divider isLast={index === offers.length - 1} isLocked={offer.ticket_data == null} />
+
+            {offer.ticket_data != null ? (
+                <View
+                    style={{
+                        gap: SPACING.medium,
+                        flex: 1
+                    }}
+                >
+                    {isSmallScreen && <TimeLeft startDate={offer.start_date} />}
+                    <UnlockedTicket
+                        searchParams={searchParams}
+                        ticket={offer.ticket_data}
+                        isLast={index === offer.length - 1}
+                    /> 
+                </View>
+            ) : (
+                <View
+                    style={{
+                        gap: SPACING.medium,
+                        flex: 1
+                    }}
+                >
+                    {isSmallScreen && <TimeLeft startDate={offer.start_date} />}
+                    <LockedTicket
+                        searchParams={searchParams}
+                        offer={offer}
+                        isLast={index === offers.length - 1}
+                    />
+                </View>
+            )}
+        </View>
+    )
 
     return (
         <View
@@ -198,50 +272,25 @@ const Offers = ({ searchParams, setTabHeight }) => {
                 //alignItems: 'center',
             }}
         >
-            {OFFERS.map((offer, index) => (
-                <View
-                    key={offer.id}
-                    style={{
-                        flexDirection: 'row',
-                        gap: SPACING.small
-                    }}
-                >
-                    {!isSmallScreen && <TimeLeft onTimeLeftLayout={(event) => onTimeLeftLayout(event, index)} width={timeLeftWidth} startDate={offer.first_match_date} />}
-                    <Divider isLast={index === OFFERS.length - 1} isLocked={offer.tickets.length === 0} />
-
-                    {offer.tickets.length > 0 ? (
-                        <View
-                            style={{
-                                gap: SPACING.medium,
-                                flex: 1
-                            }}
-                        >
-                            {isSmallScreen && <TimeLeft startDate={offer.first_match_date} />}
-                            <UnlockedTicket
-                                searchParams={searchParams}
-                                ticket={offer.tickets[0]}
-                                isLast={index === OFFERS.length - 1}
-                            />
-                        </View>
-                    ) : (
-                        <View
-                            style={{
-                                gap: SPACING.medium,
-                                flex: 1
-                            }}
-                        >
-                            {isSmallScreen && <TimeLeft startDate={offer.first_match_date} />}
-                            <LockedTicket
-                                searchParams={searchParams}
-                                ticket={offer}
-                                isLast={index === OFFERS.length - 1}
-                            />
-                        </View>
-                    )}
-                </View>
-            ))}
+            <FlatList
+                contentContainerStyle={{ gap: GAP }}
+                keyExtractor={(item) => item.id}
+                data={offers == null ? new Array(10).fill(null, 0).map((_, index) => ({ id: index })) : offers}
+                renderItem={({ item, index }) => offers == null ? <Skeleton /> : renderItem(item, index)}
+                ListEmptyComponent={() => !refreshing && (
+                    <Animated.Text entering={FlipInEasyX} style={{ textAlign: 'center', fontFamily: FONTS.medium, color: COLORS.grey400, fontSize: FONT_SIZES.xx_large, }}>
+                        No offers at the moment
+                    </Animated.Text>
+                )}
+                showsVerticalScrollIndicator={false}
+            />
+            {refreshing && new Array(10).fill(null, 0).map((_, index) => <Skeleton key={index} timeLeftWidth={timeLeftWidth} isSmallScreen={isSmallScreen} />)}
         </View>
     )
 }
 
-export default withSearchParams(Offers, ['language'])
+const mapStateToProps = (store) => ({
+    offers: store.userState.offers
+})
+
+export default connect(mapStateToProps, { fetchOffers })(withSearchParams(Offers, ['language']))

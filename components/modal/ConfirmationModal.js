@@ -30,7 +30,7 @@ const ConfirmationModal = ({
 
     const closeModal = () => {
         onCancel()
-        confirmButtonRef.current.setIsLoading(false)
+        confirmButtonRef.current?.setIsLoading(false)
     }
 
     const onConfirmPress = async () => {
@@ -40,11 +40,12 @@ const ConfirmationModal = ({
             await onConfirm()
             closeModal()
         } catch(error) {
-            modalToastRef.current.show({
+            modalToastRef.current?.show({
                 type: 'error',
                 text: errorText,
                 headerText: headerErrorText
             })
+            console.error('confirm modal error: ', error)
             confirmButtonRef.current.setIsLoading(false)
         }
     }

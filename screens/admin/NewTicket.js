@@ -492,7 +492,8 @@ const NewTicket = ({ offsetX, toastRef, setTabHeight, searchParams, storeCreated
                     odd: formattedEntries.reduce((out, current) => out * current.odd, 1),
                     stake: ticket.stake,
                     start_date: formattedEntries.sort((a, b) => a.start_date - b.start_date)[0].start_date,
-                    data: hashedTicketEntries
+                    data: hashedTicketEntries,
+                    price: ticket.price,
                 })
 
             if (hashedEntriesError) {

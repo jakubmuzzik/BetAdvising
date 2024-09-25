@@ -54,7 +54,7 @@ const TicketHeader = ({ name, id, type, showEditButtons, offsetX, actions }) => 
                 <DropdownSelect
                     ref={actionsDropdownRef}
                     offsetX={offsetX}
-                    values={actions.map(action => action.label)}
+                    options={actions.map(action => ({label: action.label, icon: action.icon}))}
                     setText={(text) => actions.find(action => action.label === text).onPress(id)}
                 >
                     <IconButton
@@ -70,7 +70,7 @@ const TicketHeader = ({ name, id, type, showEditButtons, offsetX, actions }) => 
     )
 }
 
-const Match = ({ match, width, id, showEditButtons, offsetX, actions }) => {
+const Match = ({ match, width, ticketId, id, showEditButtons, offsetX, actions }) => {
     const actionsDropdownRef = useRef()
 
     return (
@@ -140,8 +140,8 @@ const Match = ({ match, width, id, showEditButtons, offsetX, actions }) => {
                     <DropdownSelect
                         ref={actionsDropdownRef}
                         offsetX={offsetX}
-                        values={actions.map(action => action.label)}
-                        setText={(text) => actions.find(action => action.label === text).onPress(id)}
+                        options={actions.map(action => ({label: action.label, icon: action.icon}))}
+                        setText={(text) => actions.find(action => action.label === text).onPress(ticketId, id)}
                     >
                         <IconButton
                             icon="dots-horizontal"
@@ -220,7 +220,7 @@ const TicketBody = ({ ticket, showEditButtons, offsetX, actions }) => {
             gap: SPACING.medium
         }}>
             {ticket.ticket_entries.map((match) => (
-                <Match key={match.id} match={match} width={width} id={match.id} showEditButtons={showEditButtons} offsetX={offsetX} actions={actions} />
+                <Match key={match.id} match={match} width={width} ticketId={ticket.id} id={match.id} showEditButtons={showEditButtons} offsetX={offsetX} actions={actions} />
             ))}
         </View>
     )

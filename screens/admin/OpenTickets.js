@@ -3,7 +3,7 @@ import { View, Text, useWindowDimensions, FlatList } from 'react-native'
 import { FONTS, FONT_SIZES, SPACING, COLORS, SUPPORTED_LANGUAGES } from '../../constants'
 import { normalize, calculateTimeDifference } from '../../utils'
 import { LinearGradient } from 'expo-linear-gradient'
-import { MaterialIcons, FontAwesome } from '@expo/vector-icons'
+import { MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons'
 import { fetchOpenTickets } from '../../redux/actions/admin'
 import { ActivityIndicator } from 'react-native-paper'
 import Animated, { FlipInEasyX } from 'react-native-reanimated'
@@ -150,18 +150,18 @@ const OpenTickets = ({ fetchOpenTickets, setTabHeight, toastRef, openTickets, se
 
             toastRef?.show({
                 type: 'success',
-                text: 'Ticket result updated to: ' + result
+                text: 'Ticket result updated to: ' + result + '.'
             })
         } catch (e) {
             console.error(e)
             toastRef?.show({
                 type: 'error',
-                text: 'Failed to update ticket'
+                text: 'Failed to update ticket.'
             })
         }
     }
 
-    const updateTicketEntryResult = async (ticketEntryId, result) => {
+    const updateTicketEntryResult = async (ticketId, ticketEntryId, result) => {
         try {
             const { error } = await supabase
                 .from('ticket_entries')
@@ -170,26 +170,26 @@ const OpenTickets = ({ fetchOpenTickets, setTabHeight, toastRef, openTickets, se
 
             if (error) throw error
 
-            updateTicketEntryInRedux(ticketEntryId, result)
+            updateTicketEntryInRedux(ticketId, ticketEntryId, result)
 
             toastRef?.show({
                 type: 'success',
-                text: 'Ticket entry updated'
+                text: 'Ticket entry updated.'
             })
         } catch (e) {
             console.error(e)
             toastRef?.show({
                 type: 'error',
-                text: 'Failed to update ticket entry'
+                text: 'Failed to update ticket entry.'
             })
         }
     }
 
-    const wonTicketPress = async (ticketId) => {
+    const wonTicketPress = (ticketId) => {
         if (!allTicketEntriesResulted(ticketId)) {
             toastRef?.show({
                 type: 'error',
-                text: 'Not all ticket entries have been resulted yet'
+                text: 'Not all ticket entries have been resulted yet.'
             })
             return
         }
@@ -197,11 +197,11 @@ const OpenTickets = ({ fetchOpenTickets, setTabHeight, toastRef, openTickets, se
         setTicketToWin(ticketId)
     }
 
-    const loseTicketPress = async (ticketId) => {
+    const loseTicketPress = (ticketId) => {
         if (!allTicketEntriesResulted(ticketId)) {
             toastRef?.show({
                 type: 'error',
-                text: 'Not all ticket entries have been resulted yet'
+                text: 'Not all ticket entries have been resulted yet.'
             })
             return
         }
@@ -209,42 +209,47 @@ const OpenTickets = ({ fetchOpenTickets, setTabHeight, toastRef, openTickets, se
         setTicketToLose(ticketId)
     }
 
-    const wonTicketEntryPress = async (ticketEntryId) => {
-        updateTicketEntryResult(ticketEntryId, 'win')
+    const wonTicketEntryPress = (ticketId, ticketEntryId) => {
+        updateTicketEntryResult(ticketId, ticketEntryId, 'win')
     }
 
-    const loseTicketEntryPress = (ticketEntryId) => {
-        updateTicketEntryResult(ticketEntryId, 'lose')
+    const loseTicketEntryPress = (ticketId, ticketEntryId) => {
+        updateTicketEntryResult(ticketId, ticketEntryId, 'lose')
     }
 
-    const cancelTicketEntryPress = (ticketEntryId) => {
-        updateTicketEntryResult(ticketEntryId, 'cancelled')
+    const cancelTicketEntryPress = (ticketId, ticketEntryId) => {
+        updateTicketEntryResult(ticketId, ticketEntryId, 'cancelled')
     }
 
 
     const ticketEntryActions = [
         {
             label: 'Won',
-            onPress: wonTicketEntryPress
+            onPress: wonTicketEntryPress,
+            icon: <MaterialCommunityIcons name="check-circle" size={18} color="green" />
         },
         {
             label: 'Lost',
-            onPress: loseTicketEntryPress
+            onPress: loseTicketEntryPress,
+            icon: <MaterialIcons name="cancel" size={18} color={COLORS.error} />
         },
         {
             label: 'Cancelled',
-            onPress: cancelTicketEntryPress
+            onPress: cancelTicketEntryPress,
+            icon: <MaterialCommunityIcons name="cancel" size={18} color="white" />
         }
     ]
 
     const ticketActions = [
         {
             label: 'Won',
-            onPress: wonTicketPress
+            onPress: wonTicketPress,
+            icon: <MaterialCommunityIcons name="check-circle" size={18} color="green" />
         },
         {
             label: 'Lost',
-            onPress: loseTicketPress
+            onPress: loseTicketPress,
+            icon: <MaterialIcons name="cancel" size={18} color={COLORS.error} />
         }
     ]
 

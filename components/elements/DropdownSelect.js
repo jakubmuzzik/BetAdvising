@@ -12,7 +12,7 @@ import CustomInput from "./CustomInput"
 
 const DropdownSelect = forwardRef((props, ref) => {
     const {
-        values,
+        options,
         label,
         placeholder,
         multiselect = false,
@@ -38,7 +38,7 @@ const DropdownSelect = forwardRef((props, ref) => {
     } = props
 
     const dropdownRef = useRef()
-    const filteredValuesRef = useRef(values)
+    const filteredOptionsRef = useRef(options)
 
     const [dropdownDesc, setDropdownDesc] = useState(0)
     const [visible, setVisible] = useState(false)
@@ -48,8 +48,8 @@ const DropdownSelect = forwardRef((props, ref) => {
     const { height, width } = useWindowDimensions()
 
     useEffect(() => {
-        filteredValuesRef.current = values
-    }, [values])
+        filteredOptionsRef.current = options
+    }, [options])
 
     const onValuePress = (value) => {
         setText(value)
@@ -98,9 +98,9 @@ const DropdownSelect = forwardRef((props, ref) => {
     }))
 
     const onSearch = useCallback((value) => {
-        filteredValuesRef.current = value ? [...values].filter(val => val.toLowerCase().includes(value.toLowerCase())) : [...values]
+        filteredOptionsRef.current = value ? [...options].filter(val => val.toLowerCase().includes(value.toLowerCase())) : [...options]
         setSearch(value)
-    }, [filteredValuesRef.current])
+    }, [filteredOptionsRef.current])
 
     const onDropdownLayout = useCallback((event) => {
         const spaceBelowDropdown = height - (dropdownDesc.py + dropdownDesc.h + 5 + SPACING.medium)
@@ -159,12 +159,12 @@ const DropdownSelect = forwardRef((props, ref) => {
                             )}
 
                             <ScrollView>
-                                {filteredValuesRef.current.map((value) => {
-                                    const selected = multiselect ? text.includes(value) : text === value
+                                {filteredOptionsRef.current.map((option) => {
+                                    const selected = multiselect ? text.includes(option.label) : text === option.label
                                     return multiselect ? (
                                         <TouchableRipple
-                                            key={value}
-                                            onPress={() => onValuePress(value)}
+                                            key={option.label}
+                                            onPress={() => onValuePress(option.label)}
                                             style={{ 
                                                 backgroundColor: selected ? COLORS.whiteBackground : undefined, 
                                                 paddingVertical: SPACING.xx_small, 
@@ -182,7 +182,7 @@ const DropdownSelect = forwardRef((props, ref) => {
                                                 size={normalize(19)}
                                                 fillColor={COLORS.red}
                                                 unfillColor="#FFFFFF"
-                                                text={value}
+                                                text={option.label}
                                                 iconStyle={{ borderRadius: 3 }}
                                                 innerIconStyle={{ borderWidth: 2, borderRadius: 3 }}
                                                 textStyle={{ color: '#FFF', fontFamily: FONTS.medium, fontSize: FONT_SIZES.medium, textDecorationLine: "none" }}
@@ -191,21 +191,25 @@ const DropdownSelect = forwardRef((props, ref) => {
                                         </TouchableRipple>
                                     ) : (
                                         <TouchableRipple
-                                            key={value}
-                                            onPress={() => onValuePress(value)}
+                                            key={option.label}
+                                            onPress={() => onValuePress(option.label)}
                                             style={{ 
                                                     paddingVertical: SPACING.xx_small,
                                                     paddingHorizontal: SPACING.medium,
-                                                    justifyContent: 'space-between',
+                                                    //justifyContent: 'space-between',
                                                     alignItems: 'center',
                                                     flexDirection: 'row',
+                                                    gap: 10,
                                                     backgroundColor: selected ? COLORS.whiteBackground : undefined
                                                 }}
                                                 rippleColor={COLORS.whiteBackground}
                                             >
                                             <>
+                                                {
+                                                    option.icon ?? undefined
+                                                }
                                                 <Text style={{ fontFamily: FONTS.medium, fontSize: FONT_SIZES.medium, color: COLORS.white }}>
-                                                    {value}
+                                                    {option.label}
                                                 </Text>
                                                 {
                                                     multiselect

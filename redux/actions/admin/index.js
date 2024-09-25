@@ -165,14 +165,41 @@ export const closeOpenTicketInRedux = (ticketId, result) => (dispatch, getState)
     }
 }
 
-export const updateTicketEntryInRedux = (ticketEntryId, result) => (dispatch, getState) => {
+export const updateTicketEntryInRedux = (ticketId, ticketEntryId, result) => (dispatch, getState) => {
     let openTicketsToUpdate = JSON.parse(JSON.stringify(getState().adminState.openTickets))
 
-    openTicketsToUpdate.find(ticket => ticket.ticket_entries.find(ticketEntry => ticketEntry.id === ticketEntryId).result = result)
-
+    const ticketToUpdate = openTicketsToUpdate.find((ticket) => ticket.id === ticketId)
+    ticketToUpdate.ticket_entries.find((entry) => entry.id === ticketEntryId).result = result
 
     dispatch({
         type: OPEN_TICKETS_STATE_CHANGE,
         openTickets: openTicketsToUpdate
     })
+}
+
+export const storeCreatedTicketToRedux = (ticketId) => async (dispatch, getState) => {
+    try {
+        const { data=[], error } = await supabase
+            .from('tickets')
+            .select(TICKETS_QUERY)
+            .eq('id', ticketId)
+
+        if (error) throw error
+
+        if (getState().adminState.openTickets != null) {
+            dispatch({
+                type: OPEN_TICKETS_STATE_CHANGE,
+                openTickets: data.concat(getState().adminState.openTickets)
+            })
+        }
+
+        if (getState().adminState.openTicketsCount != null) {
+            dispatch({
+                type: OPEN_TICKETS_COUNT_CHANGE,
+                openTicketsCount: getState().adminState.openTicketsCount + 1
+            })
+        }
+    } catch (e) {
+        console.error(e)
+    }
 }

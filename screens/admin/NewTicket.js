@@ -12,6 +12,8 @@ import { connect } from 'react-redux'
 
 import { useNavigate } from 'react-router-dom'
 
+import { storeCreatedTicketToRedux } from '../../redux/actions/admin'
+
 import withSearchParams from '../../components/hoc/withSearchParams'
 
 const DEFAULT_TICKET_ENTRIES = [
@@ -159,7 +161,7 @@ const Match = ({ setTicketEntries, match, index, onRowDeletePress, offsetX }) =>
                     label='Sport'
                     placeholder='Fotbal'
                     containerStyle={{ flex: 1 }}
-                    values={SPORTS}
+                    options={SPORTS}
                     text={match.sport}
                     errorMessage={match.sportErrorMessage}
                     setText={(text) => {
@@ -285,7 +287,7 @@ const Match = ({ setTicketEntries, match, index, onRowDeletePress, offsetX }) =>
     )
 }
 
-const NewTicket = ({ offsetX, toastRef, setTabHeight, searchParams }) => {
+const NewTicket = ({ offsetX, toastRef, setTabHeight, searchParams, storeCreatedTicketToRedux }) => {
     const saveButtonRef = useRef()
 
     const [ticket, setTicket] = useState(DEFAULT_TICKET)
@@ -495,7 +497,7 @@ const NewTicket = ({ offsetX, toastRef, setTabHeight, searchParams }) => {
 
             if (hashedEntriesError) {
                 toastRef?.show({
-                    text: 'Could not save hashed ticket entries',
+                    text: 'Could not save hashed ticket entries.',
                     type: 'error'
                 })
 
@@ -503,9 +505,11 @@ const NewTicket = ({ offsetX, toastRef, setTabHeight, searchParams }) => {
             }
 
             toastRef?.show({
-                text: 'Ticket created successfully',
+                text: 'Ticket created successfully.',
                 type: 'success'
             })
+
+            storeCreatedTicketToRedux(ticketId)
 
             navigate({
                 pathname: '/admin',
@@ -664,4 +668,4 @@ const mapStateToProps = (store) => ({
 })
 
 
-export default connect(mapStateToProps)(withSearchParams(NewTicket, ['language']))
+export default connect(mapStateToProps, { storeCreatedTicketToRedux })(withSearchParams(NewTicket, ['language']))

@@ -106,15 +106,15 @@ export const SPACING = {
 }
 
 export const SPORTS = [
-    'Fotbal',
-    'Basketbal',
-    'Házená',
-    'Volejbal',
-    'Tenis',
-    'Stolní tenis',
-    'Badminton',
-    'Florbal',
-    'Hokej'
+    {label: 'Fotbal'},
+    {label: 'Basketbal'},
+    {label: 'Házená'},
+    {label: 'Volejbal'},
+    {label: 'Tenis'},
+    {label: 'Stolní tenis'},
+    {label: 'Badminton'},
+    {label: 'Florbal'},
+    {label: 'Hokej'}
 ]
 
 export const API_RETRY_LIMIT = 3

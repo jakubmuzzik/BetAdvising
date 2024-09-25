@@ -149,7 +149,7 @@ const ClosedTickets = ({ fetchClosedTickets, setTabHeight, toastRef, closedTicke
                     flex: 1
                 }}
             >
-                {isSmallScreen && <TimeLeft startDate={offer.start_date} />}
+                {/* {isSmallScreen && <TimeLeft startDate={offer.start_date} />} */}
                 <UnlockedTicket
                     searchParams={searchParams}
                     ticket={offer}

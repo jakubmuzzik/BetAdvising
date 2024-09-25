@@ -93,13 +93,13 @@ const Admin = ({ searchParams }) => {
                 )
             case 'open-tickets':
                 return (
-                    <View style={{ maxWidth: '100%', height: routes[index].height, alignSelf: 'center' }}>
+                    <View style={{ paddingHorizontal: SPACING.medium, maxWidth: '100%', height: routes[index].height, alignSelf: 'center' }}>
                         <OpenTickets setTabHeight={(height) => setTabHeight(height, route.index)} offsetX={windowWidth * route.index}/>
                     </View>
                 )
             case 'closed-tickets':
                 return (
-                    <View style={{ maxWidth: '100%', height: routes[index].height, alignSelf: 'center' }}>
+                    <View style={{ paddingHorizontal: SPACING.medium, maxWidth: '100%', height: routes[index].height, alignSelf: 'center' }}>
                         <ClosedTickets setTabHeight={(height) => setTabHeight(height, route.index)} offsetX={windowWidth * route.index}/>
                     </View>
                 )
@@ -111,7 +111,7 @@ const Admin = ({ searchParams }) => {
     return (
         <View style={{ backgroundColor: COLORS.lightBlack, height: routes[index].key === 'add_lady' ? initialHeight - normalize(70) : '100%' }}>
             <View style={{ width: normalize(800), maxWidth: '100%', alignSelf: 'center', marginTop: SPACING.large + SPACING.medium, paddingHorizontal: SPACING.medium, marginBottom: SPACING.large }}>
-                <View style={{ flexDirection: 'row', justifyContent: index === 0 ? 'space-between' : 'flex-start' }}>
+                <View style={{ flexDirection: 'row', gap: SPACING.medium, justifyContent: index === 0 ? 'space-between' : 'flex-start' }}>
                     <Text
                         onPress={index !== 0 ? () => onNavigationPathPress(0) : undefined}
                         style={{ 

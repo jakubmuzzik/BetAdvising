@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { Text, View, StyleSheet, TouchableOpacity, ScrollView, useWindowDimensions, Dimensions } from 'react-native'
 import Animated, {
     useSharedValue,
@@ -101,7 +101,16 @@ const Drawer = ({ isOpen, toggleLeftDrawer, duration = 500, children }) => {
 //     }
 // }
 
-const SideBar = ({ toggleDrawer, searchParams }) => {
+const SideBar = ({ toggleDrawer, searchParams, currentAuthUser }) => {
+    const [routes] = useState(
+        (currentAuthUser?.app_metadata?.userrole === 'ADMIN' ? [...ROUTES, {
+            path: '/admin',
+            title: 'Admin',
+            key: 'admin',
+            icon: (focused) => <MaterialCommunityIcons style={{ marginRight: 10 }} name="book-edit" size={20} color={focused ? COLORS.white : 'rgba(255,255,255,0.7)'} />
+        }] : ROUTES).map((route, index) => ({ ...route, index }))
+    )
+
     const isOpen = useSharedValue(false)
     const hasRendered = useRef(false)
 
@@ -158,7 +167,7 @@ const SideBar = ({ toggleDrawer, searchParams }) => {
                     gap: 15
                 }}
             >
-                {ROUTES.map((route, index) => (
+                {routes.map((route, index) => (
                     <HoverableView
                         key={route.title}
                         style={{
@@ -235,7 +244,8 @@ const SideBar = ({ toggleDrawer, searchParams }) => {
 }
 
 const mapStateToProps = (store) => ({
-    toggleDrawer: store.appState.toggleDrawer
+    toggleDrawer: store.appState.toggleDrawer,
+    currentAuthUser: store.userState.currentAuthUser,
 })
 
 export default connect(mapStateToProps)(withSearchParams(SideBar, ['language']))

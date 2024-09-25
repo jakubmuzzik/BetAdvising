@@ -80,7 +80,7 @@ const AdminDashboard = ({
 
                     {dataCount !== null && (
                         <Text
-                            style={{ fontFamily: FONTS.bold, color: dataCount > 0 ? 'orange' : COLORS.white, fontSize: FONT_SIZES.h3 }}
+                            style={{ fontFamily: FONTS.bold, color: dataCount > 0 ? COLORS.accent : COLORS.white, fontSize: FONT_SIZES.h3 }}
                         >
                             {dataCount}
                         </Text>

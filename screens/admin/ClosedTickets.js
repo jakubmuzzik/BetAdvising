@@ -97,6 +97,22 @@ const ClosedTickets = ({ fetchClosedTickets, setTabHeight, toastRef, closedTicke
         closedTickets
     ])
 
+    useEffect(() => {
+        const handleScroll = () => {
+            const scrollPosition = window.scrollY + window.innerHeight
+
+            if (scrollPosition >= document.body.scrollHeight) {
+                onEndReached()
+            }
+        }
+
+        document.addEventListener("scroll", handleScroll)
+
+        return () => {
+            document.removeEventListener('scroll', handleScroll)
+        }
+    }, [])
+
     const onEndReached = async () => {
         if (allTicketsLoaded.current || closedTickets == null || refreshing || closedTickets.length < MAX_TICKETS_ROWS_PER_QUERY) {
             return
@@ -158,22 +174,14 @@ const ClosedTickets = ({ fetchClosedTickets, setTabHeight, toastRef, closedTicke
                 keyExtractor={(item) => item.id}
                 data={closedTickets == null ? new Array(10).fill(null, 0).map((_, index) => ({ id: index })) : closedTickets}
                 renderItem={({ item, index }) => closedTickets == null ? <Skeleton /> : renderItem(item, index)}
-                onEndReached={onEndReached}
-                ListFooterComponent={() => refreshing && (
-                    <ActivityIndicator
-                        size='small'
-                        color={COLORS.darkBlue}
-                        style={{ padding: SPACING.medium }}
-                    />
-                )}
                 ListEmptyComponent={() => !refreshing && (
                     <Animated.Text entering={FlipInEasyX} style={{ textAlign: 'center', fontFamily: FONTS.medium, color: COLORS.grey400, fontSize: FONT_SIZES.xx_large, }}>
                         No closed tickets
                     </Animated.Text>
                 )}
-                refreshing={refreshing}
+                showsVerticalScrollIndicator={false}
             />
-
+            {refreshing && new Array(10).fill(null, 0).map((_, index) => <Skeleton />)}
         </View>
     )
 }

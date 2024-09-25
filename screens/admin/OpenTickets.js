@@ -133,6 +133,22 @@ const OpenTickets = ({ fetchOpenTickets, setTabHeight, toastRef, openTickets, se
         openTickets
     ])
 
+    useEffect(() => {
+        const handleScroll = () => {
+            const scrollPosition = window.scrollY + window.innerHeight
+
+            if (scrollPosition >= document.body.scrollHeight) {
+                onEndReached()
+            }
+        }
+
+        document.addEventListener("scroll", handleScroll)
+
+        return () => {
+            document.removeEventListener('scroll', handleScroll)
+        }
+    }, [])
+
     const allTicketEntriesResulted = (ticketId) => {
         return openTickets.find(ticket => ticket.id === ticketId).ticket_entries.every(ticketEntry => ticketEntry.result != 'pending')
     }
@@ -327,21 +343,15 @@ const OpenTickets = ({ fetchOpenTickets, setTabHeight, toastRef, openTickets, se
                 keyExtractor={(item) => item.id}
                 data={openTickets == null ? new Array(10).fill(null, 0).map((_, index) => ({ id: index })) : openTickets}
                 renderItem={({ item, index }) => openTickets == null ? <Skeleton /> : renderItem(item, index)}
-                onEndReached={onEndReached}
-                ListFooterComponent={() => refreshing && (
-                    <ActivityIndicator
-                        size='small'
-                        color={COLORS.darkBlue}
-                        style={{ padding: SPACING.medium }}
-                    />
-                )}
                 ListEmptyComponent={() => !refreshing && (
                     <Animated.Text entering={FlipInEasyX} style={{ textAlign: 'center', fontFamily: FONTS.medium, color: COLORS.grey400, fontSize: FONT_SIZES.xx_large, }}>
                         No open tickets
                     </Animated.Text>
                 )}
-                refreshing={refreshing}
+                showsVerticalScrollIndicator={false}
             />
+
+            {refreshing && new Array(10).fill(null, 0).map((_, index) => <Skeleton />)}
 
             <ConfirmationModal
                 visible={!!ticketToWin}

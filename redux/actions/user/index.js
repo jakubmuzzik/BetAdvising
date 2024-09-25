@@ -139,3 +139,17 @@ export const unlockTicket = (offerId, ticketId) => async (dispatch, getState) =>
         })
     })*/
 }
+
+//need to call this after the unlock animation is done
+export const updateOfferInRedux = (data) => async (dispatch, getState) => {
+    dispatch({
+        type: OFFERS_STATE_CHANGE,
+        offers: getState().userState.offers.map(offer => {
+            if (offer.id === data.id) {
+                return data
+            }
+
+            return offer
+        })
+    })
+}

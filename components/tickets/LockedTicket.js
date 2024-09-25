@@ -7,7 +7,7 @@ import Animated, { FadeInDown, useAnimatedStyle, useSharedValue, interpolate, wi
 import  { createRandomString, getEventDate, getEventTime } from '../../utils'
 import CustomButton from '../elements/CustomButton'
 import withSearchParams from '../hoc/withSearchParams'
-import { unlockTicket } from '../../redux/actions/user'
+import { unlockTicket, updateOfferInRedux } from '../../redux/actions/user'
 
 import ConfirmationModal from '../modal/ConfirmationModal'
 import { connect } from 'react-redux'
@@ -250,7 +250,7 @@ const TicketFooter = ({ odd, stake }) => (
     </View>
 )
 
-const LockedTicket = ({ offer, searchParams, toastRef, unlockTicket }) => {
+const LockedTicket = ({ offer, searchParams, toastRef, unlockTicket, updateOfferInRedux }) => {
     const [cardLayout, setCardLayout] = useState({ width: 0, height: 0 })
     const [confirmUnlockVisible, setConfirmUnlockVisible] = useState(false)
 
@@ -264,8 +264,8 @@ const LockedTicket = ({ offer, searchParams, toastRef, unlockTicket }) => {
     const duration = 500
 
     const regularCardAnimatedStyle = useAnimatedStyle(() => {
-        const spinValue = interpolate(Number(isFlipped.value), [0, 1], [0, 180])
-        const rotateValue = withTiming(`${spinValue}deg`, { duration })
+        //const spinValue = interpolate(Number(isFlipped.value), [0, 1], [0, 180])
+        const rotateValue = interpolate(Number(isFlipped.value), [0, 1], [0, 180])+ 'deg' //withTiming(`${spinValue}deg`, { duration })
 
         return {
             transform: [
@@ -275,8 +275,9 @@ const LockedTicket = ({ offer, searchParams, toastRef, unlockTicket }) => {
     })
 
     const flippedCardAnimatedStyle = useAnimatedStyle(() => {
-        const spinValue = interpolate(Number(isFlipped.value), [0, 1], [180, 360])
-        const rotateValue = withTiming(`${spinValue}deg`, { duration })
+        //const spinValue = interpolate(Number(isFlipped.value), [0, 1], [180, 360])
+        const rotateValue = interpolate(Number(isFlipped.value), [0, 1], [180, 360])+ 'deg'
+        //withTiming(`${spinValue}deg`, { duration })
 
         return {
             transform: [
@@ -301,8 +302,11 @@ const LockedTicket = ({ offer, searchParams, toastRef, unlockTicket }) => {
 
             setOfferData(newOfferData)
 
-            //wait for the setOfferData to finish
-            setTimeout(() => isFlipped.value = !isFlipped.value)
+            isFlipped.value = withTiming(true, { duration: 600 }, (isFinished) => {
+                if (isFinished) {
+                    updateOfferInRedux(newOfferData)
+                }
+            })
 
             toastRef?.show({
                 text: 'Ticket has been unlocked',
@@ -316,6 +320,11 @@ const LockedTicket = ({ offer, searchParams, toastRef, unlockTicket }) => {
             if (message.includes('User does not have enough credits')) {
                 toastRef?.show({
                     text: 'Nemáte dostatek kreditů. Prosím dobijte si váš kreditový účet.',
+                    type: 'warning'
+                })
+            } else if (message.includes('duplicate key value violates')) {
+                toastRef?.show({
+                    text: 'Tiket už byl odemčen. Aktualizujte prosím stránku.',
                     type: 'warning'
                 })
             } else {
@@ -387,7 +396,7 @@ const mapStateToProps = (store) => ({
     toastRef: store.appState.toastRef
 })
 
-export default connect(mapStateToProps, { unlockTicket })(LockedTicket)
+export default connect(mapStateToProps, { unlockTicket, updateOfferInRedux })(LockedTicket)
 
 const styles = StyleSheet.create({
     regularCard: {

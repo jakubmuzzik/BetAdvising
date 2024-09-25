@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react'
-import { View, Text, useWindowDimensions, FlatList } from 'react-native'
+import { View, Text, useWindowDimensions, FlatList, StyleSheet } from 'react-native'
 import { FONTS, FONT_SIZES, SPACING, COLORS } from '../../../constants'
 import { normalize, calculateTimeDifference } from '../../../utils'
 import { LinearGradient } from 'expo-linear-gradient'
 import { FontAwesome } from '@expo/vector-icons'
 import ContentLoader, { Rect } from "react-content-loader/native"
-import Animated, { FlipInEasyX } from 'react-native-reanimated'
+import Animated, { FlipInEasyX, FadeInDown, useAnimatedStyle, useSharedValue, interpolate, withTiming, useAnimatedProps, BounceIn } from 'react-native-reanimated'
 import { MAX_TICKETS_ROWS_PER_QUERY } from '../../../redux/actions/admin'
 
 import withSearchParams from '../../../components/hoc/withSearchParams'
@@ -23,8 +23,8 @@ const Skeleton = ({ timeLeftWidth, isSmallScreen }) => (
             flexDirection: 'row',
             gap: SPACING.small,
             width: 850,
-                maxWidth: '100%',
-                alignSelf: 'center',
+            maxWidth: '100%',
+            alignSelf: 'center',
         }}
     >
         {!isSmallScreen && <ContentLoader
@@ -78,7 +78,7 @@ const Skeleton = ({ timeLeftWidth, isSmallScreen }) => (
     </View>
 )
 
-const TimeLeft = ({ startDate, width, onTimeLeftLayout=() => {}}) => {
+const TimeLeft = ({ startDate, width, onTimeLeftLayout = () => { } }) => {
     const [timeLeft, setTimeLeft] = useState(calculateTimeDifference(new Date(), startDate))
 
     useEffect(() => {
@@ -155,6 +155,103 @@ const Divider = ({ isLast, isLocked }) => {
     )
 }
 
+const FlippableTicket = ({ isLast, offer, searchParams, isSmallScreen, onTimeLeftLayout, timeLeftWidth, index }) => {
+    const previousOffer = useRef(offer)
+
+    const [cardLayout, setCardLayout] = useState({ width: 0, height: 0 })
+
+    const isFlipped = useSharedValue(!!offer.ticket_data)
+
+    const isDirectionX = false
+    const duration = 500
+
+    useEffect(() => {
+        if (previousOffer.current.ticket_data == null && offer.ticket_data != null) {
+            isFlipped.value = withTiming(1, { duration: duration })
+        }
+
+        previousOffer.current = offer
+    }, [offer])
+
+    const regularCardAnimatedStyle = useAnimatedStyle(() => {
+        const rotateValue = interpolate(Number(isFlipped.value), [0, 1], [0, 180]) + 'deg'
+
+        return {
+            transform: [
+                isDirectionX ? { rotateX: rotateValue } : { rotateY: rotateValue },
+            ],
+        }
+    })
+
+    const flippedCardAnimatedStyle = useAnimatedStyle(() => {
+        const rotateValue = interpolate(Number(isFlipped.value), [0, 1], [180, 360]) + 'deg'
+
+        return {
+            transform: [
+                isDirectionX ? { rotateX: rotateValue } : { rotateY: rotateValue },
+            ],
+        }
+    })
+
+    const flippedCardAnimatedProps = useAnimatedProps(() => {
+        return {
+            pointerEvents: isFlipped.value ? 'auto' : 'none',
+        }
+    })
+
+    return (
+        <View
+            key={offer.id}
+            style={{
+                flexDirection: 'row',
+                gap: SPACING.small
+            }}
+        >
+            {!isSmallScreen && <TimeLeft onTimeLeftLayout={(event) => onTimeLeftLayout(event, index)} width={timeLeftWidth} startDate={offer.start_date} />}
+
+            <Divider isLast={isLast} isLocked={offer.ticket_data == null} />
+
+            <Animated.View
+                style={[
+                    styles.regularCard,
+                    regularCardAnimatedStyle,
+                ]}>
+                <View
+                    onLayout={(event) => setCardLayout({ width: event.nativeEvent.layout.width, height: event.nativeEvent.layout.height })}
+                    style={{
+                        borderRadius: 10,
+                        backgroundColor: COLORS.secondary,
+                        borderWidth: 1,
+                        borderColor: COLORS.whiteBackground2,
+                        flexGrow: 1
+                    }}
+                >
+                    <LockedTicket
+                        searchParams={searchParams}
+                        offer={offer}
+                    />
+                </View>
+            </Animated.View>
+
+            <Animated.View
+                animatedProps={flippedCardAnimatedProps}
+                style={[
+                    styles.flippedCard,
+                    flippedCardAnimatedStyle,
+                    {
+                        width: cardLayout.width,
+                        height: cardLayout.height,
+                        right: 0,
+                        bottom: 0
+                    }
+                ]}>
+
+                {offer.ticket_data && <UnlockedTicket ticket={offer.ticket_data} />}
+            </Animated.View>
+        </View>
+    )
+}
+
 const Offers = ({ searchParams, setTabHeight, fetchOffers, offers }) => {
     const { width } = useWindowDimensions()
 
@@ -205,7 +302,7 @@ const Offers = ({ searchParams, setTabHeight, fetchOffers, offers }) => {
 
     const onTimeLeftLayout = (event, index) => {
         const { width } = event.nativeEvent.layout
-        
+
         if (width > currentWidestTimeLeft.current) {
             currentWidestTimeLeft.current = width
         }
@@ -214,49 +311,6 @@ const Offers = ({ searchParams, setTabHeight, fetchOffers, offers }) => {
             setTimeLeftWidth(currentWidestTimeLeft.current)
         }
     }
-
-    const renderItem = (offer, index) => (
-        <View
-            key={offer.id}
-            style={{
-                flexDirection: 'row',
-                gap: SPACING.small
-            }}
-        >
-            {!isSmallScreen && <TimeLeft onTimeLeftLayout={(event) => onTimeLeftLayout(event, index)} width={timeLeftWidth} startDate={offer.start_date} />}
-            <Divider isLast={index === offers.length - 1} isLocked={offer.ticket_data == null} />
-
-            {offer.ticket_data != null ? (
-                <View
-                    style={{
-                        gap: SPACING.medium,
-                        flex: 1
-                    }}
-                >
-                    {isSmallScreen && <TimeLeft startDate={offer.start_date} />}
-                    <UnlockedTicket
-                        searchParams={searchParams}
-                        ticket={offer.ticket_data}
-                        isLast={index === offer.length - 1}
-                    /> 
-                </View>
-            ) : (
-                <View
-                    style={{
-                        gap: SPACING.medium,
-                        flex: 1
-                    }}
-                >
-                    {isSmallScreen && <TimeLeft startDate={offer.start_date} />}
-                    <LockedTicket
-                        searchParams={searchParams}
-                        offer={offer}
-                        isLast={index === offers.length - 1}
-                    />
-                </View>
-            )}
-        </View>
-    )
 
     return (
         <View
@@ -276,7 +330,7 @@ const Offers = ({ searchParams, setTabHeight, fetchOffers, offers }) => {
                 contentContainerStyle={{ gap: GAP }}
                 keyExtractor={(item) => item.id}
                 data={offers == null ? new Array(10).fill(null, 0).map((_, index) => ({ id: index })) : offers}
-                renderItem={({ item, index }) => offers == null ? <Skeleton /> : renderItem(item, index)}
+                renderItem={({ item, index }) => offers == null ? <Skeleton /> : <FlippableTicket isLast={index === offers.length - 1} offer={item} searchParams={searchParams} isSmallScreen={isSmallScreen} onTimeLeftLayout={onTimeLeftLayout} timeLeftWidth={timeLeftWidth} index={index} />}//= ({ isLast, offer, searchParams, isSmallScreen, onTimeLeftLayout }) => {}
                 ListEmptyComponent={() => !refreshing && (
                     <Animated.Text entering={FlipInEasyX} style={{ textAlign: 'center', fontFamily: FONTS.medium, color: COLORS.grey400, fontSize: FONT_SIZES.xx_large, }}>
                         No offers at the moment
@@ -294,3 +348,18 @@ const mapStateToProps = (store) => ({
 })
 
 export default connect(mapStateToProps, { fetchOffers })(withSearchParams(Offers, ['language']))
+
+
+const styles = StyleSheet.create({
+    regularCard: {
+        zIndex: 1,
+        overflow: 'hidden',
+        flexGrow: 1
+    },
+    flippedCard: {
+        position: 'absolute',
+        backfaceVisibility: 'hidden',
+        zIndex: 2,
+        overflow: 'hidden'
+    },
+})

@@ -1,18 +1,14 @@
 import React, { useEffect, useState, useRef, useLayoutEffect } from 'react'
-import { View, Text, StyleSheet } from 'react-native'
+import { View, Text } from 'react-native'
 import { FONTS, FONT_SIZES, SPACING, COLORS } from '../../constants'
 import { MaterialIcons, MaterialCommunityIcons, FontAwesome } from '@expo/vector-icons'
 import { BlurView } from 'expo-blur'
-import Animated, { FadeInDown, useAnimatedStyle, useSharedValue, interpolate, withTiming, useAnimatedProps, BounceIn } from 'react-native-reanimated'
 import  { createRandomString, getEventDate, getEventTime } from '../../utils'
 import CustomButton from '../elements/CustomButton'
-import withSearchParams from '../hoc/withSearchParams'
-import { unlockTicket, updateOfferInRedux } from '../../redux/actions/user'
+import { unlockTicket } from '../../redux/actions/user'
 
 import ConfirmationModal from '../modal/ConfirmationModal'
 import { connect } from 'react-redux'
-
-import UnlockedTicket from './UnlockedTicket'
 
 const TicketHeader = ({ name, type }) => (
     <View
@@ -250,47 +246,8 @@ const TicketFooter = ({ odd, stake }) => (
     </View>
 )
 
-const LockedTicket = ({ offer, searchParams, toastRef, unlockTicket, updateOfferInRedux }) => {
-    const [cardLayout, setCardLayout] = useState({ width: 0, height: 0 })
+const LockedTicket = ({ offer, searchParams, toastRef, unlockTicket }) => {
     const [confirmUnlockVisible, setConfirmUnlockVisible] = useState(false)
-
-    //need to hold the data in state because of the reanimated interpolation when user unlocks the ticket
-    //cant put it to redux because of the same reason
-    const [offerData, setOfferData] = useState(JSON.parse(JSON.stringify(offer)))
-
-    const isFlipped = useSharedValue(false)
-
-    const isDirectionX = false
-    const duration = 500
-
-    const regularCardAnimatedStyle = useAnimatedStyle(() => {
-        //const spinValue = interpolate(Number(isFlipped.value), [0, 1], [0, 180])
-        const rotateValue = interpolate(Number(isFlipped.value), [0, 1], [0, 180])+ 'deg' //withTiming(`${spinValue}deg`, { duration })
-
-        return {
-            transform: [
-                isDirectionX ? { rotateX: rotateValue } : { rotateY: rotateValue },
-            ],
-        }
-    })
-
-    const flippedCardAnimatedStyle = useAnimatedStyle(() => {
-        //const spinValue = interpolate(Number(isFlipped.value), [0, 1], [180, 360])
-        const rotateValue = interpolate(Number(isFlipped.value), [0, 1], [180, 360])+ 'deg'
-        //withTiming(`${spinValue}deg`, { duration })
-
-        return {
-            transform: [
-                isDirectionX ? { rotateX: rotateValue } : { rotateY: rotateValue },
-            ],
-        }
-    })
-
-    const flippedCardAnimatedProps = useAnimatedProps(() => {
-        return {
-            pointerEvents: isFlipped.value ? 'auto' : 'none',
-        }
-    })
 
     const onUnlockPress = () => {
         setConfirmUnlockVisible(true)
@@ -298,15 +255,7 @@ const LockedTicket = ({ offer, searchParams, toastRef, unlockTicket, updateOffer
 
     const unlock = async () => {
         try {
-            const newOfferData = await unlockTicket(offerData.id, offerData.ticket)
-
-            setOfferData(newOfferData)
-
-            isFlipped.value = withTiming(true, { duration: 600 }, (isFinished) => {
-                if (isFinished) {
-                    updateOfferInRedux(newOfferData)
-                }
-            })
+            await unlockTicket(offer.id, offer.ticket)
 
             toastRef?.show({
                 text: 'Ticket has been unlocked',
@@ -337,49 +286,23 @@ const LockedTicket = ({ offer, searchParams, toastRef, unlockTicket, updateOffer
     }
 
     return (
-        <>
-            <Animated.View
-                style={[
-                    styles.regularCard,
-                    regularCardAnimatedStyle,
-                ]}>
-                <View
-                    onLayout={(event) => setCardLayout({ width: event.nativeEvent.layout.width, height: event.nativeEvent.layout.height })}
-                    style={{
-                        borderRadius: 10,
-                        backgroundColor: COLORS.secondary,
-                        borderWidth: 1,
-                        borderColor: COLORS.whiteBackground2,
-                        flexGrow: 1
-                    }}
-                >
-                    <TicketHeader type={offerData.data.length === 1 ? 'Single' : 'AKO'} name={offerData.name} />
-                    <TicketBody offer={offerData} onUnlockPress={onUnlockPress} />
-                    <TicketFooter odd={offerData.odd} stake={offerData.stake} />
-                </View>
-            </Animated.View>
-
-            <Animated.View
-                animatedProps={flippedCardAnimatedProps}
-                style={[
-                    styles.flippedCard,
-                    flippedCardAnimatedStyle,
-                    {
-                        width: cardLayout.width,
-                        height: cardLayout.height,
-                        right: 0,
-                        bottom: 0
-                    }
-                ]}>
-
-                {offerData.ticket_data && <UnlockedTicket ticket={offerData.ticket_data} />}
-            </Animated.View>
-
+        <View
+            style={{
+                borderRadius: 10,
+                backgroundColor: COLORS.secondary,
+                borderWidth: 1,
+                borderColor: COLORS.whiteBackground2,
+                flexGrow: 1
+            }}
+        >
+            <TicketHeader type={offer.data.length === 1 ? 'Single' : 'AKO'} name={offer.name} />
+            <TicketBody offer={offer} onUnlockPress={onUnlockPress} />
+            <TicketFooter odd={offer.odd} stake={offer.stake} />
 
             <ConfirmationModal
                 visible={confirmUnlockVisible}
                 headerText='Unlock ticket'
-                text={'Are you sure you want to unlock this ticket with ' + offerData.price + ' credits?'} 
+                text={'Are you sure you want to unlock this ticket with ' + offer.price + ' credits?'} 
                 onCancel={() => setConfirmUnlockVisible(false)}
                 onConfirm={unlock}
                 headerErrorText='Error'
@@ -388,7 +311,7 @@ const LockedTicket = ({ offer, searchParams, toastRef, unlockTicket, updateOffer
                 confirmButtonColor={[COLORS.accent2, COLORS.accent, COLORS.accent, COLORS.accent2]}
                 confirmButtonTextColor={COLORS.black}
             />
-        </>
+        </View>
     )
 }
 
@@ -396,18 +319,4 @@ const mapStateToProps = (store) => ({
     toastRef: store.appState.toastRef
 })
 
-export default connect(mapStateToProps, { unlockTicket, updateOfferInRedux })(LockedTicket)
-
-const styles = StyleSheet.create({
-    regularCard: {
-        zIndex: 1,
-        overflow: 'hidden',
-        flexGrow: 1
-    },
-    flippedCard: {
-        position: 'absolute',
-        backfaceVisibility: 'hidden',
-        zIndex: 2,
-        overflow: 'hidden'
-    },
-})
+export default connect(mapStateToProps, { unlockTicket })(LockedTicket)

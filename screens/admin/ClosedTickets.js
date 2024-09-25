@@ -17,11 +17,8 @@ import withSearchParams from '../../components/hoc/withSearchParams'
 
 const GAP = normalize(60)
 
-
 const Divider = ({ isLast, result }) => {
     const [contentHeight, setContentHeight] = useState(0)
-
-    console.log('result', result)
 
     return (
         <View onLayout={(event) => setContentHeight(event.nativeEvent.layout.height)} >
@@ -88,12 +85,8 @@ const Skeleton = () => (
 const ClosedTickets = ({ fetchClosedTickets, setTabHeight, toastRef, closedTickets, searchParams }) => {
     const { width } = useWindowDimensions()
 
-    const isSmallScreen = width < 700
-
-    const currentWidestTimeLeft = useRef(0)
     const allTicketsLoaded = useRef(false)
 
-    const [timeLeftWidth, setTimeLeftWidth] = useState()
     const [refreshing, setRefreshing] = useState(false)
 
     useEffect(() => {
@@ -103,18 +96,6 @@ const ClosedTickets = ({ fetchClosedTickets, setTabHeight, toastRef, closedTicke
     }, [
         closedTickets
     ])
-
-    const onTimeLeftLayout = (event, index) => {
-        const { width } = event.nativeEvent.layout
-
-        if (width > currentWidestTimeLeft.current) {
-            currentWidestTimeLeft.current = width
-        }
-
-        if (index === closedTickets.length - 1) {
-            setTimeLeftWidth(currentWidestTimeLeft.current)
-        }
-    }
 
     const onEndReached = async () => {
         if (allTicketsLoaded.current || closedTickets == null || refreshing || closedTickets.length < MAX_TICKETS_ROWS_PER_QUERY) {

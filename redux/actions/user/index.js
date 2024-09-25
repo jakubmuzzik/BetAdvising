@@ -126,27 +126,13 @@ export const unlockTicket = (offerId, ticketId) => async (dispatch, getState) =>
 
     dispatch(updateCurrentUserInRedux({ credits: getState().userState.currentUser.credits - data[0].price }))
 
-    return data[0]
+    //return data[0]
 
-    /*dispatch({
+    dispatch({
         type: OFFERS_STATE_CHANGE,
         offers: getState().userState.offers.map(offer => {
             if (offer.id === offerId) {
                 return data[0]
-            }
-
-            return offer
-        })
-    })*/
-}
-
-//need to call this after the unlock animation is done
-export const updateOfferInRedux = (data) => async (dispatch, getState) => {
-    dispatch({
-        type: OFFERS_STATE_CHANGE,
-        offers: getState().userState.offers.map(offer => {
-            if (offer.id === data.id) {
-                return data
             }
 
             return offer

@@ -1,4 +1,5 @@
 import { Dimensions } from 'react-native'
+import { Ionicons, MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons'
 
 const {
   width: SCREEN_WIDTH
@@ -105,16 +106,38 @@ export const SPACING = {
     page_horizontal: normalizeSize(24, 40, 80)
 }
 
+export const renderSportIcon = (sport) => {
+    switch (sport) {
+        case 'Fotbal':
+            return <Ionicons name="football" size={20} color="white" />
+        case 'Basketbal':
+            return <Ionicons name="basketball" size={20} color="white" />
+        case 'Házená':
+            return <MaterialIcons name="sports-handball" size={20} color="white" />
+        case 'Volejbal':
+            return <MaterialIcons name="sports-volleyball" size={20} color="white" />
+        case 'Tenis':
+            return <Ionicons name="tennisball" size={20} color="white" />
+        case 'Stolní tenis':
+            return <MaterialCommunityIcons name="table-tennis" size={20} color="white" />
+        case 'Badminton':
+            return <MaterialCommunityIcons name="badminton" size={20} color="white" />
+        case 'Hokej':
+            return <MaterialCommunityIcons name="hockey-puck" size={20} color="white" />
+        default:
+            return undefined
+    }
+}
+
 export const SPORTS = [
-    {label: 'Fotbal'},
-    {label: 'Basketbal'},
-    {label: 'Házená'},
-    {label: 'Volejbal'},
-    {label: 'Tenis'},
-    {label: 'Stolní tenis'},
-    {label: 'Badminton'},
-    {label: 'Florbal'},
-    {label: 'Hokej'}
+    {label: 'Fotbal', icon: renderSportIcon('Fotbal')},
+    {label: 'Basketbal', icon: renderSportIcon('Basketbal')},
+    {label: 'Házená', icon: renderSportIcon('Házená')},
+    {label: 'Volejbal', icon: renderSportIcon('Volejbal')},
+    {label: 'Tenis', icon: renderSportIcon('Tenis')},
+    {label: 'Stolní tenis', icon: renderSportIcon('Stolní tenis')},
+    {label: 'Badminton', icon: renderSportIcon('Badminton')},
+    {label: 'Hokej', icon: renderSportIcon('Hokej')}
 ]
 
 export const API_RETRY_LIMIT = 3

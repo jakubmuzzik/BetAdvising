@@ -1,6 +1,6 @@
 import React, { useRef } from 'react'
 import { View, Text, useWindowDimensions } from 'react-native'
-import { FONTS, FONT_SIZES, SPACING, COLORS } from '../../constants'
+import { FONTS, FONT_SIZES, SPACING, COLORS, renderSportIcon } from '../../constants'
 import { MaterialIcons, MaterialCommunityIcons, FontAwesome } from '@expo/vector-icons'
 import { getEventDate, getEventTime } from '../../utils'
 import { Image } from 'expo-image'
@@ -97,7 +97,7 @@ const Match = ({ match, width, ticketId, id, showEditButtons, offsetX, actions }
                     flexShrink: 1
                 }}
             >
-                <FontAwesome name="soccer-ball-o" size={18} color={COLORS.grey300} />
+                {renderSportIcon(match.sport)}
                 <Text
                     style={{
                         fontFamily: FONTS.medium,

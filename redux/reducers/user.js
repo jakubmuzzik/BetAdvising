@@ -3,14 +3,16 @@ import {
     USER_AUTH_STATE_CHANGE,
     CLEAR_DATA,
     OFFERS_STATE_CHANGE,
-    UNLOCKED_STATE_CHANGE
+    UNLOCKED_STATE_CHANGE,
+    NOTIFICATIONS_STATE_CHANGE
 } from '../actionTypes'
 
 const INITIAL_STATE = {
     currentUser: {},
     currentAuthUser: {},
     offers: null,
-    unlocked: null
+    unlocked: null,
+    notifications: null
 }
 
 export const user = (state = INITIAL_STATE, action) => {
@@ -41,6 +43,11 @@ export const user = (state = INITIAL_STATE, action) => {
             return {
                 ...state,
                 unlocked: action.unlocked
+            }
+        case NOTIFICATIONS_STATE_CHANGE:
+            return {
+                ...state,
+                notifications: action.notifications
             }
         default:
             return state;

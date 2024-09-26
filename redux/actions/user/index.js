@@ -3,15 +3,19 @@ import {
     USER_AUTH_STATE_CHANGE,
     STORE_TOAST_REF,
     OFFERS_STATE_CHANGE,
-    UNLOCKED_STATE_CHANGE
+    UNLOCKED_STATE_CHANGE,
+    NOTIFICATIONS_STATE_CHANGE
 } from '../../actionTypes'
 import { logOut } from '../app'
 import { supabase } from '../../../supabase/config'
 
 const OFFERS_QUERY = '*, ticket_data:ticket(*, ticket_entries(*))'
 const UNLOCKED_QUERY = '*, ticket(*, ticket_entries(*))'
+const NOTIFICATIONS_QUERY = '*, ticket(id, name, price)'
+
 export const MAX_OFFER_ROWS_PER_QUERY = 50
 export const MAX_UNLOCKED_ROWS_PER_QUERY = 50
+export const MAX_NOTIFICATIONS_ROWS_PER_QUERY = 50
 
 export const storeToastRef = (toastRef) => ({
     type: STORE_TOAST_REF,
@@ -65,6 +69,39 @@ export const fetchOffers = () => async (dispatch, getState) => {
             dispatch({
                 type: OFFERS_STATE_CHANGE,
                 offers: getState().userState.offers.concat(data)
+            })
+        }
+
+        return data
+    } catch (e) {
+        console.error(e)
+        return null
+    }
+}
+
+export const fetchNotifications = () => async (dispatch, getState) => {
+    try {
+        const from = getState().userState.notifications != null ? getState().userState.notifications.length : 0
+
+        //order by multiple columns to avoid duplicate notifications when created_date is same
+        const { data=[], error } = await supabase
+            .from('notifications')
+            .select(NOTIFICATIONS_QUERY)
+            .order('created_date', { ascending: false })
+            .order('id', { ascending: false })
+            .range(from, Number(from) + Number(MAX_NOTIFICATIONS_ROWS_PER_QUERY) - 1)
+
+        if (error) throw error
+
+        if (from === 0) {
+            dispatch({
+                type: NOTIFICATIONS_STATE_CHANGE,
+                notifications: data
+            })
+        } else {
+            dispatch({
+                type: NOTIFICATIONS_STATE_CHANGE,
+                notifications: getState().userState.notifications.concat(data)
             })
         }
 

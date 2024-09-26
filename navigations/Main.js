@@ -5,7 +5,7 @@ import { normalize } from '../utils'
 import { Image } from 'expo-image'
 import { Route, createBrowserRouter, createRoutesFromElements, RouterProvider, Navigate, Outlet } from 'react-router-dom'
 import { supabase } from '../supabase/config'
-import { fetchUser, updateCurrentAuthUser } from '../redux/actions/user'
+import { fetchUser, updateCurrentAuthUser, fetchNotifications } from '../redux/actions/user'
 import { connect } from 'react-redux'
 
 import RequireAuth from './RequireAuth'
@@ -139,7 +139,7 @@ router.subscribe(() => {
     });
 })
 
-const Main = ({ fetchUser, updateCurrentAuthUser }) => {
+const Main = ({ fetchUser, updateCurrentAuthUser, fetchNotifications }) => {
     const [isLoggedIn, setIsLoggedIn] = useState(null)
 
     const hasLoadedRef = useRef(false)
@@ -165,6 +165,7 @@ const Main = ({ fetchUser, updateCurrentAuthUser }) => {
 
                     if (session.user.user_metadata?.profile_completed) {
                         fetchUser(session.user.id)
+                        fetchNotifications()
                     }
                 }
 
@@ -194,4 +195,4 @@ const Main = ({ fetchUser, updateCurrentAuthUser }) => {
     )
 }
 
-export default connect(null, { fetchUser, updateCurrentAuthUser })(Main)
+export default connect(null, { fetchUser, updateCurrentAuthUser, fetchNotifications })(Main)

@@ -9,9 +9,9 @@ import { logOut } from '../app'
 import { supabase } from '../../../supabase/config'
 
 const OFFERS_QUERY = '*, ticket_data:ticket(*, ticket_entries(*))'
-const UNLOCKED_QUERY = '*, ticket_entries(*)'
-const MAX_OFFER_ROWS_PER_QUERY = 50
-const MAX_UNLOCKED_ROWS_PER_QUERY = 50
+const UNLOCKED_QUERY = '*, ticket(*, ticket_entries(*))'
+export const MAX_OFFER_ROWS_PER_QUERY = 50
+export const MAX_UNLOCKED_ROWS_PER_QUERY = 50
 
 export const storeToastRef = (toastRef) => ({
     type: STORE_TOAST_REF,
@@ -75,15 +75,15 @@ export const fetchOffers = () => async (dispatch, getState) => {
     }
 }
 
-export const fetchUnlocked = () => async (dispatch, getState) => {
+export const fetchUnlockedTickets = () => async (dispatch, getState) => {
     try {
         const from = getState().userState.unlocked != null ? getState().userState.unlocked.length : 0
 
         const { data=[], error } = await supabase
-            .from('tickets')
+            .from('unlocked_tickets')
             .select(UNLOCKED_QUERY)
-            .gte('start_date', new Date().toISOString())
-            .order('start_date', { ascending: true })
+            .gte('ticket.start_date', new Date().toISOString())
+            .order('created_date', { ascending: false })
             .range(from, Number(from) + Number(MAX_UNLOCKED_ROWS_PER_QUERY) - 1)
 
         if (error) throw error
@@ -107,13 +107,37 @@ export const fetchUnlocked = () => async (dispatch, getState) => {
     }
 }
 
+export const fetchUnlockedTicket = (unlockedTicketId) => async (dispatch, getState) => {
+    try {
+        const { data, error } = await supabase
+            .from('unlocked_tickets')
+            .select(UNLOCKED_QUERY)
+            .eq('id', unlockedTicketId)
+
+        if (error) throw error
+
+        if (getState().userState.unlocked != null) {
+            dispatch({
+                type: UNLOCKED_STATE_CHANGE,
+                unlocked: data.concat(getState().userState.unlocked)
+            })
+        }
+
+        return data
+    } catch(e) {
+        console.error(e)
+        return null
+    }
+}
+
 export const unlockTicket = (offerId, ticketId) => async (dispatch, getState) => {
-    const { error: unlockError } = await supabase
+    const { data: unlockedTicket, error: unlockError } = await supabase
         .from('unlocked_tickets')
         .insert({
             ticket: ticketId,
             user: getState().userState.currentAuthUser.id
         })
+        .select('id')
 
     if (unlockError) throw unlockError
 
@@ -126,8 +150,6 @@ export const unlockTicket = (offerId, ticketId) => async (dispatch, getState) =>
 
     dispatch(updateCurrentUserInRedux({ credits: getState().userState.currentUser.credits - data[0].price }))
 
-    //return data[0]
-
     dispatch({
         type: OFFERS_STATE_CHANGE,
         offers: getState().userState.offers.map(offer => {
@@ -138,4 +160,8 @@ export const unlockTicket = (offerId, ticketId) => async (dispatch, getState) =>
             return offer
         })
     })
+
+    if (getState().userState.unlocked != null) {
+       dispatch(fetchUnlockedTicket(unlockedTicket[0].id))
+    }
 }

@@ -111,7 +111,7 @@ const ClosedTickets = ({ fetchClosedTickets, setTabHeight, toastRef, closedTicke
         return () => {
             document.removeEventListener('scroll', handleScroll)
         }
-    }, [])
+    }, [closedTickets])
 
     const onEndReached = async () => {
         if (allTicketsLoaded.current || closedTickets == null || refreshing || closedTickets.length < MAX_TICKETS_ROWS_PER_QUERY) {

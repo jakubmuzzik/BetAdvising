@@ -147,7 +147,7 @@ const OpenTickets = ({ fetchOpenTickets, setTabHeight, toastRef, openTickets, se
         return () => {
             document.removeEventListener('scroll', handleScroll)
         }
-    }, [])
+    }, [openTickets])
 
     const allTicketEntriesResulted = (ticketId) => {
         return openTickets.find(ticket => ticket.id === ticketId).ticket_entries.every(ticketEntry => ticketEntry.result != 'pending')

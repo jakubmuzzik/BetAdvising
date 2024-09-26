@@ -15,7 +15,6 @@ import { Avatar } from 'react-native-paper'
 import { MotiView } from 'moti'
 import { Picker } from '@react-native-picker/picker'
 import { logOut, toggleDrawer } from '../redux/actions/app'
-import HoverableText from './elements/HoverableText'
 
 const ROUTES = [
     {

@@ -6,7 +6,7 @@ import { LinearGradient } from 'expo-linear-gradient'
 import { FontAwesome } from '@expo/vector-icons'
 import ContentLoader, { Rect } from "react-content-loader/native"
 import Animated, { FlipInEasyX, FadeInDown, useAnimatedStyle, useSharedValue, interpolate, withTiming, useAnimatedProps, BounceIn } from 'react-native-reanimated'
-import { MAX_TICKETS_ROWS_PER_QUERY } from '../../../redux/actions/admin'
+import { MAX_OFFER_ROWS_PER_QUERY } from '../../../redux/actions/user'
 
 import withSearchParams from '../../../components/hoc/withSearchParams'
 
@@ -14,6 +14,7 @@ import UnlockedTicket from '../../../components/tickets/UnlockedTicket'
 import LockedTicket from '../../../components/tickets/LockedTicket'
 import { connect } from 'react-redux'
 import { fetchOffers } from '../../../redux/actions/user'
+import { ActivityIndicator } from 'react-native-paper'
 
 const GAP = normalize(60)
 
@@ -30,7 +31,7 @@ const Skeleton = ({ timeLeftWidth, isSmallScreen }) => (
         {!isSmallScreen && <ContentLoader
             speed={2}
             height={50}
-            width={timeLeftWidth}
+            width={timeLeftWidth ?? 150}
             style={{ borderRadius: 10 }}
             backgroundColor={COLORS.secondary}
             foregroundColor={COLORS.secondary2}
@@ -285,10 +286,10 @@ const Offers = ({ searchParams, setTabHeight, fetchOffers, offers }) => {
         return () => {
             document.removeEventListener('scroll', handleScroll)
         }
-    }, [])
+    }, [offers])
 
     const onEndReached = async () => {
-        if (allTicketsLoaded.current || offers == null || refreshing || offers.length < MAX_TICKETS_ROWS_PER_QUERY) {
+        if (allTicketsLoaded.current || offers == null || refreshing || offers.length < MAX_OFFER_ROWS_PER_QUERY) {
             return
         }
 
@@ -330,7 +331,7 @@ const Offers = ({ searchParams, setTabHeight, fetchOffers, offers }) => {
                 contentContainerStyle={{ gap: GAP }}
                 keyExtractor={(item) => item.id}
                 data={offers == null ? new Array(10).fill(null, 0).map((_, index) => ({ id: index })) : offers}
-                renderItem={({ item, index }) => offers == null ? <Skeleton /> : <FlippableTicket isLast={index === offers.length - 1} offer={item} searchParams={searchParams} isSmallScreen={isSmallScreen} onTimeLeftLayout={onTimeLeftLayout} timeLeftWidth={timeLeftWidth} index={index} />}//= ({ isLast, offer, searchParams, isSmallScreen, onTimeLeftLayout }) => {}
+                renderItem={({ item, index }) => offers == null ? <Skeleton key={index} timeLeftWidth={timeLeftWidth} isSmallScreen={isSmallScreen}/> : <FlippableTicket isLast={index === offers.length - 1} offer={item} searchParams={searchParams} isSmallScreen={isSmallScreen} onTimeLeftLayout={onTimeLeftLayout} timeLeftWidth={timeLeftWidth} index={index} />}//= ({ isLast, offer, searchParams, isSmallScreen, onTimeLeftLayout }) => {}
                 ListEmptyComponent={() => !refreshing && (
                     <Animated.Text entering={FlipInEasyX} style={{ textAlign: 'center', fontFamily: FONTS.medium, color: COLORS.grey400, fontSize: FONT_SIZES.xx_large, }}>
                         No offers at the moment
@@ -338,7 +339,8 @@ const Offers = ({ searchParams, setTabHeight, fetchOffers, offers }) => {
                 )}
                 showsVerticalScrollIndicator={false}
             />
-            {refreshing && new Array(10).fill(null, 0).map((_, index) => <Skeleton key={index} timeLeftWidth={timeLeftWidth} isSmallScreen={isSmallScreen} />)}
+            
+            {refreshing && <ActivityIndicator color={COLORS.accent} />}
         </View>
     )
 }

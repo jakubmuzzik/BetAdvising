@@ -1,20 +1,20 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect, useRef, memo } from 'react'
 import { View, Text, useWindowDimensions, FlatList, StyleSheet } from 'react-native'
 import { FONTS, FONT_SIZES, SPACING, COLORS } from '../../../constants'
-import { normalize, calculateTimeDifference } from '../../../utils'
+import { normalize } from '../../../utils'
 import { LinearGradient } from 'expo-linear-gradient'
 import { FontAwesome } from '@expo/vector-icons'
 import ContentLoader, { Rect } from "react-content-loader/native"
-import Animated, { FlipInEasyX, FadeInDown, useAnimatedStyle, useSharedValue, interpolate, withTiming, useAnimatedProps, BounceIn } from 'react-native-reanimated'
 import { MAX_OFFER_ROWS_PER_QUERY } from '../../../redux/actions/user'
+import Animated, { FlipInEasyX } from 'react-native-reanimated'
 
 import withSearchParams from '../../../components/hoc/withSearchParams'
 
-import UnlockedTicket from '../../../components/tickets/UnlockedTicket'
-import LockedTicket from '../../../components/tickets/LockedTicket'
 import { connect } from 'react-redux'
 import { fetchOffers } from '../../../redux/actions/user'
 import { ActivityIndicator } from 'react-native-paper'
+
+import FlippableTicket from './FlippableTicket'
 
 const GAP = normalize(60)
 
@@ -79,200 +79,6 @@ const Skeleton = ({ timeLeftWidth, isSmallScreen }) => (
     </View>
 )
 
-const TimeLeft = ({ startDate, width, isSmallScreen, onTimeLeftLayout = () => { } }) => {
-    const [timeLeft, setTimeLeft] = useState(calculateTimeDifference(new Date(), startDate))
-
-    useEffect(() => {
-        // Update timeLeft every second
-        const timer = setInterval(() => {
-            setTimeLeft(calculateTimeDifference(new Date(), startDate))
-        }, 1000)
-
-        // Cleanup interval on component unmount
-        return () => clearInterval(timer)
-    }, [startDate])
-
-    return (
-        <View
-            style={width != null ? { width, alignItems: isSmallScreen ? 'flex-start' : 'flex-end', marginBottom: isSmallScreen ? SPACING.medium : 0 } : { alignItems: isSmallScreen ? 'flex-start' : 'flex-end', marginBottom: isSmallScreen ? SPACING.medium : 0 }}
-        >
-            <View
-                onLayout={(event) => onTimeLeftLayout(event)}
-                style={{
-                    position: isSmallScreen ? 'relative' : 'absolute',
-                    flexDirection: 'column',
-                    width: 'max-content'
-                }}
-            >
-                <Text
-                    style={{
-                        fontFamily: FONTS.medium,
-                        fontSize: FONT_SIZES.medium,
-                        color: COLORS.grey400
-                    }}
-                >
-                    Zbývá:
-                </Text>
-                <Text
-                    style={{
-                        fontFamily: FONTS.medium,
-                        fontSize: FONT_SIZES.x_large,
-                        color: COLORS.white,
-                        marginTop: 4
-                    }}
-                >
-                    {timeLeft.days > 0 ? `${timeLeft.days}d ` : ''}
-                    {timeLeft.hours > 0 ? `${timeLeft.hours}h ` : ''}
-                    {timeLeft.minutes > 0 || timeLeft.hours > 0 ? `${timeLeft.minutes}m ` : ''}
-                    {`${timeLeft.seconds}s`}
-                </Text>
-            </View>
-        </View>
-    )
-}
-
-const Divider = ({ isLast, isLocked }) => {
-    const [contentHeight, setContentHeight] = useState(0)
-
-    return (
-        <View onLayout={(event) => setContentHeight(event.nativeEvent.layout.height)} >
-            <LinearGradient
-                colors={[COLORS.secondary, COLORS.secondary2]}
-                style={{
-                    borderRadius: 17.5,
-                    width: 35,
-                    height: 35,
-                    padding: 10,
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    zIndex: 2
-                }}
-            >
-                {isLocked ? <FontAwesome name="lock" size={18} color={COLORS.white} /> : <FontAwesome name="unlock" size={18} color={COLORS.white} />}
-            </LinearGradient>
-            {!isLast && <LinearGradient
-                colors={[COLORS.whiteBackground2, COLORS.whiteBackground2, COLORS.whiteBackground2]}
-                style={{
-                    width: 1,
-                    position: 'absolute',
-                    //top: -20,
-                    left: 17.5,
-                    height: contentHeight + GAP,
-                }}
-            />}
-        </View>
-    )
-}
-
-const FlippableTicket = ({ isLast, offer, searchParams, isSmallScreen, onTimeLeftLayout, timeLeftWidth, index }) => {
-    const previousOffer = useRef(offer)
-
-    const [cardLayout, setCardLayout] = useState({ width: 0, height: 0 })
-
-    const isFlipped = useSharedValue(!!offer.ticket_data)
-
-    const isDirectionX = false
-    const duration = 500
-
-    useEffect(() => {
-        if (previousOffer.current.ticket_data == null && offer.ticket_data != null) {
-            isFlipped.value = withTiming(1, { duration: duration })
-        }
-
-        previousOffer.current = offer
-    }, [offer])
-
-    const regularCardAnimatedStyle = useAnimatedStyle(() => {
-        const rotateValue = interpolate(Number(isFlipped.value), [0, 1], [0, 180]) + 'deg'
-
-        return {
-            transform: [
-                isDirectionX ? { rotateX: rotateValue } : { rotateY: rotateValue },
-            ],
-        }
-    })
-
-    const flippedCardAnimatedStyle = useAnimatedStyle(() => {
-        const rotateValue = interpolate(Number(isFlipped.value), [0, 1], [180, 360]) + 'deg'
-
-        return {
-            transform: [
-                isDirectionX ? { rotateX: rotateValue } : { rotateY: rotateValue },
-            ],
-        }
-    })
-
-    const flippedCardAnimatedProps = useAnimatedProps(() => {
-        return {
-            pointerEvents: isFlipped.value ? 'auto' : 'none',
-        }
-    })
-
-    return (
-        <View
-            key={offer.id}
-            style={{
-                flexDirection: 'row',
-                gap: SPACING.small
-            }}
-        >
-            {!isSmallScreen && <TimeLeft isSmallScreen={isSmallScreen} onTimeLeftLayout={(event) => onTimeLeftLayout(event, index)} width={timeLeftWidth} startDate={offer.start_date} />}
-
-
-            {(timeLeftWidth || isSmallScreen) && (
-                <>
-                    <Divider isLast={isLast} isLocked={offer.ticket_data == null} />
-                    <View style={{
-                        flex: 1
-                    }}>
-                        {isSmallScreen && <TimeLeft isSmallScreen={isSmallScreen} onTimeLeftLayout={(event) => onTimeLeftLayout(event, index)} width={timeLeftWidth} startDate={offer.start_date} />}
-
-                    <Animated.View
-                        style={[
-                            styles.regularCard,
-                            //without this the locked ticket flickers when ticket is unlocked on render
-                            { opacity: isFlipped.value ? 0 : 1 },
-                            regularCardAnimatedStyle,
-                        ]}>
-                        <View
-                            onLayout={(event) => setCardLayout({ width: event.nativeEvent.layout.width, height: event.nativeEvent.layout.height })}
-                            style={{
-                                borderRadius: 10,
-                                backgroundColor: COLORS.secondary,
-                                borderWidth: 1,
-                                borderColor: COLORS.whiteBackground2,
-                                flex: 1
-                            }}
-                        >
-                            <LockedTicket
-                                searchParams={searchParams}
-                                offer={offer}
-                            />
-                        </View>
-                    </Animated.View>
-
-                    <Animated.View
-                        animatedProps={flippedCardAnimatedProps}
-                        style={[
-                            styles.flippedCard,
-                            flippedCardAnimatedStyle,
-                            {
-                                width: cardLayout.width,
-                                height: cardLayout.height,
-                                right: 0,
-                                bottom: 0
-                            }
-                        ]}>
-
-                        {offer.ticket_data && <UnlockedTicket ticket={offer.ticket_data} />}
-                    </Animated.View>
-                    </View>
-                </>
-            )}
-        </View>
-    )
-}
-
 const Offers = ({ searchParams, setTabHeight, fetchOffers, offers }) => {
     const { width } = useWindowDimensions()
 
@@ -333,6 +139,8 @@ const Offers = ({ searchParams, setTabHeight, fetchOffers, offers }) => {
         }
     }
 
+    const renderSkeleton = () => new Array(10).fill(null, 0).map((_, index) => <Skeleton key={index} timeLeftWidth={timeLeftWidth} isSmallScreen={isSmallScreen} />)
+
     return (
         <View
             onLayout={(event) => setTabHeight(event.nativeEvent.layout.height)}
@@ -347,18 +155,20 @@ const Offers = ({ searchParams, setTabHeight, fetchOffers, offers }) => {
                 //alignItems: 'center',
             }}
         >
-            <FlatList
-                contentContainerStyle={{ gap: GAP }}
-                keyExtractor={(item) => item.id}
-                data={offers == null ? new Array(10).fill(null, 0).map((_, index) => ({ id: index })) : offers}
-                renderItem={({ item, index }) => offers == null ? <Skeleton key={index} timeLeftWidth={timeLeftWidth} isSmallScreen={isSmallScreen} /> : <FlippableTicket isLast={index === offers.length - 1} offer={item} searchParams={searchParams} isSmallScreen={isSmallScreen} onTimeLeftLayout={onTimeLeftLayout} timeLeftWidth={timeLeftWidth} index={index} />}//= ({ isLast, offer, searchParams, isSmallScreen, onTimeLeftLayout }) => {}
-                ListEmptyComponent={() => !refreshing && (
-                    <Animated.Text entering={FlipInEasyX} style={{ textAlign: 'center', fontFamily: FONTS.medium, color: COLORS.grey400, fontSize: FONT_SIZES.xx_large, }}>
-                        No offers at the moment
-                    </Animated.Text>
-                )}
-                showsVerticalScrollIndicator={false}
-            />
+            <View
+                style={{ 
+                    gap: GAP
+                }}
+            >
+                {offers == null && renderSkeleton()}
+                {offers != null && offers.map((offer, index) => <FlippableTicket key={offer.id} searchParams={searchParams} isLast={index === offers.length - 1} offer={offer} isSmallScreen={isSmallScreen} onTimeLeftLayout={onTimeLeftLayout} timeLeftWidth={timeLeftWidth} index={index} />)}
+            </View>
+
+            {offers != null && offers.length === 0 && !refreshing && (
+                <Animated.Text entering={FlipInEasyX} style={{ textAlign: 'center', fontFamily: FONTS.medium, color: COLORS.grey400, fontSize: FONT_SIZES.xx_large, }}>
+                    No offers at the moment
+                </Animated.Text>
+            )}
 
             {refreshing && <ActivityIndicator color={COLORS.accent} />}
         </View>

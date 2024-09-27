@@ -260,6 +260,8 @@ const Unlocked = ({ searchParams, setTabHeight, fetchUnlockedTickets, unlocked }
         </View>
     )
 
+    const renderSkeleton = () => new Array(10).fill(null, 0).map((_, index) => <Skeleton key={index} timeLeftWidth={timeLeftWidth} isSmallScreen={isSmallScreen} />)
+
     return (
         <View
             onLayout={(event) => setTabHeight(event.nativeEvent.layout.height)}
@@ -274,18 +276,21 @@ const Unlocked = ({ searchParams, setTabHeight, fetchUnlockedTickets, unlocked }
                 //alignItems: 'center',
             }}
         >
-            <FlatList
-                contentContainerStyle={{ gap: GAP }}
-                keyExtractor={(item) => item.id}
-                data={unlocked == null ? new Array(10).fill(null, 0).map((_, index) => ({ id: index })) : unlocked}
-                renderItem={({ item, index }) => unlocked == null ? <Skeleton key={index} timeLeftWidth={timeLeftWidth} isSmallScreen={isSmallScreen} /> : renderItem(item, index)}
-                ListEmptyComponent={() => !refreshing && (
-                    <Animated.Text entering={FlipInEasyX} style={{ textAlign: 'center', fontFamily: FONTS.medium, color: COLORS.grey400, fontSize: FONT_SIZES.xx_large, }}>
-                        You haven't unlocked any tickets yet.
-                    </Animated.Text>
-                )}
-                showsVerticalScrollIndicator={false}
-            />
+            <View
+                style={{ 
+                    gap: GAP
+                }}
+            >
+                {unlocked == null && renderSkeleton()}
+                {unlocked != null && unlocked.map((item, index) => renderItem(item, index))}
+            </View>
+
+            {unlocked != null && unlocked.length === 0 && !refreshing && (
+                <Animated.Text entering={FlipInEasyX} style={{ textAlign: 'center', fontFamily: FONTS.medium, color: COLORS.grey400, fontSize: FONT_SIZES.xx_large, }}>
+                   You haven't unlocked any tickets yet.
+                </Animated.Text>
+            )}
+
             {refreshing && <ActivityIndicator color={COLORS.accent} />}
         </View>
     )

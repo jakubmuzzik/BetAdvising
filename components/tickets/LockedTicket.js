@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef, useLayoutEffect } from 'react'
+import React, { useEffect, useState, useRef, useLayoutEffect, memo, useMemo } from 'react'
 import { View, Text, useWindowDimensions } from 'react-native'
 import { FONTS, FONT_SIZES, SPACING, COLORS } from '../../constants'
 import { MaterialIcons, MaterialCommunityIcons, FontAwesome } from '@expo/vector-icons'
@@ -51,7 +51,7 @@ const TicketHeader = ({ name, type }) => (
     </View>
 )
 
-const Match = ({data, width}) => (
+const Match = memo(({data, width}) => (
     <View
         style={{
             flex: 1
@@ -148,7 +148,7 @@ const Match = ({data, width}) => (
             </Text>
         </View>
     </View>
-)
+))
 
 const TicketBody = ({ offer, onUnlockPress }) => {
     const { width } = useWindowDimensions()
@@ -332,4 +332,4 @@ const mapStateToProps = (store) => ({
     toastRef: store.appState.toastRef
 })
 
-export default connect(mapStateToProps, { unlockTicket })(LockedTicket)
+export default connect(mapStateToProps, { unlockTicket })(memo(LockedTicket))

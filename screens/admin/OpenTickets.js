@@ -333,6 +333,8 @@ const OpenTickets = ({ fetchOpenTickets, setTabHeight, toastRef, openTickets, se
         </View>
     )
 
+    const renderSkeleton = () => new Array(10).fill(null, 0).map((_, index) => <Skeleton key={index} timeLeftWidth={timeLeftWidth} isSmallScreen={isSmallScreen} />)
+
     return (
         <View
             onLayout={(event) => setTabHeight(event.nativeEvent.layout.height)}
@@ -346,20 +348,22 @@ const OpenTickets = ({ fetchOpenTickets, setTabHeight, toastRef, openTickets, se
                 //alignItems: 'center',
             }}
         >
-            <FlatList
-                contentContainerStyle={{ gap: GAP }}
-                keyExtractor={(item) => item.id}
-                data={openTickets == null ? new Array(10).fill(null, 0).map((_, index) => ({ id: index })) : openTickets}
-                renderItem={({ item, index }) => openTickets == null ? <Skeleton /> : renderItem(item, index)}
-                ListEmptyComponent={() => !refreshing && (
-                    <Animated.Text entering={FlipInEasyX} style={{ textAlign: 'center', fontFamily: FONTS.medium, color: COLORS.grey400, fontSize: FONT_SIZES.xx_large, }}>
-                        No open tickets
-                    </Animated.Text>
-                )}
-                showsVerticalScrollIndicator={false}
-            />
+            <View
+                style={{
+                    gap: GAP
+                }}
+            >
+                {openTickets == null && renderSkeleton()}
+                {openTickets != null && openTickets.map((item, index) => renderItem(item, index))}
+            </View>
 
-            {refreshing && new Array(10).fill(null, 0).map((_, index) => <Skeleton />)}
+            {openTickets != null && openTickets.length === 0 && !refreshing && (
+                <Animated.Text entering={FlipInEasyX} style={{ textAlign: 'center', fontFamily: FONTS.medium, color: COLORS.grey400, fontSize: FONT_SIZES.xx_large, }}>
+                    No open tickets
+                </Animated.Text>
+            )}
+
+            {refreshing && <ActivityIndicator color={COLORS.accent} />}
 
             <ConfirmationModal
                 visible={!!ticketToWin}

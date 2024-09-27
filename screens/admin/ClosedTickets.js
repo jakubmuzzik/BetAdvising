@@ -154,6 +154,8 @@ const ClosedTickets = ({ fetchClosedTickets, setTabHeight, toastRef, closedTicke
         </View>
     )
 
+    const renderSkeleton = () => new Array(10).fill(null, 0).map((_, index) => <Skeleton key={index}/>)
+
     return (
         <View
             onLayout={(event) => setTabHeight(event.nativeEvent.layout.height)}
@@ -166,20 +168,23 @@ const ClosedTickets = ({ fetchClosedTickets, setTabHeight, toastRef, closedTicke
                 backgroundColor: COLORS.primary,
                 //alignItems: 'center',
             }}
-        >
-            <FlatList
-                contentContainerStyle={{ gap: GAP }}
-                keyExtractor={(item) => item.id}
-                data={closedTickets == null ? new Array(10).fill(null, 0).map((_, index) => ({ id: index })) : closedTickets}
-                renderItem={({ item, index }) => closedTickets == null ? <Skeleton /> : renderItem(item, index)}
-                ListEmptyComponent={() => !refreshing && (
-                    <Animated.Text entering={FlipInEasyX} style={{ textAlign: 'center', fontFamily: FONTS.medium, color: COLORS.grey400, fontSize: FONT_SIZES.xx_large, }}>
-                        No closed tickets
-                    </Animated.Text>
-                )}
-                showsVerticalScrollIndicator={false}
-            />
-            {refreshing && new Array(10).fill(null, 0).map((_, index) => <Skeleton />)}
+        >   
+            <View
+                style={{
+                    gap: GAP
+                }}
+            >
+                {closedTickets == null && renderSkeleton()}
+                {closedTickets != null && closedTickets.map((item, index) => renderItem(item, index))}
+            </View>
+
+            {closedTickets != null && closedTickets.length === 0 && !refreshing && (
+                <Animated.Text entering={FlipInEasyX} style={{ textAlign: 'center', fontFamily: FONTS.medium, color: COLORS.grey400, fontSize: FONT_SIZES.xx_large, }}>
+                    No closed tickets
+                </Animated.Text>
+            )}
+
+            {refreshing && <ActivityIndicator color={COLORS.accent} />}
         </View>
     )
 }

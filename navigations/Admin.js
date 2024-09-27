@@ -111,7 +111,7 @@ const Admin = ({ searchParams }) => {
     return (
         <View style={{ backgroundColor: COLORS.lightBlack, height: routes[index].key === 'add_lady' ? initialHeight - normalize(70) : '100%' }}>
             <View style={{ width: normalize(800), maxWidth: '100%', alignSelf: 'center', marginTop: SPACING.large + SPACING.medium, paddingHorizontal: SPACING.medium, marginBottom: SPACING.large }}>
-                <View style={{ flexDirection: 'row', gap: SPACING.medium, justifyContent: index === 0 ? 'space-between' : 'flex-start' }}>
+                <View style={{ flexDirection: 'row', justifyContent: index === 0 ? 'space-between' : 'flex-start' }}>
                     <Text
                         onPress={index !== 0 ? () => onNavigationPathPress(0) : undefined}
                         style={{ 
@@ -156,6 +156,7 @@ const Admin = ({ searchParams }) => {
                         ))}
                     </AnimatePresence>
                     {index === 0 && <Animated.View
+                        style={{marginLeft: SPACING.medium}}
                         entering={FadeInRight}
                         exiting={FadeOutRight}
                     >

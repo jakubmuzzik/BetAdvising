@@ -9,6 +9,7 @@ import { FONTS, FONT_SIZES, COLORS, SPACING } from '../../constants'
 import HoverableView from '../elements/HoverableView'
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons'
 import CustomButton from '../elements/CustomButton'
+import Animated, { FadeInDown, FadeOut, FadeOutDown } from 'react-native-reanimated'
 
 const ConfirmationModal = ({ 
     visible,
@@ -110,22 +111,10 @@ const ConfirmationModal = ({
                     activeOpacity={1}
                     onPressOut={closeModal}
                 >
-                    <MotiView
+                     <Animated.View
                         style={{ flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: 'transparent', width: '100%' }}
-                        from={{
-                            opacity: 0,
-                            //translateY: -100,
-                            //transform: [{ scale: 0.7 }],
-                        }}
-                        animate={{
-                            opacity: 1,
-                            //translateY: 0,
-                            //transform: [{ scale: 1 }],
-                        }}
-                        transition={{
-                            type: 'timing',
-                            duration: 150,
-                        }}
+                        entering={FadeInDown.duration(200).withInitialValues({ translateY: -100 })}
+                        exiting={FadeOutDown.duration(100)}
                     >
                         <TouchableWithoutFeedback>
                             <View style={{
@@ -141,7 +130,7 @@ const ConfirmationModal = ({
                                 <Content />
                             </View>
                         </TouchableWithoutFeedback>
-                    </MotiView>
+                    </Animated.View>
                 </TouchableOpacity>
             </BlurView>
 

@@ -1,12 +1,19 @@
-import React, { useState, useMemo } from 'react'
-import { View, Text } from 'react-native'
+import React, { useState, useMemo, useEffect } from 'react'
+import { View, Text, TouchableOpacity } from 'react-native'
 import { FONT_SIZES, COLORS, FONTS, SPACING } from '../../constants'
 import { normalize } from '../../utils'
 import { Octicons } from '@expo/vector-icons'
+import Animated, { FlipInEasyX } from 'react-native-reanimated'
 
 import HoverableView from '../../components/elements/HoverableView'
+import { connect } from 'react-redux'
+import { markNotificationsAsDisplayed } from '../../redux/actions/user'
+
+import UnlockedTicketModal from '../../components/modal/UnlockedTicketModal'
 
 const Notification = ({ notification }) => {
+    const [ticketModalVisible, setTicketModalVisible] = useState(false)
+
     const renderDate = () => {
         let diffInMilliSeconds = Math.abs(new Date(notification.created_date) - new Date()) / 1000
         const daysDiff = getDaysDiff(diffInMilliSeconds)
@@ -41,58 +48,80 @@ const Notification = ({ notification }) => {
         return days
     }
 
+    const onNotificationPress = () => {
+        setTicketModalVisible(true)
+    }
+
     return (
-        <HoverableView
-            style={{
-                paddingHorizontal: 20,
-                paddingVertical: 16,
-                flexDirection: 'row',
-                alignItems: 'center'
-            }}
-            backgroundColor={COLORS.secondary}
-            hoveredBackgroundColor={COLORS.secondary2}
-        >
-            <View
+        <>
+            <HoverableView
                 style={{
-                    marginRight: 20
                 }}
+                backgroundColor={COLORS.secondary}
+                hoveredBackgroundColor={COLORS.secondary2}
             >
-                {
-                    notification.type === 'credit_returned' ? (
-                        <Text style={{ fontSize: FONT_SIZES.xx_large }}>↩️</Text>
-                    ) : notification.type === 'ticket_success' ? (
-                        <Text style={{ fontSize: FONT_SIZES.xx_large }}>🎉</Text>
-                    ) : null
-                }
-            </View>
-
-            <View style={{ flex: 1 }}>
-                <Text
+                <TouchableOpacity
                     style={{
-                        color: COLORS.grey400,
-                        fontFamily: FONTS.regular,
-                        fontSize: FONT_SIZES.medium
+                        paddingHorizontal: 20,
+                        paddingVertical: 16,
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                        flex: 1
                     }}
-                >
-                    {renderDate(notification.created_date)}
-                </Text>
 
-                <Text
-                    style={{
-                        paddingTop: 8,
-                        fontFamily: FONTS.medium,
-                        fontSize: FONT_SIZES.large,
-                        color: COLORS.grey100
-                    }}
+                    onPress={onNotificationPress}
                 >
-                    {
-                        notification.type === 'credit_returned' ? 'Dnes to nevyšlo, vracíme vám 100 kreditů za neúspešný tiket #1235.'
-                            : notification.type === 'ticket_success' ? 'Gratulujeme, zakoupený tiket #1235 byl úspěšný.'
-                                : ''
-                    }
-                </Text>
-            </View>
-        </HoverableView>
+                    <>
+                        <View
+                            style={{
+                                marginRight: 20
+                            }}
+                        >
+                            {
+                                notification.type === 'credit_returned' ? (
+                                    <Text style={{ fontSize: FONT_SIZES.xx_large }}>↩️</Text>
+                                ) : notification.type === 'ticket_success' ? (
+                                    <Text style={{ fontSize: FONT_SIZES.xx_large }}>🎉</Text>
+                                ) : null
+                            }
+                        </View>
+
+                        <View style={{ flex: 1 }}>
+                            <Text
+                                style={{
+                                    color: COLORS.grey400,
+                                    fontFamily: FONTS.regular,
+                                    fontSize: FONT_SIZES.medium
+                                }}
+                            >
+                                {renderDate(notification.created_date)}
+                            </Text>
+
+                            <Text
+                                style={{
+                                    paddingTop: 8,
+                                    fontFamily: FONTS.medium,
+                                    fontSize: FONT_SIZES.large,
+                                    color: COLORS.grey100
+                                }}
+                            >
+                                {
+                                    notification.type === 'credit_returned' ? 'Dnes to nevyšlo, vracíme vám ' + notification.ticket.price + ' kreditů za neúspešný tiket #' + notification.ticket.name + '.'
+                                        : notification.type === 'ticket_success' ? 'Gratulujeme, zakoupený tiket #' + notification.ticket.name + ' byl úspěšný.'
+                                            : ''
+                                }
+                            </Text>
+                        </View>
+                    </>
+                </TouchableOpacity>
+            </HoverableView>
+
+            <UnlockedTicketModal
+                visible={ticketModalVisible}
+                ticketId={notification.ticket.id}
+                onCancel={() => setTicketModalVisible(false)}
+            />
+        </>
     )
 }
 
@@ -100,30 +129,17 @@ const Notification = ({ notification }) => {
  * Vracene kredity
  * Odemceny tiket byl uspesny
  */
-const Notifications = () => {
-    const [notifications, setNotifications] = useState([
-        {
-            read: false,
-            id: 1,
-            type: 'credit_returned',
-            created_date: new Date()
-        },
-        {
-            read: false,
-            id: 4,
-            type: 'credit_returned',
-            created_date: new Date()
-        },
-        {
-            read: true,
-            id: 2,
-            type: 'ticket_success',
-            created_date: new Date()
-        },
-    ])
+const Notifications = ({ notifications, markNotificationsAsDisplayed }) => {
+    const newNotifications = useMemo(() => notifications == null ? [] : notifications.filter(n => !n.displayed), [notifications])
+    const oldNotifications = useMemo(() => notifications == null ? [] : notifications.filter(n => n.displayed), [notifications])
 
-    const newNotifications = useMemo(() => notifications.filter(n => !n.read), [notifications])
-    const oldNotifications = useMemo(() => notifications.filter(n => n.read), [notifications])
+    useEffect(() => {
+        return () => {
+            if (newNotifications.length > 0) {
+                markNotificationsAsDisplayed(newNotifications.map(n => n.id))
+            }
+        }
+    }, [newNotifications])
 
     return (
         <View
@@ -205,8 +221,26 @@ const Notifications = () => {
                     </View>
                 </View>
             )}
+
+            {newNotifications.length === 0 && oldNotifications.length === 0 && (
+                <Animated.Text
+                    entering={FlipInEasyX}
+                    style={{
+                        color: COLORS.grey400,
+                        fontSize: FONT_SIZES.x_large,
+                        fontFamily: FONTS.medium,
+                        marginTop: SPACING.large
+                    }}
+                >
+                    Nemáte žádné notifikace
+                </Animated.Text>
+            )}
         </View>
     )
 }
 
-export default Notifications
+const mapStateToProps = (store) => ({
+    notifications: store.userState.notifications
+})
+
+export default connect(mapStateToProps, { markNotificationsAsDisplayed })(Notifications)

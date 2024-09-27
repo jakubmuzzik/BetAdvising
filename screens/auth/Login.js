@@ -163,7 +163,7 @@ const Login = ({ searchParams, toastRef, fetchUser }) => {
                         textColor={COLORS.black}
                         backgroundColors={COLORS.white}
                         buttonText='Continue with Google'
-                        spinnerColor={COLORS.darkBlue}
+                        spinnerColor={COLORS.black}
                         textStyles={{ fontFamily: FONTS.regular }}
                         icon={<Image
                             source={require('../../assets/logos/google.png')}
@@ -212,6 +212,7 @@ const Login = ({ searchParams, toastRef, fetchUser }) => {
                             additionalStyles={{ borderWidth: 0, borderColor: COLORS.whiteBackground2, marginTop: SPACING.x_small, width: '100%' }}
                             textColor={COLORS.white}
                             backgroundColors={COLORS.secondary2}
+                            spinnerColor={COLORS.white}
                             buttonText='Continue with Email'
                             textStyles={{ fontFamily: FONTS.medium }}
                             icon={<Feather

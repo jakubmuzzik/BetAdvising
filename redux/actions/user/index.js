@@ -206,3 +206,28 @@ export const unlockTicket = (offerId, ticketId) => async (dispatch, getState) =>
        dispatch(fetchUnlockedTicket(unlockedTicket[0].id))
     }
 }
+
+export const markNotificationsAsDisplayed = (toUpdateIds) => async (dispatch, getState) => {
+    try {
+        const { error } = await supabase
+            .from('notifications')
+            .update({ displayed: true })
+            .select()
+            .in('id', toUpdateIds)
+
+        if (error) throw error
+
+        dispatch({
+            type: NOTIFICATIONS_STATE_CHANGE,
+            notifications: getState().userState.notifications?.map(notification => {
+                if (toUpdateIds.includes(notification.id)) {
+                    return { ...notification, displayed: true }
+                } else {
+                    return notification
+                }
+            })
+        })
+    } catch (e) {
+        console.error('Error updating notifications as displayed: ', e)
+    }
+}

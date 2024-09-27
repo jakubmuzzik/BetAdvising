@@ -11,10 +11,12 @@ import { Image } from 'expo-image'
 import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons'
 import HoverableView from './elements/HoverableView'
 import { DEFAULT_LANGUAGE } from '../labels'
-import { Avatar } from 'react-native-paper'
+import { Avatar, Badge } from 'react-native-paper'
 import { MotiView } from 'moti'
 import { Picker } from '@react-native-picker/picker'
 import { logOut, toggleDrawer } from '../redux/actions/app'
+import { markNotificationsAsDisplayed } from '../redux/actions/user'
+import { Octicons } from '@expo/vector-icons'
 
 import UnderlineTabView from './animated/UnderlineTabView'
 
@@ -35,7 +37,7 @@ const ROUTES = [
     },
 ]
 
-const AppHeader = ({ searchParams, currentAuthUser, logOut, toggleDrawer, currentUser }) => {
+const AppHeader = ({ searchParams, currentAuthUser, logOut, toggleDrawer, currentUser, newNotifications, markNotificationsAsDisplayed }) => {
     const { width } = useWindowDimensions()
 
     let location = useLocation()
@@ -219,6 +221,14 @@ const AppHeader = ({ searchParams, currentAuthUser, logOut, toggleDrawer, curren
         toggleDrawer()
     }
 
+    const markNotificationsAsDisplayedAndClose = () => {
+        setNotificationsDropdownVisible(false)
+
+        if (newNotifications.length > 0) {
+            markNotificationsAsDisplayed(newNotifications.map(n => n.id))
+        }
+    }
+
     const renderLanguageModal = () => {
         return (
             <Modal ref={languageDropdownModalRef} visible={languageDropdownVisible} transparent animationType="none">
@@ -285,7 +295,7 @@ const AppHeader = ({ searchParams, currentAuthUser, logOut, toggleDrawer, curren
         <Modal ref={notificationsDropdownModalRef} visible={notificationsDropdownVisible} transparent animationType="none">
             <TouchableOpacity
                 style={styles.dropdownOverlay}
-                onPress={() => setNotificationsDropdownVisible(false)}
+                onPress={markNotificationsAsDisplayedAndClose}
             >
                 <TouchableWithoutFeedback>
                     <MotiView
@@ -341,21 +351,32 @@ const AppHeader = ({ searchParams, currentAuthUser, logOut, toggleDrawer, curren
                                 maxWidth: width - notificationsDropdownRight - SPACING.medium
                             }}
                         >
-                             <Text
+                            <View
                                 style={{
-                                    fontSize: FONT_SIZES.large,
-                                    fontFamily: FONTS.medium,
-                                    color: COLORS.white,
+                                    flexDirection: 'row',
+                                    alignItems: 'center',
+                                    flex: 1,
                                     marginBottom: 3,
                                     paddingHorizontal: SPACING.x_small,
                                     paddingTop: SPACING.xx_small,
                                     paddingBottom: SPACING.x_small,
+                                    gap: 9
                                 }}
                             >
-                                Notifications
-                            </Text>
+                                <Text
+                                    style={{
+                                        fontSize: FONT_SIZES.large,
+                                        fontFamily: FONTS.medium,
+                                        color: COLORS.white
+                                    }}
+                                >
 
-                            <Text
+                                    Notifikace
+                                </Text>
+                                {newNotifications.length > 0 && <Octicons name="dot-fill" size={20} color={COLORS.accent}  />}
+                            </View>
+
+                            {newNotifications.length === 0 && <Text
                                 style={{
                                     fontSize: FONT_SIZES.medium,
                                     fontFamily: FONTS.medium,
@@ -364,8 +385,55 @@ const AppHeader = ({ searchParams, currentAuthUser, logOut, toggleDrawer, curren
                                     textAlign: 'center'
                                 }}
                             >
-                                No new notifications
-                            </Text>
+                                Žádné nové notifikace
+                            </Text>}
+
+                            {newNotifications.length > 0 && <View
+                                style={{
+                                    maxHeight: 300,
+                                    overflowY: 'auto',
+                                }}
+                            >
+                                    {newNotifications.map(notification => (
+                                        <HoverableView
+                                            style={{
+                                                padding: SPACING.xx_small,
+                                                width: '100%',
+                                                flexDirection: 'row',
+                                                alignItems: 'center',
+                                                gap: SPACING.xx_small,
+                                            }}
+                                            hoveredBackgroundColor={COLORS.secondary}
+                                            key={notification.id}
+                                        >
+                                            {
+                                                notification.type === 'credit_returned' ? (
+                                                    <Text style={{ fontSize: FONT_SIZES.medium }}>↩️</Text>
+                                                ) : notification.type === 'ticket_success' ? (
+                                                    <Text style={{ fontSize: FONT_SIZES.medium }}>🎉</Text>
+                                                ) : null
+                                            }
+
+                                            <Text
+                                                style={{
+                                                    fontSize: FONT_SIZES.medium,
+                                                    fontFamily: FONTS.medium,
+                                                    color: COLORS.white,
+                                                }}
+                                            >
+                                                {
+                                                    notification.type === 'credit_returned'
+                                                        ? 'Tiket #' + notification.ticket.name + ' nevyšel. Kredity byly vráceny.'
+                                                        : notification.type === 'ticket_success'
+                                                            ? 'Gratulujeme, Tiket #' + notification.ticket.name + ' byl úspěšný.'
+                                                            : null
+                                                }
+                                            </Text>
+                                        </HoverableView>
+                                    ))}
+                                </View>
+                            }
+
 
                             <View style={{ height: 0.5, width: '100%', backgroundColor: COLORS.grey400, marginVertical: SPACING.xxx_small }} />
 
@@ -376,7 +444,7 @@ const AppHeader = ({ searchParams, currentAuthUser, logOut, toggleDrawer, curren
                                     activeOpacity={0.8}
                                 >
                                     <Text style={{ textAlign: 'center', fontFamily: FONTS.medium, fontSize: FONT_SIZES.medium, color: COLORS.grey200 }}>
-                                        View all 
+                                        Zobrazit všechny
                                     </Text>
                                 </TouchableOpacity>
                             </HoverableView>
@@ -683,6 +751,14 @@ const AppHeader = ({ searchParams, currentAuthUser, logOut, toggleDrawer, curren
                     >
                        <MaterialIcons name="notifications-none" size={23} color="white" />
                     </TouchableOpacity>
+                    {
+                        newNotifications.length > 0 && (
+                            <Badge
+                                size={10}
+                                style={{ position: 'absolute', top: 9, right: 12, backgroundColor: COLORS.accent }}
+                            />
+                        )
+                    }
                 </HoverableView>
 
                 <HoverableView
@@ -738,10 +814,11 @@ const AppHeader = ({ searchParams, currentAuthUser, logOut, toggleDrawer, curren
 
 const mapStateToProps = (store) => ({
     currentAuthUser: store.userState.currentAuthUser,
-    currentUser: store.userState.currentUser
+    currentUser: store.userState.currentUser,
+    newNotifications: store.userState.notifications ? store.userState.notifications.filter(notif => !notif.displayed) : [],
 })
 
-export default connect(mapStateToProps, { logOut, toggleDrawer })(withSearchParams(AppHeader, ['language']))
+export default connect(mapStateToProps, { logOut, toggleDrawer, markNotificationsAsDisplayed })(withSearchParams(AppHeader, ['language']))
 
 const styles = StyleSheet.create({
     container: {

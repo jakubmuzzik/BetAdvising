@@ -21,7 +21,7 @@ import ConfirmationModal from '../../components/modal/ConfirmationModal'
 
 const GAP = normalize(60)
 
-const TimeLeft = ({ startDate, width, onTimeLeftLayout = () => { } }) => {
+const TimeLeft = ({ startDate, width, onTimeLeftLayout = () => { }, isSmallScreen }) => {
     const [timeLeft, setTimeLeft] = useState(calculateTimeDifference(new Date(), startDate))
 
     useEffect(() => {
@@ -36,12 +36,12 @@ const TimeLeft = ({ startDate, width, onTimeLeftLayout = () => { } }) => {
 
     return (
         <View
-            style={width != null ? { width, alignItems: 'flex-end' } : { alignItems: 'flex-end' }}
+            style={width != null ? { width, alignItems: 'flex-end' } : { alignItems: isSmallScreen ? 'flex-start' : 'flex-end' }}
         >
             <View
                 onLayout={(event) => onTimeLeftLayout(event)}
                 style={{
-                    position: 'absolute',
+                    position: isSmallScreen ? 'relative' : 'absolute',
                     flexDirection: 'column',
                     width: 'max-content'
                 }}
@@ -310,7 +310,7 @@ const OpenTickets = ({ fetchOpenTickets, setTabHeight, toastRef, openTickets, se
                 gap: SPACING.small
             }}
         >
-            {!isSmallScreen && <TimeLeft onTimeLeftLayout={(event) => onTimeLeftLayout(event, index)} width={timeLeftWidth} startDate={offer.start_date} />}
+            {!isSmallScreen && <TimeLeft isSmallScreen={isSmallScreen} onTimeLeftLayout={(event) => onTimeLeftLayout(event, index)} width={timeLeftWidth} startDate={offer.start_date} />}
             <Divider isLast={index === openTickets.length - 1} />
 
             <View
@@ -319,7 +319,7 @@ const OpenTickets = ({ fetchOpenTickets, setTabHeight, toastRef, openTickets, se
                     flex: 1
                 }}
             >
-                {isSmallScreen && <TimeLeft startDate={offer.start_date} />}
+                {isSmallScreen && <TimeLeft isSmallScreen={isSmallScreen} startDate={offer.start_date} />}
                 <UnlockedTicket
                     offsetX={offsetX}
                     ticketEntryActions={ticketEntryActions}

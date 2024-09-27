@@ -103,7 +103,8 @@ const Match = ({ match, width, ticketId, id, showEditButtons, offsetX, actions }
                         fontFamily: FONTS.medium,
                         fontSize: width < 420 ? FONT_SIZES.medium : FONT_SIZES.large,
                         color: COLORS.white,
-                        flexShrink: 1
+                        flexShrink: 1,
+                        wordBreak: 'break-word'
                     }}
                 //numberOfLines={1}
                 >
@@ -159,15 +160,17 @@ const Match = ({ match, width, ticketId, id, showEditButtons, offsetX, actions }
                 flexDirection: 'row',
                 justifyContent: 'space-between',
                 alignItems: 'center',
+                gap: SPACING.small,
             }}
         >
-            <View>
+            <View style={{ flexShrink: 1, }}>
                 <Text
                     style={{
                         fontFamily: FONTS.medium,
                         fontSize: FONT_SIZES.medium,
                         color: COLORS.grey300,
-                        marginBottom: 4
+                        marginBottom: 4,
+                        flexShrink: 1,
                     }}
                 >
                     {getEventDate(match.start_date, false, true)}, {getEventTime(match.start_date)}
@@ -177,7 +180,8 @@ const Match = ({ match, width, ticketId, id, showEditButtons, offsetX, actions }
                         fontFamily: FONTS.medium,
                         fontSize: FONT_SIZES.medium,
                         color: COLORS.grey300,
-                        marginBottom: 4
+                        marginBottom: 4,
+                        flexShrink: 1,
                     }}
                 >
                     {match.tip}
@@ -186,7 +190,8 @@ const Match = ({ match, width, ticketId, id, showEditButtons, offsetX, actions }
                     style={{
                         fontFamily: FONTS.medium,
                         fontSize: FONT_SIZES.medium,
-                        color: COLORS.grey300
+                        color: COLORS.grey300,
+                        flexShrink: 1,
                     }}
                 >
                     {match.league}
@@ -198,7 +203,8 @@ const Match = ({ match, width, ticketId, id, showEditButtons, offsetX, actions }
                     fontFamily: FONTS.medium,
                     fontSize: FONT_SIZES.large,
                     color: COLORS.white,
-                    textAlign: 'right'
+                    textAlign: 'right',
+                    flexShrink: 1,
                 }}
             >
                 {match.odd}
@@ -217,7 +223,8 @@ const TicketBody = ({ ticket, showEditButtons, offsetX, actions }) => {
             backgroundColor: COLORS.secondary2,
             borderTopWidth: 1,
             borderColor: COLORS.whiteBackground2,
-            gap: SPACING.medium
+            gap: SPACING.medium,
+            flexGrow: 1
         }}>
             {ticket.ticket_entries?.map((match) => (
                 <Match key={match.id} match={match} width={width} ticketId={ticket.id} id={match.id} showEditButtons={showEditButtons} offsetX={offsetX} actions={actions} />

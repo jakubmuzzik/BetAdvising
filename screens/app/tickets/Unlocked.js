@@ -79,16 +79,16 @@ const Skeleton = ({ timeLeftWidth, isSmallScreen }) => (
     </View>
 )
 
-const TimeStamp = ({ createdDate, width, onTimeLeftLayout = () => { } }) => {
+const TimeStamp = ({ createdDate, isSmallScreen, width, onTimeLeftLayout = () => { } }) => {
 
     return (
         <View
-            style={width != null ? { width, alignItems: 'flex-end' } : { alignItems: 'flex-end' }}
+        style={width != null ? { width, alignItems: isSmallScreen ? 'flex-start' : 'flex-end' } : { alignItems: isSmallScreen ? 'flex-start' : 'flex-end' }}
         >
             <View
                 onLayout={(event) => onTimeLeftLayout(event)}
                 style={{
-                    position: 'absolute',
+                    position: isSmallScreen ? 'relative' : 'absolute',
                     flexDirection: 'column',
                     width: 'max-content'
                 }}
@@ -236,7 +236,7 @@ const Unlocked = ({ searchParams, setTabHeight, fetchUnlockedTickets, unlocked }
                 gap: SPACING.small
             }}
         >
-            {!isSmallScreen && <TimeStamp createdDate={item.created_date} onTimeLeftLayout={(event) => onTimeLeftLayout(event, index)} width={timeLeftWidth} />}
+            {!isSmallScreen && <TimeStamp isSmallScreen={isSmallScreen} createdDate={item.created_date} onTimeLeftLayout={(event) => onTimeLeftLayout(event, index)} width={timeLeftWidth} />}
 
             <Divider
                 isLast={index === unlocked.length - 1}
@@ -251,7 +251,7 @@ const Unlocked = ({ searchParams, setTabHeight, fetchUnlockedTickets, unlocked }
                     flex: 1
                 }}
             >
-                {isSmallScreen && <TimeStamp createdDate={item.created_date} />}
+                {isSmallScreen && <TimeStamp isSmallScreen={isSmallScreen} createdDate={item.created_date} />}
                 <UnlockedTicket
                     ticket={item.ticket}
                     isLast={index === unlocked.length - 1}

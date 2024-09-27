@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef, useLayoutEffect } from 'react'
-import { View, Text } from 'react-native'
+import { View, Text, useWindowDimensions } from 'react-native'
 import { FONTS, FONT_SIZES, SPACING, COLORS } from '../../constants'
 import { MaterialIcons, MaterialCommunityIcons, FontAwesome } from '@expo/vector-icons'
 import { BlurView } from 'expo-blur'
@@ -51,7 +51,7 @@ const TicketHeader = ({ name, type }) => (
     </View>
 )
 
-const Match = ({data}) => (
+const Match = ({data, width}) => (
     <View
         style={{
             flex: 1
@@ -62,7 +62,9 @@ const Match = ({data}) => (
                 marginBottom: 10,
                 flexDirection: 'row',
                 justifyContent: 'space-between',
-                alignItems: 'center'
+                alignItems: 'center',
+                flexShrink: 1,
+                gap: 10
             }}
         >
             <View
@@ -70,15 +72,17 @@ const Match = ({data}) => (
                     flexDirection: 'row',
                     alignItems: 'center',
                     gap: SPACING.xx_small,
-
+                    flexShrink: 1
                 }}
             >
                 <FontAwesome name="soccer-ball-o" size={18} color={COLORS.grey300} />
                 <Text
                     style={{
                         fontFamily: FONTS.medium,
-                        fontSize: FONT_SIZES.large,
+                        fontSize: width < 420 ? FONT_SIZES.medium : FONT_SIZES.large,
                         color: COLORS.white,
+                        flexShrink: 1,
+                        wordBreak: 'break-word'
                     }}
                 >
                     {createRandomString(data.home)} - {createRandomString(data.away)}
@@ -94,15 +98,17 @@ const Match = ({data}) => (
                 flexDirection: 'row',
                 justifyContent: 'space-between',
                 alignItems: 'center',
+                gap: SPACING.small,
             }}
         >
-            <View>
+            <View style={{ flexShrink: 1, }}>
                 <Text
                     style={{
                         fontFamily: FONTS.medium,
                         fontSize: FONT_SIZES.medium,
                         color: COLORS.grey300,
-                        marginBottom: 4
+                        marginBottom: 4,
+                        flexShrink: 1,
                     }}
                 >
                     {getEventDate(new Date(), false, true)}, {getEventTime(new Date())}
@@ -112,7 +118,8 @@ const Match = ({data}) => (
                         fontFamily: FONTS.medium,
                         fontSize: FONT_SIZES.medium,
                         color: COLORS.grey300,
-                        marginBottom: 4
+                        marginBottom: 4,
+                        flexShrink: 1,
                     }}
                 >
                     {createRandomString(data.tip)}
@@ -121,7 +128,8 @@ const Match = ({data}) => (
                     style={{
                         fontFamily: FONTS.medium,
                         fontSize: FONT_SIZES.medium,
-                        color: COLORS.grey300
+                        color: COLORS.grey300,
+                        flexShrink: 1,
                     }}
                 >
                     {createRandomString(data.league)}
@@ -142,13 +150,17 @@ const Match = ({data}) => (
     </View>
 )
 
-const TicketBody = ({ offer, onUnlockPress }) => (
+const TicketBody = ({ offer, onUnlockPress }) => {
+    const { width } = useWindowDimensions()
+
+    return (
     <View style={{
         padding: SPACING.small,
         backgroundColor: COLORS.secondary2,
         borderTopWidth: 1,
         borderColor: COLORS.whiteBackground2,
-        gap: SPACING.medium
+        gap: SPACING.medium,
+        flexGrow: 1
     }}>
         <BlurView
             intensity={50}
@@ -176,9 +188,10 @@ const TicketBody = ({ offer, onUnlockPress }) => (
             />
         </BlurView>
 
-        {offer.data.map((match, index) => <Match key={index} data={match}/>)}
+        {offer.data.map((match, index) => <Match key={index} data={match} width={width} />)}
     </View>
-)
+    )
+}
 
 const TicketFooter = ({ odd, stake }) => (
     <View

@@ -79,7 +79,7 @@ const Skeleton = ({ timeLeftWidth, isSmallScreen }) => (
     </View>
 )
 
-const TimeLeft = ({ startDate, width, onTimeLeftLayout = () => { } }) => {
+const TimeLeft = ({ startDate, width, isSmallScreen, onTimeLeftLayout = () => { } }) => {
     const [timeLeft, setTimeLeft] = useState(calculateTimeDifference(new Date(), startDate))
 
     useEffect(() => {
@@ -94,12 +94,12 @@ const TimeLeft = ({ startDate, width, onTimeLeftLayout = () => { } }) => {
 
     return (
         <View
-            style={width != null ? { width, alignItems: 'flex-end' } : { alignItems: 'flex-end' }}
+            style={width != null ? { width, alignItems: isSmallScreen ? 'flex-start' : 'flex-end', marginBottom: isSmallScreen ? SPACING.medium : 0 } : { alignItems: isSmallScreen ? 'flex-start' : 'flex-end', marginBottom: isSmallScreen ? SPACING.medium : 0 }}
         >
             <View
                 onLayout={(event) => onTimeLeftLayout(event)}
                 style={{
-                    position: 'absolute',
+                    position: isSmallScreen ? 'relative' : 'absolute',
                     flexDirection: 'column',
                     width: 'max-content'
                 }}
@@ -216,12 +216,17 @@ const FlippableTicket = ({ isLast, offer, searchParams, isSmallScreen, onTimeLef
                 gap: SPACING.small
             }}
         >
-            {!isSmallScreen && <TimeLeft onTimeLeftLayout={(event) => onTimeLeftLayout(event, index)} width={timeLeftWidth} startDate={offer.start_date} />}
+            {!isSmallScreen && <TimeLeft isSmallScreen={isSmallScreen} onTimeLeftLayout={(event) => onTimeLeftLayout(event, index)} width={timeLeftWidth} startDate={offer.start_date} />}
 
 
-            {timeLeftWidth && (
+            {(timeLeftWidth || isSmallScreen) && (
                 <>
                     <Divider isLast={isLast} isLocked={offer.ticket_data == null} />
+                    <View style={{
+                        flex: 1
+                    }}>
+                        {isSmallScreen && <TimeLeft isSmallScreen={isSmallScreen} onTimeLeftLayout={(event) => onTimeLeftLayout(event, index)} width={timeLeftWidth} startDate={offer.start_date} />}
+
                     <Animated.View
                         style={[
                             styles.regularCard,
@@ -236,7 +241,7 @@ const FlippableTicket = ({ isLast, offer, searchParams, isSmallScreen, onTimeLef
                                 backgroundColor: COLORS.secondary,
                                 borderWidth: 1,
                                 borderColor: COLORS.whiteBackground2,
-                                flexGrow: 1
+                                flex: 1
                             }}
                         >
                             <LockedTicket
@@ -261,6 +266,7 @@ const FlippableTicket = ({ isLast, offer, searchParams, isSmallScreen, onTimeLef
 
                         {offer.ticket_data && <UnlockedTicket ticket={offer.ticket_data} />}
                     </Animated.View>
+                    </View>
                 </>
             )}
         </View>

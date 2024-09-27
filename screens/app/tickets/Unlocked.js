@@ -83,7 +83,7 @@ const TimeStamp = ({ createdDate, width, onTimeLeftLayout = () => { } }) => {
 
     return (
         <View
-            style={width != null ? { width } : null}
+            style={width != null ? { width, alignItems: 'flex-end' } : { alignItems: 'flex-end' }}
         >
             <View
                 onLayout={(event) => onTimeLeftLayout(event)}

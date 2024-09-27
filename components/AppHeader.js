@@ -1,5 +1,5 @@
-import React, { useState, useLayoutEffect, useRef, useEffect, useCallback } from 'react'
-import { View, useWindowDimensions, StyleSheet, Text, Pressable, TouchableOpacity, TouchableWithoutFeedback, Modal } from 'react-native'
+import React, { useState, useLayoutEffect, useRef, useEffect, useCallback, useMemo } from 'react'
+import { View, useWindowDimensions, StyleSheet, Text, Pressable, TouchableOpacity, TouchableWithoutFeedback, Modal, Image as RNImage } from 'react-native'
 import { BlurView } from 'expo-blur'
 import { COLORS, FONTS, FONT_SIZES, SPACING, SMALL_SCREEN_THRESHOLD_APP_HEADER, HEADER_HEIGHT, SIDEBAR_WIDTH } from '../constants'
 import { normalize } from '../utils'
@@ -16,18 +16,22 @@ import { MotiView } from 'moti'
 import { Picker } from '@react-native-picker/picker'
 import { logOut, toggleDrawer } from '../redux/actions/app'
 
+import UnderlineTabView from './animated/UnderlineTabView'
+
 const ROUTES = [
     {
         path: '/tickets',
-        title: 'Tikety',
+        label: 'Tikety',
         key: 'tickets',
-        icon: (focused) => <MaterialCommunityIcons style={{ marginRight: 10 }} name="ticket-confirmation-outline" size={20} color={focused ? COLORS.white : 'rgba(255,255,255,0.7)'} />
+        icon: (focused) => <MaterialCommunityIcons style={{ marginRight: 10 }} name="ticket-confirmation-outline" size={20} color={focused ? COLORS.white : 'rgba(255,255,255,0.7)'} />,
+        ref: React.createRef()
     },
     {
         path: '/credits',
-        title: 'Kredity',
+        label: 'Kredity',
         key: 'credits',
-        icon: (focused) => <MaterialCommunityIcons style={{ marginRight: 10 }} name="hand-coin-outline" size={20} color={focused ? COLORS.white : 'rgba(255,255,255,0.7)'} />
+        icon: (focused) => <MaterialCommunityIcons style={{ marginRight: 10 }} name="hand-coin-outline" size={20} color={focused ? COLORS.white : 'rgba(255,255,255,0.7)'} />,
+        ref: React.createRef()
     },
 ]
 
@@ -58,10 +62,16 @@ const AppHeader = ({ searchParams, currentAuthUser, logOut, toggleDrawer, curren
     const [routes, setRoutes] = useState(
         (currentAuthUser.app_metadata.userrole === 'ADMIN' ? [...ROUTES, {
             path: '/admin',
-            title: 'Admin',
+            label: 'Admin',
             key: 'admin',
-            icon: (focused) => <MaterialCommunityIcons style={{ marginRight: 10 }} name="book-edit" size={20} color={focused ? COLORS.white : 'rgba(255,255,255,0.7)'} />
-        }] : ROUTES).map((route, index) => ({ ...route, index }))
+            icon: (focused) => <MaterialCommunityIcons style={{ marginRight: 10 }} name="book-edit" size={20} color={focused ? COLORS.white : 'rgba(255,255,255,0.7)'} />,
+            ref: React.createRef()
+        }] : ROUTES)
+        .map((route, index) => ({ 
+            ...route, 
+            index, 
+            onPress: () => onTabPress({index, path: route.path}), 
+        }))
     )
 
     const renderIndicator = routes.some(route => location.pathname.includes(route.path))
@@ -76,7 +86,23 @@ const AppHeader = ({ searchParams, currentAuthUser, logOut, toggleDrawer, curren
         setIndex(newIndex ?? 0)
     }, [location])
 
-    const onTabPress = ({ route, preventDefault }) => {
+    const onTabPress = (route) => {
+        setIndex(route.index)
+
+        navigate({
+            pathname: route.path,
+            search: new URLSearchParams(searchParams).toString()
+        })
+    }
+
+    const onTabPress2 = ({route, preventDefault}) => {
+        /*setIndex(route.index)
+
+        navigate({
+            pathname: route.path,
+            search: new URLSearchParams(searchParams).toString()
+        })*/
+
         preventDefault()
 
         setIndex(routes.indexOf(route))
@@ -138,7 +164,6 @@ const AppHeader = ({ searchParams, currentAuthUser, logOut, toggleDrawer, curren
     }
 
     const openNotificationsDropdown = () => {
-        console.log('openNotificationsDropdown')
         notificationsDropdownRef.current.measureLayout(
             notificationsDropdownModalRef.current,
             (left, top, width, height) => {
@@ -452,7 +477,7 @@ const AppHeader = ({ searchParams, currentAuthUser, logOut, toggleDrawer, curren
                             <HoverableView hoveredBackgroundColor={COLORS.secondary}>
                                 <TouchableOpacity
                                     onPress={onLogoutPress}
-                                    style={{ flexDirection: 'row', alignItems: 'center', gap: 5, padding: SPACING.xx_small }}
+                                    style={{ flexDirection: 'row', alignItems: 'center', gap: 5, padding: SPACING.xx_small, flex: 1 }}
                                     activeOpacity={0.8}
                                 >
                                     <MaterialIcons name="logout" size={17} color={COLORS.red} />
@@ -467,6 +492,13 @@ const AppHeader = ({ searchParams, currentAuthUser, logOut, toggleDrawer, curren
             </Modal>
         )
     }
+
+    const renderTabBar2 = (props) => (
+        <UnderlineTabView
+            tabs={routes}
+            activeIndex={props.navigationState.index}
+        />
+    )
 
     const renderTabBar = (props) => (
         <TabBar
@@ -505,26 +537,31 @@ const AppHeader = ({ searchParams, currentAuthUser, logOut, toggleDrawer, curren
                 <View
                     style={{ height: normalize(50), justifyContent: 'center', marginRight: SPACING.x_small }}
                 >
-                    <Link to={{ pathname: '/tickets', search: new URLSearchParams(searchParams).toString() }}>
-                        <Image
-                            contentFit='contain'
-                            source={require('../assets/logos/logo-header.png')}
-                            style={{
-                                height: normalize(32),
-                                width: normalize(102)
-                            }}
-                            tintColor={COLORS.accent}
-                        />
-                    </Link>
+                        <Link to={{ pathname: '/tickets', search: new URLSearchParams(searchParams).toString() }}>
+                            <RNImage
+                                resizeMode='contain'
+                                source={require('../assets/logos/logo-header.png')}
+                                style={{
+                                    height: normalize(32),
+                                    width: normalize(102)
+                                }}
+                                tintColor={COLORS.accent}
+                            />
+                        </Link>
                 </View>
-                <TabView
+                {/* <TabView
                     renderTabBar={renderTabBar}
                     swipeEnabled={false}
                     navigationState={{ index, routes }}
                     renderScene={() => undefined}
                     onIndexChange={setIndex}
-                />
-            </>
+                /> */}
+                    <UnderlineTabView
+                        tabs={routes}
+                        activeIndex={index}
+                        indicatorStyle={{ bottom: -4 }}
+                    />
+                </>
         )
     )
 
@@ -683,7 +720,7 @@ const AppHeader = ({ searchParams, currentAuthUser, logOut, toggleDrawer, curren
             <View style={isSmallScreen ? styles.headerSmall : styles.headerLarge}>
                 <View style={{ 
                     flexDirection: 'row', 
-                    display: 'contents' 
+                    //display: 'contents' 
                 }}>
                     {renderLeftHeader()}
                 </View>

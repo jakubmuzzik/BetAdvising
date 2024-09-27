@@ -94,7 +94,7 @@ const TimeLeft = ({ startDate, width, onTimeLeftLayout = () => { } }) => {
 
     return (
         <View
-            style={width != null ? { width } : null}
+            style={width != null ? { width, alignItems: 'flex-end' } : { alignItems: 'flex-end' }}
         >
             <View
                 onLayout={(event) => onTimeLeftLayout(event)}
@@ -218,45 +218,51 @@ const FlippableTicket = ({ isLast, offer, searchParams, isSmallScreen, onTimeLef
         >
             {!isSmallScreen && <TimeLeft onTimeLeftLayout={(event) => onTimeLeftLayout(event, index)} width={timeLeftWidth} startDate={offer.start_date} />}
 
-            <Divider isLast={isLast} isLocked={offer.ticket_data == null} />
 
-            <Animated.View
-                style={[
-                    styles.regularCard,
-                    regularCardAnimatedStyle,
-                ]}>
-                <View
-                    onLayout={(event) => setCardLayout({ width: event.nativeEvent.layout.width, height: event.nativeEvent.layout.height })}
-                    style={{
-                        borderRadius: 10,
-                        backgroundColor: COLORS.secondary,
-                        borderWidth: 1,
-                        borderColor: COLORS.whiteBackground2,
-                        flexGrow: 1
-                    }}
-                >
-                    <LockedTicket
-                        searchParams={searchParams}
-                        offer={offer}
-                    />
-                </View>
-            </Animated.View>
+            {timeLeftWidth && (
+                <>
+                    <Divider isLast={isLast} isLocked={offer.ticket_data == null} />
+                    <Animated.View
+                        style={[
+                            styles.regularCard,
+                            //without this the locked ticket flickers when ticket is unlocked on render
+                            { opacity: isFlipped.value ? 0 : 1 },
+                            regularCardAnimatedStyle,
+                        ]}>
+                        <View
+                            onLayout={(event) => setCardLayout({ width: event.nativeEvent.layout.width, height: event.nativeEvent.layout.height })}
+                            style={{
+                                borderRadius: 10,
+                                backgroundColor: COLORS.secondary,
+                                borderWidth: 1,
+                                borderColor: COLORS.whiteBackground2,
+                                flexGrow: 1
+                            }}
+                        >
+                            <LockedTicket
+                                searchParams={searchParams}
+                                offer={offer}
+                            />
+                        </View>
+                    </Animated.View>
 
-            <Animated.View
-                animatedProps={flippedCardAnimatedProps}
-                style={[
-                    styles.flippedCard,
-                    flippedCardAnimatedStyle,
-                    {
-                        width: cardLayout.width,
-                        height: cardLayout.height,
-                        right: 0,
-                        bottom: 0
-                    }
-                ]}>
+                    <Animated.View
+                        animatedProps={flippedCardAnimatedProps}
+                        style={[
+                            styles.flippedCard,
+                            flippedCardAnimatedStyle,
+                            {
+                                width: cardLayout.width,
+                                height: cardLayout.height,
+                                right: 0,
+                                bottom: 0
+                            }
+                        ]}>
 
-                {offer.ticket_data && <UnlockedTicket ticket={offer.ticket_data} />}
-            </Animated.View>
+                        {offer.ticket_data && <UnlockedTicket ticket={offer.ticket_data} />}
+                    </Animated.View>
+                </>
+            )}
         </View>
     )
 }
@@ -339,7 +345,7 @@ const Offers = ({ searchParams, setTabHeight, fetchOffers, offers }) => {
                 contentContainerStyle={{ gap: GAP }}
                 keyExtractor={(item) => item.id}
                 data={offers == null ? new Array(10).fill(null, 0).map((_, index) => ({ id: index })) : offers}
-                renderItem={({ item, index }) => offers == null ? <Skeleton key={index} timeLeftWidth={timeLeftWidth} isSmallScreen={isSmallScreen}/> : <FlippableTicket isLast={index === offers.length - 1} offer={item} searchParams={searchParams} isSmallScreen={isSmallScreen} onTimeLeftLayout={onTimeLeftLayout} timeLeftWidth={timeLeftWidth} index={index} />}//= ({ isLast, offer, searchParams, isSmallScreen, onTimeLeftLayout }) => {}
+                renderItem={({ item, index }) => offers == null ? <Skeleton key={index} timeLeftWidth={timeLeftWidth} isSmallScreen={isSmallScreen} /> : <FlippableTicket isLast={index === offers.length - 1} offer={item} searchParams={searchParams} isSmallScreen={isSmallScreen} onTimeLeftLayout={onTimeLeftLayout} timeLeftWidth={timeLeftWidth} index={index} />}//= ({ isLast, offer, searchParams, isSmallScreen, onTimeLeftLayout }) => {}
                 ListEmptyComponent={() => !refreshing && (
                     <Animated.Text entering={FlipInEasyX} style={{ textAlign: 'center', fontFamily: FONTS.medium, color: COLORS.grey400, fontSize: FONT_SIZES.xx_large, }}>
                         No offers at the moment
@@ -347,7 +353,7 @@ const Offers = ({ searchParams, setTabHeight, fetchOffers, offers }) => {
                 )}
                 showsVerticalScrollIndicator={false}
             />
-            
+
             {refreshing && <ActivityIndicator color={COLORS.accent} />}
         </View>
     )

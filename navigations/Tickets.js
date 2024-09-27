@@ -129,7 +129,7 @@ const Tickets = ({ searchParams }) => {
                     alignSelf: 'center',
                     paddingHorizontal: SPACING.medium,
                 }}
-                //initialLayout={{ width: Dimensions.get('window').width, height: Dimensions.get('window').height }}
+                initialLayout={{ width: Dimensions.get('window').width, height: Dimensions.get('window').height }}
                 //lazy={({ route }) => route.key !== 'settings'}
                 lazy
                 renderLazyPlaceholder={renderLazyPlaceholder}

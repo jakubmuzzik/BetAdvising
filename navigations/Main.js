@@ -89,19 +89,17 @@ const router = createBrowserRouter(createRoutesFromElements(
             <Route path='/credits' element={<Credits />} />
             <Route path='/support' element={<Support />} />
             <Route path='/notifications' element={<Notifications />} />
-        </Route>
 
-        <Route path='/admin' element={
-            <RequireAdminUser>
-                <AppLayout>
+            <Route path='/admin' element={
+                <RequireAdminUser>
                     <Outlet />
-                </AppLayout>
-            </RequireAdminUser>
-        } >
-            <Route index element={<Admin />} />
-            <Route path='open-tickets' element={<Admin />} />
-            <Route path='closed-tickets' element={<Admin />} />
-            <Route path='new-ticket' element={<Admin />} />
+                </RequireAdminUser>
+            } >
+                <Route index element={<Admin />} />
+                <Route path='open-tickets' element={<Admin />} />
+                <Route path='closed-tickets' element={<Admin />} />
+                <Route path='new-ticket' element={<Admin />} />
+            </Route>
         </Route>
 
         <Route path='/complete-profile' element={

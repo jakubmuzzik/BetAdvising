@@ -25,7 +25,7 @@ export const CUSTOM_BUTTON_HEIGHT = normalizeSize(40, 40, 40)
 
 export const SMALL_SCREEN_THRESHOLD_APP_HEADER = 700
 
-export const HEADER_HEIGHT = normalizeSize(60, 65, 65)
+export const HEADER_HEIGHT = normalizeSize(60, 60, 60)
 export const SIDEBAR_WIDTH = normalizeSize(230, 230, 230)
 
 export const COLORS = {

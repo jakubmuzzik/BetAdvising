@@ -79,32 +79,40 @@ const Skeleton = ({ timeLeftWidth, isSmallScreen }) => (
     </View>
 )
 
-const TimeStamp = ({ createdDate, width, onTimeLeftLayout=() => {} }) => {
-    
+const TimeStamp = ({ createdDate, width, onTimeLeftLayout = () => { } }) => {
+
     return (
         <View
-            onLayout={(event) => onTimeLeftLayout(event)}
             style={width != null ? { width } : null}
         >
-            <Text
+            <View
+                onLayout={(event) => onTimeLeftLayout(event)}
                 style={{
-                    fontFamily: FONTS.medium,
-                    fontSize: FONT_SIZES.medium,
-                    color: COLORS.grey400
+                    position: 'absolute',
+                    flexDirection: 'column',
+                    width: 'max-content'
                 }}
             >
-                Odemčeno:
-            </Text>
-            <Text
-                style={{
-                    fontFamily: FONTS.medium,
-                    fontSize: FONT_SIZES.x_large,
-                    color: COLORS.white,
-                    marginTop: 4
-                }}
-            >
-                {getEventDate(createdDate, false, true)}, {getEventTime(createdDate)}
-            </Text>
+                <Text
+                    style={{
+                        fontFamily: FONTS.medium,
+                        fontSize: FONT_SIZES.medium,
+                        color: COLORS.grey400
+                    }}
+                >
+                    Odemčeno:
+                </Text>
+                <Text
+                    style={{
+                        fontFamily: FONTS.medium,
+                        fontSize: FONT_SIZES.x_large,
+                        color: COLORS.white,
+                        marginTop: 4
+                    }}
+                >
+                    {getEventDate(createdDate, false, true)}, {getEventTime(createdDate)}
+                </Text>
+            </View>
         </View>
     )
 }
@@ -143,7 +151,7 @@ const Divider = ({ isLast, result }) => {
                             }}
                             contentFit="contain"
                         />
-                    : <MaterialIcons name="question-mark" size={18} color={COLORS.white} />
+                            : <MaterialIcons name="question-mark" size={18} color={COLORS.white} />
                 }
             </LinearGradient>
             {!isLast && <LinearGradient
@@ -173,7 +181,7 @@ const Unlocked = ({ searchParams, setTabHeight, fetchUnlockedTickets, unlocked }
 
     const onTimeLeftLayout = (event, index) => {
         const { width } = event.nativeEvent.layout
-        
+
         if (width > currentWidestTimeLeft.current) {
             currentWidestTimeLeft.current = width
         }
@@ -233,9 +241,7 @@ const Unlocked = ({ searchParams, setTabHeight, fetchUnlockedTickets, unlocked }
             <Divider
                 isLast={index === unlocked.length - 1}
                 result={
-                    item.ticket.ticket_entries.some(ticket => ticket.result === 'lose' || ticket.result === 'cancelled') ? 'lose'
-                        : item.ticket.ticket_entries.every(ticket => ticket.result === 'win') ? 'win'
-                            : 'pending'
+                    item.ticket.result
                 }
             />
 
@@ -272,7 +278,7 @@ const Unlocked = ({ searchParams, setTabHeight, fetchUnlockedTickets, unlocked }
                 contentContainerStyle={{ gap: GAP }}
                 keyExtractor={(item) => item.id}
                 data={unlocked == null ? new Array(10).fill(null, 0).map((_, index) => ({ id: index })) : unlocked}
-                renderItem={({ item, index }) => unlocked == null ? <Skeleton key={index} timeLeftWidth={timeLeftWidth} isSmallScreen={isSmallScreen}/> : renderItem(item, index)}
+                renderItem={({ item, index }) => unlocked == null ? <Skeleton key={index} timeLeftWidth={timeLeftWidth} isSmallScreen={isSmallScreen} /> : renderItem(item, index)}
                 ListEmptyComponent={() => !refreshing && (
                     <Animated.Text entering={FlipInEasyX} style={{ textAlign: 'center', fontFamily: FONTS.medium, color: COLORS.grey400, fontSize: FONT_SIZES.xx_large, }}>
                         You haven't unlocked any tickets yet.

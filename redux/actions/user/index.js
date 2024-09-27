@@ -4,7 +4,8 @@ import {
     STORE_TOAST_REF,
     OFFERS_STATE_CHANGE,
     UNLOCKED_STATE_CHANGE,
-    NOTIFICATIONS_STATE_CHANGE
+    NOTIFICATIONS_STATE_CHANGE,
+    CLEAR_DATA
 } from '../../actionTypes'
 import { logOut } from '../app'
 import { supabase } from '../../../supabase/config'
@@ -16,6 +17,10 @@ const NOTIFICATIONS_QUERY = '*, ticket(id, name, price)'
 export const MAX_OFFER_ROWS_PER_QUERY = 50
 export const MAX_UNLOCKED_ROWS_PER_QUERY = 50
 export const MAX_NOTIFICATIONS_ROWS_PER_QUERY = 50
+
+export const clearReduxData = () => ({
+    type: CLEAR_DATA
+})
 
 export const storeToastRef = (toastRef) => ({
     type: STORE_TOAST_REF,
@@ -119,7 +124,6 @@ export const fetchUnlockedTickets = () => async (dispatch, getState) => {
         const { data=[], error } = await supabase
             .from('unlocked_tickets')
             .select(UNLOCKED_QUERY)
-            .gte('ticket.start_date', new Date().toISOString())
             .order('created_date', { ascending: false })
             .range(from, Number(from) + Number(MAX_UNLOCKED_ROWS_PER_QUERY) - 1)
 

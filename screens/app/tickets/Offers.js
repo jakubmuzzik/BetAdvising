@@ -94,31 +94,39 @@ const TimeLeft = ({ startDate, width, onTimeLeftLayout = () => { } }) => {
 
     return (
         <View
-            onLayout={(event) => onTimeLeftLayout(event)}
             style={width != null ? { width } : null}
         >
-            <Text
+            <View
+                onLayout={(event) => onTimeLeftLayout(event)}
                 style={{
-                    fontFamily: FONTS.medium,
-                    fontSize: FONT_SIZES.medium,
-                    color: COLORS.grey400
+                    position: 'absolute',
+                    flexDirection: 'column',
+                    width: 'max-content'
                 }}
             >
-                Zbývá:
-            </Text>
-            <Text
-                style={{
-                    fontFamily: FONTS.medium,
-                    fontSize: FONT_SIZES.x_large,
-                    color: COLORS.white,
-                    marginTop: 4
-                }}
-            >
-                {timeLeft.days > 0 ? `${timeLeft.days}d ` : ''}
-                {timeLeft.hours > 0 ? `${timeLeft.hours}h ` : ''}
-                {timeLeft.minutes > 0 || timeLeft.hours > 0 ? `${timeLeft.minutes}m ` : ''}
-                {`${timeLeft.seconds}s`}
-            </Text>
+                <Text
+                    style={{
+                        fontFamily: FONTS.medium,
+                        fontSize: FONT_SIZES.medium,
+                        color: COLORS.grey400
+                    }}
+                >
+                    Zbývá:
+                </Text>
+                <Text
+                    style={{
+                        fontFamily: FONTS.medium,
+                        fontSize: FONT_SIZES.x_large,
+                        color: COLORS.white,
+                        marginTop: 4
+                    }}
+                >
+                    {timeLeft.days > 0 ? `${timeLeft.days}d ` : ''}
+                    {timeLeft.hours > 0 ? `${timeLeft.hours}h ` : ''}
+                    {timeLeft.minutes > 0 || timeLeft.hours > 0 ? `${timeLeft.minutes}m ` : ''}
+                    {`${timeLeft.seconds}s`}
+                </Text>
+            </View>
         </View>
     )
 }

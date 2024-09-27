@@ -131,8 +131,7 @@ const Tickets = ({ searchParams }) => {
                 }}
                 //initialLayout={{ width: Dimensions.get('window').width, height: Dimensions.get('window').height }}
                 //lazy={({ route }) => route.key !== 'settings'}
-                //lazy
-                lazy={({ route }) => route.key !== 'settings'}
+                lazy
                 renderLazyPlaceholder={renderLazyPlaceholder}
             />
         </View>

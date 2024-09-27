@@ -137,7 +137,8 @@ const OTP = ({ toastRef, searchParams }) => {
                         style={{
                             fontSize: FONT_SIZES.x_large,
                             color: COLORS.white,
-                            fontFamily: FONTS.medium
+                            fontFamily: FONTS.medium,
+                            textAlign: 'center'
                         }}
                     >
                         Check your email
@@ -147,7 +148,8 @@ const OTP = ({ toastRef, searchParams }) => {
                             fontSize: FONT_SIZES.medium,
                             color: COLORS.grey400,
                             fontFamily: FONTS.regular,
-                            marginTop: SPACING.xx_small
+                            marginTop: SPACING.xx_small,
+                            textAlign: 'center'
                         }}
                     >
                         We have sent a verification code to {email ? email : 'your email'}

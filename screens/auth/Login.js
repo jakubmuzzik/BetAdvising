@@ -160,8 +160,8 @@ const Login = ({ searchParams, toastRef, fetchUser }) => {
                         ref={googleSignInButtonRef}
                         onPress={onGoogleSignupPress}
                         additionalStyles={{ borderWidth: 1, borderColor: COLORS.whiteBackground2, width: '100%', marginTop: SPACING.large }}
-                        textColor={COLORS.white}
-                        backgroundColors={COLORS.secondary2}
+                        textColor={COLORS.black}
+                        backgroundColors={COLORS.white}
                         buttonText='Continue with Google'
                         spinnerColor={COLORS.darkBlue}
                         textStyles={{ fontFamily: FONTS.regular }}
@@ -209,16 +209,16 @@ const Login = ({ searchParams, toastRef, fetchUser }) => {
                     >
                         <CustomButton ref={emailSignupButton}
                             onPress={onEmailSignupPress}
-                            additionalStyles={{ borderWidth: 1, borderColor: COLORS.white, marginTop: SPACING.x_small, width: '100%' }}
-                            textColor={COLORS.black}
-                            backgroundColors={COLORS.white}
+                            additionalStyles={{ borderWidth: 0, borderColor: COLORS.whiteBackground2, marginTop: SPACING.x_small, width: '100%' }}
+                            textColor={COLORS.white}
+                            backgroundColors={COLORS.secondary2}
                             buttonText='Continue with Email'
                             textStyles={{ fontFamily: FONTS.medium }}
                             icon={<Feather
                                 style={{ marginRight: SPACING.xx_small }}
                                 name="mail"
                                 size={normalize(17)}
-                                color={COLORS.black}
+                                color={COLORS.white}
                             />}
                         />
                     </Animated.View>

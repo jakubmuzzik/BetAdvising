@@ -134,7 +134,6 @@ const ClosedTickets = ({ fetchClosedTickets, setTabHeight, toastRef, closedTicke
                 gap: SPACING.small
             }}
         >
-            {/* {!isSmallScreen && <TimeLeft onTimeLeftLayout={(event) => onTimeLeftLayout(event, index)} width={timeLeftWidth} startDate={offer.start_date} />} */}
             <Divider
                 isLast={index === closedTickets.length - 1}
                 result={offer.result}
@@ -146,7 +145,6 @@ const ClosedTickets = ({ fetchClosedTickets, setTabHeight, toastRef, closedTicke
                     flex: 1
                 }}
             >
-                {/* {isSmallScreen && <TimeLeft startDate={offer.start_date} />} */}
                 <UnlockedTicket
                     searchParams={searchParams}
                     ticket={offer}

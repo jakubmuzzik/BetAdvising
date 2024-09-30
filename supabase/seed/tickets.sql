@@ -7,7 +7,7 @@ CREATE SEQUENCE IF NOT EXISTS ticket_name
 ALTER TABLE tickets 
 ADD COLUMN name TEXT DEFAULT NEXTVAL('ticket_name')::TEXT;
 
-CREATE OR REPLACE FUNCTION public.handle_tickets_after_update()
+CREATE OR REPLACE FUNCTION private.handle_tickets_after_update()
   RETURNS TRIGGER AS $$
 BEGIN
   IF NEW.result = 'win' AND NEW.result != OLD.result THEN
@@ -34,4 +34,4 @@ $$ LANGUAGE plpgsql SECURITY DEFINER;
 
 create trigger tickets_after_update
   after update on tickets
-  for each row execute function handle_tickets_after_update();
+  for each row execute function private.handle_tickets_after_update();

@@ -154,6 +154,7 @@ const CompleteProfile = ({ toastRef, searchParams, currentAuthUser, logOut }) =>
                         onChangeText={setFirstName}
                         containerStyle={{ width: '100%', marginTop: SPACING.large }}
                         errorMessage={showErrorMessage && !firstName ? 'Enter your first name' : undefined}
+                        onSubmitEditing={onCompleteProfilePress}
                     />
 
                     <CustomInput
@@ -163,6 +164,7 @@ const CompleteProfile = ({ toastRef, searchParams, currentAuthUser, logOut }) =>
                         onChangeText={setLastName}
                         containerStyle={{ width: '100%', marginTop: SPACING.xx_small }}
                         errorMessage={showErrorMessage && !lastName ? 'Enter your last name' : undefined}
+                        onSubmitEditing={onCompleteProfilePress}
                     />
 
                     <BouncyCheckbox

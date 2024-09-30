@@ -1,7 +1,7 @@
 ALTER TABLE unlocked_tickets
 ADD CONSTRAINT pk_unlocked_tickets PRIMARY KEY (ticket, "user");
 
-CREATE OR REPLACE FUNCTION public.handle_unlocked_tickets_after_insert()
+CREATE OR REPLACE FUNCTION private.handle_unlocked_tickets_after_insert()
   RETURNS TRIGGER AS $$
   DECLARE
   user_credits numeric;  -- Declare variable to hold user's credits
@@ -33,4 +33,4 @@ $$ LANGUAGE plpgsql SECURITY DEFINER;
 
 create trigger unlocked_tickets_after_insert
   after insert on unlocked_tickets
-  for each row execute function handle_unlocked_tickets_after_insert();
+  for each row execute function private.handle_unlocked_tickets_after_insert();

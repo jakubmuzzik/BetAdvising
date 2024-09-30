@@ -5,20 +5,20 @@ import { ActivityIndicator } from 'react-native-paper'
 import { normalize } from '../utils'
 import { TabView, SceneMap, TabBar } from 'react-native-tab-view'
 import { useNavigate, useLocation, useSearchParams } from 'react-router-dom'
+import { connect } from 'react-redux'
 
 import withSearchParams from '../components/hoc/withSearchParams'
 
 import PersonalInformation from '../screens/app/account/PersonalInformation'
-import { connect } from 'react-redux'
+import VerifyAccountBanner from '../components/VerifyAccountBanner'
 
-const Account = ({ currentUser, searchParams }) => {
-
+const Account = ({ currentUser, searchParams, currentAuthUser }) => {
     const [index, setIndex] = useState(0)
     const [routes, setRoutes] = useState([
         { key: 'profile-information', title: 'Profile information', height: '100%', path: '/account/profile-information' },
         { key: 'settings', title: 'Settings', height: '100%', path: '/account/settings' },
     ]
-    .map((route, index) => ({ ...route, index })))
+        .map((route, index) => ({ ...route, index })))
 
     const navigate = useNavigate()
     const location = useLocation()
@@ -87,7 +87,7 @@ const Account = ({ currentUser, searchParams }) => {
             onTabPress={onTabPress}
         />
     )
-    
+
     return (
         <>
             <View
@@ -110,6 +110,8 @@ const Account = ({ currentUser, searchParams }) => {
                 >
                     Account
                 </Text>
+
+                {(!currentAuthUser.phone_confirmed_at) && <VerifyAccountBanner />}
             </View>
             <TabView
                 renderTabBar={renderTabBar}
@@ -129,7 +131,8 @@ const Account = ({ currentUser, searchParams }) => {
 }
 
 const mapStateToProps = (store) => ({
-    currentUser: store.userState.currentUser
+    currentUser: store.userState.currentUser,
+    currentAuthUser: store.userState.currentAuthUser,
 })
 
 export default connect(mapStateToProps)(withSearchParams(Account, ['language']))

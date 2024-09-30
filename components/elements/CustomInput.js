@@ -46,6 +46,7 @@ const CustomInput = ({
     backgroundColor = COLORS.secondary2,
     focusedBackgroundColor = 'transparent',
     cursor = 'text',
+    prefix,
     onSubmitEditing = () => {}
 }) => {
     const inputRef = useRef()
@@ -122,6 +123,7 @@ const CustomInput = ({
                 boxShadow: isFocused ? '0px 0px 14px rgba(251, 193, 13, 0.35)' : undefined,
             }}>
                 {leftIcon ?? undefined}
+                {prefix ?? undefined}
 
                 <TouchableOpacity
                     onPress={onInputPress}

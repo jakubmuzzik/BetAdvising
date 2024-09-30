@@ -6,8 +6,6 @@ import { MaterialCommunityIcons } from "@expo/vector-icons"
 import Animated, { useSharedValue, useDerivedValue, useAnimatedStyle, withTiming, LinearTransition } from 'react-native-reanimated'
 import { TouchableRipple } from 'react-native-paper'
 
-const AnimatedMaterialCommunityIcons = Animated.createAnimatedComponent(MaterialCommunityIcons)
-
 const Accordion = ({ headerText, bodyText, headerTextStyle, bodyTextStyle, backgroundColor }) => {
     const height = useSharedValue(0)
     const isExpanded = useSharedValue(false)

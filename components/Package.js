@@ -12,6 +12,7 @@ const Package = ({ name, coins, price, description, searchParams }) => {
 
     return (
         <BlurView
+            dataSet={{ id: 'package' }}
             style={{
                 borderWidth: 1,
                 borderColor: COLORS.grey400,//COLORS.accent + '90',
@@ -112,7 +113,7 @@ const Package = ({ name, coins, price, description, searchParams }) => {
                             fontSize: FONT_SIZES.medium
                         }}
                     >
-                        Get started
+                        Vybrat
                     </Text>
                 </HoverableView>
             </Link>

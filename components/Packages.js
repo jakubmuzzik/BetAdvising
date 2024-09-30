@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useLayoutEffect, useState } from 'react'
 import { Text, View, useWindowDimensions, StyleSheet, FlatList } from 'react-native'
 import { COLORS, FONT_SIZES, FONTS, SPACING } from '../constants'
 import { normalize } from '../utils'
@@ -7,8 +7,22 @@ import Package from './Package'
 import { LinearGradient } from 'expo-linear-gradient'
 import withSearchParams from './hoc/withSearchParams'
 
+import VanillaTilt from 'vanilla-tilt'
+
+
 const Packages = ({ searchParams }) => {
     const { width } = useWindowDimensions()
+
+    useLayoutEffect(() => {
+        VanillaTilt.init(document.querySelectorAll(`[data-id="package"]`), {
+          max: 7,
+          speed: 200,
+          easing: "cubic-bezier(.03,.98,.52,.99)",
+          reverse: true,
+          glare: true,
+          "max-glare": 0.1,
+        })
+      }, [])
 
     return (
         <View
@@ -133,7 +147,7 @@ const Packages = ({ searchParams }) => {
                     { id: 4, name: 'Premium', coins: 200, price: 850, description: 'Serious bettors who are committed to using your service regularly and want the best value.' },
                     { id: 5, name: 'VIP', coins: 350, price: 999, description: 'High-volume users or professional bettors who want to maximize their use of the service.' },
                 ]}
-                contentContainerStyle={{ paddingHorizontal: SPACING.page_horizontal, gap: SPACING.medium }}
+                contentContainerStyle={{ paddingHorizontal: SPACING.page_horizontal, gap: SPACING.medium, paddingVertical: 2 }}
                 initialNumToRender={30}
                 renderItem={({ item, index }) => (
                     <Package

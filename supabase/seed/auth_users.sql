@@ -15,6 +15,18 @@ begin
     VALUES (new.id::uuid, new.raw_user_meta_data->>'name', new.email, (NEW.raw_user_meta_data ->> 'email_notifications_enabled')::boolean);
   END IF;
 
+/**
+  * User Phone was confirmed
+  * -> Add 100 credits to the user record
+  */
+   IF (
+    OLD.phone_confirmed_at IS NULL AND NEW.phone_confirmed_at IS NOT NULL
+  ) THEN
+    UPDATE public.users
+    SET credits = credits + 100
+    WHERE id = NEW.id::uuid;
+  END IF;
+
   RETURN NEW;
 end;
 $$;

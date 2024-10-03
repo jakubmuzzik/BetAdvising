@@ -209,7 +209,7 @@ const Login = ({ searchParams, toastRef, fetchUser }) => {
                     >
                         <CustomButton ref={emailSignupButton}
                             onPress={onEmailSignupPress}
-                            additionalStyles={{ borderWidth: 0, borderColor: COLORS.whiteBackground2, marginTop: SPACING.x_small, width: '100%' }}
+                            additionalStyles={{ borderWidth: 1, borderColor: COLORS.whiteBackground2, marginTop: SPACING.x_small, width: '100%' }}
                             textColor={COLORS.white}
                             backgroundColors={COLORS.secondary2}
                             spinnerColor={COLORS.white}

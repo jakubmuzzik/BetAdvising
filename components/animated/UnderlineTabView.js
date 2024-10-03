@@ -4,6 +4,8 @@ import { COLORS, FONT_SIZES, FONTS, SPACING } from '../../constants'
 import Animated, { useAnimatedStyle, withTiming, useSharedValue, interpolate, useDerivedValue } from 'react-native-reanimated'
 
 const Indicator = ({ measures, activeIndex, indicatorStyle={} }) => {
+    if (activeIndex == null) return null
+
     const indicatorAnimatedStyle = useAnimatedStyle(() => {
         return {
             width: withTiming(measures[activeIndex].width - 10),

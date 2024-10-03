@@ -105,7 +105,7 @@ const Account = ({ currentUser, searchParams, currentAuthUser }) => {
                         fontFamily: FONTS.medium,
                         marginTop: SPACING.large,
                         paddingHorizontal: SPACING.medium,
-                        marginBottom: SPACING.xx_large
+                        marginBottom: !currentAuthUser.phone_confirmed_at ? SPACING.small : SPACING.xx_large
                     }}
                 >
                     Account

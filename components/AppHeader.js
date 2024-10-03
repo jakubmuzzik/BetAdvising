@@ -85,7 +85,7 @@ const AppHeader = ({ searchParams, currentAuthUser, logOut, toggleDrawer, curren
 
     useLayoutEffect(() => {
         const newIndex = routes.find(route => location.pathname.includes(route.path))?.index
-        setIndex(newIndex ?? 0)
+        setIndex(newIndex)
     }, [location])
 
     const onTabPress = (route) => {

@@ -311,7 +311,7 @@ const MobileVerificationModal = ({ visible, setVisible, toastRef }) => {
                     </Text>
 
                     <Text style={{
-                        fontFamily: FONTS.medium,
+                        fontFamily: FONTS.regular,
                         fontSize: FONT_SIZES.large,
                         color: COLORS.grey400,
                         paddingTop: SPACING.x_large,

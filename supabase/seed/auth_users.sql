@@ -15,7 +15,7 @@ begin
     VALUES (new.id::uuid, new.raw_user_meta_data->>'name', new.email, (NEW.raw_user_meta_data ->> 'email_notifications_enabled')::boolean);
   END IF;
 
-/**
+  /**
   * User Phone was confirmed
   * -> Add 100 credits to the user record
   */
@@ -24,6 +24,17 @@ begin
   ) THEN
     UPDATE public.users
     SET credits = credits + 100
+    WHERE id = NEW.id::uuid;
+  END IF;
+
+   /**
+   * Phone number was updated
+   */
+  IF (
+    OLD.phone IS DISTINCT FROM NEW.phone
+  ) THEN
+    UPDATE public.users
+    SET phone = NEW.phone
     WHERE id = NEW.id::uuid;
   END IF;
 

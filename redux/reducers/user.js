@@ -4,7 +4,8 @@ import {
     CLEAR_DATA,
     OFFERS_STATE_CHANGE,
     UNLOCKED_STATE_CHANGE,
-    NOTIFICATIONS_STATE_CHANGE
+    NOTIFICATIONS_STATE_CHANGE,
+    CREDIT_TRANSACTIONS_STATE_CHANGE
 } from '../actionTypes'
 
 const INITIAL_STATE = {
@@ -12,7 +13,8 @@ const INITIAL_STATE = {
     currentAuthUser: {},
     offers: null,
     unlocked: null,
-    notifications: null
+    notifications: null,
+    creditTransactions: null
 }
 
 export const user = (state = INITIAL_STATE, action) => {
@@ -48,6 +50,11 @@ export const user = (state = INITIAL_STATE, action) => {
             return {
                 ...state,
                 notifications: action.notifications
+            }
+        case CREDIT_TRANSACTIONS_STATE_CHANGE:
+            return {
+                ...state,
+                creditTransactions: action.creditTransactions
             }
         default:
             return state;

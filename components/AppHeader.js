@@ -204,7 +204,7 @@ const AppHeader = ({ searchParams, currentAuthUser, logOut, toggleDrawer, curren
 
     const onBuyCreditsPress = () => {
         navigate({
-            pathname: '/credits',
+            pathname: '/credits/order/select-package',
             search: new URLSearchParams(searchParams).toString()
         })
     }
@@ -656,7 +656,7 @@ const AppHeader = ({ searchParams, currentAuthUser, logOut, toggleDrawer, curren
                     <View>
                         <Text
                             style={{
-                                fontFamily: FONTS.medium,
+                                fontFamily: FONTS.regular,
                                 fontSize: FONT_SIZES.small,
                                 color: COLORS.grey300,
                                 marginBottom: 4
@@ -692,6 +692,7 @@ const AppHeader = ({ searchParams, currentAuthUser, logOut, toggleDrawer, curren
                                 borderWidth: 1,
                                 borderColor: COLORS.accent
                             }}
+                            withCustomButtonHeight
                         >
                             <Text
                                 style={{

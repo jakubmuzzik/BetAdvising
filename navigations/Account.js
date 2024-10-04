@@ -105,13 +105,16 @@ const Account = ({ currentUser, searchParams, currentAuthUser }) => {
                         fontFamily: FONTS.medium,
                         marginTop: SPACING.large,
                         paddingHorizontal: SPACING.medium,
-                        marginBottom: !currentAuthUser.phone_confirmed_at ? SPACING.small : SPACING.xx_large
+                        marginBottom: SPACING.xx_large
                     }}
                 >
                     Account
                 </Text>
 
-                {(!currentAuthUser.phone_confirmed_at) && <VerifyAccountBanner />}
+                {(!currentAuthUser.phone_confirmed_at) && <VerifyAccountBanner containerStyle={{
+                    marginBottom: SPACING.medium,
+                    marginHorizontal: SPACING.medium,
+                }} />}
             </View>
             <TabView
                 renderTabBar={renderTabBar}

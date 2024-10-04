@@ -5,7 +5,8 @@ import {
     OFFERS_STATE_CHANGE,
     UNLOCKED_STATE_CHANGE,
     NOTIFICATIONS_STATE_CHANGE,
-    CLEAR_DATA
+    CLEAR_DATA,
+    CREDIT_TRANSACTIONS_STATE_CHANGE
 } from '../../actionTypes'
 import { logOut } from '../app'
 import { supabase } from '../../../supabase/config'
@@ -13,10 +14,12 @@ import { supabase } from '../../../supabase/config'
 const OFFERS_QUERY = '*, ticket_data:ticket(*, ticket_entries(*))'
 const UNLOCKED_QUERY = '*, ticket(*, ticket_entries(*))'
 const NOTIFICATIONS_QUERY = '*, ticket(id, name, price)'
+const CREDIT_TRANSACTIONS_QUERY = '*, ticket(*, ticket_entries(*)), payment_intent(*)'
 
 export const MAX_OFFER_ROWS_PER_QUERY = 50
 export const MAX_UNLOCKED_ROWS_PER_QUERY = 50
 export const MAX_NOTIFICATIONS_ROWS_PER_QUERY = 50
+export const MAX_CREDIT_TRANSACTIONS_ROWS_PER_QUERY = 50
 
 export const clearReduxData = () => ({
     type: CLEAR_DATA
@@ -92,6 +95,7 @@ export const fetchNotifications = () => async (dispatch, getState) => {
         const { data=[], error } = await supabase
             .from('notifications')
             .select(NOTIFICATIONS_QUERY)
+            .eq('user', getState().userState.currentAuthUser.id)
             .order('created_date', { ascending: false })
             .order('id', { ascending: false })
             .range(from, Number(from) + Number(MAX_NOTIFICATIONS_ROWS_PER_QUERY) - 1)
@@ -107,6 +111,40 @@ export const fetchNotifications = () => async (dispatch, getState) => {
             dispatch({
                 type: NOTIFICATIONS_STATE_CHANGE,
                 notifications: getState().userState.notifications.concat(data)
+            })
+        }
+
+        return data
+    } catch (e) {
+        console.error(e)
+        return null
+    }
+}
+
+export const fetchCreditTransactions = () => async (dispatch, getState) => {
+    try {
+        const from = getState().userState.creditTransactions != null ? getState().userState.creditTransactions.length : 0
+
+        //order by multiple columns to avoid duplicate notifications when created_date is same
+        const { data=[], error } = await supabase
+            .from('credit_transactions')
+            .select(CREDIT_TRANSACTIONS_QUERY)
+            .eq('user', getState().userState.currentAuthUser.id)
+            .order('created_date', { ascending: false })
+            .order('id', { ascending: false })
+            .range(from, Number(from) + Number(MAX_CREDIT_TRANSACTIONS_ROWS_PER_QUERY) - 1)
+
+        if (error) throw error
+
+        if (from === 0) {
+            dispatch({
+                type: CREDIT_TRANSACTIONS_STATE_CHANGE,
+                creditTransactions: data
+            })
+        } else {
+            dispatch({
+                type: CREDIT_TRANSACTIONS_STATE_CHANGE,
+                creditTransactions: getState().userState.creditTransactions.concat(data)
             })
         }
 

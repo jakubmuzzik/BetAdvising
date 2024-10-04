@@ -228,7 +228,7 @@ const Notifications = ({ notifications, markNotificationsAsDisplayed }) => {
                     style={{
                         color: COLORS.grey400,
                         fontSize: FONT_SIZES.x_large,
-                        fontFamily: FONTS.medium,
+                        fontFamily: FONTS.regular,
                         marginTop: SPACING.large
                     }}
                 >

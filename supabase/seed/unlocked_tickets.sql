@@ -27,6 +27,9 @@ BEGIN
     WHERE id = NEW."user";
   END IF;
 
+  INSERT INTO credit_transactions ("user", transaction_type, amount, ticket)
+  VALUES (NEW."user", 'ticket_unlock', ticket_price, NEW.ticket);
+
   RETURN NEW;
 END;
 $$ LANGUAGE plpgsql SECURITY DEFINER;

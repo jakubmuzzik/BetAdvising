@@ -15,7 +15,8 @@ import Home from '../screens/Home'
 import Footer from '../components/Footer'
 import Login from '../screens/auth/Login'
 import Tickets from './Tickets'
-import Credits from '../screens/app/Credits'
+import Credits from './Credits'
+import Order from '../screens/app/credits/Order'
 import Support from '../screens/app/Support'
 import Account from './Account'
 import Notifications from '../screens/app/Notifications'
@@ -86,7 +87,12 @@ const router = createBrowserRouter(createRoutesFromElements(
                 <Route path='unlocked' element={<Tickets />} />
             </Route>
 
-            <Route path='/credits' element={<Credits />} />
+            <Route path='/credits' element={<Credits />} >
+                <Route path='order/select-package' element={<Credits />} />
+                <Route path='order/checkout' element={<Credits />} />
+                <Route path='order/result' element={<Credits />} />
+            </Route>
+
             <Route path='/support' element={<Support />} />
             <Route path='/notifications' element={<Notifications />} />
 

@@ -9,7 +9,7 @@ import MobileVerificationModal from './modal/MobileVerificationModal'
 import HoverableView from './elements/HoverableView'
 import CustomButton from './elements/CustomButton'
 
-const VerifyAccountBanner = () => {
+const VerifyAccountBanner = ({ containerStyle={} }) => {
     const [modalVisible, setModalVisible] = useState(false)
 
     const onVerifyPress = () => {
@@ -28,16 +28,14 @@ const VerifyAccountBanner = () => {
                     transform: [{ translateY: 0 }],
                 }}
                 style={{
-                    marginHorizontal: SPACING.medium,
                     paddingHorizontal: SPACING.small,
                     paddingVertical: SPACING.x_small,
                     borderRadius: 10,
                     backgroundColor: COLORS.darkGrey,
                     borderWidth: 1,
-                    borderColor: COLORS.accent,
-                    marginTop: SPACING.x_small,
-                    marginBottom: SPACING.medium,
-                    backgroundColor: COLORS.accent + '10'
+                    borderColor: COLORS.accent + '99',
+                    backgroundColor: COLORS.accent + '14',
+                    ...containerStyle
                 }}
             >
                 <View style={{ flexDirection: 'row' }}>
@@ -53,7 +51,7 @@ const VerifyAccountBanner = () => {
 
                         <CustomButton
                             onPress={onVerifyPress}
-                            additionalStyles={{ borderWidth: 0, borderColor: COLORS.whiteBackground2, marginTop: SPACING.x_small, width: 'fit-content' }}
+                            additionalStyles={{ borderWidth: 0, borderColor: COLORS.accent, marginTop: SPACING.x_small, width: 'fit-content' }}
                             textColor={COLORS.black}
                             backgroundColors={COLORS.white}
                             spinnerColor={COLORS.black}

@@ -25,9 +25,6 @@
     },
     "plugins": [
       "expo-font"
-    ],
-    "experiments": {
-      "baseUrl": "/TipStrike"
-    }
+    ]
   }
 }

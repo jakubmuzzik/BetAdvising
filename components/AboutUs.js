@@ -231,7 +231,7 @@ const AboutUs = ({ searchParams }) => {
                     //alignItems: 'center'
                 }}>
                     <Image
-                        source={require('../assets/images/about_us2.png')}
+                        source={require('../assets/images/about_us.png')}
                         style={{
                             width: '100%',
                             maxWidth: 500,

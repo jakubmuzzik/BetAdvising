@@ -8,7 +8,7 @@ import { BlurView } from 'expo-blur'
 import withSearchParams from './hoc/withSearchParams'
 import { Link } from 'react-router-dom'
 
-const Package = ({ name, coins, price, description, searchParams }) => {
+const Package = ({ id, name, coins, price, description, searchParams }) => {
 
     return (
         <BlurView
@@ -86,7 +86,7 @@ const Package = ({ name, coins, price, description, searchParams }) => {
                     textDecoration: 'none',
                     marginTop: SPACING.small
                 }}
-                to={{ pathname: '/auth', search: new URLSearchParams(searchParams).toString() }}
+                to={{ pathname: '/credits/order/checkout', search: new URLSearchParams({...searchParams, package: id}).toString() }}
             >
                 <HoverableView
                     //hoveredBackgroundColor={'rgba(255, 255, 255, 0.2)'}

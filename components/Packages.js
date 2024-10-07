@@ -1,6 +1,6 @@
 import React, { useLayoutEffect, useState } from 'react'
 import { Text, View, useWindowDimensions, StyleSheet, FlatList } from 'react-native'
-import { COLORS, FONT_SIZES, FONTS, SPACING } from '../constants'
+import { COLORS, FONT_SIZES, FONTS, SPACING, PACKAGES } from '../constants'
 import { normalize } from '../utils'
 import { Image } from 'expo-image'
 import Package from './Package'
@@ -15,7 +15,7 @@ const Packages = ({ searchParams }) => {
 
     useLayoutEffect(() => {
         VanillaTilt.init(document.querySelectorAll(`[data-id="package"]`), {
-          max: 7,
+          max: 5,
           speed: 200,
           easing: "cubic-bezier(.03,.98,.52,.99)",
           reverse: true,
@@ -140,18 +140,13 @@ const Packages = ({ searchParams }) => {
                 style={width > 1500 ? {
                     margin: 'auto',
                 } : {}}
-                data={[
-                    { id: 1, name: 'Starter', coins: 10, price: 250, description: 'New or casual users who want to try out the service with minimal investment.' },
-                    { id: 2, name: 'Basic', coins: 50, price: 350, description: 'Users who are somewhat familiar with the service and want more flexibility.' },
-                    { id: 3, name: 'Standard', coins: 100, price: 550, description: 'Regular users who frequently use your betting tips.' },
-                    { id: 4, name: 'Premium', coins: 200, price: 850, description: 'Serious bettors who are committed to using your service regularly and want the best value.' },
-                    { id: 5, name: 'VIP', coins: 350, price: 999, description: 'High-volume users or professional bettors who want to maximize their use of the service.' },
-                ]}
+                data={PACKAGES}
                 contentContainerStyle={{ paddingHorizontal: SPACING.page_horizontal, gap: SPACING.medium, paddingVertical: 2 }}
                 initialNumToRender={30}
                 renderItem={({ item, index }) => (
                     <Package
                         key={item.id}
+                        id={item.id}
                         name={item.name}
                         coins={item.coins}
                         price={item.price}

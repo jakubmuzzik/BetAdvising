@@ -12,22 +12,10 @@ import Animated, { FlipInEasyX }  from 'react-native-reanimated'
 import { MAX_CREDIT_TRANSACTIONS_ROWS_PER_QUERY } from '../../../redux/actions/user'
 import { useNavigate } from 'react-router-dom'
 
-import { loadStripe } from '@stripe/stripe-js'
-import { Elements } from '@stripe/react-stripe-js'
-
-import CheckoutForm from '../../../components/credits/CheckoutForm'
 import HoverableView from '../../../components/elements/HoverableView'
 import CustomButton from '../../../components/elements/CustomButton'
 import UnlockedTicketModal from '../../../components/modal/UnlockedTicketModal'
 
-const appearance = {
-    theme: 'night',
-    //labels: 'floating',
-    variables: {
-        colorPrimary: COLORS.secondary2,
-        fontFamily: 'Roboto, sans-serif'
-    }
-}
 
 const Balance = ({ credits, navigate, searchParams }) => {
     const onBuyCreditsPress = () => {
@@ -49,7 +37,7 @@ const Balance = ({ credits, navigate, searchParams }) => {
                 borderRadius: 10,
                 padding: SPACING.small,
                 borderWidth: 1,
-                borderColor: COLORS.whiteBackground2,
+                borderColor: COLORS.grey400,
                 //marginTop: SPACING.large,
                 //marginRight: SPACING.small + SPACING.xx_small
             }}
@@ -183,6 +171,7 @@ const TransactionEntry = ({ transaction }) => {
             <HoverableView
                 style={{
                     borderRadius: 10,
+                    width: '100%',
                 }}
                 backgroundColor={COLORS.secondary}
                 hoveredBackgroundColor={COLORS.secondary2}
@@ -236,7 +225,7 @@ const TransactionEntry = ({ transaction }) => {
                             >
                                 {
                                 transaction.transaction_type === 'purchase' ? (
-                                    `Nákup ${transaction.amount} kreditů${transaction.payment_intent && transaction.payment_intent.amount ? ` za ${transaction.payment_intent.amount / 100} Kč` : ''}.`
+                                    `Nákup ${transaction.amount} kreditů${(transaction.payment_intent && transaction.payment_intent.amount) ? ` za ${transaction.payment_intent.amount / 100} Kč` : ''}.`
                                 ) : transaction.transaction_type === 'ticket_unlock' ? (
                                     `Odemčení tiketu${transaction.ticket ? ` #${transaction.ticket.name}` : ''} za ${transaction.amount} kreditů.`
                                 ) : null
@@ -324,11 +313,15 @@ const History = ({ creditTransactions, fetchCreditTransactions }) => {
             {creditTransactions != null && creditTransactions.length > 0 && (
                 <View
                     style={{
-                        gap: 10,
+                        //gap: 10,
+                        alignItems: 'center',
                     }}
                 >
                     {creditTransactions.map((transaction, index) => (
-                        <TransactionEntry key={transaction.id} transaction={transaction} />
+                        <>
+                            <TransactionEntry key={transaction.id} transaction={transaction} />
+                            {index !== creditTransactions.length - 1 && <View style={{width: 1, height: 20, backgroundColor: COLORS.whiteBackground2}} />}
+                        </>
                     ))}
                 </View>
             )}
@@ -355,27 +348,11 @@ const Credits = ({ searchParams, currentUser, currentAuthUser, setTabHeight, cre
 
     const navigate = useNavigate()
 
-    /*useEffect(() => {
-        fetch(process.env.EXPO_PUBLIC_API_URL + '/config').then(async (r) => {
-            const { publishableKey } = await r.json()
-            console.log({ publishableKey })
-            setStripePromise(loadStripe(publishableKey))
-        })
-
-        fetch(process.env.EXPO_PUBLIC_API_URL + "/create-payment-intent")
-            .then((res) => res.json())
-            .then(({ clientSecret }) => setClientSecret(clientSecret));
-    }, [])*/
-
-
     return (
         <View
             onLayout={event => setTabHeight(event.nativeEvent.layout.height)}
             style={{
-                width: normalize(800),
-                maxWidth: '100%',
-                alignSelf: 'center',
-                paddingHorizontal: SPACING.medium,
+                flex: 1,
             }}
         >
           
@@ -388,24 +365,6 @@ const Credits = ({ searchParams, currentUser, currentAuthUser, setTabHeight, cre
             <Balance credits={currentUser.credits} navigate={navigate} searchParams={searchParams} />
 
             <History fetchCreditTransactions={fetchCreditTransactions} creditTransactions={creditTransactions}/>
-
-            {/* {clientSecret && stripePromise && (
-                <View
-                    style={{
-                        marginTop: SPACING.large,
-                        marginHorizontal: SPACING.medium,
-                        padding: SPACING.medium,
-                        backgroundColor: COLORS.secondary,
-                        borderRadius: 10,
-                        borderWidth: 1,
-                        borderColor: COLORS.whiteBackground2
-                    }}
-                >
-                    <Elements stripe={stripePromise} options={{ clientSecret, appearance }}>
-                        <CheckoutForm />
-                    </Elements>
-                </View>
-            )} */}
         </View>
     )
 }

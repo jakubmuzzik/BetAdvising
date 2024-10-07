@@ -48,7 +48,9 @@
     "react-router-dom": "^6.26.2",
     "react-router-native": "^6.26.2",
     "redux-thunk": "^3.1.0",
-    "vanilla-tilt": "^1.8.1"
+    "vanilla-tilt": "^1.8.1",
+    "typescript": "~5.3.3",
+    "@types/react": "~18.2.79"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

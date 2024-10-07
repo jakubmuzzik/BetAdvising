@@ -51,7 +51,7 @@ app.get('/create-payment-intent', async (req, res) => {
 // Expose a endpoint as a webhook handler for asynchronous events.
 // Configure your webhook in the stripe developer dashboard
 // https://dashboard.stripe.com/test/webhooks
-/*app.post('/webhook', async (req, res) => {
+app.post('/webhook', async (req, res) => {
   let data, eventType;
 
   // Check if webhook signing is configured.
@@ -87,7 +87,7 @@ app.get('/create-payment-intent', async (req, res) => {
     console.log('❌ Payment failed.');
   }
   res.sendStatus(200);
-});*/
+});
 
 app.listen(PORT, () => {
   console.log(`Server is running on ${process.env.BASE_URL}:${PORT}`);

@@ -15,6 +15,7 @@ import withSearchParams from '../components/hoc/withSearchParams'
 import CustomButton from '../components/elements/CustomButton'
 
 import Home from '../screens/app/credits/Home'
+import Order from '../screens/app/credits/Order'
 
 const Credits = ({ searchParams }) => {
     const [index, setIndex] = useState(0)
@@ -52,10 +53,10 @@ const Credits = ({ searchParams }) => {
     }
 
     const setTabHeight = (height, index) => {
-        setRoutes(r => {
+       /*setRoutes(r => {
             r[index].height = height
             return [...r]
-        })
+        })*/
     }
 
     const renderPagesScene = ({ route }) => {
@@ -66,14 +67,14 @@ const Credits = ({ searchParams }) => {
         switch (route.key) {
             case 'home':
                 return (
-                    <View style={{ height: routes[index].height, width: normalize(800), maxWidth: '100%', alignSelf: 'center' }}>
+                    <View style={{ height: routes[index].height, paddingHorizontal: SPACING.medium, width: normalize(800), maxWidth: '100%', alignSelf: 'center' }}>
                         <Home setTabHeight={(height) => setTabHeight(height, route.index)}/>
                     </View>
                 )
             case 'buy-credits':
                 return (
-                    <View style={{ paddingHorizontal: SPACING.medium, height: routes[index].height, width: normalize(800), maxWidth: '100%', alignSelf: 'center'}}>
-                        {/* <NewTicket setTabHeight={(height) => setTabHeight(height, route.index)} offsetX={windowWidth * route.index}/> */}
+                    <View style={{ height: routes[index].height, paddingHorizontal: SPACING.medium, width: normalize(800), maxWidth: '100%', alignSelf: 'center'}}>
+                        <Order setTabHeight={(height) => setTabHeight(height, route.index)} />
                     </View>
                 )
             default:

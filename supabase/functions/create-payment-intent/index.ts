@@ -34,7 +34,10 @@ const createOrRetrieveCustomer = async (authHeader: string) => {
     // Exactly one customer found, return it.
     const customer = data[0].stripe_customer_id;
     console.log(`Found customer id: ${customer}`);
-    return customer;
+    return {
+      customerId: customer,
+      userId: user.id,
+    }
   }
   if (data?.length === 0) {
     // Create customer object in Stripe.
@@ -48,7 +51,11 @@ const createOrRetrieveCustomer = async (authHeader: string) => {
       .from("stripe_customers")
       .insert({ id: user.id, stripe_customer_id: customer.id })
       .throwOnError();
-    return customer.id;
+    
+    return {
+      customerId: customer.id,
+      userId: user.id,
+    }
   } else throw new Error(`Unexpected count of customer rows: ${data?.length}`);
 }
 
@@ -110,12 +117,12 @@ Deno.serve(async (req) => {
     const data = await stripe.paymentIntents.create({
       amount: packageDate.price * 100,
       currency: "czk",
-      customer,
+      customer: customer.customerId,
       automatic_payment_methods: { enabled: true },
       metadata: { 
         packageId, 
         credits: packageDate.credits,
-        userId: customer
+        userId: customer.userId
       },
     });
 

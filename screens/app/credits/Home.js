@@ -225,7 +225,7 @@ const TransactionEntry = ({ transaction }) => {
                             >
                                 {
                                 transaction.transaction_type === 'purchase' ? (
-                                    `Nákup ${transaction.amount} kreditů${(transaction.payment_intent && transaction.payment_intent.amount) ? ` za ${transaction.payment_intent.amount / 100} Kč` : ''}.`
+                                    `Nákup ${transaction.amount} kreditů${(transaction.payment_intent && transaction.payment_intent.amount) ? ` za ${transaction.payment_intent.amount} Kč` : ''}.`
                                 ) : transaction.transaction_type === 'ticket_unlock' ? (
                                     `Odemčení tiketu${transaction.ticket ? ` #${transaction.ticket.name}` : ''} za ${transaction.amount} kreditů.`
                                 ) : null

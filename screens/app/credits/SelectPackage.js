@@ -2,10 +2,7 @@ import React, { useRef, useState, useMemo } from 'react'
 import { View, Text } from 'react-native'
 import { FONTS, FONT_SIZES, COLORS, SPACING, PACKAGES } from '../../../constants'
 import { useNavigate } from 'react-router-dom'
-import { BlurView } from 'expo-blur'
-import { normalize } from '../../../utils'
 import { Image } from 'expo-image'
-import { isBrowser } from 'react-device-detect'
 
 import withSearchParams from '../../../components/hoc/withSearchParams'
 

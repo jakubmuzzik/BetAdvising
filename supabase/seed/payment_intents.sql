@@ -1,9 +1,13 @@
 CREATE OR REPLACE FUNCTION private.handle_payment_intents_after_insert()
   RETURNS TRIGGER AS $$
 BEGIN
-  IF status = 'succeeded' THEN
+  IF NEW.status = 'succeeded' THEN
     INSERT INTO credit_transactions ("user", transaction_type, amount, payment_intent)
-    VALUES (NEW."user", 'purchase', NEW.amount, NEW.id);
+    VALUES (NEW."user", 'purchase', NEW.credits, NEW.id);
+
+    UPDATE users
+    SET credits = credits + NEW.credits
+    WHERE id = NEW."user";
   END IF;
 
   RETURN NEW;

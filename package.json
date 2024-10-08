@@ -10,7 +10,7 @@
     "web": "expo start --web",
     "deploy": "gh-pages -t -d dist",
     "predeploy": "expo export -p web",
-    "build": "npx expo export -p web && echo '/* /index.html 200' | cat > dist/_redirects"
+    "build": "npx expo export -p web && mkdir -p dist/.well-known && cp assets/apple-developer-merchantid-domain-association dist/.well-known/apple-developer-merchantid-domain-association && echo '/* /index.html 200' | cat > dist/_redirects"
   },
   "dependencies": {
     "@expo/metro-runtime": "~3.2.3",

@@ -10,7 +10,7 @@ import Animated, {
 import { Image } from 'expo-image'
 import { normalize } from '../utils'
 import { connect } from 'react-redux'
-import { SPACING, COLORS, FONTS, SMALL_SCREEN_THRESHOLD_APP_HEADER, HEADER_HEIGHT, SIDEBAR_WIDTH, FONT_SIZES, DEFAULT_LANGUAGE } from '../constants'
+import { SPACING, COLORS, FONTS, SMALL_SCREEN_THRESHOLD_APP_HEADER, HEADER_HEIGHT, SIDEBAR_WIDTH, FONT_SIZES, DEFAULT_LANGUAGE, SEARCH_PARAMS } from '../constants'
 import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons'
 import { useLocation, useNavigate, Link } from 'react-router-dom'
 import withSearchParams from './hoc/withSearchParams'
@@ -19,7 +19,7 @@ import { Picker } from '@react-native-picker/picker'
 
 const ROUTES = [
     {
-        path: '/tickets',
+        path: '/tickets/offers',
         title: 'Tikety',
         icon: (focused) => <MaterialCommunityIcons style={{ marginRight: 10 }} name="ticket-confirmation-outline" size={17} color={focused ? COLORS.white : 'rgba(255,255,255,0.7)'} />
     },
@@ -248,7 +248,7 @@ const mapStateToProps = (store) => ({
     currentAuthUser: store.userState.currentAuthUser,
 })
 
-export default connect(mapStateToProps)(withSearchParams(SideBar, ['language']))
+export default connect(mapStateToProps)(withSearchParams(SideBar, SEARCH_PARAMS))
 
 const styles = StyleSheet.create({
     drawer: {

@@ -25,6 +25,7 @@ const Login = ({ searchParams, toastRef, fetchUser }) => {
     const [showErrorMessage, setShowErrorMessage] = useState(false)
 
     const location = useLocation()
+    //params used to get url params when redirected from google sign in
     const [urlSearchParams] = useSearchParams()
     const navigate = useNavigate()
 
@@ -34,14 +35,13 @@ const Login = ({ searchParams, toastRef, fetchUser }) => {
     if (urlSearchParams.get('from')) {
         let to = urlSearchParams.get('from')
 
-        if (searchParams.language) {
-            to += '?language=' + searchParams.language
-        }
+        const params = new URLSearchParams(urlSearchParams)
+        params.delete('from')
 
-        return <Navigate to={to} replace />
+        return <Navigate to={{pathname: to, search: new URLSearchParams(params).toString()}} replace />
     }
 
-    let from = location.state?.from || "/tickets"
+    let from = location.state?.from || "/tickets/offers"
 
     const onGoogleSignupPress = async () => {
         googleSignInButtonRef.current.setIsLoading(true)
@@ -50,6 +50,10 @@ const Login = ({ searchParams, toastRef, fetchUser }) => {
 
             if (searchParams.language) {
                 redirectTo += '&language=' + searchParams.language
+            }
+
+            if (searchParams.package) {
+                redirectTo += '&package=' + searchParams.package
             }
 
             const { error: signInError, data: sessionData } = await supabase.auth.signInWithOAuth({
@@ -89,11 +93,12 @@ const Login = ({ searchParams, toastRef, fetchUser }) => {
 
             let to = '/auth/otp'
 
-            if (searchParams.language) {
-                to += '?language=' + searchParams.language
-            }
-
-            navigate(to, { state: { email, from } })
+            navigate({
+                pathname: to,
+                search: new URLSearchParams(searchParams).toString(),
+            },
+                { state: { email, from } }
+            )
         } catch (e) {
             console.error('Error signing in with OTP:', e.message ?? e)
             toastRef?.show({
@@ -245,4 +250,4 @@ const mapStateToProps = (store) => ({
     toastRef: store.appState.toastRef
 })
 
-export default connect(mapStateToProps, { fetchUser })(withSearchParams(Login, ['language']))
+export default connect(mapStateToProps, { fetchUser })(withSearchParams(Login, ['language', 'package']))

@@ -149,3 +149,14 @@ export const PACKAGES = [
     { id: 'premium', name: 'Premium', coins: 200, price: 850, description: 'Serious bettors who are committed to using your service regularly and want the best value.' },
     { id: 'vip', name: 'VIP', coins: 350, price: 999, description: 'High-volume users or professional bettors who want to maximize their use of the service.' },
 ]
+
+//SEARCH PARAMS
+export const LANGUAGE = 'language'
+export const PACKAGE = 'package'
+export const STATUS = 'status'
+
+export const SEARCH_PARAMS = [
+    LANGUAGE, 
+    PACKAGE, 
+    STATUS
+]

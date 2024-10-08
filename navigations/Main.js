@@ -75,16 +75,14 @@ const router = createBrowserRouter(createRoutesFromElements(
                 </AppLayout>
             </RequireAuth>
         } >
-            <Route path='/account' element={<Outlet />} >
-                <Route index element={<Navigate to="/account/profile-information" replace />} />
-                <Route path='profile-information' element={<Account />} />
-                <Route path='settings' element={<Account />} />
+            <Route element={<Outlet />} >
+                <Route path='/account/profile-information' element={<Account />} />
+                <Route path='/account/settings' element={<Account />} />
             </Route>
 
-            <Route path='/tickets' element={<Outlet />} >
-                <Route index element={<Navigate to="/tickets/offers" replace />} />
-                <Route path='offers' element={<Tickets />} />
-                <Route path='unlocked' element={<Tickets />} />
+            <Route element={<Outlet />} >
+                <Route path='/tickets/offers' element={<Tickets />} />
+                <Route path='/tickets/unlocked' element={<Tickets />} />
             </Route>
 
             <Route path='/credits' element={<Credits />} >

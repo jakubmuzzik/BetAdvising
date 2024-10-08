@@ -7,6 +7,7 @@ import { useLocation } from "react-router-dom"
 import ExpandableSteps from "../../../components/ExpandableSteps"
 import SelectPackage from "./SelectPackage"
 import Checkout from "./Checkout"
+import Result from "./Result"
 
 const ROUTES = [
     '/credits/order/select-package',
@@ -37,7 +38,7 @@ const STEPS = [
         index: 2,
         headerLeftIcon: (isActive) => <MaterialIcons name='list-alt' size={20} color={isActive ? COLORS.white : COLORS.grey300} />,
         headerText: 'Potvrzení objednávky',
-        body: <SelectPackage />,
+        body: <Result />,
         pathname: '/credits/order/checkout'
     }
 ]

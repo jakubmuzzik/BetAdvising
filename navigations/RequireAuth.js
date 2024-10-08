@@ -12,20 +12,12 @@ const RequireAuth = ({ children, currentAuthUser, searchParams }) => {
 
     if (!isLoggedIn) {        
         let to = '/auth'
-        //need to hardcode => search param on Navigate component didn't work
-        if (searchParams.language) {
-            to += '?language=' + searchParams.language
-        }
 
-        return <Navigate to={to} state={{ from: location.pathname }} replace />
+        return <Navigate to={{pathname: to, search: new URLSearchParams(searchParams).toString()}} state={{ from: location.pathname }} replace />
     } else if (isLoggedIn && !currentAuthUser.user_metadata?.profile_completed && location.pathname !== '/complete-profile') {
         let to = '/complete-profile'
 
-        if (searchParams.language) {
-            to += '?language=' + searchParams.language
-        }
-
-        return <Navigate to={to} state={{ from: location.pathname }} replace />
+        return <Navigate to={{pathname: to, search: new URLSearchParams(searchParams).toString()}} state={{ from: location.pathname }} replace />
     }
 
     return children
@@ -35,4 +27,4 @@ const mapStateToProps = (store) => ({
     currentAuthUser: store.userState.currentAuthUser
 })
 
-export default connect(mapStateToProps)(withSearchParams(RequireAuth, ['language']))
+export default connect(mapStateToProps)(withSearchParams(RequireAuth, ['language', 'package']))

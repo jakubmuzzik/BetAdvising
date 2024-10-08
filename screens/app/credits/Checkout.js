@@ -39,11 +39,19 @@ const CheckoutForm = ({ toastRef, navigate, searchParams }) => {
         
         payButtonRef.current.setIsLoading(true)
 
+        let return_url = `${window.location.origin}/credits/order/result`
+
+        if (searchParams.language) {
+            return_url += `?language=${searchParams.language}`
+        }
+
+        return_url += `&package=${searchParams.package}`
+
         try {
             const { error, paymentIntent } = await stripe.confirmPayment({
                 elements,
                 confirmParams: {
-                    return_url:`${window.location.origin}/credits/order/result`,
+                    return_url
                 },
                 redirect: 'if_required'
             })
@@ -63,8 +71,10 @@ const CheckoutForm = ({ toastRef, navigate, searchParams }) => {
                 console.log('paymentIntent.status: ', paymentIntent.status)
                 console.log({...searchParams, status: paymentIntent.status})
 
-                navigate('/credits/order/result', {
+                navigate({
+                    pathname: '/credits/order/result',
                     search: new URLSearchParams({...searchParams, status: paymentIntent.status}).toString(),
+                }, {
                     replace: true
                 })
             }
@@ -141,13 +151,10 @@ const Checkout = ({ toastRef, searchParams }) => {
                     text: 'Balíček nebyl nalezen.'
                 })
 
-                const params = {}
-                if (searchParams.language) {
-                    params.language = searchParams.language
-                }
-
-                navigate('/credits/order/select-package', {
-                    search: new URLSearchParams(params).toString(),
+                navigate({
+                    pathname: '/credits/order/select-package',
+                    search: new URLSearchParams(searchParams).toString(),
+                }, {
                     replace: true
                 })
             }

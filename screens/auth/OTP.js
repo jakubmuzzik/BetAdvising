@@ -19,7 +19,7 @@ const OTP = ({ toastRef, searchParams }) => {
     const navigate = useNavigate()
 
     let email = location.state?.email || ''
-    let from = location.state?.from || '/tickets'
+    let from = location.state?.from || '/tickets/offers'
 
     const [otp, setOtp] = useState('')
     const [showErrorMessage, setShowErrorMessage] = useState(false)
@@ -45,11 +45,10 @@ const OTP = ({ toastRef, searchParams }) => {
                 throw error
             }
 
-            if (searchParams.language) {
-                from += '?language=' + searchParams.language
-            }
-
-            navigate(from, {
+            navigate({
+                pathname: from,
+                search: new URLSearchParams(searchParams).toString()
+            }, {
                 replace: true
             })
         } catch(error) {
@@ -215,4 +214,4 @@ const mapStateToProps = (store) => ({
     toastRef: store.appState.toastRef
 })
 
-export default connect(mapStateToProps)( withSearchParams(OTP, ['language']) )
+export default connect(mapStateToProps)( withSearchParams(OTP, ['language', 'package']) )

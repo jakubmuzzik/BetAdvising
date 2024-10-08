@@ -30,8 +30,10 @@ const Step = ({ step, activeStep, navigate, searchParams }) => {
             return
         }
 
-        navigate(step.pathname, {
+        navigate({
+            pathname: step.pathname,
             search: new URLSearchParams(searchParams).toString(),
+        }, {
             replace: true
         })
     }

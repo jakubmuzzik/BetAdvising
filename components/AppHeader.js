@@ -1,7 +1,7 @@
 import React, { useState, useLayoutEffect, useRef, useEffect, useCallback, useMemo } from 'react'
 import { View, useWindowDimensions, StyleSheet, Text, Pressable, TouchableOpacity, TouchableWithoutFeedback, Modal, Image as RNImage } from 'react-native'
 import { BlurView } from 'expo-blur'
-import { COLORS, FONTS, FONT_SIZES, SPACING, SMALL_SCREEN_THRESHOLD_APP_HEADER, HEADER_HEIGHT, SIDEBAR_WIDTH } from '../constants'
+import { COLORS, FONTS, FONT_SIZES, SPACING, SMALL_SCREEN_THRESHOLD_APP_HEADER, HEADER_HEIGHT, SEARCH_PARAMS } from '../constants'
 import { normalize } from '../utils'
 import { Link, useSearchParams, useLocation, useNavigate } from 'react-router-dom'
 import { TabView, SceneMap, TabBar } from 'react-native-tab-view'
@@ -22,7 +22,7 @@ import UnderlineTabView from './animated/UnderlineTabView'
 
 const ROUTES = [
     {
-        path: '/tickets',
+        path: '/tickets/offers',
         label: 'Tikety',
         key: 'tickets',
         icon: (focused) => <MaterialCommunityIcons style={{ marginRight: 10 }} name="ticket-confirmation-outline" size={20} color={focused ? COLORS.white : 'rgba(255,255,255,0.7)'} />,
@@ -117,7 +117,7 @@ const AppHeader = ({ searchParams, currentAuthUser, logOut, toggleDrawer, curren
 
     const onAccountPress = () => {
         navigate({
-            pathname: '/account',
+            pathname: '/account/profile-information',
             search: new URLSearchParams(searchParams).toString()
         })
 
@@ -605,7 +605,7 @@ const AppHeader = ({ searchParams, currentAuthUser, logOut, toggleDrawer, curren
                 <View
                     style={{ height: normalize(50), justifyContent: 'center', marginRight: SPACING.x_small }}
                 >
-                        <Link to={{ pathname: '/tickets', search: new URLSearchParams(searchParams).toString() }}>
+                        <Link to={{ pathname: '/tickets/offers', search: new URLSearchParams(searchParams).toString() }}>
                             <RNImage
                                 resizeMode='contain'
                                 source={require('../assets/logos/logo-header.png')}
@@ -819,7 +819,7 @@ const mapStateToProps = (store) => ({
     newNotifications: store.userState.notifications ? store.userState.notifications.filter(notif => !notif.displayed) : [],
 })
 
-export default connect(mapStateToProps, { logOut, toggleDrawer, markNotificationsAsDisplayed })(withSearchParams(AppHeader, ['language']))
+export default connect(mapStateToProps, { logOut, toggleDrawer, markNotificationsAsDisplayed })(withSearchParams(AppHeader, SEARCH_PARAMS))
 
 const styles = StyleSheet.create({
     container: {

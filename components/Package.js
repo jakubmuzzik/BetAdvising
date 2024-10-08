@@ -8,7 +8,7 @@ import { BlurView } from 'expo-blur'
 import withSearchParams from './hoc/withSearchParams'
 import { Link } from 'react-router-dom'
 
-const Package = ({ id, name, coins, price, description, searchParams }) => {
+const Package = ({ id, name, credits, price, description, searchParams }) => {
 
     return (
         <BlurView
@@ -49,7 +49,7 @@ const Package = ({ id, name, coins, price, description, searchParams }) => {
 
                         }}
                     >
-                        {coins}
+                        {credits}
                     </Text>
                     <Image
                         source={require('../assets/images/coin.png')}

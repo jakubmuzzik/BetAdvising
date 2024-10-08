@@ -86,7 +86,7 @@ const Package = ({ data, isSelected, packageWidth, setSelectedPackage }) => {
 
                         }}
                     >
-                        {data.coins}
+                        {data.credits}
                     </Text>
                     <Image
                         source={require('../../../assets/images/coin.png')}

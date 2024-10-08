@@ -24,6 +24,75 @@ const appearance = {
     }
 }
 
+const OrderRecap = ({ searchParams }) => {
+
+    const packageData = PACKAGES.find(packageData => packageData.id.toLocaleLowerCase() === searchParams.package.toLocaleLowerCase())
+
+    return (
+        <>
+            <Text
+                style={{
+                    fontFamily: FONTS.regular,
+                    fontSize: FONT_SIZES.large,
+                    color: COLORS.grey300,
+                    marginBottom: SPACING.small
+                }}
+            >
+                Vaše objednávka:
+            </Text>
+            {/* <View style={{ height: 1, backgroundColor: COLORS.whiteBackground2, marginVertical: SPACING.x_small }} /> */}
+            <View
+                style={{
+                    padding: SPACING.small,
+                    backgroundColor: COLORS.secondary2,
+                    borderRadius: 10,
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    borderWidth: 1,
+                    borderColor: COLORS.accent,
+                    flexWrap: 'wrap',
+                    gap: 10
+                }}
+            >
+                <View>
+                    <Text
+                        style={{
+                            fontFamily: FONTS.medium,
+                            fontSize: FONT_SIZES.large,
+                            color: COLORS.white,
+                            marginBottom: 4
+                        }}
+                    >
+                        {packageData.name} balíček
+                    </Text>
+                    <Text
+                        style={{
+                            fontFamily: FONTS.regular,
+                            fontSize: FONT_SIZES.medium,
+                            color: COLORS.grey300
+                        }}
+                    >
+                        {packageData.credits} kreditů
+                    </Text>
+                </View>
+
+                <Text
+                    style={{
+                        fontFamily: FONTS.medium,
+                        fontSize: FONT_SIZES.large,
+                        color: COLORS.white
+                    }}
+                >
+                    {packageData.price} Kč
+                </Text>
+            </View>
+
+            <View style={{ height: 1, backgroundColor: COLORS.whiteBackground2, marginVertical: SPACING.large }} />
+        </>
+    )
+}
+
 const CheckoutForm = ({ toastRef, navigate, searchParams }) => {
     const stripe = useStripe()
     const elements = useElements()
@@ -41,11 +110,15 @@ const CheckoutForm = ({ toastRef, navigate, searchParams }) => {
 
         let return_url = `${window.location.origin}/credits/order/result`
 
+        let params = []
+
         if (searchParams.language) {
-            return_url += `?language=${searchParams.language}`
+            params.push(`language=${searchParams.language}`)
         }
 
-        return_url += `&package=${searchParams.package}`
+        params.push(`package=${searchParams.package}`)
+
+        return_url += `?${params.join('&')}`
 
         try {
             const { error, paymentIntent } = await stripe.confirmPayment({
@@ -58,8 +131,6 @@ const CheckoutForm = ({ toastRef, navigate, searchParams }) => {
     
             if (error) throw error
 
-            console.log(paymentIntent)
-
             if (paymentIntent) {
                 if (paymentIntent.status === 'succeeded') {
                     toastRef?.show({
@@ -67,9 +138,6 @@ const CheckoutForm = ({ toastRef, navigate, searchParams }) => {
                         text: 'Platba byla úspěšná 🎉'
                     })
                 }
-
-                console.log('paymentIntent.status: ', paymentIntent.status)
-                console.log({...searchParams, status: paymentIntent.status})
 
                 navigate({
                     pathname: '/credits/order/result',
@@ -94,6 +162,7 @@ const CheckoutForm = ({ toastRef, navigate, searchParams }) => {
 
     return (
         <>
+            <OrderRecap searchParams={searchParams} />
             <PaymentElement id="payment-element" />
             <CustomButton
                 ref={payButtonRef}
@@ -111,9 +180,6 @@ const CheckoutForm = ({ toastRef, navigate, searchParams }) => {
 const Checkout = ({ toastRef, searchParams }) => {
     const location = useLocation()
     const navigate = useNavigate()
-
-    //const stripe = useStripe()
-    //const elements = useElements()
     
     const [loading, setLoading] = useState(false)
     const [stripePromise, setStripePromise] = useState(null)
@@ -127,7 +193,7 @@ const Checkout = ({ toastRef, searchParams }) => {
         }
     }, [searchParams])
 
-    const createPaymentIntent = async (packageId) => {
+    const createPaymentIntent = async (packageId) => {         
         try {
             setLoading(true)
             console.log('creating payment intent for package: ', packageId)
@@ -173,7 +239,8 @@ const Checkout = ({ toastRef, searchParams }) => {
                 style={{
                     fontFamily: FONTS.regular,
                     fontSize: FONT_SIZES.medium,
-                    color: COLORS.error
+                    color: COLORS.error,
+                    padding: SPACING.large
                 }}
             >
                 Balíček nebyl nalezen.

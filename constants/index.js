@@ -143,11 +143,11 @@ export const SPORTS = [
 export const API_RETRY_LIMIT = 3
 
 export const PACKAGES = [
-    { id: 'starter', name: 'Starter', coins: 10, price: 250, description: 'New or casual users who want to try out the service with minimal investment.' },
-    { id: 'basic', name: 'Basic', coins: 50, price: 350, description: 'Users who are somewhat familiar with the service and want more flexibility.' },
-    { id: 'standard', name: 'Standard', coins: 100, price: 550, description: 'Regular users who frequently use your betting tips.' },
-    { id: 'premium', name: 'Premium', coins: 200, price: 850, description: 'Serious bettors who are committed to using your service regularly and want the best value.' },
-    { id: 'vip', name: 'VIP', coins: 350, price: 999, description: 'High-volume users or professional bettors who want to maximize their use of the service.' },
+    { id: 'starter', name: 'Starter', credits: 10, price: 250, description: 'New or casual users who want to try out the service with minimal investment.' },
+    { id: 'basic', name: 'Basic', credits: 50, price: 350, description: 'Users who are somewhat familiar with the service and want more flexibility.' },
+    { id: 'standard', name: 'Standard', credits: 100, price: 550, description: 'Regular users who frequently use your betting tips.' },
+    { id: 'premium', name: 'Premium', credits: 200, price: 850, description: 'Serious bettors who are committed to using your service regularly and want the best value.' },
+    { id: 'vip', name: 'VIP', credits: 350, price: 999, description: 'High-volume users or professional bettors who want to maximize their use of the service.' },
 ]
 
 //SEARCH PARAMS

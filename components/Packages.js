@@ -148,7 +148,7 @@ const Packages = ({ searchParams }) => {
                         key={item.id}
                         id={item.id}
                         name={item.name}
-                        coins={item.coins}
+                        credits={item.credits}
                         price={item.price}
                         description={item.description}
                         searchParams={searchParams}
@@ -167,31 +167,31 @@ const Packages = ({ searchParams }) => {
             >
                 <Package 
                     name='Starter'
-                    coins={10}
+                    credits={10}
                     price={250}
                     description='New or casual users who want to try out the service with minimal investment.'
                 />
                 <Package 
                     name='Basic'
-                    coins={50}
+                    credits={50}
                     price={350}
                     description='Users who are somewhat familiar with the service and want more flexibility.'
                 />
                 <Package 
                     name='Standard'
-                    coins={100}
+                    credits={100}
                     price={550}
                     description='Regular users who frequently use your betting tips.'
                 />
                 <Package 
                     name='Premium'
-                    coins={200}
+                    credits={200}
                     price={850}
                     description='Serious bettors who are committed to using your service regularly and want the best value.'
                 />
                 <Package 
                     name='VIP'
-                    coins={350}
+                    credits={350}
                     price={999}
                     description='High-volume users or professional bettors who want to maximize their use of the service.'
                 />

@@ -121,6 +121,29 @@ export const fetchNotifications = () => async (dispatch, getState) => {
     }
 }
 
+export const fetchLatestCreditTransaction = () => async (dispatch, getState) => {
+    try {
+        //order by multiple columns to avoid duplicate notifications when created_date is same
+        const { data=[], error } = await supabase
+            .from('credit_transactions')
+            .select(CREDIT_TRANSACTIONS_QUERY)
+            .eq('user', getState().userState.currentAuthUser.id)
+            .order('created_date', { ascending: false })
+            .limit(1)
+            .throwOnError()
+
+            dispatch({
+                type: CREDIT_TRANSACTIONS_STATE_CHANGE,
+                creditTransactions: data.concat(getState().userState.creditTransactions ?? [])
+            })
+
+        return data
+    } catch (e) {
+        console.error(e)
+        return null
+    }
+}
+
 export const fetchCreditTransactions = () => async (dispatch, getState) => {
     try {
         const from = getState().userState.creditTransactions != null ? getState().userState.creditTransactions.length : 0

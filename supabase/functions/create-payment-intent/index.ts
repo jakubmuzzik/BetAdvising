@@ -37,6 +37,7 @@ const createOrRetrieveCustomer = async (authHeader: string) => {
     return {
       customerId: customer,
       userId: user.id,
+      email: user.email,
     }
   }
   if (data?.length === 0) {
@@ -55,6 +56,7 @@ const createOrRetrieveCustomer = async (authHeader: string) => {
     return {
       customerId: customer.id,
       userId: user.id,
+      email: user.email,
     }
   } else throw new Error(`Unexpected count of customer rows: ${data?.length}`);
 }
@@ -124,6 +126,7 @@ Deno.serve(async (req) => {
         credits: packageDate.credits,
         userId: customer.userId
       },
+      //receipt_email: customer.email
     });
 
     const res = {

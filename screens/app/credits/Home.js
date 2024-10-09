@@ -330,7 +330,7 @@ const History = ({ creditTransactions, fetchCreditTransactions }) => {
                 <CustomButton
                     ref={loadMoreButtonRef}
                     onPress={onLoadMorePress}
-                    additionalStyles={{ borderWidth: 1, borderColor: COLORS.white, marginTop: SPACING.x_small, width: 'fit-content' }}
+                    additionalStyles={{ borderWidth: 1, borderColor: COLORS.white, marginTop: SPACING.x_small, width: 'fit-content', alignSelf: 'center' }}
                     textColor={COLORS.white}
                     //backgroundColors={COLORS.white}
                     spinnerColor={COLORS.white}

@@ -108,7 +108,7 @@ const Step = ({ step, activeStep, navigate, searchParams }) => {
                         width: '100%',
                     }}
                 >
-                    {step.body}
+                    {isActive ? step.body : null}
                 </View>
             </Animated.View>
         </View>

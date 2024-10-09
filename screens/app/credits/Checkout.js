@@ -185,10 +185,15 @@ const Checkout = ({ toastRef, searchParams }) => {
     const [stripePromise, setStripePromise] = useState(null)
     const [clientSecret, setClientSecret] = useState('')
 
-    const payButtonRef = useRef()
+    const paymentIntentCreated = useRef()
 
     useEffect(() => {
+        if (paymentIntentCreated.current) {
+            return
+        }
+
         if (searchParams.package) {
+            paymentIntentCreated.current = true
             createPaymentIntent(searchParams.package)
         }
     }, [searchParams])

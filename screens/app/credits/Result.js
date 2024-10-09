@@ -5,16 +5,33 @@ import LottieView from 'lottie-react-native'
 import { useNavigate, createSearchParams } from "react-router-dom"
 import { ActivityIndicator } from "react-native-paper"
 import { Image } from "expo-image"
+import { fetchLatestCreditTransaction } from "../../../redux/actions/user"
 
 import withSearchParams from "../../../components/hoc/withSearchParams"
 import CustomButton from "../../../components/elements/CustomButton"
 import { stripEmptyParams } from "../../../utils"
 import { connect } from "react-redux"
 
-const Success = () => {
+const Success = ({ searchParams, navigate, fetchLatestCreditTransaction }) => {
+    const onFinishPress = async () => {
+        navigate({
+            pathname: '/credits',
+            search: new URLSearchParams(stripEmptyParams({ language: searchParams.language })).toString(),
+        }, {
+            replace: true
+        })
+
+        await fetchLatestCreditTransaction()
+    }
 
     return (
-        <>
+        <View
+            style={{
+                flex: 1,
+                justifyContent: 'center',
+                alignItems: 'center'
+            }}
+        >
             <LottieView
                 style={{ height: 130, alignSelf: 'center', width: 'fit-content', }}
                 autoPlay
@@ -44,19 +61,89 @@ const Success = () => {
             >
                 Děkujeme za Vaši objednávku. Zakoupené kredity vám budou během chvíle připsány na účet.
             </Text>
-        </>
+            <CustomButton
+                onPress={onFinishPress}
+                textColor={COLORS.black}
+                backgroundColors={COLORS.accent}
+                buttonText='Dokončit'
+                additionalStyles={{ width: '100%' }}
+                textStyles={{ fontFamily: FONTS.medium, fontSize: FONT_SIZES.large }}
+            />
+        </View>
     )
 }
 
-const Processing = () => {
-
-    return null
-}
-
-const Failed = () => {
+const Processing = ({ searchParams, navigate }) => {
+    const onFinishPress = () => {
+        navigate({
+            pathname: '/credits',
+            search: new URLSearchParams(stripEmptyParams({ language: searchParams.language })).toString(),
+        }, {
+            replace: true
+        })
+    }
 
     return (
-        <>
+        <View
+            style={{
+                flex: 1,
+                justifyContent: 'center',
+                alignItems: 'center'
+            }}
+        >
+            <Text
+                style={{
+                    fontFamily: FONTS.bold,
+                    fontSize: FONT_SIZES.x_large,
+                    color: COLORS.white,
+                    marginTop: SPACING.medium,
+                    marginBottom: SPACING.xx_small
+                }}
+            >
+                Platba se zpracovává... 🔄
+            </Text>
+
+            <Text
+                style={{
+                    fontFamily: FONTS.regular,
+                    fontSize: FONT_SIZES.medium,
+                    color: COLORS.grey300,
+                    textAlign: 'center',
+                    marginBottom: SPACING.xx_large
+                }}
+            >
+                Platba se zpracovává, prosím vyčkejte. Jakmile bude platba dokončena, dostanete potvrzovací email a zakoupené kredity budou připsány na Váš účet.
+            </Text>
+            <CustomButton
+                onPress={onFinishPress}
+                textColor={COLORS.black}
+                backgroundColors={COLORS.accent}
+                buttonText='Dokončit'
+                additionalStyles={{ width: '100%' }}
+                textStyles={{ fontFamily: FONTS.medium, fontSize: FONT_SIZES.large }}
+            />
+        </View>
+    )
+}
+
+const Failed = ({ searchParams, navigate }) => {
+    const onFinishPress = () => {
+        navigate({
+            pathname: '/credits',
+            search: new URLSearchParams(stripEmptyParams({ language: searchParams.language })).toString(),
+        }, {
+            replace: true
+        })
+    }
+
+    return (
+        <View
+            style={{
+                flex: 1,
+                justifyContent: 'center',
+                alignItems: 'center'
+            }}
+        >
             <Image
                 source={require('../../../assets/images/ErrorIcon.png')}
                 style={{ width: 50, height: 50, alignSelf: 'center' }}
@@ -84,170 +171,7 @@ const Failed = () => {
             >
                 Platbu se nepodařilo dokončit. Zkuste to prosím znovu.
             </Text>
-        </>
-    )
-}
 
-const Result = ({ searchParams, toastRef }) => {
-    const [loading, setLoading] = useState(searchParams.redirect_status === 'succeeded' && searchParams.payment_intent_client_secret)
-    const [orderStatus, setOrderStatus] = useState(searchParams.status)
-
-    const navigate = useNavigate()
-
-    useEffect(() => {
-        if (searchParams.redirect_status === 'succeeded' && searchParams.payment_intent_client_secret) {
-            console.log('fetching order data')
-            fetchOrderData()
-        }  
-    }, [searchParams])
-
-    const fetchOrderData = async () => {
-        try {
-            setTimeout(() => setLoading(false), 2000)
-        } catch(e) {
-            console.error('Error fetching order data', e)
-            toastRef?.show({
-                type: 'error',
-                text: 'Stav objednávky se nepodařilo načíst.'
-            })
-        } finally {
-            setLoading(false)
-        }
-    }
-
-    const onFinishPress = () => {
-        navigate({
-            pathname: '/credits',
-            search: new URLSearchParams(stripEmptyParams({ language: searchParams.language })).toString(),
-        }, {
-            replace: true
-        })
-
-        //TODO - call supabase to get the latest order data
-    }
-    
-    //non-redirect case and unknown status
-    if (!searchParams.status && !searchParams.redirect_status) {
-        return (
-            <View
-                style={{
-                    flex: 1,
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    padding: SPACING.large
-                }}
-            >
-                <Text
-                    style={{
-                        fontFamily: FONTS.regular,
-                        fontSize: FONT_SIZES.medium,
-                        color: COLORS.error
-                    }}
-                >
-                    Neznámý stav objednávky
-                </Text>
-            </View>
-        )
-    }
-
-    //redirect case and unknown status
-    if (searchParams.redirect_status === 'succeeded' && !searchParams.payment_intent_client_secret) {
-        return (
-            <View
-                style={{
-                    flex: 1,
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    padding: SPACING.large
-                }}
-            >
-                <Text
-                    style={{
-                        fontFamily: FONTS.regular,
-                        fontSize: FONT_SIZES.medium,
-                        color: COLORS.error
-                    }}
-                >
-                    Neznámý stav objednávky
-                </Text>
-            </View>
-        )
-    }
-
-    //redirect case and status could not be fetched
-    if (searchParams.redirect_status && !loading && !orderStatus) {
-        return (
-            <View
-                style={{
-                    flex: 1,
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    padding: SPACING.large
-                }}
-            >
-                <Text
-                    style={{
-                        fontFamily: FONTS.regular,
-                        fontSize: FONT_SIZES.medium,
-                        color: COLORS.error
-                    }}
-                >
-                    Neznámý stav objednávky
-                </Text>
-            </View>
-        )
-    }
-
-    //redirect case and payment failed
-    if (searchParams.redirect_status && searchParams.redirect_status !== 'succeeded') {
-        return (
-            <View
-                style={{
-                    flex: 1,
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    padding: SPACING.large
-                }}
-            >
-                <Text
-                    style={{
-                        fontFamily: FONTS.regular,
-                        fontSize: FONT_SIZES.medium,
-                        color: COLORS.error
-                    }}
-                >
-                    Platba byla zamítnuta
-                </Text>
-            </View>
-        )
-    }
-
-    if (loading) {
-        return (
-            <View
-                style={{
-                    padding: SPACING.medium,
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                }}
-            >
-                <ActivityIndicator size='small' color={COLORS.white} />
-            </View>
-        )
-    }
-
-    return (
-        <View
-            style={{
-                flex: 1,
-                justifyContent: 'center',
-                alignItems: 'center'
-            }}
-        >
-            {
-                orderStatus === 'succeeded' ? <Success />
-                    : orderStatus === 'processing' ? <Processing /> : <Failed />
-            }
             <CustomButton
                 onPress={onFinishPress}
                 textColor={COLORS.black}
@@ -260,9 +184,84 @@ const Result = ({ searchParams, toastRef }) => {
     )
 }
 
+const Unknown = ({ searchParams, navigate }) => {
+    const onFinishPress = () => {
+        navigate({
+            pathname: '/credits',
+            search: new URLSearchParams(stripEmptyParams({ language: searchParams.language })).toString(),
+        }, {
+            replace: true
+        })
+    }
+
+    return (
+        <View
+            style={{
+                flex: 1,
+                justifyContent: 'center',
+                alignItems: 'center'
+            }}
+        >
+            <Text
+                style={{
+                    fontFamily: FONTS.regular,
+                    fontSize: FONT_SIZES.large,
+                    color: COLORS.error,
+                    textAlign: 'center',
+                    marginVertical: SPACING.large
+                }}
+            >
+                Neznámý stav objednávky
+            </Text>
+            <CustomButton
+                onPress={onFinishPress}
+                textColor={COLORS.black}
+                backgroundColors={COLORS.accent}
+                buttonText='Dokončit'
+                additionalStyles={{ width: '100%' }}
+                textStyles={{ fontFamily: FONTS.medium, fontSize: FONT_SIZES.large }}
+            />
+        </View>
+    )
+}
+
+//todo - fetch order data using payment_intent_client_secret
+//do not using redirect payment methods for now anyway
+const RedirectResult = ({ searchParams, navigate }) => {
+
+    return (
+        searchParams.redirect_status === 'succeeded' ? <Success searchParams={searchParams} navigate={navigate}/> : <Unknown searchParams={searchParams} navigate={navigate}/>
+    )
+}
+
+const NonRedirectResult = ({ searchParams, navigate, fetchLatestCreditTransaction }) => {
+
+    return (
+        searchParams.status === 'succeeded' ? <Success searchParams={searchParams} navigate={navigate} fetchLatestCreditTransaction={fetchLatestCreditTransaction}/>
+        : searchParams.status === 'processing' ? <Processing searchParams={searchParams} navigate={navigate}/> 
+        : searchParams.status === 'requires_payment_method' ? <Failed searchParams={searchParams} navigate={navigate}/> : <Unknown searchParams={searchParams} navigate={navigate}/>
+    )
+}
+
+const Result = ({ searchParams, fetchLatestCreditTransaction }) => { 
+    const navigate = useNavigate()
+
+    if (!searchParams.status && !searchParams.redirect_status && !searchParams.payment_intent_client_secret) {
+        return null
+    }
+
+    if (searchParams.status) {
+        return <NonRedirectResult searchParams={searchParams} navigate={navigate} fetchLatestCreditTransaction={fetchLatestCreditTransaction}/>
+    } else if (searchParams.redirect_status) {
+        return <RedirectResult searchParams={searchParams} navigate={navigate}/>
+    } else {
+        return <Unknown searchParams={searchParams} navigate={navigate}/>
+    }
+}
+
 
 const mapStateToProps = (store) => ({
     toastRef: store.appState.toastRef
 })
 
-export default connect(mapStateToProps)(withSearchParams(Result, ['language', 'status', 'redirect_status', 'payment_intent_client_secret']))
+export default connect(mapStateToProps, { fetchLatestCreditTransaction })(withSearchParams(Result, ['language', 'status', 'redirect_status', 'payment_intent_client_secret']))

@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { View, Text, TouchableOpacity } from 'react-native'
 import { COLORS, SPACING, FONTS, FONT_SIZES } from '../../../constants'
-import { normalize } from '../../../utils'
+import { getEventDate } from '../../../utils'
 import VerifyAccountBanner from '../../../components/VerifyAccountBanner'
 import { connect } from 'react-redux'
 import withSearchParams from '../../../components/hoc/withSearchParams'
@@ -129,8 +129,8 @@ const TransactionEntry = ({ transaction }) => {
             } else {
                 return `${hoursDiff} hour${hoursDiff === 1 ? '' : 's'} ago`
             }
-        } else if (daysDiff < 8) {
-            return `${daysDiff} day${daysDiff === 1 ? '' : 's'} ago`
+        //} else if (daysDiff < 8) {
+        //    return `${daysDiff} day${daysDiff === 1 ? '' : 's'} ago`
         } else {
             return getEventDate(transaction.created_date, true, true)
         }
@@ -152,19 +152,21 @@ const TransactionEntry = ({ transaction }) => {
     }
 
     const onTransactionPress = () => {
-        console.log(transaction.ticket)
         if (
             transaction.transaction_type === 'ticket_unlock' 
             && transaction.ticket
         ) {
             setTicketModalVisible(true)
         } else if (
-            transaction.transaction_type === 'purchase' &&
-            transaction.payment_intent
+            transaction.transaction_type === 'purchase'
+            && transaction.payment_intent
+            && transaction.payment_intent.receipt_url
         ) {
-            //TODO - show payment details / PDF invoice
+            window.open(transaction.payment_intent.receipt_url, '_blank')
         }
     }
+
+    const isPressable = !!(transaction.ticket || (transaction.payment_intent && transaction.payment_intent.receipt_url))
 
     return (
         <>
@@ -177,14 +179,14 @@ const TransactionEntry = ({ transaction }) => {
                 hoveredBackgroundColor={COLORS.secondary2}
             >
                 <TouchableOpacity
-                    activeOpacity={(transaction.ticket || transaction.payment_intent) ? 0.8 : 1}
+                    activeOpacity={isPressable ? 0.8 : 1}
                     style={{
                         paddingHorizontal: 20,
                         paddingVertical: 16,
                         flexDirection: 'row',
                         alignItems: 'center',
                         flex: 1,
-                        cursor: (transaction.ticket || transaction.payment_intent) ? 'pointer' : 'default'
+                        cursor: isPressable ? 'pointer' : 'default'
                     }}
 
                     onPress={onTransactionPress}

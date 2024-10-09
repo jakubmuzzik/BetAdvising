@@ -58,6 +58,20 @@ Deno.serve(async (request) => {
           status: 'succeeded'
         })
         .throwOnError();
+
+      if (paymentIntent.latest_charge) {
+        const charge  = await stripe.charges.retrieve(paymentIntent.latest_charge)
+
+        if (charge) {
+          console.log('charge retrieved: ', charge)
+
+          await supabaseAdmin
+            .from('payment_intents')
+            .update({ receipt_url: charge.receipt_url })
+            .eq('id', paymentIntent.id)
+            .throwOnError()
+        }
+      }
     }
   } catch(e) {
     console.error('Error processing webhook event: ', e)

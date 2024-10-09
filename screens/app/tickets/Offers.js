@@ -165,7 +165,7 @@ const Offers = ({ searchParams, setTabHeight, fetchOffers, offers }) => {
             </View>
 
             {offers != null && offers.length === 0 && !refreshing && (
-                <Animated.Text entering={FlipInEasyX} style={{ textAlign: 'center', fontFamily: FONTS.medium, color: COLORS.grey400, fontSize: FONT_SIZES.xx_large, }}>
+                <Animated.Text entering={FlipInEasyX} style={{ textAlign: 'center', fontFamily: FONTS.medium, color: COLORS.grey400, fontSize: FONT_SIZES.x_large, }}>
                     No offers at the moment
                 </Animated.Text>
             )}

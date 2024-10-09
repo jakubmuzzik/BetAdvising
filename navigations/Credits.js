@@ -148,6 +148,7 @@ const Credits = ({ searchParams }) => {
                 onIndexChange={setIndex}
                 initialLayout={{ width: Dimensions.get('window').width }}
                 sceneContainerStyle={{ paddingBottom: SPACING.medium }}
+                lazy
             />
         </View>
     )

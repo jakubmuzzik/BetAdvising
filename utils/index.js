@@ -1,6 +1,7 @@
 import { isSmallScreen } from "../constants"
 
 const DAY_NAMES = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+const TRANSLATED_DAY_NAMES = ['Neděle', 'Pondělí', 'Úterý', 'Středa', 'Čtvrtek', 'Pátek', 'Sobota']
 
 export const normalize = (size, inverse = false) => {
     return isSmallScreen ? size - 5 * (inverse ? -1 : 1) : size
@@ -72,7 +73,7 @@ export const getEventDate = (timestamp, getDayName = false, getYear = false) => 
 
     const dateTime = new Date(timestamp)
 
-    out += getDayName ? DAY_NAMES[dateTime.getDay()] + ', ' : ''
+    out += getDayName ? TRANSLATED_DAY_NAMES[DAY_NAMES.indexOf(DAY_NAMES[dateTime.getDay()])] + ', ' : ''
     out += dateTime.getDate() + '. ' + (dateTime.getMonth() + 1) + '.'
     out += getYear ? ' ' + dateTime.getFullYear() : ''
 

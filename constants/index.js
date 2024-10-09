@@ -32,7 +32,7 @@ export const COLORS = {
     accent: '#FBC10D',
     accentSecondary: '#FBC10D' + '14',
     accentHoveredSecondary: '#FBC10D' + '20',
-    accentSecondaryBorder: '#FBC10D' + '99', 
+    accentSecondaryBorder: '#FBC10D' + 'CC', 
     accent2: '#957308',
     hoveredAccent: '#D8A30B',
     primary: '#0D131A',//'#131C27',

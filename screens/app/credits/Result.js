@@ -44,7 +44,8 @@ const Success = ({ searchParams, navigate, fetchLatestCreditTransaction }) => {
                     fontSize: FONT_SIZES.x_large,
                     color: COLORS.white,
                     marginTop: SPACING.medium,
-                    marginBottom: SPACING.xx_small
+                    marginBottom: SPACING.xx_small,
+                    textAlign: 'center'
                 }}
             >
                 Objednávka byla úspěšně dokončena  🎉
@@ -97,7 +98,8 @@ const Processing = ({ searchParams, navigate }) => {
                     fontSize: FONT_SIZES.x_large,
                     color: COLORS.white,
                     marginTop: SPACING.medium,
-                    marginBottom: SPACING.xx_small
+                    marginBottom: SPACING.xx_small,
+                    textAlign: 'center'
                 }}
             >
                 Platba se zpracovává... 🔄
@@ -154,7 +156,8 @@ const Failed = ({ searchParams, navigate }) => {
                     fontSize: FONT_SIZES.x_large,
                     color: COLORS.white,
                     marginTop: SPACING.medium,
-                    marginBottom: SPACING.xx_small
+                    marginBottom: SPACING.xx_small,
+                    textAlign: 'center'
                 }}
             >
                 Platba byla neúspěšná 😔

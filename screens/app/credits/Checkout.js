@@ -124,7 +124,8 @@ const CheckoutForm = ({ toastRef, navigate, searchParams }) => {
             const { error, paymentIntent } = await stripe.confirmPayment({
                 elements,
                 confirmParams: {
-                    return_url
+                    return_url,
+                    expand: ['latest_charge.receipt_url']
                 },
                 redirect: 'if_required'
             })
@@ -132,6 +133,8 @@ const CheckoutForm = ({ toastRef, navigate, searchParams }) => {
             if (error) throw error
 
             if (paymentIntent) {
+                console.log('paymentIntent: ', paymentIntent)
+
                 if (paymentIntent.status === 'succeeded') {
                     toastRef?.show({
                         type: 'success',

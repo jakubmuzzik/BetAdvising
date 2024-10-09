@@ -3,7 +3,7 @@ import { View, Text, useWindowDimensions, FlatList, StyleSheet } from 'react-nat
 import { FONTS, FONT_SIZES, SPACING, COLORS } from '../../../constants'
 import { normalize, calculateTimeDifference } from '../../../utils'
 import { LinearGradient } from 'expo-linear-gradient'
-import { FontAwesome } from '@expo/vector-icons'
+import { FontAwesome, MaterialCommunityIcons } from '@expo/vector-icons'
 import Animated, { useAnimatedStyle, useSharedValue, interpolate, withTiming, useAnimatedProps } from 'react-native-reanimated'
 
 import UnlockedTicket from '../../../components/tickets/UnlockedTicket'
@@ -80,7 +80,7 @@ const Divider = ({ isLast, isLocked }) => {
                     zIndex: 2
                 }}
             >
-                {isLocked ? <FontAwesome name="lock" size={18} color={COLORS.white} /> : <FontAwesome name="unlock" size={18} color={COLORS.white} />}
+                {isLocked ? <MaterialCommunityIcons name="lock" size={18} color={COLORS.white} /> : <MaterialCommunityIcons name="lock-open-variant" size={18} color={COLORS.white} />}
             </LinearGradient>
             {!isLast && <LinearGradient
                 colors={[COLORS.whiteBackground2, COLORS.whiteBackground2, COLORS.whiteBackground2]}

@@ -11,7 +11,7 @@ import { Image } from 'expo-image'
 import { normalize } from '../utils'
 import { connect } from 'react-redux'
 import { SPACING, COLORS, FONTS, SMALL_SCREEN_THRESHOLD_APP_HEADER, HEADER_HEIGHT, SIDEBAR_WIDTH, FONT_SIZES, DEFAULT_LANGUAGE, SEARCH_PARAMS } from '../constants'
-import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons'
+import { MaterialCommunityIcons, MaterialIcons, FontAwesome5 } from '@expo/vector-icons'
 import { useLocation, useNavigate, Link } from 'react-router-dom'
 import withSearchParams from './hoc/withSearchParams'
 import HoverableView from './elements/HoverableView'
@@ -21,16 +21,16 @@ const ROUTES = [
     {
         path: '/tickets/offers',
         title: 'Tikety',
-        icon: (focused) => <MaterialCommunityIcons style={{ marginRight: 10 }} name="ticket-confirmation-outline" size={17} color={focused ? COLORS.white : 'rgba(255,255,255,0.7)'} />
+        icon: (focused) => <MaterialCommunityIcons style={{ marginRight: 10 }} name="ticket-confirmation" size={17} color={focused ? COLORS.white : 'rgba(255,255,255,0.7)'} />
     },
     {
         path: '/credits',
         title: 'Kredity',
-        icon: (focused) => <MaterialCommunityIcons style={{ marginRight: 10 }} name="hand-coin-outline" size={17} color={focused ? COLORS.white : 'rgba(255,255,255,0.7)'} />
+        icon: (focused) => <FontAwesome5 style={{ marginRight: 13 }} name="coins" size={14} color={focused ? COLORS.white : 'rgba(255,255,255,0.7)'} />
     }
 ]
 
-const Drawer = ({ isOpen, toggleLeftDrawer, duration = 500, children }) => {
+const Drawer = ({ isOpen, toggleLeftDrawer, duration = 250, children }) => {
     const width = useSharedValue(0)
     const progress = useDerivedValue(() =>
         withTiming(isOpen.value ? 0 : -1, { duration })

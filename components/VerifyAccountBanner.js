@@ -51,7 +51,7 @@ const VerifyAccountBanner = ({ containerStyle={} }) => {
 
                         <CustomButton
                             onPress={onVerifyPress}
-                            additionalStyles={{ borderWidth: 0, borderColor: COLORS.accent, marginTop: SPACING.x_small, width: 'fit-content' }}
+                            additionalStyles={{  marginTop: SPACING.x_small, width: 'fit-content' }}
                             textColor={COLORS.black}
                             backgroundColors={COLORS.white}
                             spinnerColor={COLORS.black}

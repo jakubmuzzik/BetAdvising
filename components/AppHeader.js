@@ -8,7 +8,7 @@ import { TabView, SceneMap, TabBar } from 'react-native-tab-view'
 import withSearchParams from './hoc/withSearchParams'
 import { connect } from 'react-redux'
 import { Image } from 'expo-image'
-import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons'
+import { MaterialCommunityIcons, MaterialIcons, FontAwesome5 } from '@expo/vector-icons'
 import HoverableView from './elements/HoverableView'
 import { DEFAULT_LANGUAGE } from '../labels'
 import { Avatar, Badge } from 'react-native-paper'
@@ -25,14 +25,14 @@ const ROUTES = [
         path: '/tickets/offers',
         label: 'Tikety',
         key: 'tickets',
-        icon: (focused) => <MaterialCommunityIcons style={{ marginRight: 10 }} name="ticket-confirmation-outline" size={20} color={focused ? COLORS.white : 'rgba(255,255,255,0.7)'} />,
+        icon: (focused) => <MaterialCommunityIcons style={{ marginRight: 10 }} name="ticket-confirmation" size={19} color={focused ? COLORS.white : 'rgba(255,255,255,0.7)'} />,
         ref: React.createRef()
     },
     {
         path: '/credits',
         label: 'Kredity',
         key: 'credits',
-        icon: (focused) => <MaterialCommunityIcons style={{ marginRight: 10 }} name="hand-coin-outline" size={20} color={focused ? COLORS.white : 'rgba(255,255,255,0.7)'} />,
+        icon: (focused) => <FontAwesome5 style={{ marginRight: 14 }} name="coins" size={15} color={focused ? COLORS.white : 'rgba(255,255,255,0.7)'} />,
         ref: React.createRef()
     },
 ]
@@ -678,8 +678,8 @@ const AppHeader = ({ searchParams, currentAuthUser, logOut, toggleDrawer, curren
                         onPress={onBuyCreditsPress}
                     >
                         <HoverableView
-                            hoveredBackgroundColor={COLORS.secondary}
-                            //backgroundColor={}
+                            hoveredBackgroundColor={COLORS.accentHoveredSecondary}
+                            backgroundColor={COLORS.accentSecondary}
                             style={{
                                 justifyContent: 'center',
                                 alignItems: 'center',
@@ -690,14 +690,14 @@ const AppHeader = ({ searchParams, currentAuthUser, logOut, toggleDrawer, curren
                                 flexDirection: 'row',
                                 //boxShadow: '0px 0px 10px rgba(251, 193, 13, 0.15)',
                                 borderWidth: 1,
-                                borderColor: COLORS.accent
+                                borderColor: COLORS.accentSecondaryBorder
                             }}
                             withCustomButtonHeight
                         >
                             <Text
                                 style={{
-                                    color: COLORS.white,
-                                    fontFamily: FONTS.regular,
+                                    color: COLORS.accent,
+                                    fontFamily: FONTS.bold,
                                     fontSize: FONT_SIZES.medium
                                 }}
                             >

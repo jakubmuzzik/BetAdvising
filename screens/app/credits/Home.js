@@ -83,8 +83,8 @@ const Balance = ({ credits, navigate, searchParams }) => {
                 onPress={onBuyCreditsPress}
             >
                 <HoverableView
-                    hoveredOpacity={0.8}
-                    //backgroundColor={}
+                    backgroundColor={COLORS.accentSecondary}
+                    hoveredBackgroundColor={COLORS.accentHoveredSecondary}
                     style={{
                         justifyContent: 'center',
                         alignItems: 'center',
@@ -95,14 +95,14 @@ const Balance = ({ credits, navigate, searchParams }) => {
                         flexDirection: 'row',
                         //boxShadow: '0px 0px 10px rgba(251, 193, 13, 0.15)',
                         borderWidth: 1,
-                        borderColor: COLORS.accent
+                        borderColor: COLORS.accentSecondaryBorder
                     }}
                     withCustomButtonHeight
                 >
                     <Text
                         style={{
-                            color: COLORS.white,
-                            fontFamily: FONTS.regular,
+                            color: COLORS.accent,
+                            fontFamily: FONTS.bold,
                             fontSize: FONT_SIZES.medium
                         }}
                     >

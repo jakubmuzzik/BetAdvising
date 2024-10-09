@@ -320,10 +320,10 @@ const History = ({ creditTransactions, fetchCreditTransactions }) => {
                     }}
                 >
                     {creditTransactions.map((transaction, index) => (
-                        <>
-                            <TransactionEntry key={transaction.id} transaction={transaction} />
+                        <React.Fragment key={transaction.id}>
+                            <TransactionEntry transaction={transaction} />
                             {index !== creditTransactions.length - 1 && <View style={{width: 1, height: 20, backgroundColor: COLORS.whiteBackground2}} />}
-                        </>
+                        </React.Fragment>
                     ))}
                 </View>
             )}

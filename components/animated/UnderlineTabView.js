@@ -1,5 +1,5 @@
-import React, { useState, useRef, useEffect, useLayoutEffect } from 'react'
-import { View, TouchableOpacity, Text } from 'react-native'
+import React, { useState, useRef, useEffect, useLayoutEffect, memo } from 'react'
+import { View, TouchableOpacity, Text, InteractionManager } from 'react-native'
 import { COLORS, FONT_SIZES, FONTS, SPACING } from '../../constants'
 import Animated, { useAnimatedStyle, withTiming, useSharedValue, interpolate, useDerivedValue } from 'react-native-reanimated'
 
@@ -15,7 +15,7 @@ const Indicator = ({ measures, activeIndex, indicatorStyle={} }) => {
                 }
             ]
         }
-    }, [activeIndex])
+    }, [activeIndex, measures])
 
     return (
         <Animated.View
@@ -42,7 +42,7 @@ const UnderlineTabView = ({
     tabItemsGap = 0,//SPACING.large,
     labelActiveColor = COLORS.white,
     labelInactiveColor = COLORS.grey400,
-    indicatorStyle={},
+    indicatorStyle={ bottom: -4 },
     itemPaddingVertical = 12,
     itemPaddingHorizontal = 16,
     tabs,
@@ -51,7 +51,7 @@ const UnderlineTabView = ({
     const [measures, setMeasures] = useState([])
     const containerRef = useRef()
 
-    useLayoutEffect(() => {
+    /*useEffect(() => {
         const m = []
         tabs.forEach((tab, index) => {
             tab.ref.current.measureLayout(
@@ -61,7 +61,7 @@ const UnderlineTabView = ({
                         //need to calculate like this, because x does not contain the padding
                         x: index === 0 ? 0 : m[index - 1].x + m[index - 1].width + tabItemsGap, 
                         y, 
-                        width: Number(width) + Number(itemPaddingHorizontal * 2), 
+                        width,//: Number(width) + Number(itemPaddingHorizontal * 2), 
                         height
                     })
                 }
@@ -69,7 +69,17 @@ const UnderlineTabView = ({
         })
 
         setMeasures(m)
-    }, [])
+    }, [])*/
+
+    const onTabLayout = (e, index) => {
+       const { x, y, width, height } = e.nativeEvent.layout
+        setMeasures(prev => {
+            const m = [...prev]
+            m[index] = { x, y, width, height }
+            return m
+        })
+    }
+
 
     return (
         <View
@@ -82,10 +92,11 @@ const UnderlineTabView = ({
                 ...containerStyle
             }}
         >
-            {measures.length > 0 && <Indicator measures={measures} activeIndex={activeIndex} indicatorStyle={indicatorStyle} />}
+            {measures.length === tabs.length && <Indicator measures={measures} activeIndex={activeIndex} indicatorStyle={indicatorStyle} />}
 
-            {tabs.map((tab) => (
+            {tabs.map((tab, index) => (
                 <TouchableOpacity
+                    onLayout={(e) => onTabLayout(e, index)}
                     ref={tab.ref}
                     key={tab.key}
                     onPress={tab.onPress}
@@ -116,4 +127,4 @@ const UnderlineTabView = ({
     )
 }
 
-export default UnderlineTabView
+export default memo(UnderlineTabView)

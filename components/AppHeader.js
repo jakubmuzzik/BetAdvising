@@ -69,11 +69,11 @@ const AppHeader = ({ searchParams, currentAuthUser, logOut, toggleDrawer, curren
             icon: (focused) => <MaterialCommunityIcons style={{ marginRight: 10 }} name="book-edit" size={20} color={focused ? COLORS.white : 'rgba(255,255,255,0.7)'} />,
             ref: React.createRef()
         }] : ROUTES)
-        .map((route, index) => ({ 
-            ...route, 
-            index, 
-            onPress: () => onTabPress({index, path: route.path}), 
-        }))
+            .map((route, index) => ({
+                ...route,
+                index,
+                onPress: () => onTabPress({ index, path: route.path }),
+            }))
     )
 
     const renderIndicator = routes.some(route => location.pathname.includes(route.path))
@@ -97,7 +97,7 @@ const AppHeader = ({ searchParams, currentAuthUser, logOut, toggleDrawer, curren
         })
     }
 
-    const onTabPress2 = ({route, preventDefault}) => {
+    const onTabPress2 = ({ route, preventDefault }) => {
         /*setIndex(route.index)
 
         navigate({
@@ -373,7 +373,7 @@ const AppHeader = ({ searchParams, currentAuthUser, logOut, toggleDrawer, curren
 
                                     Notifikace
                                 </Text>
-                                {newNotifications.length > 0 && <Octicons name="dot-fill" size={20} color={COLORS.accent}  />}
+                                {newNotifications.length > 0 && <Octicons name="dot-fill" size={20} color={COLORS.accent} />}
                             </View>
 
                             {newNotifications.length === 0 && <Text
@@ -394,44 +394,44 @@ const AppHeader = ({ searchParams, currentAuthUser, logOut, toggleDrawer, curren
                                     overflowY: 'auto',
                                 }}
                             >
-                                    {newNotifications.map(notification => (
-                                        <HoverableView
+                                {newNotifications.map(notification => (
+                                    <HoverableView
+                                        style={{
+                                            padding: SPACING.xx_small,
+                                            width: '100%',
+                                            flexDirection: 'row',
+                                            alignItems: 'center',
+                                            gap: SPACING.xx_small,
+                                        }}
+                                        hoveredBackgroundColor={COLORS.secondary}
+                                        key={notification.id}
+                                    >
+                                        {
+                                            notification.type === 'credit_returned' ? (
+                                                <Text style={{ fontSize: FONT_SIZES.medium }}>↩️</Text>
+                                            ) : notification.type === 'ticket_success' ? (
+                                                <Text style={{ fontSize: FONT_SIZES.medium }}>🎉</Text>
+                                            ) : null
+                                        }
+
+                                        <Text
                                             style={{
-                                                padding: SPACING.xx_small,
-                                                width: '100%',
-                                                flexDirection: 'row',
-                                                alignItems: 'center',
-                                                gap: SPACING.xx_small,
+                                                fontSize: FONT_SIZES.medium,
+                                                fontFamily: FONTS.medium,
+                                                color: COLORS.white,
                                             }}
-                                            hoveredBackgroundColor={COLORS.secondary}
-                                            key={notification.id}
                                         >
                                             {
-                                                notification.type === 'credit_returned' ? (
-                                                    <Text style={{ fontSize: FONT_SIZES.medium }}>↩️</Text>
-                                                ) : notification.type === 'ticket_success' ? (
-                                                    <Text style={{ fontSize: FONT_SIZES.medium }}>🎉</Text>
-                                                ) : null
+                                                notification.type === 'credit_returned'
+                                                    ? 'Tiket #' + notification.ticket.name + ' nevyšel. Kredity byly vráceny.'
+                                                    : notification.type === 'ticket_success'
+                                                        ? 'Gratulujeme, Tiket #' + notification.ticket.name + ' byl úspěšný.'
+                                                        : null
                                             }
-
-                                            <Text
-                                                style={{
-                                                    fontSize: FONT_SIZES.medium,
-                                                    fontFamily: FONTS.medium,
-                                                    color: COLORS.white,
-                                                }}
-                                            >
-                                                {
-                                                    notification.type === 'credit_returned'
-                                                        ? 'Tiket #' + notification.ticket.name + ' nevyšel. Kredity byly vráceny.'
-                                                        : notification.type === 'ticket_success'
-                                                            ? 'Gratulujeme, Tiket #' + notification.ticket.name + ' byl úspěšný.'
-                                                            : null
-                                                }
-                                            </Text>
-                                        </HoverableView>
-                                    ))}
-                                </View>
+                                        </Text>
+                                    </HoverableView>
+                                ))}
+                            </View>
                             }
 
 
@@ -449,7 +449,7 @@ const AppHeader = ({ searchParams, currentAuthUser, logOut, toggleDrawer, curren
                                 </TouchableOpacity>
                             </HoverableView>
 
-                                {/* <TouchableOpacity
+                            {/* <TouchableOpacity
                                     onPress={onViewAllNotificationsPress}
                                 >
                                     <HoverableText
@@ -538,7 +538,7 @@ const AppHeader = ({ searchParams, currentAuthUser, logOut, toggleDrawer, curren
                                     <Picker.Item label="Čeština" value="cs" />
                                     <Picker.Item label="English" value="en" />
                                 </Picker>
-                            </HoverableView> 
+                            </HoverableView>
 
                             <View style={{ height: 0.5, width: '100%', backgroundColor: COLORS.grey400, marginVertical: SPACING.xxx_small }} />
 
@@ -561,38 +561,6 @@ const AppHeader = ({ searchParams, currentAuthUser, logOut, toggleDrawer, curren
         )
     }
 
-    const renderTabBar2 = (props) => (
-        <UnderlineTabView
-            tabs={routes}
-            activeIndex={props.navigationState.index}
-        />
-    )
-
-    const renderTabBar = (props) => (
-        <TabBar
-            {...props}
-            indicatorStyle={{ backgroundColor: !renderIndicator ? 'transparent' : COLORS.accent }}
-            style={{ backgroundColor: 'transparent' }}
-            tabStyle={{ width: 'auto' }}
-            scrollEnabled={true}
-            renderLabel={({ route, focused, color }) => (
-                // <Text style={{ fontFamily: FONTS.medium, fontSize: FONT_SIZES.large, color: focused ? '#FFF' : 'rgba(255,255,255,0.7)' }}>
-                //     {route.title}
-                // </Text>
-                <Link style={{ textDecoration: 'none' }} to={{ pathname: route.path, search: new URLSearchParams(searchParams).toString() }}>
-                    <View style={styles.categoryContainer}>
-                        {route.icon(focused)}
-                        <Text style={{ fontFamily: FONTS.medium, fontSize: FONT_SIZES.large, color: (focused && renderIndicator) ? '#FFF' : 'rgba(255,255,255,0.7)' }}>
-                            {route.title}
-                        </Text>
-                    </View>
-                </Link>
-            )}
-            gap={10}
-            onTabPress={onTabPress}
-        />
-    )
-
     const renderLeftHeader = () => (
         isSmallScreen ? (
             <>
@@ -601,35 +569,27 @@ const AppHeader = ({ searchParams, currentAuthUser, logOut, toggleDrawer, curren
                 </TouchableOpacity>
             </>
         ) : (
-                <>
+            <>
                 <View
                     style={{ height: normalize(50), justifyContent: 'center', marginRight: SPACING.x_small }}
                 >
-                        <Link to={{ pathname: '/tickets/offers', search: new URLSearchParams(searchParams).toString() }}>
-                            <RNImage
-                                resizeMode='contain'
-                                source={require('../assets/logos/logo-header.png')}
-                                style={{
-                                    height: normalize(32),
-                                    width: normalize(102)
-                                }}
-                                tintColor={COLORS.accent}
-                            />
-                        </Link>
+                    <Link to={{ pathname: '/tickets/offers', search: new URLSearchParams(searchParams).toString() }}>
+                        <RNImage
+                            resizeMode='contain'
+                            source={require('../assets/logos/logo-header.png')}
+                            style={{
+                                height: normalize(32),
+                                width: normalize(102)
+                            }}
+                            tintColor={COLORS.accent}
+                        />
+                    </Link>
                 </View>
-                {/* <TabView
-                    renderTabBar={renderTabBar}
-                    swipeEnabled={false}
-                    navigationState={{ index, routes }}
-                    renderScene={() => undefined}
-                    onIndexChange={setIndex}
-                /> */}
-                    <UnderlineTabView
-                        tabs={routes}
-                        activeIndex={index}
-                        indicatorStyle={{ bottom: -4 }}
-                    />
-                </>
+                <UnderlineTabView
+                    tabs={routes}
+                    activeIndex={index}
+                />
+            </>
         )
     )
 
@@ -750,7 +710,7 @@ const AppHeader = ({ searchParams, currentAuthUser, logOut, toggleDrawer, curren
                             paddingHorizontal: 12
                         }}
                     >
-                       <MaterialIcons name="notifications-none" size={23} color="white" />
+                        <MaterialIcons name="notifications-none" size={23} color="white" />
                     </TouchableOpacity>
                     {
                         newNotifications.length > 0 && (
@@ -795,8 +755,8 @@ const AppHeader = ({ searchParams, currentAuthUser, logOut, toggleDrawer, curren
     return (
         <BlurView style={{ position: 'fixed', zIndex: 1, width: '100%', flexDirection: 'column' }}>
             <View style={isSmallScreen ? styles.headerSmall : styles.headerLarge}>
-                <View style={{ 
-                    flexDirection: 'row', 
+                <View style={{
+                    flexDirection: 'row',
                     //display: 'contents' 
                 }}>
                     {renderLeftHeader()}

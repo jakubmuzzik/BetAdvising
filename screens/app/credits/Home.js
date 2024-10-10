@@ -153,8 +153,10 @@ const TransactionEntry = ({ transaction }) => {
 
     const onTransactionPress = () => {
         if (
-            transaction.transaction_type === 'ticket_unlock' 
-            && transaction.ticket
+            (
+                transaction.transaction_type === 'ticket_unlock' 
+                || transaction.transaction_type === 'failed_ticket_refund'
+            ) && transaction.ticket
         ) {
             setTicketModalVisible(true)
         } else if (
@@ -202,6 +204,8 @@ const TransactionEntry = ({ transaction }) => {
                                     <Text style={{ fontSize: FONT_SIZES.xx_large }}>💳</Text>
                                 ) : transaction.transaction_type === 'ticket_unlock' ? (
                                     <Text style={{ fontSize: FONT_SIZES.xx_large }}>🔓</Text>
+                                ) : transaction.transaction_type === 'failed_ticket_refund' ? (
+                                    <Text style={{ fontSize: FONT_SIZES.xx_large }}>↩️</Text>
                                 ) : null
                             }
                         </View>
@@ -230,6 +234,8 @@ const TransactionEntry = ({ transaction }) => {
                                     `Nákup ${transaction.amount} kreditů${(transaction.payment_intent && transaction.payment_intent.amount) ? ` za ${transaction.payment_intent.amount} Kč` : ''}.`
                                 ) : transaction.transaction_type === 'ticket_unlock' ? (
                                     `Odemčení tiketu${transaction.ticket ? ` #${transaction.ticket.name}` : ''} za ${transaction.amount} kreditů.`
+                                ) : transaction.transaction_type === 'failed_ticket_refund' ? (
+                                    `Vrácení kreditů za neúspěšný odemčený tiket${transaction.ticket ? ` #${transaction.ticket.name}` : ''}.`
                                 ) : null
                             }
                             </Text>

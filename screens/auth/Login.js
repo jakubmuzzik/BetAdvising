@@ -46,7 +46,8 @@ const Login = ({ searchParams, toastRef, fetchUser }) => {
     const onGoogleSignupPress = async () => {
         googleSignInButtonRef.current.setIsLoading(true)
         try {
-            let redirectTo = Linking.createURL("/auth?from=" + from)
+            let redirectTo = `${window.location.origin}/auth?from=${from}`
+            //let redirectTo = Linking.createURL("/auth?from=" + from)
 
             if (searchParams.language) {
                 redirectTo += '&language=' + searchParams.language

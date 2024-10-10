@@ -69,8 +69,7 @@ const UnlockedTicketModal = ({
                                 borderRadius: 10,
                                 width,
                                 maxWidth: '90%',
-                                maxHeight: '80%',
-                                overflow: 'hidden',
+                                maxHeight: '80%'
                             }}>
                                 <Content />
                             </View>

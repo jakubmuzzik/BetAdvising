@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { StyleSheet, Text, Touchable, TouchableOpacity, View, useWindowDimensions } from 'react-native'
 import { SPACING, FONT_SIZES, FONTS, COLORS } from '../constants'
 import { Image } from 'expo-image'
@@ -6,13 +7,18 @@ import { LinearGradient } from 'expo-linear-gradient'
 import HoverableView from './elements/HoverableView'
 import { Link } from 'react-router-dom'
 import withSearchParams from './hoc/withSearchParams'
+import VanillaTilt from 'vanilla-tilt'
+import {isBrowser } from 'react-device-detect'
+
+const SEPARATOR_TOP_INSET = 20
+const STEP_COUNT_MARKER_SIZE = 35
 
 const STEPS = [
     {
         id: 1,
         content: (searchParams) => (
             <>
-            <Text
+                <Text
                     style={styles.stepHeaderText}
                 >
                     Otevřete si účet u sázkové kanceláře
@@ -83,21 +89,21 @@ const STEPS = [
             </>
         ),
         image: (width) => <Image
-                    source={require('../assets/images/mobile_mock.png')}
-                    style={{
-                        width,
-                        maxWidth: 500,
-                        aspectRatio: 457 / 344,
-                        alignSelf: 'center'
-                    }}
-                    contentFit='cover'
-                />
+            source={require('../assets/images/mobile_mock.png')}
+            style={{
+                width,
+                maxWidth: 500,
+                aspectRatio: 457 / 344,
+                alignSelf: 'center'
+            }}
+            contentFit='cover'
+        />
     },
     {
         id: 2,
         content: (searchParams) => (
             <>
-            <Text
+                <Text
                     style={styles.stepHeaderText}
                 >
                     Zaregistrujte se a získejte 200 kreditů zdarma
@@ -146,21 +152,21 @@ const STEPS = [
             </>
         ),
         image: (width) => <Image
-                    source={require('../assets/images/mobile_mock.png')}
-                    style={{
-                        width,
-                        maxWidth: 500,
-                        aspectRatio: 457 / 344,
-                        alignSelf: 'center'
-                    }}
-                    contentFit='cover'
-                />
+            source={require('../assets/images/mobile_mock.png')}
+            style={{
+                width,
+                maxWidth: 500,
+                aspectRatio: 457 / 344,
+                alignSelf: 'center'
+            }}
+            contentFit='cover'
+        />
     },
     {
         id: 3,
         content: (searchParams) => (
             <>
-            <Text
+                <Text
                     style={styles.stepHeaderText}
                 >
                     Odemykejte si naše tipy a začněte vydělávat
@@ -228,21 +234,21 @@ const STEPS = [
             </>
         ),
         image: (width) => <Image
-                    source={require('../assets/images/mobile_mock.png')}
-                    style={{
-                        width,
-                        maxWidth: 500,
-                        aspectRatio: 457 / 344,
-                        alignSelf: 'center'
-                    }}
-                    contentFit='cover'
-                />
+            source={require('../assets/images/mobile_mock.png')}
+            style={{
+                width,
+                maxWidth: 500,
+                aspectRatio: 457 / 344,
+                alignSelf: 'center'
+            }}
+            contentFit='cover'
+        />
     },
     {
         id: 4,
         content: (searchParams) => (
             <>
-            <Text
+                <Text
                     style={styles.stepHeaderText}
                 >
                     Dokupte si kredity
@@ -296,26 +302,38 @@ const STEPS = [
             </>
         ),
         image: (width) => <Image
-                    source={require('../assets/images/mobile_mock.png')}
-                    style={{
-                        width,
-                        maxWidth: 500,
-                        aspectRatio: 457 / 344,
-                        alignSelf: 'center'
-                    }}
-                    contentFit='cover'
-                />
+            source={require('../assets/images/mobile_mock.png')}
+            style={{
+                width,
+                maxWidth: 500,
+                aspectRatio: 457 / 344,
+                alignSelf: 'center'
+            }}
+            contentFit='cover'
+        />
     }
 ]
 
 const StepCountMarker = ({ stepCount }) => (
-    <>
+    <View
+        style={{
+            position: 'absolute',
+            left: 0,
+            right: 0,
+            top: 0,
+            //bottom: 0,
+            alignItems: 'center',
+            justifyContent: 'center',
+            zIndex: 2
+        }}
+    >
         <LinearGradient
             colors={['#957308', COLORS.accent]}
             style={{
                 borderRadius: 17.5,
-                width: 35,
-                height: 35,
+                top: 20,
+                width: STEP_COUNT_MARKER_SIZE,
+                height: STEP_COUNT_MARKER_SIZE,
                 padding: 10,
                 justifyContent: 'center',
                 alignItems: 'center',
@@ -332,84 +350,126 @@ const StepCountMarker = ({ stepCount }) => (
                 {stepCount}
             </Text>
         </LinearGradient>
-        <LinearGradient
-            colors={['#957308', COLORS.accent, '#957308']}
-            style={{
-                borderRadius: 17.5,
-                width: 1,
-                flex: 1,
-                justifyContent: 'center',
-                alignItems: 'center',
-                alignSelf: 'center',
-                marginVertical: SPACING.small
-            }}
-        />
-    </>
+    </View>
 )
 
 const Step = ({ isSmallScreen, index, isEven, step, searchParams, imageWidth }) => {
 
-    return isSmallScreen ? (
-        <View style={{
-            flexDirection: 'row',
-            gap: SPACING.large,
-            //alignSelf: 'flex-start'
-        }}>
-            <View
-                style={{
-                    flexGrow: 0,
-                    flexShrink: 1
-                }}
-            >
-                <StepCountMarker stepCount={index + 1} />
-            </View>
+    return (
+        <LinearGradient
+            dataSet={{ id: 'step' }}
+            colors={isSmallScreen ? [COLORS.secondary, COLORS.secondary, COLORS.primary] : isEven ? [COLORS.secondary, COLORS.secondary, COLORS.primary] : [COLORS.primary, COLORS.secondary, COLORS.secondary]}
+            locations={isSmallScreen ? [0, 0.9, 0.9] : isEven ? [0, 0.5, 0.6] : [0.4, 0.5, 1]}
+            start={{ x: 0, y: 0 }}
+            end={isSmallScreen ? { x: 0, y: 1 } : { x: 1, y: 0 }}
+            style={{
+                flexDirection: isSmallScreen ? (isEven ? 'column' : 'column-reverse') : 'row',
+                gap: isSmallScreen ? SPACING.xx_large : 150,
+                paddingHorizontal: isSmallScreen ? SPACING.medium : SPACING.xx_large,
+                paddingTop: STEP_COUNT_MARKER_SIZE + SEPARATOR_TOP_INSET + SPACING.large,
+                paddingBottom: 64,
+                borderRadius: 20,
+                overflow: 'hidden',
+                justifyContent: 'flex-start'
+            }}
+        >
+
+            {!isSmallScreen && (
+                <>
+                    <View
+                        style={{
+                            position: 'absolute',
+                            top: 0,
+                            [!isEven ? 'right' : 'left']: 0,
+                            width: '60%',
+                            height: '100%',
+                            borderRadius: 20,
+                            borderWidth: 1,
+                            borderColor: COLORS.whiteBackground2
+                        }}
+                    />
+                    <LinearGradient
+                        colors={!isEven ? [COLORS.primary, 'rgba(255,255,255,0)'] : ['rgba(255,255,255,0)', COLORS.primary]}
+                        start={{ x: 0, y: 0 }}
+                        end={{ x: 1, y: 0 }}
+                        style={{
+                            position: 'absolute',
+                            top: 0,
+                            [!isEven ? 'right' : 'left']: 1,
+                            width: '60%',
+                            height: '100%'
+                        }}
+                    />
+                </>
+            )}
+
+            {isSmallScreen && (
+                <>
+                    <View
+                        style={{
+                            position: 'absolute',
+                            top: 1,
+                            right: 0,
+                            left: 0,
+                            width: '100%',
+                            height: '90%',
+                            borderRadius: 20,
+                            borderWidth: 1,
+                            borderColor: COLORS.whiteBackground2
+                        }}
+                    />
+                    <LinearGradient
+                        colors={['rgba(255,255,255,0)', COLORS.primary]}
+                        start={{ x: 0, y: 0 }}
+                        end={{ x: 0, y: 1 }}
+                        style={{
+                            position: 'absolute',
+                            top: 2,
+                            left: 0,
+                            right: 0,
+                            height: '90%',
+                            width: '100%'
+                        }}
+                    />
+                </>
+            )}
 
             <View
-                style={{
-                    flexGrow: 1,
-                    flexBasis: 0,
-                    paddingBottom: normalize(100)
-                }}
-            >
-                {step.content(searchParams)}
-            </View>
-        </View>
-    ) : (
-        <View style={{
-            flexDirection: 'row',
-            gap: SPACING.large
-        }}>
-            <View
-                style={{
-                    flexGrow: 1,
-                    flexBasis: 0,
-                    paddingBottom: normalize(100)
+                style={isSmallScreen ? {} : {
+                    flex: 1
                 }}
             >
                 {isEven ? step.content(searchParams) : step.image(imageWidth)}
             </View>
+
+            <StepCountMarker stepCount={index + 1} />
+
             <View
-                style={{
-                    flexGrow: 0
+                style={isSmallScreen ? {} : {
+                    flex: 1
                 }}
             >
-                <StepCountMarker stepCount={index + 1} />
+                {isEven ? step.image(imageWidth) : step.content(searchParams)}
             </View>
-            <View
-                style={{
-                    flexGrow: 1,
-                    flexBasis: 0,
-                    paddingBottom: normalize(100)
-                }}
-            >
-                {!isEven ? step.content(searchParams) : step.image(imageWidth)}
-            </View>
-        </View>
+        </LinearGradient>
     )
 }
 
 const Steps = ({ searchParams }) => {
     const { width } = useWindowDimensions()
+
+    useEffect(() => {
+        if (!isBrowser) return
+
+        VanillaTilt.init(document.querySelectorAll(`[data-id="step"]`), {
+            max: 2,
+            speed: 200,
+            easing: "cubic-bezier(.03,.98,.52,.99)",
+            reverse: true,
+            glare: true,
+            "max-glare": 0.1,
+        })
+    }, [])
 
     return (
         <View
@@ -425,12 +485,7 @@ const Steps = ({ searchParams }) => {
                 style={{
                     maxWidth: 1680,
                     flex: 1,
-                    borderWidth: 1,
                     borderColor: COLORS.grey400,
-                    backgroundColor: 'rgba(255,255,255,.05)',
-                    borderRadius: 10,
-                    //boxShadow: '0px 0px 14px rgba(251, 193, 13, 0.15)'
-                    boxShadow: '0px 0px 10px rgba(255, 255, 255, 0.1)'
                 }}
             >
                 <View style={{
@@ -457,33 +512,57 @@ const Steps = ({ searchParams }) => {
                             fontSize: FONT_SIZES.h1,
                             color: COLORS.white,
                             textAlign: 'center',
-                            maxWidth: 500,
-                            marginBottom: normalize(80),
+                            maxWidth: 500
                         }}
                     >
                         Připraveni vydělávat sázením?
                     </Text>
 
-                    <View>
-                    {STEPS.map((step, index) => (
-                        <Step
-                            key={index}
-                            index={index}
-                            step={step}
-                            searchParams={searchParams}
-                            isSmallScreen={width < 1000}
-                            isEven={index % 2 === 0}
-                            imageWidth={width * 0.2}
-                        />
-                    ))}
+                    <LinearGradient
+                        colors={['rgba(255,255,255,.0)', COLORS.accent]}
+                        locations={[0, 0.4]}
+                        style={{
+                            height: 120,
+                            width: 1,
+                            marginTop: 32,
+                            marginBottom: -SEPARATOR_TOP_INSET,
+                            zIndex: 2
+                        }}
+                    />
+
+                    <View
+                        style={{
+                            //gap: 128
+                        }}
+                    >
+                        {STEPS.map((step, index) => (
+                            <>
+                            <Step
+                                key={index}
+                                index={index}
+                                step={step}
+                                searchParams={searchParams}
+                                isSmallScreen={width < 1000}
+                                isEven={index % 2 === 0}
+                                imageWidth={width * 0.2}
+                                />
+                                {index !== STEPS.length - 1 && <LinearGradient
+                                    colors={['rgba(255,255,255,.0)', COLORS.accent]}
+                                    locations={[0, 0.4]}
+                                    style={{
+                                        height: 100,
+                                        width: 1,
+                                        margin: 'auto',
+                                        marginBottom: -SEPARATOR_TOP_INSET,
+                                        zIndex: 2
+                                        //marginTop: 32
+                                    }}
+                                />}
+                            </>
+                        ))}
                     </View>
                 </View>
             </View>
-            <LinearGradient
-                colors={['rgba(22,22,22,0)', COLORS.primary]}
-                style={{ position: 'absolute', bottom: -10, height: 200, right: 0, left: 0 }}
-                locations={[0, 0.75]}
-            />
         </View>
     )
 }

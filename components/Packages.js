@@ -1,4 +1,4 @@
-import React, { useLayoutEffect, useState } from 'react'
+import React, { useEffect, useLayoutEffect, useState } from 'react'
 import { Text, View, useWindowDimensions, StyleSheet, FlatList } from 'react-native'
 import { COLORS, FONT_SIZES, FONTS, SPACING, PACKAGES } from '../constants'
 import { normalize } from '../utils'
@@ -13,7 +13,7 @@ import VanillaTilt from 'vanilla-tilt'
 const Packages = ({ searchParams }) => {
     const { width } = useWindowDimensions()
 
-    useLayoutEffect(() => {
+    useEffect(() => {
         VanillaTilt.init(document.querySelectorAll(`[data-id="package"]`), {
           max: 2,
           speed: 200,

@@ -182,7 +182,7 @@ const TicketBody = ({ offer, onUnlockPress }) => {
                 onPress={onUnlockPress}
                 additionalStyles={{ marginTop: SPACING.medium }}
                 textColor={COLORS.black}
-                backgroundColors={[COLORS.accent2, COLORS.accent, COLORS.accent, COLORS.accent2]}
+                backgroundColors={COLORS.accent}
                 buttonText='Odemknout'
                 textStyles={{ fontSize: FONT_SIZES.large, fontFamily: FONTS.bold }}
             />

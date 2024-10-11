@@ -164,7 +164,7 @@ const Admin = ({ searchParams }) => {
                             onPress={onNewTicketPress}
                             additionalStyles={{ alignSelf: 'flex-end' }}
                             textColor={COLORS.black}
-                            backgroundColors={[COLORS.accent2, COLORS.accent, COLORS.accent, COLORS.accent2]}
+                            backgroundColors={COLORS.accent}
                             buttonText='New Ticket'
                             textStyles={{ fontSize: FONT_SIZES.large, fontFamily: FONTS.bold }}
                         />

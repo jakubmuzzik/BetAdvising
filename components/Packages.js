@@ -15,7 +15,7 @@ const Packages = ({ searchParams }) => {
 
     useLayoutEffect(() => {
         VanillaTilt.init(document.querySelectorAll(`[data-id="package"]`), {
-          max: 5,
+          max: 2,
           speed: 200,
           easing: "cubic-bezier(.03,.98,.52,.99)",
           reverse: true,
@@ -122,9 +122,9 @@ const Packages = ({ searchParams }) => {
                 </Text>
                 <Text
                     style={{
-                        fontFamily: FONTS.light,
-                        fontSize: FONT_SIZES.large,
-                        color: COLORS.grey300,
+                        fontFamily: FONTS.regular,
+                        fontSize: FONT_SIZES.x_large,
+                        color: COLORS.grey400,
                         lineHeight: FONT_SIZES.large * 1.5,
                         marginBottom: SPACING.large,
                         textAlign: 'center',

@@ -50,8 +50,8 @@ const FooterCTA = ({ searchParams }) => {
                 <Text
                     style={{
                         fontFamily: FONTS.light,
-                        fontSize: FONT_SIZES.large,
-                        color: COLORS.grey300,
+                        fontSize: FONT_SIZES.x_large,
+                        color: COLORS.grey400,
                         textAlign: 'center'
                     }}
                 >
@@ -67,14 +67,14 @@ const FooterCTA = ({ searchParams }) => {
                     to={{ pathname: '/auth', search: new URLSearchParams(searchParams).toString() }}
                 >
                     <HoverableView
-                        hoveredOpacity={0.85}
-                        backgroundColor={[COLORS.accent2, COLORS.accent, COLORS.accent, COLORS.accent2]}
+                        hoveredBackgroundColor={COLORS.hoveredAccent}
+                        backgroundColor={COLORS.accent}
                         style={{
                             justifyContent: 'center',
                             alignItems: 'center',
                             borderRadius: 10,
                             width: 'fit-content',
-                            //boxShadow: '0px 0px 14px rgba(251, 193, 13, 0.35)',
+                            boxShadow: '0px 0px 14px rgba(251, 193, 13, 0.55)',
                             paddingHorizontal: SPACING.x_small,
                             paddingVertical: SPACING.xx_small,
                         }}

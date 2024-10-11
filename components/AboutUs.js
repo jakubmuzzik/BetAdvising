@@ -92,12 +92,12 @@ const AboutUs = ({ searchParams }) => {
                     </Text>
                     <Text
                         style={{
-                            fontFamily: FONTS.light,
+                            fontFamily: FONTS.regular,
                             fontSize: FONT_SIZES.large,
                             color: COLORS.grey400,
                             marginTop: 10,
                             maxWidth: 500,
-                            lineHeight: FONT_SIZES.large * 1.3
+                            lineHeight: FONT_SIZES.large * 1.4
                         }}
                     >
                         Jsme tým profesionálních tipařů poskytujících přesné a spolehlivé tipy na sázení. S našimi radami můžete činit informovaná rozhodnutí a zvýšit své šance na výhru.
@@ -112,14 +112,14 @@ const AboutUs = ({ searchParams }) => {
                         to={{ hash: '#contact', search: new URLSearchParams(searchParams).toString() }}
                     >
                         <HoverableView
-                            hoveredOpacity={0.8}
-                            //backgroundColor={COLORS.whiteBackground}
+                            backgroundColor={COLORS.accentSecondary}
+                            hoveredBackgroundColor={COLORS.accentHoveredSecondary}
                             style={{
                                 borderRadius: 10,
                                 width: 'fit-content',
                                 marginTop: 20,
                                 borderWidth: 1,
-                                borderColor: COLORS.accent,
+                                borderColor: COLORS.accentSecondaryBorder,
                                 paddingHorizontal: SPACING.x_small,
                                 paddingVertical: SPACING.xx_small,
                                 flexDirection: 'row',
@@ -130,8 +130,8 @@ const AboutUs = ({ searchParams }) => {
                         >
                             <Text
                                 style={{
-                                    color: COLORS.white,
-                                    fontFamily: FONTS.regular,
+                                    color: COLORS.accent,
+                                    fontFamily: FONTS.medium,
                                     fontSize: FONT_SIZES.large
                                 }}
                             >

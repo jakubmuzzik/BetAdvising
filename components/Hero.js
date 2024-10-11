@@ -1,23 +1,15 @@
 import React from 'react'
 import { COLORS, FONT_SIZES, FONTS } from '../constants'
 import { normalize } from '../utils'
-import { StyleSheet, View, ImageBackground, Text, useWindowDimensions, TouchableOpacity } from 'react-native'
+import { StyleSheet, View, ImageBackground, Text } from 'react-native'
 import { LinearGradient } from 'expo-linear-gradient'
 import { SPACING } from '../constants'
-import { Image } from 'expo-image'
 import HoverableView from './elements/HoverableView'
 import { MotiText } from 'moti'
 import { Link } from 'react-router-dom'
 import withSearchParams from './hoc/withSearchParams'
-import CustomButton from './elements/CustomButton'
 
 const Hero = ({ searchParams }) => {
-    const { width } = useWindowDimensions()
-
-    const onGetAppPress = () => {
-
-    }
-
     return (
         <>
             <ImageBackground
@@ -105,8 +97,8 @@ const Hero = ({ searchParams }) => {
                             to={{ pathname: '/auth', search: new URLSearchParams(searchParams).toString() }}
                         >
                             <HoverableView
-                                hoveredOpacity={0.85}
-                                backgroundColor={[COLORS.accent2, COLORS.accent, COLORS.accent, COLORS.accent2]}
+                                hoveredBackgroundColor={COLORS.hoveredAccent}
+                                backgroundColor={COLORS.accent}
                                 style={{
                                     justifyContent: 'center',
                                     alignItems: 'center',
@@ -150,15 +142,16 @@ const Hero = ({ searchParams }) => {
                                     //boxShadow: '0px 0px 10px rgba(255, 255, 255, 0.1)',
                                     //boxShadow: '0px 0px 14px rgba(251, 193, 13, 0.25)',
                                     borderWidth: 1,
-                                    borderColor: COLORS.accent
+                                    borderColor: COLORS.accentSecondaryBorder
                                 }}
                                 withCustomButtonHeight
-                                hoveredOpacity={0.8}
+                                hoveredBackgroundColor={COLORS.accentHoveredSecondary}
+                                backgroundColor={COLORS.accentSecondary}
                             >
                                 <Text
                                     style={{
-                                        color: COLORS.white,
-                                        fontFamily: FONTS.regular,
+                                        color: COLORS.accent,
+                                        fontFamily: FONTS.medium,
                                         fontSize: FONT_SIZES.large
                                     }}
                                 >

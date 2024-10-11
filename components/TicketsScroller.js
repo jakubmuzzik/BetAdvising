@@ -281,14 +281,14 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         borderWidth: 1,
         borderColor: COLORS.whiteBackground2,
-        shadowColor: COLORS.black,
+        shadowColor: '#0e1926',
 
         shadowOffset: {
-            width: 0,
-            height: 5,
+            width: 2,
+            height: 4,
         },
-        shadowOpacity: 0.26,
-        shadowRadius: 6.68,
+        shadowOpacity: 0.46,
+        shadowRadius: 10.68,
 
         elevation: 11,
     },

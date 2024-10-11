@@ -635,10 +635,11 @@ const NewTicket = ({ offsetX, toastRef, setTabHeight, searchParams, storeCreated
                 >
                     <CustomButton
                         onPress={onAddMatchPress}
-                        textColor={COLORS.white}
+                        textColor={COLORS.accent}
+                        backgroundColors={COLORS.accentSecondary}
                         buttonText='Přidat zápas'
                         textStyles={{ fontSize: FONT_SIZES.large, fontFamily: FONTS.regular, }}
-                        additionalStyles={{ borderWidth: 1, borderColor: COLORS.white, borderRadius: 20 }}
+                        additionalStyles={{ borderWidth: 1, borderColor: COLORS.accentSecondaryBorder }}
                     />
                 </View>
             </View>
@@ -657,7 +658,7 @@ const NewTicket = ({ offsetX, toastRef, setTabHeight, searchParams, storeCreated
                     buttonText='Vytvořit tiket'
                     textStyles={{ fontSize: FONT_SIZES.large }}
                     additionalStyles={{ borderRadius: 10 }}
-                    backgroundColors={[COLORS.accent2, COLORS.accent, COLORS.accent, COLORS.accent2]}
+                    backgroundColors={COLORS.accent}
                 />
             </View>
         </View>

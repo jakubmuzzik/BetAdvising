@@ -97,7 +97,7 @@ const Package = ({ id, name, credits, price, description, searchParams }) => {
                         borderRadius: 10,
                         width: 'fit-content',
                         borderWidth: 1,
-                        borderColor: COLORS.accent,
+                        borderColor: COLORS.accentSecondaryBorder,
                         paddingHorizontal: SPACING.x_small,
                         paddingVertical: SPACING.xx_small
                     }}

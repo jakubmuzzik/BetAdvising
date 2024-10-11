@@ -16,10 +16,10 @@ const UNLOCKED_QUERY = '*, ticket(*, ticket_entries(*))'
 const NOTIFICATIONS_QUERY = '*, ticket(id, name, price)'
 const CREDIT_TRANSACTIONS_QUERY = '*, ticket(*, ticket_entries(*)), payment_intent(*)'
 
-export const MAX_OFFER_ROWS_PER_QUERY = 50
-export const MAX_UNLOCKED_ROWS_PER_QUERY = 50
-export const MAX_NOTIFICATIONS_ROWS_PER_QUERY = 50
-export const MAX_CREDIT_TRANSACTIONS_ROWS_PER_QUERY = 50
+export const MAX_OFFER_ROWS_PER_QUERY = 30
+export const MAX_UNLOCKED_ROWS_PER_QUERY = 30
+export const MAX_NOTIFICATIONS_ROWS_PER_QUERY = 30
+export const MAX_CREDIT_TRANSACTIONS_ROWS_PER_QUERY = 30
 
 export const clearReduxData = () => ({
     type: CLEAR_DATA
@@ -136,6 +136,10 @@ export const fetchLatestCreditTransaction = () => async (dispatch, getState) => 
                 type: CREDIT_TRANSACTIONS_STATE_CHANGE,
                 creditTransactions: data.concat(getState().userState.creditTransactions ?? [])
             })
+
+        if (data[0]?.transaction_type === 'purchase' && data[0]?.payment_intent?.status === 'succeeded') {
+            dispatch(updateCurrentUserInRedux({ credits: Number(getState().userState.currentUser.credits) + Number(data[0].amount) }))
+        }
 
         return data
     } catch (e) {

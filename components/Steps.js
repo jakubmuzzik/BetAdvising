@@ -194,7 +194,7 @@ const STEPS = [
                         gap: SPACING.xx_small,
                         borderRadius: 20,
                         borderWidth: 1,
-                        borderColor: COLORS.accent
+                        borderColor: COLORS.accent,
                     }}
                 >
                     <Image
@@ -245,15 +245,14 @@ const STEPS = [
                         { rotateZ: '20deg' },
                         //{ scale: withTiming(isHovered ? 1.1 : 1, { duration: 200 }) }
                     ],
-                    width: '100%',
-                    height: 400,
-                        //maxWidth: 900,
-                        //aspectRatio: 2976 / 2290,
+                    width,
+                maxWidth: 500,
+                aspectRatio: 1811 / 2135,
                         alignSelf: 'center',
                 }}
             >
                 <Image
-                    source={require('../assets/images/tickets_mock2.png')}
+                    source={require('../assets/images/tickets_mock3.png')}
                     style={{
                         flex: 1
                     }}

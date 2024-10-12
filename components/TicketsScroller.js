@@ -8,6 +8,7 @@ import Animated, {
     useFrameCallback,
     useSharedValue,
 } from 'react-native-reanimated'
+import { AntDesign } from '@expo/vector-icons'
 
 const MeasureElement = ({ onLayout, children }) => (
     <Animated.ScrollView
@@ -163,7 +164,56 @@ const TicketsScroller = () => {
                 marginTop: 200
             }}
         >
-            
+            <LinearGradient
+                colors={[COLORS.primary, 'rgba(255,255,255,.05)', COLORS.primary]}
+                start={{ x: 0, y: 0 }}
+                end={{ x: 1, y: 0 }}
+                style={{
+                    position: 'absolute',
+                    width: width - SPACING.page_horizontal * 1.5,
+                    maxWidth: 1180,
+                    height: 500,
+                    top: -SPACING.x_large,
+                    //borderTopWidth: 1,
+                    borderColor: COLORS.grey400,
+                }}
+            >
+                <LinearGradient
+                    colors={['rgba(255,255,255,0)', COLORS.grey400, 'rgba(255,255,255,.0)']}
+                    start={{ x: 0, y: 0 }}
+                    end={{ x: 1, y: 0 }}
+                    style={{
+                        height: 1
+                    }}
+                />
+                <LinearGradient
+                    colors={['rgba(255,255,255,0)', COLORS.primary]}
+                    style={{ position: 'absolute', bottom: 0, height: 100, right: 0, left: 0 }}
+                    locations={[0, 0.75]}
+                />
+            </LinearGradient>
+            <View
+                style={{
+                    paddingHorizontal: SPACING.x_small,
+                    paddingVertical: SPACING.xxx_small,
+                    borderWidth: 1,
+                    borderColor: COLORS.accentSecondaryBorder,
+                    borderRadius: 30,
+                    backgroundColor: COLORS.accentSecondary,
+                    width : 'fit-content',
+                    alignSelf: 'center',
+                    marginBottom: 16,
+                    flexDirection: 'row',
+                    gap: 5,
+                }}
+            >
+                <AntDesign name="star" size={SPACING.x_small} color={COLORS.accent} />
+                <AntDesign name="star" size={SPACING.x_small} color={COLORS.accent} />
+                <AntDesign name="star" size={SPACING.x_small} color={COLORS.accent} />
+                <AntDesign name="star" size={SPACING.x_small} color={COLORS.accent} />
+                <AntDesign name="star" size={SPACING.x_small} color={COLORS.accent} />
+            </View>
+
             <Text
                 style={{
                     fontFamily: FONTS.medium,

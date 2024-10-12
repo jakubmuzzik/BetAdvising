@@ -233,16 +233,40 @@ const STEPS = [
                 </LinearGradient>
             </>
         ),
-        image: (width) => <Image
-            source={require('../assets/images/mobile_mock.png')}
-            style={{
-                width,
-                maxWidth: 500,
-                aspectRatio: 457 / 344,
-                alignSelf: 'center'
-            }}
-            contentFit='cover'
-        />
+        image: (width) => (
+            <View
+                style={{
+                    borderRadius: 10,
+                    borderColor: COLORS.whiteBackground2,
+                    //borderWidth: 1,
+                    transform: [
+                        { rotateX: '20deg' },
+                        { rotateY: '-20deg' },
+                        { rotateZ: '20deg' },
+                        //{ scale: withTiming(isHovered ? 1.1 : 1, { duration: 200 }) }
+                    ],
+                    width: '100%',
+                    height: 400,
+                        //maxWidth: 900,
+                        //aspectRatio: 2976 / 2290,
+                        alignSelf: 'center',
+                }}
+            >
+                <Image
+                    source={require('../assets/images/tickets_mock2.png')}
+                    style={{
+                        flex: 1
+                    }}
+                    contentFit='cover'
+                    contentPosition='top center'
+                />
+               <LinearGradient
+                    colors={['rgba(22,22,22,0)', COLORS.primary]}
+                    style={{ position: 'absolute', bottom: 0, width: '100%', height: '50%', justifyContent: 'center', alignItems: 'center' }}
+                />
+            </View>
+        )
+        
     },
     {
         id: 4,

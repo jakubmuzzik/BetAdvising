@@ -388,55 +388,55 @@ const STEPS = [
         />
     </View>
     },
-    {
-        id: 5,
-        content: (searchParams) => (
-            <>
-                <Text
-                    style={styles.stepHeaderText}
-                >
-                    Doplňujte kredity a odemykejte další tipy
-                </Text>
-                <Text
-                    style={styles.stepText}
-                >
-                    • Pokud s našimi tipy budete spokojení, můžete si dokoupit další kredity
-                </Text>
-                <Text
-                    style={styles.stepText}
-                >
-                    • Na výběr máte ze 6 balíčků, které se liší počtem kreditů a cenou
-                </Text>
-            </>
-        ),
-        image: (width) => <View
-        style={{
-            transform: [
-                { rotateX: '20deg' },
-                { rotateY: '20deg' },
-                { rotateZ: '-20deg' },
-            ],
-            width: width - 20,
-            maxWidth: 300,
-            aspectRatio: 1811 / 2135,
-            alignSelf: 'center',
-            marginVertical: 20
-        }}
-    >
-        <Image
-            source={require('../assets/images/tickets_mock3.png')}
-            style={{
-                flex: 1
-            }}
-            contentFit='cover'
-            contentPosition='top center'
-        />
-       <LinearGradient
-            colors={['rgba(22,22,22,0)', COLORS.primary]}
-            style={{ position: 'absolute', bottom: 0, width: '100%', height: '50%', justifyContent: 'center', alignItems: 'center' }}
-        />
-    </View>
-    }
+    // {
+    //     id: 5,
+    //     content: (searchParams) => (
+    //         <>
+    //             <Text
+    //                 style={styles.stepHeaderText}
+    //             >
+    //                 Doplňujte kredity a odemykejte další tipy
+    //             </Text>
+    //             <Text
+    //                 style={styles.stepText}
+    //             >
+    //                 • Pokud s našimi tipy budete spokojení, můžete si dokoupit další kredity
+    //             </Text>
+    //             <Text
+    //                 style={styles.stepText}
+    //             >
+    //                 • Na výběr máte ze 6 balíčků, které se liší počtem kreditů a cenou
+    //             </Text>
+    //         </>
+    //     ),
+    //     image: (width) => <View
+    //     style={{
+    //         transform: [
+    //             { rotateX: '20deg' },
+    //             { rotateY: '20deg' },
+    //             { rotateZ: '-20deg' },
+    //         ],
+    //         width: width - 20,
+    //         maxWidth: 300,
+    //         aspectRatio: 1811 / 2135,
+    //         alignSelf: 'center',
+    //         marginVertical: 20
+    //     }}
+    // >
+    //     <Image
+    //         source={require('../assets/images/tickets_mock3.png')}
+    //         style={{
+    //             flex: 1
+    //         }}
+    //         contentFit='cover'
+    //         contentPosition='top center'
+    //     />
+    //    <LinearGradient
+    //         colors={['rgba(22,22,22,0)', COLORS.primary]}
+    //         style={{ position: 'absolute', bottom: 0, width: '100%', height: '50%', justifyContent: 'center', alignItems: 'center' }}
+    //     />
+    // </View>
+    // }
 ]
 
 const StepCountMarker = ({ stepCount }) => (

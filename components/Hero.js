@@ -451,7 +451,7 @@ const Hero = ({ searchParams }) => {
                             textAlign: 'center',
                         }}
                     >
-                        Jsme tým profesionálních sázkařů s dlouholetými zkušenostmi. Jsme tu abychom pro všechny, kteří chtějí sázet a vyhrávat.
+                        Jsme tým profesionálních sázkařů s dlouholetými zkušenostmi. Jsme tu pro všechny, kteří chtějí sázet a vyhrávat.
                     </Text>
                 </View>
 

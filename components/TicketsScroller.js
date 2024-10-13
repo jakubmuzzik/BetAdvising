@@ -223,7 +223,7 @@ const TicketsScroller = () => {
                     zIndex: 2
                 }}
             >
-                Nech se inspirovat
+                Výherní tikety
             </Text>
             <Text
                 style={{

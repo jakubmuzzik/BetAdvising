@@ -161,37 +161,55 @@ const TicketsScroller = () => {
             style={{
                 width: '100%',
                 alignItems: 'center',
-                marginTop: 200
+                marginTop: 550
             }}
         >
+            <Image
+                style={{
+                    position: 'absolute',
+                    top: -SPACING.x_large * 2,
+                    right: 0,
+                    left: 0,
+                    margin: 'auto',
+                    width: '100%',
+                    height: 300,
+                    //aspectRatio: 3000/2400,
+                    opacity: 0.3
+                    
+                }}
+                source={require('../assets/images/gold-confetti.png')}
+                contentFit='cover'
+            />
             <LinearGradient
                 colors={[COLORS.primary, 'rgba(255,255,255,.05)', COLORS.primary]}
                 start={{ x: 0, y: 0 }}
                 end={{ x: 1, y: 0 }}
                 style={{
                     position: 'absolute',
-                    width: width - SPACING.page_horizontal * 1.5,
-                    maxWidth: 1180,
+                    width: '100%' ,//- SPACING.page_horizontal * 1.5,
+                    //maxWidth: 1180,
                     height: 500,
-                    top: -SPACING.x_large,
+                    top:-SPACING.x_large * 2,
                     //borderTopWidth: 1,
                     borderColor: COLORS.grey400,
                 }}
             >
-                <LinearGradient
-                    colors={['rgba(255,255,255,0)', COLORS.grey400, 'rgba(255,255,255,.0)']}
-                    start={{ x: 0, y: 0 }}
-                    end={{ x: 1, y: 0 }}
-                    style={{
-                        height: 1
-                    }}
+                
+            </LinearGradient>
+
+            <LinearGradient
+                    colors={[ COLORS.primary, 'rgba(255,255,255,0)']}
+                    style={{ position: 'absolute', top: -SPACING.x_large*2, height: 150, right: 0, left: 0 }}
+                    locations={[0, 1]}
                 />
-                <LinearGradient
+
+            <LinearGradient
                     colors={['rgba(255,255,255,0)', COLORS.primary]}
                     style={{ position: 'absolute', bottom: 0, height: 100, right: 0, left: 0 }}
                     locations={[0, 0.75]}
                 />
-            </LinearGradient>
+
+            
             <View
                 style={{
                     paddingHorizontal: SPACING.x_small,
@@ -213,6 +231,8 @@ const TicketsScroller = () => {
                 <AntDesign name="star" size={SPACING.x_small} color={COLORS.accent} />
                 <AntDesign name="star" size={SPACING.x_small} color={COLORS.accent} />
             </View>
+            
+            
 
             <Text
                 style={{
@@ -239,21 +259,7 @@ const TicketsScroller = () => {
                 Nech se inspirovat našimi tipy a začni svou cestu k úspěchu ještě dnes.
             </Text>
 
-            {/* <Image
-                style={{
-                    position: 'absolute',
-                    top: 10,
-                    right: 0,
-                    left: 0,
-                    margin: 'auto',
-                    width: '40%',
-                    aspectRatio: 3000/2400,
-                    opacity: 0.3
-                    
-                }}
-                source={require('../assets/images/gold-confetti.png')}
-            /> */}
-
+            
             <Marquee 
                 style={{
                     marginTop: SPACING.xxx_large,

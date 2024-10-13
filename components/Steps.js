@@ -14,91 +14,91 @@ const SEPARATOR_TOP_INSET = 20
 const STEP_COUNT_MARKER_SIZE = 35
 
 const STEPS = [
-    {
-        id: 1,
-        content: (searchParams) => (
-            <>
-                <Text
-                    style={styles.stepHeaderText}
-                >
-                    Otevřete si účet u sázkové kanceláře
-                </Text>
-                <Text
-                    style={styles.stepText}
-                >
-                    Pro použití tipů od našich expertů budete potřebovat aktivní účet u sázkové kanceláře. Pokud hledáte důvěryhodnou platformu, podívejte se na naše partnery a využijte exkluzivních nabídek a bonusů!
-                </Text>
-                <Text
-                    style={{
-                        fontFamily: FONTS.regular,
-                        fontSize: FONT_SIZES.large,
-                        color: COLORS.grey400,
-                        marginTop: SPACING.large
-                    }}
-                >
-                    Naše doporučené sázkové kanceláře:
-                </Text>
+    // {
+    //     id: 1,
+    //     content: (searchParams) => (
+    //         <>
+    //             <Text
+    //                 style={styles.stepHeaderText}
+    //             >
+    //                 Otevřete si účet u sázkové kanceláře
+    //             </Text>
+    //             <Text
+    //                 style={styles.stepText}
+    //             >
+    //                 Pro použití tipů od našich expertů budete potřebovat aktivní účet u sázkové kanceláře. Pokud hledáte důvěryhodnou platformu, podívejte se na naše partnery a využijte exkluzivních nabídek a bonusů!
+    //             </Text>
+    //             <Text
+    //                 style={{
+    //                     fontFamily: FONTS.regular,
+    //                     fontSize: FONT_SIZES.large,
+    //                     color: COLORS.grey400,
+    //                     marginTop: SPACING.large
+    //                 }}
+    //             >
+    //                 Naše doporučené sázkové kanceláře:
+    //             </Text>
 
-                <View style={{
-                    marginTop: SPACING.small,
-                    flexDirection: 'row',
-                    flexWrap: 'wrap',
-                    gap: SPACING.small
-                }}>
-                    <TouchableOpacity
-                        style={{
-                            //borderWidth: 1,
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                            padding: SPACING.xx_small,
-                            borderRadius: 10,
-                            borderColor: COLORS.grey400
-                        }}
-                        onPress={() => { }}
-                    >
-                        <Image
-                            source={require('../assets/logos/tipsport.png')}
-                            style={{
-                                height: 25,
-                                aspectRatio: 300 / 68
-                            }}
-                            contentFit='contain'
-                        />
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                        style={{
-                            //borderWidth: 1,
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                            padding: SPACING.xx_small,
-                            borderRadius: 10,
-                            borderColor: COLORS.grey400
-                        }}
-                        onPress={() => { }}
-                    >
-                        <Image
-                            source={require('../assets/logos/chance.svg')}
-                            style={{
-                                height: 25,
-                                aspectRatio: 300 / 68
-                            }}
-                            contentFit='contain'
-                        />
-                    </TouchableOpacity>
-                </View>
-            </>
-        ),
-        image: (width) => <Image
-            source={require('../assets/images/mobile_mock.png')}
-            style={{
-                width,
-                maxWidth: 500,
-                aspectRatio: 457 / 344,
-                alignSelf: 'center'
-            }}
-            contentFit='cover'
-        />
-    },
+    //             <View style={{
+    //                 marginTop: SPACING.small,
+    //                 flexDirection: 'row',
+    //                 flexWrap: 'wrap',
+    //                 gap: SPACING.small
+    //             }}>
+    //                 <TouchableOpacity
+    //                     style={{
+    //                         //borderWidth: 1,
+    //                         justifyContent: 'center',
+    //                         alignItems: 'center',
+    //                         padding: SPACING.xx_small,
+    //                         borderRadius: 10,
+    //                         borderColor: COLORS.grey400
+    //                     }}
+    //                     onPress={() => { }}
+    //                 >
+    //                     <Image
+    //                         source={require('../assets/logos/tipsport.png')}
+    //                         style={{
+    //                             height: 25,
+    //                             aspectRatio: 300 / 68
+    //                         }}
+    //                         contentFit='contain'
+    //                     />
+    //                 </TouchableOpacity>
+    //                 <TouchableOpacity
+    //                     style={{
+    //                         //borderWidth: 1,
+    //                         justifyContent: 'center',
+    //                         alignItems: 'center',
+    //                         padding: SPACING.xx_small,
+    //                         borderRadius: 10,
+    //                         borderColor: COLORS.grey400
+    //                     }}
+    //                     onPress={() => { }}
+    //                 >
+    //                     <Image
+    //                         source={require('../assets/logos/chance.svg')}
+    //                         style={{
+    //                             height: 25,
+    //                             aspectRatio: 300 / 68
+    //                         }}
+    //                         contentFit='contain'
+    //                     />
+    //                 </TouchableOpacity>
+    //             </View>
+    //         </>
+    //     ),
+    //     image: (width) => <Image
+    //         source={require('../assets/images/mobile_mock.png')}
+    //         style={{
+    //             width,
+    //             maxWidth: 500,
+    //             aspectRatio: 457 / 344,
+    //             alignSelf: 'center'
+    //         }}
+    //         contentFit='cover'
+    //     />
+    // },
     {
         id: 2,
         content: (searchParams) => (
@@ -514,7 +514,7 @@ const Steps = ({ searchParams }) => {
                 <View style={{
                     alignItems: 'center',
                     justifyContent: 'center',
-                    paddingHorizontal: SPACING.medium,
+                    //paddingHorizontal: SPACING.medium,
                     paddingTop: SPACING.x_large,
                     paddingBottom: normalize(100)
                 }}>

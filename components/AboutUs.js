@@ -24,7 +24,7 @@ const AboutUs = ({ searchParams }) => {
                 width: '100%',
                 alignItems: 'center',
                 zIndex: 2,
-                marginTop: normalize(150)
+                marginTop: 950,
             }}>
             <LinearGradient
                 colors={[COLORS.primary, 'rgba(255,255,255,.05)', COLORS.primary]}

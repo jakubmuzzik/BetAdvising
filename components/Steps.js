@@ -106,12 +106,17 @@ const STEPS = [
                 <Text
                     style={styles.stepHeaderText}
                 >
-                    Zaregistrujte se a získejte 200 kreditů zdarma
+                    Zaregistrujte se a získejte 200 vstupních kreditů zdarma
                 </Text>
                 <Text
                     style={styles.stepText}
                 >
-                    Zaregistrujte se a získejte zdarma 200 kreditů, které můžete využít na odemykání tipů.
+                    • Pro získání přístupu k našim tipům musíte se prvně zdarma zaregistrovat
+                </Text>
+                <Text
+                    style={styles.stepText}
+                >
+                    • Každý nový a ověřený uživatel obdrží 200 vstupních kreditů zdarma
                 </Text>
                 <Link
                     style={{
@@ -151,16 +156,38 @@ const STEPS = [
                 </Link>
             </>
         ),
-        image: (width) => <Image
-            source={require('../assets/images/mobile_mock.png')}
-            style={{
-                width,
-                maxWidth: 500,
-                aspectRatio: 457 / 344,
-                alignSelf: 'center'
-            }}
-            contentFit='cover'
-        />
+        image: (width) => (
+            <View
+                style={{
+                    
+                    //borderWidth: 1,
+                    transform: [
+                        { rotateX: '20deg' },
+                        { rotateY: '-20deg' },
+                        { rotateZ: '20deg' },
+                        //{ scale: withTiming(isHovered ? 1.1 : 1, { duration: 200 }) }
+                    ],
+                    width: width - 20,
+                    maxWidth: 300,
+                    aspectRatio: 1811 / 2135,
+                    alignSelf: 'center',
+                    marginVertical: 20
+                }}
+            >
+                <Image
+                    source={require('../assets/images/tickets_mock3.png')}
+                    style={{
+                        flex: 1
+                    }}
+                    contentFit='cover'
+                    contentPosition='top center'
+                />
+               <LinearGradient
+                    colors={['rgba(22,22,22,0)', COLORS.primary]}
+                    style={{ position: 'absolute', bottom: 0, width: '100%', height: '50%', justifyContent: 'center', alignItems: 'center' }}
+                />
+            </View>
+        )
     },
     {
         id: 3,
@@ -169,15 +196,20 @@ const STEPS = [
                 <Text
                     style={styles.stepHeaderText}
                 >
-                    Odemykejte si naše tipy a začněte vydělávat
+                    Odemykejte naše tipy a nechte se inspirovat
                 </Text>
                 <Text
                     style={styles.stepText}
                 >
-                    Za nakoupené kredity odemykejte sázkařské tipy. Sázky na tyto tipy můžete umístit u vaší sázkové kanceláře. Pokud vybraný tiket nevyjde, vrátíme vám veškeré kredity.
+                    • Naše tipy můžete následně odemykat pomocí kreditů
+                </Text>
+                <Text
+                    style={styles.stepText}
+                >
+                    • Před odemčením každého tipu vidíte jeho celkový kurz, náš vklad a zbývající čas do začátku prvního zápasu
                 </Text>
 
-                <LinearGradient
+                {/* <LinearGradient
                     colors={['rgba(255, 204, 44, 0.38)', 'rgba(153, 122, 27, 0.38)']}
                     start={{ x: 0, y: 0 }}
                     end={{ x: 1, y: 0 }}
@@ -230,7 +262,7 @@ const STEPS = [
                             Pokud vybraný tiket nevyjde, vrátíme vám veškeré kredity
                         </Text>
                     </View>
-                </LinearGradient>
+                </LinearGradient> */}
             </>
         ),
         image: (width) => (
@@ -240,15 +272,16 @@ const STEPS = [
                     borderColor: COLORS.whiteBackground2,
                     //borderWidth: 1,
                     transform: [
-                        { rotateX: '20deg' },
+                        { rotateX: '-20deg' },
                         { rotateY: '-20deg' },
-                        { rotateZ: '20deg' },
+                        { rotateZ: '-20deg' },
                         //{ scale: withTiming(isHovered ? 1.1 : 1, { duration: 200 }) }
                     ],
                     width,
-                maxWidth: 500,
-                aspectRatio: 1811 / 2135,
-                        alignSelf: 'center',
+                    maxWidth: 500,
+                    aspectRatio: 1811 / 2135,
+                    alignSelf: 'center',
+                    marginVertical: 20
                 }}
             >
                 <Image
@@ -274,14 +307,14 @@ const STEPS = [
                 <Text
                     style={styles.stepHeaderText}
                 >
-                    Dokupte si kredity
+                    Kredity budou uplatněny pouze za úspěšné tipy
                 </Text>
                 <Text
                     style={styles.stepText}
                 >
-                    Pokud s námi budete chtít spokojení, můžete si dokoupit kredity. Čím více kreditů si zakoupíte, tím více tipů můžete odemykat.
+                    • Pokud by některý z odemčených tiketů nevyšel, budou vám kredity vráceny
                 </Text>
-                <View style={{
+                {/* <View style={{
                     marginTop: SPACING.large
                 }}>
                     <Link
@@ -321,19 +354,88 @@ const STEPS = [
                             </Text>
                         </HoverableView>
                     </Link>
-                </View>
+                </View> */}
             </>
         ),
-        image: (width) => <Image
-            source={require('../assets/images/mobile_mock.png')}
+        image: (width) => <View
+        style={{
+            
+            //borderWidth: 1,
+            transform: [
+                { rotateX: '20deg' },
+                { rotateY: '-20deg' },
+                { rotateZ: '20deg' },
+                //{ scale: withTiming(isHovered ? 1.1 : 1, { duration: 200 }) }
+            ],
+            width: width - 20,
+            maxWidth: 300,
+            aspectRatio: 1811 / 2135,
+            alignSelf: 'center',
+            marginVertical: 20
+        }}
+    >
+        <Image
+            source={require('../assets/images/tickets_mock3.png')}
             style={{
-                width,
-                maxWidth: 500,
-                aspectRatio: 457 / 344,
-                alignSelf: 'center'
+                flex: 1
             }}
             contentFit='cover'
+            contentPosition='top center'
         />
+       <LinearGradient
+            colors={['rgba(22,22,22,0)', COLORS.primary]}
+            style={{ position: 'absolute', bottom: 0, width: '100%', height: '50%', justifyContent: 'center', alignItems: 'center' }}
+        />
+    </View>
+    },
+    {
+        id: 5,
+        content: (searchParams) => (
+            <>
+                <Text
+                    style={styles.stepHeaderText}
+                >
+                    Doplňujte kredity a odemykejte další tipy
+                </Text>
+                <Text
+                    style={styles.stepText}
+                >
+                    • Pokud s našimi tipy budete spokojení, můžete si dokoupit další kredity
+                </Text>
+                <Text
+                    style={styles.stepText}
+                >
+                    • Na výběr máte ze 6 balíčků, které se liší počtem kreditů a cenou
+                </Text>
+            </>
+        ),
+        image: (width) => <View
+        style={{
+            transform: [
+                { rotateX: '20deg' },
+                { rotateY: '20deg' },
+                { rotateZ: '-20deg' },
+            ],
+            width: width - 20,
+            maxWidth: 300,
+            aspectRatio: 1811 / 2135,
+            alignSelf: 'center',
+            marginVertical: 20
+        }}
+    >
+        <Image
+            source={require('../assets/images/tickets_mock3.png')}
+            style={{
+                flex: 1
+            }}
+            contentFit='cover'
+            contentPosition='top center'
+        />
+       <LinearGradient
+            colors={['rgba(22,22,22,0)', COLORS.primary]}
+            style={{ position: 'absolute', bottom: 0, width: '100%', height: '50%', justifyContent: 'center', alignItems: 'center' }}
+        />
+    </View>
     }
 ]
 
@@ -388,9 +490,6 @@ const Step = ({ isSmallScreen, index, isEven, step, searchParams, imageWidth }) 
             style={{
                 flexDirection: isSmallScreen ? (isEven ? 'column' : 'column-reverse') : 'row',
                 gap: isSmallScreen ? SPACING.xx_large : 150,
-                paddingHorizontal: isSmallScreen ? SPACING.medium : SPACING.xx_large,
-                paddingTop: STEP_COUNT_MARKER_SIZE + SEPARATOR_TOP_INSET + SPACING.large,
-                paddingBottom: 64,
                 borderRadius: 20,
                 overflow: 'hidden',
                 justifyContent: 'flex-start'
@@ -458,9 +557,14 @@ const Step = ({ isSmallScreen, index, isEven, step, searchParams, imageWidth }) 
             )}
 
             <View
-                style={isSmallScreen ? {} : {
-                    flex: 1
-                }}
+                style={[
+                    isEven ? {
+                        paddingLeft: isSmallScreen ? SPACING.medium : SPACING.xx_large,
+                        paddingTop: STEP_COUNT_MARKER_SIZE + SEPARATOR_TOP_INSET + SPACING.large,
+                        paddingBottom: 64,
+                    } : {},
+                    isSmallScreen ? {} : { flex: 1 }
+                ]}
             >
                 {isEven ? step.content(searchParams) : step.image(imageWidth)}
             </View>
@@ -468,9 +572,14 @@ const Step = ({ isSmallScreen, index, isEven, step, searchParams, imageWidth }) 
             <StepCountMarker stepCount={index + 1} />
 
             <View
-                style={isSmallScreen ? {} : {
-                    flex: 1
-                }}
+                style={[
+                    !isEven ? {
+                        paddingLeft: isSmallScreen ? SPACING.medium : SPACING.xx_large,
+                        paddingTop: STEP_COUNT_MARKER_SIZE + SEPARATOR_TOP_INSET + SPACING.large,
+                        paddingBottom: 64,
+                    } : {},
+                    isSmallScreen ? {} : { flex: 1 }
+                ]}
             >
                 {isEven ? step.image(imageWidth) : step.content(searchParams)}
             </View>
@@ -491,6 +600,7 @@ const Steps = ({ searchParams }) => {
             reverse: true,
             glare: true,
             "max-glare": 0.1,
+            axis: 'x',
         })
     }, [])
 
@@ -501,7 +611,7 @@ const Steps = ({ searchParams }) => {
                 paddingHorizontal: SPACING.page_horizontal,
                 width: '100%',
                 alignItems: 'center',
-                marginTop: normalize(200)
+                marginTop: 100
             }}
         >
             <View
@@ -518,17 +628,30 @@ const Steps = ({ searchParams }) => {
                     paddingTop: SPACING.x_large,
                     paddingBottom: normalize(100)
                 }}>
-                    <Text
+                    <View
                         style={{
-                            fontFamily: FONTS.regular,
-                            fontSize: FONT_SIZES.large,
-                            color: COLORS.accent,
-                            marginBottom: 5,
-                            textAlign: 'center'
+                            paddingHorizontal: SPACING.x_small,
+                            paddingVertical: SPACING.xxx_small,
+                            borderWidth: 1,
+                            borderColor: COLORS.accentSecondaryBorder,
+                            borderRadius: 30,
+                            backgroundColor: COLORS.accentSecondary,
+                            width: 'fit-content',
+                            alignSelf: 'center',
+                            marginBottom: 16,
                         }}
                     >
-                        Jak to funguje
-                    </Text>
+                        <Text
+                            style={{
+                                fontFamily: FONTS.regular,
+                                fontSize: FONT_SIZES.large,
+                                color: COLORS.accent,
+                                textAlign: 'center'
+                            }}
+                        >
+                            Jak to funguje
+                        </Text>
+                    </View>
                     <Text
                         style={{
                             fontFamily: FONTS.medium,
@@ -604,6 +727,8 @@ const styles = StyleSheet.create({
         fontFamily: FONTS.regular,
         fontSize: FONT_SIZES.large,
         color: COLORS.grey400,
-        lineHeight: FONT_SIZES.large * 1.5
+        lineHeight: FONT_SIZES.large * 1.5,
+        marginLeft: 4,
+        marginBottom: 4
     }
 })

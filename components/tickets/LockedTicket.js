@@ -144,7 +144,7 @@ const Match = memo(({data, width}) => (
                     textAlign: 'right'
                 }}
             >
-                {createRandomString(data.odd)}
+                {createRandomString(data.odd.toFixed(2))}
             </Text>
         </View>
     </View>

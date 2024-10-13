@@ -207,7 +207,7 @@ const Match = ({ match, width, ticketId, id, showEditButtons, offsetX, actions }
                         flexShrink: 1,
                     }}
                 >
-                    {match.odd}
+                    {match.odd.toFixed(2)}
                 </Text>
             </View>
         </View>

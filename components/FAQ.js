@@ -60,7 +60,7 @@ const FAQ = () => {
                     Chcete vědět více? Kontaktuje nás kdykoliv na
                 </Text>
                 <Text
-                    onPress={() => Linking.openURL('mailto:support@bet4you.cz')}
+                    onPress={() => Linking.openURL('mailto:support@tipstrike.cz')}
                     style={{
                         fontFamily: FONTS.light,
                         fontSize: FONT_SIZES.large,
@@ -69,7 +69,7 @@ const FAQ = () => {
                         textAlign: isSmallScreen ? 'center' : 'left'
                     }}
                 >
-                    support@bet4you.cz
+                    support@tipstrike.cz
                 </Text>
             </View>
             <View
@@ -87,14 +87,14 @@ const FAQ = () => {
                     backgroundColor={COLORS.secondary}
                 />
                 <Accordion 
-                    headerText='Jak si mohu vytvořit účet?'
+                    headerText='Jak mohu získat 200 vstupních kreditů zdarma?'
                     bodyText='Pro vytvoření účtu klikněte na tlačítko "Registrace" v pravém horním rohu.Pro vytvoření účtu klikněte na tlačítko "Registrace" v pravém horním rohu.Pro vytvoření účtu klikněte na tlačítko "Registrace" v pravém horním rohu.Pro vytvoření účtu klikněte na tlačítko "Registrace" v pravém horním rohu.'
                     headerTextStyle={styles.accordionHeader}
                     bodyTextStyle={styles.accordionBody}
                     backgroundColor={COLORS.secondary}
                 />
                 <Accordion 
-                    headerText='Jak si mohu vytvořit účet?'
+                    headerText='Kolik nabídek poskytujeme?'
                     bodyText='Pro vytvoření účtu klikněte na tlačítko "Registrace" v pravém horním rohu.Pro vytvoření účtu klikněte na tlačítko "Registrace" v pravém horním rohu.Pro vytvoření účtu klikněte na tlačítko "Registrace" v pravém horním rohu.Pro vytvoření účtu klikněte na tlačítko "Registrace" v pravém horním rohu.'
                     headerTextStyle={styles.accordionHeader}
                     bodyTextStyle={styles.accordionBody}

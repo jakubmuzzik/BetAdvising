@@ -163,9 +163,46 @@ const KeyFeatues = ({ width }) => {
     )
 }
 
+const MacbookScreen = ({ width }) => {
+    const macbookWidth = (width > 1100 ? 950 : width)
+
+    return (
+        <>
+        <View
+                    style={{
+                        width: macbookWidth,
+                        maxWidth: '80%',
+                        alignSelf: 'center',
+                    }}
+                    dataSet={{ id: 'macbook-screen' }}
+                >
+                    <Image
+                        source={require('../assets/images/macbook-screen.png')}
+                        style={{
+                            width: '100%',
+                            aspectRatio: 2412 / 1603,
+                        }}
+                        contentFit='contain'
+                    />
+                </View>
+                <Image
+                    source={require('../assets/images/macbook-bottom.png')}
+                    style={{
+                        width: macbookWidth + 150,
+                        maxWidth: '90%',
+                        //maxWidth: '90%',
+                        aspectRatio: 2988 / 96,
+                        //height: 500,
+                        alignSelf: 'center',
+                    }}
+                    contentFit='contain'
+                />
+        </>
+    )
+}
+
 const Hero = ({ searchParams }) => {
     const { width } = useWindowDimensions()
-    const macbookWidth = (width > 1100 ? 950 : width)
 
     useEffect(() => {
         if (!isBrowser) return
@@ -357,7 +394,7 @@ const Hero = ({ searchParams }) => {
 
             <View
                 style={{
-                    marginTop: 100,
+                    marginTop: width >= 700 ? 100 : 0,
                     width: '100%',
                 }}
             >
@@ -384,36 +421,39 @@ const Hero = ({ searchParams }) => {
                         contentFit='contain'
                     /> */}
 
-                <View
-                    style={{
-                        width: macbookWidth,
-                        maxWidth: '80%',
-                        alignSelf: 'center',
-                    }}
-                    dataSet={{ id: 'macbook-screen' }}
-                >
+                {width >= 700 && <MacbookScreen width={width} />}
 
-                    <Image
-                        source={require('../assets/images/macbook-screen.png')}
+                <View style={{
+                    paddingHorizontal: SPACING.page_horizontal,
+                    maxWidth: 800,
+                    alignItems: 'center',
+                    margin: 'auto',
+                    marginTop: 64
+                }}>
+                    <Text
                         style={{
-                            width: '100%',
-                            aspectRatio: 2412 / 1603,
+                            fontFamily: FONTS.medium,
+                            fontSize: FONT_SIZES.h1,
+                            color: COLORS.white,
+                            textAlign: 'center',
+                            maxWidth: 500,
+                            marginBottom: 10
                         }}
-                        contentFit='contain'
-                    />
+                    >
+                        Nechte se inspirovat
+                    </Text>
+                    <Text
+                        style={{
+                            fontFamily: FONTS.regular,
+                            fontSize: FONT_SIZES.x_large,
+                            color: COLORS.grey400,
+                            lineHeight: FONT_SIZES.large * 1.5,
+                            textAlign: 'center',
+                        }}
+                    >
+                        Jsme tým profesionálních sázkařů s dlouholetými zkušenostmi. Jsme tu abychom pro všechny, kteří chtějí sázet a vyhrávat.
+                    </Text>
                 </View>
-                <Image
-                    source={require('../assets/images/macbook-bottom.png')}
-                    style={{
-                        width: macbookWidth + 150,
-                        maxWidth: '90%',
-                        //maxWidth: '90%',
-                        aspectRatio: 2988 / 96,
-                        //height: 500,
-                        alignSelf: 'center',
-                    }}
-                    contentFit='contain'
-                />
 
                 <KeyFeatues width={width} />
             </View>

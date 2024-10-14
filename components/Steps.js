@@ -33,7 +33,7 @@ const BulletPoint = ({ text }) => (
 
 const CreditsRefundGuarantee = () => (
     <LinearGradient
-        colors={['rgba(255, 204, 44, 0.38)', 'rgba(153, 122, 27, 0.38)']}
+        colors={[COLORS.accent + '30', COLORS.accent + '30']}
         start={{ x: 0, y: 0 }}
         end={{ x: 1, y: 0 }}
         style={{
@@ -47,7 +47,7 @@ const CreditsRefundGuarantee = () => (
             paddingVertical: SPACING.xx_small,
             paddingHorizontal: SPACING.x_small,
             gap: SPACING.xx_small,
-            borderRadius: 20,
+            borderRadius: 10,
             borderWidth: 1,
             borderColor: COLORS.accent,
         }}
@@ -55,7 +55,7 @@ const CreditsRefundGuarantee = () => (
         <Image
             source={require('../assets/images/guarantee.png')}
             style={{
-                width: normalize(70),
+                width: normalize(50),
                 aspectRatio: 99 / 92,
             }}
             contentFit='contain'
@@ -76,13 +76,13 @@ const CreditsRefundGuarantee = () => (
             </Text>
             <Text
                 style={{
-                    fontFamily: FONTS.light,
+                    fontFamily: FONTS.regular,
                     fontSize: FONT_SIZES.medium,
-                    color: COLORS.grey400,
+                    color: COLORS.grey300,
                     marginTop: 5
                 }}
             >
-                Pokud vybraný tiket nevyjde, vrátíme vám veškeré kredity
+                Pokud odemčený tiket nevyjde, vrátíme vám použité kredity.
             </Text>
         </View>
     </LinearGradient>
@@ -203,7 +203,7 @@ const STEPS = [
                 </Text>
                 <BulletPoint text='Pokud by některý z odemčených tiketů nevyšel, budou vám kredity vráceny.' />
 
-                {/* <CreditsRefundGuarantee /> */}
+                <CreditsRefundGuarantee />
             </>
         ),
         image: (width) => <View
@@ -501,17 +501,20 @@ const Steps = ({ searchParams }) => {
                             Jak to funguje
                         </Text>
                     </View>
-                    <Text
+                    <span
                         style={{
                             fontFamily: FONTS.medium,
                             fontSize: FONT_SIZES.h1,
                             color: COLORS.white,
                             textAlign: 'center',
-                            maxWidth: 500
+                            maxWidth: 500,
+                            background: `linear-gradient(180deg, ${COLORS.white}, rgba(255, 255, 255, 0.7))`,
+                            WebkitBackgroundClip: 'text',
+                            WebkitTextFillColor: 'transparent',
                         }}
                     >
                         Připraveni vydělávat sázením?
-                    </Text>
+                    </span>
 
                     <LinearGradient
                         colors={['rgba(255,255,255,.0)', COLORS.accent]}

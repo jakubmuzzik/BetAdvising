@@ -8,6 +8,7 @@ import { LinearGradient } from 'expo-linear-gradient'
 import withSearchParams from './hoc/withSearchParams'
 
 import VanillaTilt from 'vanilla-tilt'
+import { ScrollView } from 'react-native-gesture-handler'
 
 
 const Packages = ({ searchParams }) => {
@@ -108,18 +109,21 @@ const Packages = ({ searchParams }) => {
                 alignItems: 'center',
                 margin: 'auto'
             }}>
-                <Text
+                <span
                     style={{
                         fontFamily: FONTS.medium,
                         fontSize: FONT_SIZES.h1,
                         color: COLORS.white,
                         textAlign: 'center',
                         maxWidth: 500,
-                        marginBottom: 10
+                        marginBottom: 10,
+                        background: `linear-gradient(180deg, ${COLORS.white}, rgba(255, 255, 255, 0.7))`,
+                        WebkitBackgroundClip: 'text',
+                        WebkitTextFillColor: 'transparent',
                     }}
                 >
                     Jaké balíčky nabízíme?
-                </Text>
+                </span>
                 <Text
                     style={{
                         fontFamily: FONTS.regular,
@@ -134,7 +138,7 @@ const Packages = ({ searchParams }) => {
                 </Text>
             </View>
 
-            <FlatList
+            {/* <FlatList
                 horizontal
                 showsHorizontalScrollIndicator={false}
                 style={width > 1500 ? {
@@ -154,9 +158,9 @@ const Packages = ({ searchParams }) => {
                         searchParams={searchParams}
                     />
                 )}
-            />
+            /> */}
 
-            {/* <ScrollView
+            <ScrollView
                 horizontal  
                 showsHorizontalScrollIndicator={false}
                 contentContainerStyle={{
@@ -164,6 +168,9 @@ const Packages = ({ searchParams }) => {
                     gap: SPACING.medium,
                     justifyContent: 'center',
                 }}
+                style={width > 1500 ? {
+                    margin: 'auto',
+                } : {}}
             >
                 <Package 
                     name='Starter'
@@ -195,7 +202,7 @@ const Packages = ({ searchParams }) => {
                     price={999}
                     description='High-volume users or professional bettors who want to maximize their use of the service.'
                 />
-            </ScrollView> */}
+            </ScrollView>
         </View>
     )
 }

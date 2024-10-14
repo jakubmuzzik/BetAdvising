@@ -36,17 +36,20 @@ const FooterCTA = ({ searchParams }) => {
                     paddingBottom: isSmallScreen ? 80 : 150
                 }}
             >
-                <Text
+                <span
                     style={{
                         fontFamily: FONTS.medium,
                         fontSize: FONT_SIZES.h1,
                         color: COLORS.white,
                         marginBottom: 10,
-                        textAlign: 'center'
+                        textAlign: 'center',
+                        background: `linear-gradient(180deg, ${COLORS.white}, rgba(255, 255, 255, 0.7))`,
+                        WebkitBackgroundClip: 'text',
+                        WebkitTextFillColor: 'transparent',
                     }}
                 >
                     Zvyšte své šance na výhru
-                </Text>
+                </span>
                 <Text
                     style={{
                         fontFamily: FONTS.regular,

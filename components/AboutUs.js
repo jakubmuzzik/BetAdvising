@@ -180,18 +180,22 @@ const AboutUs = ({ searchParams }) => {
                 margin: 'auto',
                 marginTop: 64
             }}>
-                <Text
+                <span
                     style={{
                         fontFamily: FONTS.medium,
                         fontSize: FONT_SIZES.h1,
                         color: COLORS.white,
                         textAlign: 'center',
                         maxWidth: 500,
-                        marginBottom: 10
+                        marginBottom: 10,
+                        //background: `linear-gradient(90deg, ${COLORS.white}, ${COLORS.grey400})`,
+                        background: `linear-gradient(180deg, ${COLORS.white}, rgba(255, 255, 255, 0.7))`,
+                        WebkitBackgroundClip: 'text',
+                        WebkitTextFillColor: 'transparent',
                     }}
                 >
                     Nechte se inspirovat
-                </Text>
+                </span>
                 <Text
                     style={{
                         fontFamily: FONTS.regular,

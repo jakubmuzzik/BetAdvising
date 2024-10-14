@@ -27,28 +27,36 @@ const FAQ = () => {
             }}
         >
             <View>
-                <Text
+                <div
+                    style={{
+                        background: `linear-gradient(180deg, ${COLORS.white}, rgba(255, 255, 255, 0.7))`,
+                        WebkitBackgroundClip: 'text',
+                        WebkitTextFillColor: 'transparent',
+                        marginBottom: SPACING.medium,
+                        textAlign: isSmallScreen ? 'center' : 'left'
+                    }}
+                >
+                <span
                     style={{
                         fontFamily: FONTS.medium,
                         fontSize: FONT_SIZES.h1,
                         color: COLORS.white,
                         marginBottom: 4,
-                        textAlign: isSmallScreen ? 'center' : 'left'
                     }}
                 >
-                    Máte otázky?
-                </Text>
-                <Text
+                    Máte otázky? 
+                </span>
+                <br />
+                <span
                     style={{
                         fontFamily: FONTS.medium,
                         fontSize: FONT_SIZES.h1,
                         color: COLORS.white,
-                        marginBottom: SPACING.medium,
-                        textAlign: isSmallScreen ? 'center' : 'left'
                     }}
                 >
                     Máme odpovědi!
-                </Text>
+                </span>
+                </div>
                 <Text
                     style={{
                         fontFamily: FONTS.regular,

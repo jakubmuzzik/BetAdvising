@@ -262,7 +262,7 @@ const TicketFooter = ({ odd, result }) => (
                     textAlign: 'center'
                 }}
             >
-                {odd}
+                {odd.toFixed(2)}
             </Text>
         </View>
         <View>

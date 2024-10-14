@@ -214,17 +214,20 @@ const TicketsScroller = () => {
                 <AntDesign name="star" size={SPACING.x_small} color={COLORS.accent} />
             </View>
 
-            <Text
+            <span
                 style={{
                     fontFamily: FONTS.medium,
                     fontSize: FONT_SIZES.h1,
                     color: COLORS.white,
                     textAlign: 'center',
-                    zIndex: 2
+                    zIndex: 2,
+                    background: `linear-gradient(180deg, ${COLORS.white}, rgba(255, 255, 255, 0.7))`,
+                    WebkitBackgroundClip: 'text',
+                    WebkitTextFillColor: 'transparent',
                 }}
             >
                 Výherní tikety
-            </Text>
+            </span>
             <Text
                 style={{
                     fontFamily: FONTS.regular,

@@ -117,7 +117,7 @@ const AppHeader = ({ searchParams, currentAuthUser, logOut, toggleDrawer, curren
 
     const onAccountPress = () => {
         navigate({
-            pathname: '/account/profile-information',
+            pathname: '/account',
             search: new URLSearchParams(searchParams).toString()
         })
 

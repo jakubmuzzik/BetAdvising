@@ -6,6 +6,7 @@ import { Image } from 'expo-image'
 import { Route, createBrowserRouter, createRoutesFromElements, RouterProvider, Navigate, Outlet } from 'react-router-dom'
 import { supabase } from '../supabase/config'
 import { fetchUser, updateCurrentAuthUser, fetchNotifications, clearReduxData } from '../redux/actions/user'
+import { clearPersistedReduxData } from '../redux/actions/app'
 import { connect } from 'react-redux'
 
 import RequireAuth from './RequireAuth'
@@ -75,10 +76,12 @@ const router = createBrowserRouter(createRoutesFromElements(
                 </AppLayout>
             </RequireAuth>
         } >
-            <Route element={<Outlet />} >
+            <Route path='/account' element={<Account />} />
+
+            {/* <Route element={<Outlet />} >
                 <Route path='/account/profile-information' element={<Account />} />
                 <Route path='/account/settings' element={<Account />} />
-            </Route>
+            </Route> */}
 
             <Route element={<Outlet />} >
                 <Route path='/tickets/offers' element={<Tickets />} />
@@ -141,7 +144,7 @@ router.subscribe(() => {
     });
 })
 
-const Main = ({ fetchUser, updateCurrentAuthUser, fetchNotifications, clearReduxData }) => {
+const Main = ({ fetchUser, updateCurrentAuthUser, fetchNotifications, clearReduxData, clearPersistedReduxData }) => {
     const [isLoggedIn, setIsLoggedIn] = useState(null)
 
     const hasLoadedRef = useRef(false)
@@ -161,6 +164,7 @@ const Main = ({ fetchUser, updateCurrentAuthUser, fetchNotifications, clearRedux
 
             if (!session) {
                 clearReduxData()
+                clearPersistedReduxData()
                 setIsLoggedIn(false)
             } else {
                 if (_event === 'SIGNED_IN' || _event === 'INITIAL_SESSION' || _event === 'USER_UPDATED') {
@@ -198,4 +202,4 @@ const Main = ({ fetchUser, updateCurrentAuthUser, fetchNotifications, clearRedux
     )
 }
 
-export default connect(null, { fetchUser, updateCurrentAuthUser, fetchNotifications, clearReduxData })(Main)
+export default connect(null, { fetchUser, updateCurrentAuthUser, fetchNotifications, clearReduxData, clearPersistedReduxData })(Main)

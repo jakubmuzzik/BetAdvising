@@ -8,12 +8,20 @@ import { MotiView } from 'moti'
 import MobileVerificationModal from './modal/MobileVerificationModal'
 import HoverableView from './elements/HoverableView'
 import CustomButton from './elements/CustomButton'
+import { connect } from 'react-redux'
+import { HIDE_VERIFY_BANNER } from '../redux/actionTypes'
 
-const VerifyAccountBanner = ({ containerStyle={} }) => {
+const VerifyAccountBanner = ({ containerStyle = {}, dispatch, verifyBannerHidden }) => {
+    if (verifyBannerHidden) return null
+
     const [modalVisible, setModalVisible] = useState(false)
 
     const onVerifyPress = () => {
         setModalVisible(true)
+    }
+
+    const onHideBannerPress = () => {
+        dispatch({ type: 'HIDE_VERIFY_BANNER' })
     }
 
     return (
@@ -33,15 +41,15 @@ const VerifyAccountBanner = ({ containerStyle={} }) => {
                     borderRadius: 10,
                     backgroundColor: COLORS.darkGrey,
                     borderWidth: 1,
-                    borderColor: COLORS.accent + '99',
-                    backgroundColor: COLORS.accent + '14',
+                    borderColor: COLORS.whiteBackground2,//COLORS.accent + '99',
+                    backgroundColor: COLORS.secondary, //COLORS.accent + '14',
                     ...containerStyle
                 }}
             >
                 <View style={{ flexDirection: 'row' }}>
                     <Ionicons name="information-circle-outline" size={20} color={COLORS.accent} style={{ marginRight: SPACING.xx_small }} />
 
-                    <View style={{ flexShrink: 1 }}>
+                    <View style={{ flex: 1 }}>
                         <Text style={{ fontFamily: FONTS.medium, fontSize: FONT_SIZES.large, color: '#FFF' }}>
                             Získej 100 kreditů zdarma
                         </Text>
@@ -51,14 +59,31 @@ const VerifyAccountBanner = ({ containerStyle={} }) => {
 
                         <CustomButton
                             onPress={onVerifyPress}
-                            additionalStyles={{  marginTop: SPACING.x_small, width: 'fit-content' }}
-                            textColor={COLORS.black}
-                            backgroundColors={COLORS.white}
+                            additionalStyles={{ marginTop: SPACING.x_small, width: 'fit-content', borderWidth: 1, borderColor: COLORS.accentSecondaryBorder }}
+                            textColor={COLORS.accent}
+                            backgroundColors={COLORS.accentSecondary}
                             spinnerColor={COLORS.black}
                             buttonText='Ověřit profil'
                             textStyles={{ fontFamily: FONTS.medium }}
                         />
                     </View>
+                    <TouchableOpacity
+                        onPress={onHideBannerPress}
+                    >
+                        <HoverableView
+                            style={{
+                                width: 28,
+                                height: 28,
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                                borderRadius: 17.5
+                            }}
+                            hoveredBackgroundColor={COLORS.whiteBackground2}
+                            backgroundColor={COLORS.whiteBackground}
+                        >
+                            <Ionicons name="close" size={17} color={COLORS.white} />
+                        </HoverableView>
+                    </TouchableOpacity>
                 </View>
             </MotiView>
 
@@ -67,4 +92,8 @@ const VerifyAccountBanner = ({ containerStyle={} }) => {
     )
 }
 
-export default VerifyAccountBanner
+const mapStateToProps = (store) => ({
+    verifyBannerHidden: store.persistedState.verifyBannerHidden
+})
+
+export default connect(mapStateToProps)(VerifyAccountBanner)

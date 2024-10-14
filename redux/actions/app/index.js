@@ -1,4 +1,4 @@
-import { CLEAR_DATA, TOGGLE_DRAWER } from "../../actionTypes"
+import { CLEAR_DATA, TOGGLE_DRAWER, CLEAR_PERSISTED_DATA } from "../../actionTypes"
 import { supabase } from "../../../supabase/config"
 
 export const logOut = () => async (dispatch, getState) => {
@@ -11,4 +11,8 @@ export const logOut = () => async (dispatch, getState) => {
 
 export const toggleDrawer = () => ({
     type: TOGGLE_DRAWER
+})
+
+export const clearPersistedReduxData = () => ({
+    type: CLEAR_PERSISTED_DATA
 })

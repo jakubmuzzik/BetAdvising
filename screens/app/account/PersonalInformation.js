@@ -6,31 +6,65 @@ import { Button } from 'react-native-paper'
 import { MaterialCommunityIcons, FontAwesome5, EvilIcons } from '@expo/vector-icons'
 
 import { connect } from 'react-redux'
+import CustomButton from '../../../components/elements/CustomButton'
+import HoverableView from '../../../components/elements/HoverableView'
 
-const PersonalInformation = ({ setTabHeight, toastRef, userData={}, currentAuthUser }) => {
+import NameEditor from './NameEditor'
+
+const PersonalInformation = ({ toastRef, currentUser, updateCurrentUserInRedux }) => {
     const { width } = useWindowDimensions()
     const isSmallScreen = width <= SMALL_SCREEN_THRESHOLD
 
-    const contactInformation = useMemo(() => ({
-        phone: userData.phone,
-        name: userData.name,
-        viber: userData.viber,
-        whatsapp: userData.whatsapp,
-        telegram: userData.telegram,
-        website: userData.website
-    }), [userData.phone, userData.name, userData.viber, userData.whatsapp, userData.telegram, userData.website])
+    const [nameEditorVisible, setNameEditorVisible] = useState(false)
 
-    const onContactInformationEditPress = () => {
-        setContactInformationEditorVisible(true)
+    const onNameEditPress = () => {
+        setNameEditorVisible(true)
+    }
+
+    const onPhoneEditPress = () => {
+        console.log('edit phone')
     }
 
     const renderContactInformation = () => (
         <View style={styles.section}>
             <View style={styles.sectionHeader}>
                 <Text numberOfLines={1} style={styles.sectionHeaderText}>
-                    Contact information
+                    Kontaktní informace
                 </Text>
-                <Button
+
+                {/* <TouchableOpacity
+                        onPress={onContactInformationEditPress}
+                    >
+                        <HoverableView
+                            style={{
+                                alignItems: 'center',
+                                borderRadius: 10,
+                                flexDirection: 'row',
+                                paddingHorizontal: SPACING.x_small,
+                                borderWidth: 1,
+                                borderColor: COLORS.whiteBackground3
+                            }}
+                            hoveredBackgroundColor={'rgba(255,255,255,0.03)'}
+                            withCustomButtonHeight
+                        >
+                            <MaterialCommunityIcons style={{ marginRight: 4 }} name="pencil" size={14} color={COLORS.white} />
+                            <Text style={{ fontFamily: FONTS.medium, fontSize: FONT_SIZES.medium, color: COLORS.white }}>
+                                Upravit
+                            </Text>
+                        </HoverableView>
+                    </TouchableOpacity> */}
+
+                {/* <CustomButton
+                    onPress={onContactInformationEditPress}
+                    textColor={COLORS.white}
+                    buttonText='Upravit'
+                    textStyles={{ fontFamily: FONTS.medium }}
+                    icon={<MaterialCommunityIcons style={{ marginRight: 10 }} name="pencil" size={14} color={COLORS.white} />}
+                    additionalStyles={{ borderWidth: 1, borderColor: COLORS.whiteBackground3, paddingHorizontal: SPACING.x_small }}
+                    hoveredBackgroundColor={COLORS.whiteBackground}
+                /> */}
+
+                {/* <Button
                     labelStyle={{ fontFamily: FONTS.bold, fontSize: FONT_SIZES.medium, color: '#FFF' }}
                     mode="outlined"
                     icon="pencil-outline"
@@ -38,64 +72,81 @@ const PersonalInformation = ({ setTabHeight, toastRef, userData={}, currentAuthU
                     rippleColor={COLORS.whiteBackground}
                 >
                     Edit
-                </Button>
+                </Button> */}
             </View>
 
             <View style={[styles.row, { borderTopWidth: 1, borderColor: COLORS.whiteBackground2 }]}>
                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                     <MaterialCommunityIcons name="badge-account-outline" size={FONT_SIZES.medium} color="white" style={{ marginRight: SPACING.xxx_small }} />
                     <Text style={{ fontFamily: FONTS.medium, fontSize: FONT_SIZES.medium, color: '#FFF', marginRight: SPACING.x_small }}>
-                        Name
+                        Jméno
                     </Text>
                 </View>
-                <Text numberOfLines={1} style={{ fontFamily: FONTS.bold, fontSize: FONT_SIZES.medium, color: userData.name ? COLORS.white : COLORS.error }}>
-                    {userData.name ? userData.name : 'Enter your name'}
-                </Text>
+                <TouchableOpacity
+                    onPress={onNameEditPress}
+                    style={{
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                        gap: SPACING.xx_small,
+                        flexShrink: 1
+                    }}
+                >
+                    <Text numberOfLines={1} style={{ fontFamily: FONTS.bold, fontSize: FONT_SIZES.medium, color: currentUser.name ? COLORS.white : COLORS.error }}>
+                        {currentUser.name}
+                    </Text>
+                    <MaterialCommunityIcons name="pencil" size={13} color={COLORS.white} />
+                </TouchableOpacity>
             </View>
             <View style={styles.row}>
                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                     <MaterialCommunityIcons name="phone-outline" size={FONT_SIZES.medium} color="white" style={{ marginRight: SPACING.xxx_small }} />
                     <Text style={{ fontFamily: FONTS.medium, fontSize: FONT_SIZES.medium, color: '#FFF', marginRight: SPACING.x_small }}>
-                        Phone
+                        Telefonní číslo
                     </Text>
                 </View>
-                <View style={{ flexDirection: 'row', alignItems: 'center', flexShrink: 1 }}>
-                    <Text numberOfLines={1} style={{ fontFamily: FONTS.bold, fontSize: FONT_SIZES.medium, color: COLORS.white }}>
-                        {userData.phone ? userData.phone : ''}
+                <TouchableOpacity
+                    onPress={onPhoneEditPress}
+                    style={{
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                        gap: SPACING.xx_small,
+                        flexShrink: 1
+                    }}
+                >
+                    <Text numberOfLines={1} style={{ fontFamily: FONTS.bold, fontSize: FONT_SIZES.medium, color: currentUser.name ? COLORS.white : COLORS.error }}>
+                        {currentUser.phone}
                     </Text>
-                    {userData.phone && userData.whatsapp && <View style={{ padding: 5, width: 28, height: 28, backgroundColor: '#108a0c', borderRadius: '50%', marginLeft: SPACING.xxx_small, alignItems: 'center', justifyContent: 'center' }}>
-                        <FontAwesome5 name="whatsapp" size={18} color="white" />
-                    </View>}
-                    {userData.phone && userData.viber && <View style={{ padding: 5, width: 28, height: 28, backgroundColor: '#7d3daf', borderRadius: '50%', marginLeft: SPACING.xxx_small, alignItems: 'center', justifyContent: 'center' }}>
-                        <FontAwesome5 name="viber" size={18} color="white" />
-                    </View>}
-                    {userData.phone && userData.telegram && <View style={{ padding: 5, width: 28, height: 28, backgroundColor: '#38a5e4', borderRadius: 30, marginLeft: SPACING.xxx_small, alignItems: 'center', justifyContent: 'center' }}>
-                        <EvilIcons name="sc-telegram" size={22} color="white" />
-                    </View>}
+                    <MaterialCommunityIcons name="pencil" size={13} color={COLORS.white} />
+                </TouchableOpacity>
+            </View>
+
+            <View style={styles.row}>
+                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                    <MaterialCommunityIcons name="email-outline" size={FONT_SIZES.medium} color="white" style={{ marginRight: SPACING.xxx_small }} />
+                    <Text style={{ fontFamily: FONTS.medium, fontSize: FONT_SIZES.medium, color: '#FFF', marginRight: SPACING.x_small }}>
+                        Email
+                    </Text>
                 </View>
+                <Text numberOfLines={1} style={{ fontFamily: FONTS.bold, fontSize: FONT_SIZES.medium, color: currentUser.name ? COLORS.white : COLORS.error }}>
+                    {currentUser.email}
+                </Text>
             </View>
         </View>
     )
 
     return (
-        <View onLayout={(event) => setTabHeight(event.nativeEvent.layout.height)}>
+        <View>
             {renderContactInformation()}
 
-            {/* <ContactInformationEditor visible={contactInformationEditorVisible} setVisible={setContactInformationEditorVisible} contactInformation={contactInformation} toastRef={toastRef} userId={userData.id} currentUserId={currentAuthUser.id} updateRedux={getUpdateReduxFunction()} user_type={user_type} /> */}
+            <NameEditor visible={nameEditorVisible} setVisible={setNameEditorVisible} toastRef={toastRef} name={currentUser.name} userId={currentUser.id} updateCurrentUserInRedux={updateCurrentUserInRedux} />
         </View>
     )
 }
 
-const mapStateToProps = (store) => ({
-    toastRef: store.appState.toastRef,
-    currentAuthUser: store.userState.currentAuthUser
-})
-
-export default connect(mapStateToProps)(memo(PersonalInformation))
+export default PersonalInformation
 
 const styles = StyleSheet.create({
     section: {
-        marginTop: SPACING.large,
         padding: SPACING.small,
         borderRadius: 10,
         backgroundColor: COLORS.secondary,
@@ -105,11 +156,11 @@ const styles = StyleSheet.create({
     sectionHeader: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        marginBottom: SPACING.small
+        marginBottom: SPACING.large
     },
     sectionHeaderText: {
         color: COLORS.white,
-        fontFamily: FONTS.bold,
+        fontFamily: FONTS.medium,
         fontSize: FONT_SIZES.h3
     },
     column: {

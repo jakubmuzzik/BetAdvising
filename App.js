@@ -6,8 +6,9 @@ import { SafeAreaProvider } from 'react-native-safe-area-context'
 import { COLORS } from './constants'
 import * as Font from 'expo-font'
 import { Provider } from 'react-redux'
+import { PersistGate } from 'redux-persist/integration/react'
 import initStore from './redux/store'
-const store = initStore()
+const { store, persistor } = initStore()
 
 import Main from './navigations/Main'
 
@@ -62,9 +63,11 @@ export default function App() {
       <StatusBar style="auto" />
 
       <Provider store={store}>
-        <SafeAreaProvider style={{ backgroundColor: COLORS.primary, /*overflowY: 'auto'*/ /* overscrollBehavior: 'none'*/ }}>
-          <Main />
-        </SafeAreaProvider>
+        <PersistGate persistor={persistor}>
+          <SafeAreaProvider style={{ backgroundColor: COLORS.primary, /*overflowY: 'auto'*/ /* overscrollBehavior: 'none'*/ }}>
+            <Main />
+          </SafeAreaProvider>
+        </PersistGate>
       </Provider>
     </>
   )

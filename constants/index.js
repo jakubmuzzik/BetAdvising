@@ -30,8 +30,8 @@ export const SIDEBAR_WIDTH = normalizeSize(230, 230, 230)
 
 export const COLORS = {
     accent: '#FBC10D',
-    accentSecondary: '#FBC10D' + '14',
-    accentHoveredSecondary: '#FBC10D' + '20',
+    accentSecondary: '#20211b',//'#FBC10D' + '14',
+    accentHoveredSecondary: '#1a1b17',
     accentSecondaryBorder: '#FBC10D' + 'CC', 
     accent2: '#957308',
     hoveredAccent: '#D8A30B',

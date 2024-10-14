@@ -49,7 +49,7 @@ const FooterCTA = ({ searchParams }) => {
                 </Text>
                 <Text
                     style={{
-                        fontFamily: FONTS.light,
+                        fontFamily: FONTS.regular,
                         fontSize: FONT_SIZES.x_large,
                         color: COLORS.grey400,
                         textAlign: 'center'

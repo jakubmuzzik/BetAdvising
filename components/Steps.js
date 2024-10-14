@@ -4,101 +4,91 @@ import { SPACING, FONT_SIZES, FONTS, COLORS } from '../constants'
 import { Image } from 'expo-image'
 import { normalize } from '../utils'
 import { LinearGradient } from 'expo-linear-gradient'
-import HoverableView from './elements/HoverableView'
-import { Link } from 'react-router-dom'
 import withSearchParams from './hoc/withSearchParams'
 import VanillaTilt from 'vanilla-tilt'
 import {isBrowser } from 'react-device-detect'
+import HoverableLinkButton from './elements/HoverableLinkButton'
 
 const SEPARATOR_TOP_INSET = 20
 const STEP_COUNT_MARKER_SIZE = 35
 
-const STEPS = [
-    // {
-    //     id: 1,
-    //     content: (searchParams) => (
-    //         <>
-    //             <Text
-    //                 style={styles.stepHeaderText}
-    //             >
-    //                 Otevřete si účet u sázkové kanceláře
-    //             </Text>
-    //             <Text
-    //                 style={styles.stepText}
-    //             >
-    //                 Pro použití tipů od našich expertů budete potřebovat aktivní účet u sázkové kanceláře. Pokud hledáte důvěryhodnou platformu, podívejte se na naše partnery a využijte exkluzivních nabídek a bonusů!
-    //             </Text>
-    //             <Text
-    //                 style={{
-    //                     fontFamily: FONTS.regular,
-    //                     fontSize: FONT_SIZES.large,
-    //                     color: COLORS.grey400,
-    //                     marginTop: SPACING.large
-    //                 }}
-    //             >
-    //                 Naše doporučené sázkové kanceláře:
-    //             </Text>
+const BulletPoint = ({ text }) => (
+    <View
+        style={{
+            flexDirection: 'row',
+        }}
+    >
+        <Text
+            style={styles.stepText}
+        >
+            •
+        </Text>
+        <Text
+            style={styles.stepText}
+        >
+            {text}
+        </Text>
+    </View>
+)
 
-    //             <View style={{
-    //                 marginTop: SPACING.small,
-    //                 flexDirection: 'row',
-    //                 flexWrap: 'wrap',
-    //                 gap: SPACING.small
-    //             }}>
-    //                 <TouchableOpacity
-    //                     style={{
-    //                         //borderWidth: 1,
-    //                         justifyContent: 'center',
-    //                         alignItems: 'center',
-    //                         padding: SPACING.xx_small,
-    //                         borderRadius: 10,
-    //                         borderColor: COLORS.grey400
-    //                     }}
-    //                     onPress={() => { }}
-    //                 >
-    //                     <Image
-    //                         source={require('../assets/logos/tipsport.png')}
-    //                         style={{
-    //                             height: 25,
-    //                             aspectRatio: 300 / 68
-    //                         }}
-    //                         contentFit='contain'
-    //                     />
-    //                 </TouchableOpacity>
-    //                 <TouchableOpacity
-    //                     style={{
-    //                         //borderWidth: 1,
-    //                         justifyContent: 'center',
-    //                         alignItems: 'center',
-    //                         padding: SPACING.xx_small,
-    //                         borderRadius: 10,
-    //                         borderColor: COLORS.grey400
-    //                     }}
-    //                     onPress={() => { }}
-    //                 >
-    //                     <Image
-    //                         source={require('../assets/logos/chance.svg')}
-    //                         style={{
-    //                             height: 25,
-    //                             aspectRatio: 300 / 68
-    //                         }}
-    //                         contentFit='contain'
-    //                     />
-    //                 </TouchableOpacity>
-    //             </View>
-    //         </>
-    //     ),
-    //     image: (width) => <Image
-    //         source={require('../assets/images/mobile_mock.png')}
-    //         style={{
-    //             width,
-    //             maxWidth: 500,
-    //             aspectRatio: 457 / 344,
-    //             alignSelf: 'center'
-    //         }}
-    //         contentFit='cover'
-    //     />
-    // },
+const CreditsRefundGuarantee = () => (
+    <LinearGradient
+        colors={['rgba(255, 204, 44, 0.38)', 'rgba(153, 122, 27, 0.38)']}
+        start={{ x: 0, y: 0 }}
+        end={{ x: 1, y: 0 }}
+        style={{
+            marginTop: SPACING.large,
+            flexShrink: 1,
+            width: 'fit-content',
+            //flex: 1,
+            justifyContent: 'center',
+            alignItems: 'center',
+            flexDirection: 'row',
+            paddingVertical: SPACING.xx_small,
+            paddingHorizontal: SPACING.x_small,
+            gap: SPACING.xx_small,
+            borderRadius: 20,
+            borderWidth: 1,
+            borderColor: COLORS.accent,
+        }}
+    >
+        <Image
+            source={require('../assets/images/guarantee.png')}
+            style={{
+                width: normalize(70),
+                aspectRatio: 99 / 92,
+            }}
+            contentFit='contain'
+        />
+        <View
+            style={{
+                flexShrink: 1
+            }}
+        >
+            <Text
+                style={{
+                    fontFamily: FONTS.regular,
+                    fontSize: FONT_SIZES.large,
+                    color: COLORS.white
+                }}
+            >
+                Garance vrácení kreditů
+            </Text>
+            <Text
+                style={{
+                    fontFamily: FONTS.light,
+                    fontSize: FONT_SIZES.medium,
+                    color: COLORS.grey400,
+                    marginTop: 5
+                }}
+            >
+                Pokud vybraný tiket nevyjde, vrátíme vám veškeré kredity
+            </Text>
+        </View>
+    </LinearGradient>
+)
+
+const STEPS = [
     {
         id: 2,
         content: (searchParams) => (
@@ -108,52 +98,16 @@ const STEPS = [
                 >
                     Zaregistrujte se a získejte 200 vstupních kreditů zdarma
                 </Text>
-                <Text
-                    style={styles.stepText}
-                >
-                    • Pro získání přístupu k našim tipům musíte se prvně zdarma zaregistrovat
-                </Text>
-                <Text
-                    style={styles.stepText}
-                >
-                    • Každý nový a ověřený uživatel obdrží 200 vstupních kreditů zdarma
-                </Text>
-                <Link
-                    style={{
-                        textDecoration: 'none',
-                        marginTop: SPACING.large,
-                    }}
-                    to={{ pathname: '/auth', search: new URLSearchParams(searchParams).toString() }}
-                >
-                    <HoverableView
-                        hoveredBackgroundColor={COLORS.accentHoveredSecondary}
-                        backgroundColor={COLORS.accentSecondary}
-                        style={{
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                            borderRadius: 10,
-                            width: 'fit-content',
-                            //boxShadow: '0px 0px 14px rgba(251, 193, 13, 0.35)',
-                            paddingHorizontal: SPACING.x_small,
-                            paddingVertical: SPACING.xx_small,
-                            borderWidth: 1,
-                            borderColor: COLORS.accentSecondaryBorder
-                        }}
-                        withCustomButtonHeight
-                        withHoverableArrow
-                        arrowColor={COLORS.accent}
-                    >
-                        <Text
-                            style={{
-                                color: COLORS.accent,
-                                fontFamily: FONTS.medium,
-                                fontSize: FONT_SIZES.large
-                            }}
-                        >
-                            Zaregistrovat se
-                        </Text>
-                    </HoverableView>
-                </Link>
+
+                <BulletPoint text='Pro získání přístupu k našim tipům musíte se prvně zdarma zaregistrovat.' />
+                <BulletPoint text='Každý nový a ověřený uživatel obdrží 200 vstupních kreditů zdarma.' />
+
+                <HoverableLinkButton 
+                    searchParams={searchParams}
+                    pathname='/auth'
+                    linkStyles={{ marginTop: SPACING.large}}
+                    buttonText='Zaregistrovat se'
+                />
             </>
         ),
         image: (width) => (
@@ -198,71 +152,9 @@ const STEPS = [
                 >
                     Odemykejte naše tipy a nechte se inspirovat
                 </Text>
-                <Text
-                    style={styles.stepText}
-                >
-                    • Naše tipy můžete následně odemykat pomocí kreditů
-                </Text>
-                <Text
-                    style={styles.stepText}
-                >
-                    • Před odemčením každého tipu vidíte jeho celkový kurz, náš vklad a zbývající čas do začátku prvního zápasu
-                </Text>
 
-                {/* <LinearGradient
-                    colors={['rgba(255, 204, 44, 0.38)', 'rgba(153, 122, 27, 0.38)']}
-                    start={{ x: 0, y: 0 }}
-                    end={{ x: 1, y: 0 }}
-                    style={{
-                        marginTop: SPACING.large,
-                        flexShrink: 1,
-                        width: 'fit-content',
-                        //flex: 1,
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        flexDirection: 'row',
-                        paddingVertical: SPACING.xx_small,
-                        paddingHorizontal: SPACING.x_small,
-                        gap: SPACING.xx_small,
-                        borderRadius: 20,
-                        borderWidth: 1,
-                        borderColor: COLORS.accent,
-                    }}
-                >
-                    <Image
-                        source={require('../assets/images/guarantee.png')}
-                        style={{
-                            width: normalize(70),
-                            aspectRatio: 99 / 92,
-                        }}
-                        contentFit='contain'
-                    />
-                    <View
-                        style={{
-                            flexShrink: 1
-                        }}
-                    >
-                        <Text
-                            style={{
-                                fontFamily: FONTS.regular,
-                                fontSize: FONT_SIZES.large,
-                                color: COLORS.white
-                            }}
-                        >
-                            Garance vrácení kreditů
-                        </Text>
-                        <Text
-                            style={{
-                                fontFamily: FONTS.light,
-                                fontSize: FONT_SIZES.medium,
-                                color: COLORS.grey400,
-                                marginTop: 5
-                            }}
-                        >
-                            Pokud vybraný tiket nevyjde, vrátíme vám veškeré kredity
-                        </Text>
-                    </View>
-                </LinearGradient> */}
+                <BulletPoint text='Naše tipy můžete následně odemykat pomocí kreditů.' />
+                <BulletPoint text='Před odemčením každého tipu vidíte jeho celkový kurz, náš vklad a zbývající čas do začátku prvního zápasu.' />
             </>
         ),
         image: (width) => (
@@ -309,52 +201,9 @@ const STEPS = [
                 >
                     Kredity budou uplatněny pouze za úspěšné tipy
                 </Text>
-                <Text
-                    style={styles.stepText}
-                >
-                    • Pokud by některý z odemčených tiketů nevyšel, budou vám kredity vráceny
-                </Text>
-                {/* <View style={{
-                    marginTop: SPACING.large
-                }}>
-                    <Link
-                        style={{
-                            textDecoration: 'none',
-                        }}
-                        to={{ hash: '#packages', search: new URLSearchParams(searchParams).toString() }}
-                    >
-                        <HoverableView
-                            style={{
-                                justifyContent: 'center',
-                                alignItems: 'center',
-                                borderRadius: 10,
-                                width: 'fit-content',
-                                paddingHorizontal: SPACING.x_small,
-                                paddingVertical: SPACING.xx_small,
-                                flexDirection: 'row',
-                                //boxShadow: '0px 0px 10px rgba(255, 255, 255, 0.1)',
-                                //boxShadow: '0px 0px 14px rgba(251, 193, 13, 0.25)',
-                                borderWidth: 1,
-                                borderColor: COLORS.accentSecondaryBorder
-                            }}
-                            withCustomButtonHeight
-                            withHoverableArrow
-                            arrowColor={COLORS.accent}
-                            backgroundColor={COLORS.accentSecondary}
-                            hoveredBackgroundColor={COLORS.accentHoveredSecondary}
-                        >
-                            <Text
-                                style={{
-                                    color: COLORS.accent,
-                                    fontFamily: FONTS.regular,
-                                    fontSize: FONT_SIZES.large
-                                }}
-                            >
-                                Zobrazit balíčky
-                            </Text>
-                        </HoverableView>
-                    </Link>
-                </View> */}
+                <BulletPoint text='Pokud by některý z odemčených tiketů nevyšel, budou vám kredity vráceny.' />
+
+                {/* <CreditsRefundGuarantee /> */}
             </>
         ),
         image: (width) => <View
@@ -559,11 +408,11 @@ const Step = ({ isSmallScreen, index, isEven, step, searchParams, imageWidth }) 
             <View
                 style={[
                     isEven ? {
-                        paddingLeft: isSmallScreen ? SPACING.medium : SPACING.xx_large,
+                        paddingLeft: SPACING.xx_large,
                         paddingTop: STEP_COUNT_MARKER_SIZE + SEPARATOR_TOP_INSET + SPACING.large,
                         paddingBottom: 64,
                     } : {},
-                    isSmallScreen ? {} : { flex: 1 }
+                    isSmallScreen ? { paddingHorizontal: SPACING.medium } : { flex: 1 }
                 ]}
             >
                 {isEven ? step.content(searchParams) : step.image(imageWidth)}
@@ -574,11 +423,11 @@ const Step = ({ isSmallScreen, index, isEven, step, searchParams, imageWidth }) 
             <View
                 style={[
                     !isEven ? {
-                        paddingLeft: isSmallScreen ? SPACING.medium : SPACING.xx_large,
+                        paddingRight: SPACING.xx_large,
                         paddingTop: STEP_COUNT_MARKER_SIZE + SEPARATOR_TOP_INSET + SPACING.large,
                         paddingBottom: 64,
                     } : {},
-                    isSmallScreen ? {} : { flex: 1 }
+                    isSmallScreen ? { paddingHorizontal: SPACING.medium } : { flex: 1 }
                 ]}
             >
                 {isEven ? step.image(imageWidth) : step.content(searchParams)}

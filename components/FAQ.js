@@ -51,9 +51,9 @@ const FAQ = () => {
                 </Text>
                 <Text
                     style={{
-                        fontFamily: FONTS.light,
-                        fontSize: FONT_SIZES.large,
-                        color: COLORS.grey300,
+                        fontFamily: FONTS.regular,
+                        fontSize: FONT_SIZES.x_large,
+                        color: COLORS.grey400,
                         textAlign: isSmallScreen ? 'center' : 'left'
                     }}
                 >
@@ -62,8 +62,8 @@ const FAQ = () => {
                 <Text
                     onPress={() => Linking.openURL('mailto:support@tipstrike.cz')}
                     style={{
-                        fontFamily: FONTS.light,
-                        fontSize: FONT_SIZES.large,
+                        fontFamily: FONTS.regular,
+                        fontSize: FONT_SIZES.x_large,
                         color: COLORS.accent,
                         marginTop: 4,
                         textAlign: isSmallScreen ? 'center' : 'left'
@@ -128,9 +128,9 @@ const styles = StyleSheet.create({
         color: COLORS.white
     },
     accordionBody: {
-        fontFamily: FONTS.light,
-        fontSize: FONT_SIZES.medium,
+        fontFamily: FONTS.regular,
+        fontSize: FONT_SIZES.large,
         color: COLORS.grey300,
-        lineHeight: FONT_SIZES.medium * 1.5
+        lineHeight: FONT_SIZES.medium * 1.6
     }
 })

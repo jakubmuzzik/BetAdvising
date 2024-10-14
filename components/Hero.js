@@ -1,7 +1,7 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useRef, forwardRef, useState } from 'react'
 import { COLORS, FONT_SIZES, FONTS } from '../constants'
 import { normalize } from '../utils'
-import { StyleSheet, View, ImageBackground, Text, useWindowDimensions } from 'react-native'
+import { StyleSheet, View, Text, useWindowDimensions, Dimensions } from 'react-native'
 import { LinearGradient } from 'expo-linear-gradient'
 import { SPACING } from '../constants'
 import HoverableView from './elements/HoverableView'
@@ -11,212 +11,72 @@ import withSearchParams from './hoc/withSearchParams'
 import { Image } from 'expo-image'
 import { isBrowser } from 'react-device-detect'
 import VanillaTilt from 'vanilla-tilt'
-import { BlurView } from 'expo-blur'
-import { MaterialCommunityIcons, FontAwesome5, Ionicons } from '@expo/vector-icons'
+import Animated, { interpolate, useAnimatedStyle, useSharedValue, Extrapolation, useDerivedValue } from 'react-native-reanimated'
 
-const KeyFeatues = ({ width }) => {
+const MACBOOK_WIDTH_THRESHOLD = 700
 
-    const isSmallScreen = width < 700
-
-    return (
-        <View
-            dataSet={{ id: 'key-features' }}
-            style={{
-                marginTop: 50,
-                flexDirection: isSmallScreen ? 'column' : 'row',
-                gap: SPACING.large,
-                alignSelf: 'center',
-                padding: SPACING.medium,
-                flexWrap: 'wrap',
-                backgroundColor: isSmallScreen ? 'transparent' : COLORS.secondary,
-                borderRadius: 15,
-                borderColor: COLORS.whiteBackground2,
-                borderWidth: isSmallScreen ? 0 : 1,
-                flexShrink: 1,
-                marginHorizontal: SPACING.page_horizontal,
-                width: isSmallScreen ? width - SPACING.page_horizontal *2 : 'auto',
-            }}
-        >
-            <View
-                style={{
-                    alignItems: 'center',
-                    flex: 1
-                }}
-            >
-                <View
-                    style={{
-                        backgroundColor: COLORS.accentSecondary,
-                        width: 60,
-                        height: 60,
-                        borderRadius: 50,
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        marginBottom: 20
-                    }}
-                >
-                    <MaterialCommunityIcons
-                        name="lightning-bolt"
-                        size={34}
-                        color={COLORS.accent}
-                    />
-                </View>
-                <Text
-                    style={{
-                        fontFamily: FONTS.regular,
-                        color: COLORS.white,
-                        fontSize: FONT_SIZES.x_large,
-                        textAlign: 'center'
-                    }}
-                >
-                    Aktuální nabídky VIP tipů
-                </Text>
-            </View>
-
-            <View
-                style={{
-                    height: isSmallScreen ? .5 : '100%',
-                    width: isSmallScreen ? '100%' : 1,
-                    backgroundColor: COLORS.whiteBackground2,
-                }}
-            />
-
-            <View
-                style={{
-                    alignItems: 'center',
-                    flex: 1
-                }}
-            >
-                <View
-                    style={{
-                        backgroundColor: COLORS.accentSecondary,
-                        width: 60,
-                        height: 60,
-                        borderRadius: 50,
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        marginBottom: 20
-                    }}
-                >
-                    <FontAwesome5
-                        name="coins"
-                        size={26}
-                        color={COLORS.accent}
-                    />
-                </View>
-                <Text
-                    style={{
-                        fontFamily: FONTS.regular,
-                        color: COLORS.white,
-                        fontSize: FONT_SIZES.x_large,
-                        textAlign: 'center'
-                    }}
-                >
-                    Zdarma vstupních 200 kreditů
-                </Text>
-            </View>
-
-            <View
-                style={{
-                    height: isSmallScreen ? .5 : '100%',
-                    width: isSmallScreen ? '100%' : 1,
-                    backgroundColor: COLORS.whiteBackground2,
-                }}
-            />
-
-            <View
-                style={{
-                    alignItems: 'center',
-                    flex: 1
-                }}
-            >
-                <View
-                    style={{
-                        backgroundColor: COLORS.accentSecondary,
-                        width: 60,
-                        height: 60,
-                        borderRadius: 50,
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        marginBottom: 20
-                    }}
-                >
-                    <Ionicons
-                        name="trophy"
-                        size={27}
-                        color={COLORS.accent}
-                    />
-                </View>
-
-
-                <Text
-                    style={{
-                        fontFamily: FONTS.regular,
-                        color: COLORS.white,
-                        fontSize: FONT_SIZES.x_large,
-                        textAlign: 'center'
-                    }}
-                >
-                    Kredity uplatněny jen při výhře
-                </Text>
-            </View>
-        </View>
-    )
-}
-
-const MacbookScreen = ({ width }) => {
-    const macbookWidth = (width > 1100 ? 950 : width)
-
+const MacbookScreen = forwardRef(({ width }, ref) => {
+    const macbookWidth = (width > 1100 ? 900 : width)
+ 
     return (
         <>
-        <View
-                    style={{
-                        width: macbookWidth,
-                        maxWidth: '80%',
-                        alignSelf: 'center',
-                    }}
-                    dataSet={{ id: 'macbook-screen' }}
-                >
-                    <Image
-                        source={require('../assets/images/macbook-screen.png')}
-                        style={{
-                            width: '100%',
-                            aspectRatio: 2412 / 1603,
-                        }}
-                        contentFit='contain'
-                    />
-                </View>
+            <View
+                ref={ref}
+                style={{
+                    width: macbookWidth,
+                    maxWidth: '80%',
+                    alignSelf: 'center',
+                    //transform: perspective(1200px) translateY(10.6508px) scaleX(0.891392) scaleY(0.891392) rotateX(20.5151deg);
+                    transform: [
+                        { perspective: 1200 },
+                        { translateY: 10.6508 },
+                        { scaleX: 0.891392 },
+                        { scaleY: 0.891392 },
+                        { rotateX: '20.5151deg' }
+                    ],
+                }}
+                dataSet={{ id: 'macbook-screen' }}
+            >
                 <Image
-                    source={require('../assets/images/macbook-bottom.png')}
+                    source={require('../assets/images/macbook-screen.png')}
                     style={{
-                        width: macbookWidth + 150,
-                        maxWidth: '90%',
-                        //maxWidth: '90%',
-                        aspectRatio: 2988 / 96,
-                        //height: 500,
-                        alignSelf: 'center',
+                        width: '100%',
+                        aspectRatio: 2412 / 1603,
                     }}
                     contentFit='contain'
                 />
+            </View>
+            <Image
+                source={require('../assets/images/macbook-bottom.png')}
+                style={{
+                    width: macbookWidth + 150,
+                    maxWidth: '90%',
+                    //maxWidth: '90%',
+                    aspectRatio: 2988 / 96,
+                    //height: 500,
+                    alignSelf: 'center',
+                }}
+                contentFit='contain'
+            />
         </>
     )
-}
+})
 
 const Hero = ({ searchParams }) => {
-    const { width } = useWindowDimensions()
+    const { width, height } = useWindowDimensions()
+    const macbookWidth = (width > 1100 ? 900 : width)
+
+    const bottomYOfWindow = useSharedValue(0)
+    //const macbookContainerLayout = useRef({ x: 0, y: 0, width: 0, height: 0 })
+    const containerRef = useRef()
+    const macbookContainerRef = useRef()
+    const windowHeight = useRef(Dimensions.get('window').height)
+
+    const [macbookContainerLayout, setMacbookContainerLayout] = useState({ x: 0, y: 0, width: 0, height: 0 })
 
     useEffect(() => {
         if (!isBrowser) return
 
-        VanillaTilt.init(document.querySelector(`[data-id="macbook-screen"]`), {
-            max: 2,
-            speed: 200,
-            easing: "cubic-bezier(.03,.98,.52,.99)",
-            reverse: true,
-            glare: true,
-            "max-glare": 0.08,
-            axis: 'y',
-            //startY: -100
-        })
         VanillaTilt.init(document.querySelector(`[data-id="key-features"]`), {
             max: 2,
             speed: 200,
@@ -229,8 +89,49 @@ const Hero = ({ searchParams }) => {
         })
     }, [])
 
+    useEffect(() => {
+        if (!isBrowser || width < MACBOOK_WIDTH_THRESHOLD) return
+
+        macbookContainerRef.current.measureLayout(
+            containerRef.current,
+            (left, top, width, height) => {
+                setMacbookContainerLayout({ x: left, y: top, width, height })
+            },
+        )
+    }, [width])
+
+    useEffect(() => {
+        const handleScroll = () => {
+            bottomYOfWindow.value = window.scrollY
+        }
+
+        document.addEventListener("scroll", handleScroll)
+
+        return () => {
+            document.removeEventListener('scroll', handleScroll)
+        }
+    }, [])
+
+    const derivedBottomYOfWindowValue = useDerivedValue(() => {
+        return bottomYOfWindow.value + height
+    }, [bottomYOfWindow, height])
+
+    const macbookAnimatedStyle = useAnimatedStyle(() => {
+        return !isBrowser ? {} : {
+            transform: [
+                { perspective: 500 },
+                { translateY: interpolate(derivedBottomYOfWindowValue.value, [0, macbookContainerLayout.y + 50, macbookContainerLayout.y + 50 + macbookContainerLayout.height * 0.7, macbookContainerLayout.y + 50 + macbookContainerLayout.height * 2], [20, 20, 0, 0], Extrapolation.CLAMP) },
+                { scaleX: interpolate(derivedBottomYOfWindowValue.value, [0, macbookContainerLayout.y + 50, macbookContainerLayout.y + 50 + macbookContainerLayout.height * 0.7, macbookContainerLayout.y + 50 + macbookContainerLayout.height * 2], [0.891392, 0.891392, 1, 1], Extrapolation.CLAMP) },
+                { scaleY: interpolate(derivedBottomYOfWindowValue.value, [0, macbookContainerLayout.y + 50, macbookContainerLayout.y + 50 + macbookContainerLayout.height * 0.7, macbookContainerLayout.y + 50 + macbookContainerLayout.height * 2], [0.891392, 0.891392, 1, 1], Extrapolation.CLAMP) },
+                { rotateX: interpolate(derivedBottomYOfWindowValue.value, [0, macbookContainerLayout.y + 50, macbookContainerLayout.y + 50 + macbookContainerLayout.height * 0.7, macbookContainerLayout.y + 50 + macbookContainerLayout.height * 2], [30, 30, 0, 0], Extrapolation.CLAMP) + 'deg' }
+            ]
+        }
+    }, [macbookContainerLayout])
+
     return (
-        <>
+        <View
+            ref={containerRef}
+        >
             <Image
                 source={require('../assets/images/hero3.png')}
                 style={{
@@ -286,7 +187,7 @@ const Hero = ({ searchParams }) => {
 
                 <MotiText
                     style={{
-                        fontFamily: FONTS.light,
+                        fontFamily: FONTS.regular,
                         fontSize: FONT_SIZES.x_large,
                         color: COLORS.grey300,
                         marginBottom: SPACING.large,
@@ -394,7 +295,7 @@ const Hero = ({ searchParams }) => {
 
             <View
                 style={{
-                    marginTop: width >= 700 ? 100 : 0,
+                    marginTop: width >= MACBOOK_WIDTH_THRESHOLD ? 100 : 0,
                     width: '100%',
                 }}
             >
@@ -421,44 +322,44 @@ const Hero = ({ searchParams }) => {
                         contentFit='contain'
                     /> */}
 
-                {width >= 700 && <MacbookScreen width={width} />}
-
-                <View style={{
-                    paddingHorizontal: SPACING.page_horizontal,
-                    maxWidth: 800,
-                    alignItems: 'center',
-                    margin: 'auto',
-                    marginTop: 64
-                }}>
-                    <Text
-                        style={{
-                            fontFamily: FONTS.medium,
-                            fontSize: FONT_SIZES.h1,
-                            color: COLORS.white,
-                            textAlign: 'center',
-                            maxWidth: 500,
-                            marginBottom: 10
-                        }}
-                    >
-                        Nechte se inspirovat
-                    </Text>
-                    <Text
-                        style={{
-                            fontFamily: FONTS.regular,
-                            fontSize: FONT_SIZES.x_large,
-                            color: COLORS.grey400,
-                            lineHeight: FONT_SIZES.large * 1.5,
-                            textAlign: 'center',
-                        }}
-                    >
-                        Jsme tým profesionálních sázkařů s dlouholetými zkušenostmi. Jsme tu pro všechny, kteří chtějí sázet a vyhrávat.
-                    </Text>
-                </View>
-
-                <KeyFeatues width={width} />
+                {width >= MACBOOK_WIDTH_THRESHOLD && (
+                    <>
+                        <Animated.View
+                            ref={macbookContainerRef}
+                            style={[{
+                                width: macbookWidth,
+                                maxWidth: '80%',
+                                alignSelf: 'center',
+                                //transform: perspective(1200px) translateY(10.6508px) scaleX(0.891392) scaleY(0.891392) rotateX(20.5151deg);
+                            }, macbookAnimatedStyle]}
+                            dataSet={{ id: 'macbook-screen' }}
+                        >
+                            <Image
+                                source={require('../assets/images/macbook-screen.png')}
+                                style={{
+                                    width: '100%',
+                                    aspectRatio: 2412 / 1603,
+                                }}
+                                contentFit='contain'
+                            />
+                        </Animated.View>
+                        <Image
+                            source={require('../assets/images/macbook-bottom.png')}
+                            style={{
+                                width: macbookWidth + 150,
+                                maxWidth: '90%',
+                                //maxWidth: '90%',
+                                aspectRatio: 2988 / 96,
+                                //height: 500,
+                                alignSelf: 'center',
+                            }}
+                            contentFit='contain'
+                        />
+                    </>
+                )}
             </View>
 
-        </>
+        </View>
     )
 }
 

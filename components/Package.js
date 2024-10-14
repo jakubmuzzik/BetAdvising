@@ -84,7 +84,8 @@ const Package = ({ id, name, credits, price, description, searchParams }) => {
             <Link
                 style={{
                     textDecoration: 'none',
-                    marginTop: SPACING.small
+                    marginTop: SPACING.small,
+                    width: 'fit-content'
                 }}
                 to={{ pathname: '/credits/order/checkout', search: new URLSearchParams({...searchParams, package: id}).toString() }}
             >
@@ -104,7 +105,7 @@ const Package = ({ id, name, credits, price, description, searchParams }) => {
                     withHoverableArrow
                     withCustomButtonHeight
                     arrowColor={COLORS.white}
-                    arrowSize={13}
+                    arrowSize={11}
                 >
                     <Text
                         style={{

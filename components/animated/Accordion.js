@@ -58,9 +58,9 @@ const Accordion = ({ headerText, bodyText, headerTextStyle, bodyTextStyle, backg
                         backgroundColor: backgroundColor,
                         borderRadius: 10,
                         padding: SPACING.medium,
+                        gap: SPACING.x_small
                     }}
                 >
-                    <>
                         <Text style={headerTextStyle}>
                             {headerText}
                         </Text>
@@ -73,7 +73,7 @@ const Accordion = ({ headerText, bodyText, headerTextStyle, bodyTextStyle, backg
                                 color={COLORS.grey300}
                             />
                         </Animated.View>
-                    </>
+                   
                 </View>
                 <Animated.View
 

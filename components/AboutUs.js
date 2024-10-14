@@ -7,8 +7,157 @@ import { LinearGradient } from 'expo-linear-gradient'
 import { Link } from 'react-router-dom'
 import CountInNumber from './animated/CountInNumber'
 import HoverableView from './elements/HoverableView'
+import { MaterialCommunityIcons, FontAwesome5, Ionicons } from '@expo/vector-icons'
 
 import withSearchParams from './hoc/withSearchParams'
+
+const KeyFeatues = ({ width }) => {
+
+    const isSmallScreen = width < 700
+
+    return (
+        <View
+            dataSet={{ id: 'key-features' }}
+            style={{
+                marginTop: 50,
+                flexDirection: isSmallScreen ? 'column' : 'row',
+                gap: SPACING.large,
+                alignSelf: 'center',
+                padding: SPACING.medium,
+                flexWrap: 'wrap',
+                backgroundColor: isSmallScreen ? 'transparent' : COLORS.secondary,
+                borderRadius: 15,
+                borderColor: COLORS.whiteBackground2,
+                borderWidth: isSmallScreen ? 0 : 1,
+                flexShrink: 1,
+                width: isSmallScreen ? '100%' : 'auto',
+            }}
+        >
+            <View
+                style={{
+                    alignItems: 'center',
+                    flex: 1
+                }}
+            >
+                <View
+                    style={{
+                        backgroundColor: COLORS.accentSecondary,
+                        width: 60,
+                        height: 60,
+                        borderRadius: 50,
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        marginBottom: 20
+                    }}
+                >
+                    <MaterialCommunityIcons
+                        name="lightning-bolt"
+                        size={34}
+                        color={COLORS.accent}
+                    />
+                </View>
+                <Text
+                    style={{
+                        fontFamily: FONTS.regular,
+                        color: COLORS.white,
+                        fontSize: FONT_SIZES.x_large,
+                        textAlign: 'center'
+                    }}
+                >
+                    Aktuální nabídky VIP tipů
+                </Text>
+            </View>
+
+            <View
+                style={{
+                    height: isSmallScreen ? .5 : '100%',
+                    width: isSmallScreen ? '100%' : 1,
+                    backgroundColor: COLORS.whiteBackground2,
+                }}
+            />
+
+            <View
+                style={{
+                    alignItems: 'center',
+                    flex: 1
+                }}
+            >
+                <View
+                    style={{
+                        backgroundColor: COLORS.accentSecondary,
+                        width: 60,
+                        height: 60,
+                        borderRadius: 50,
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        marginBottom: 20
+                    }}
+                >
+                    <FontAwesome5
+                        name="coins"
+                        size={26}
+                        color={COLORS.accent}
+                    />
+                </View>
+                <Text
+                    style={{
+                        fontFamily: FONTS.regular,
+                        color: COLORS.white,
+                        fontSize: FONT_SIZES.x_large,
+                        textAlign: 'center'
+                    }}
+                >
+                    Zdarma vstupních 200 kreditů
+                </Text>
+            </View>
+
+            <View
+                style={{
+                    height: isSmallScreen ? .5 : '100%',
+                    width: isSmallScreen ? '100%' : 1,
+                    backgroundColor: COLORS.whiteBackground2,
+                }}
+            />
+
+            <View
+                style={{
+                    alignItems: 'center',
+                    flex: 1
+                }}
+            >
+                <View
+                    style={{
+                        backgroundColor: COLORS.accentSecondary,
+                        width: 60,
+                        height: 60,
+                        borderRadius: 50,
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        marginBottom: 20
+                    }}
+                >
+                    <Ionicons
+                        name="trophy"
+                        size={27}
+                        color={COLORS.accent}
+                    />
+                </View>
+
+
+                <Text
+                    style={{
+                        fontFamily: FONTS.regular,
+                        color: COLORS.white,
+                        fontSize: FONT_SIZES.x_large,
+                        textAlign: 'center'
+                    }}
+                >
+                    Kredity uplatněny jen při výhře
+                </Text>
+            </View>
+        </View>
+    )
+}
 
 const AboutUs = ({ searchParams }) => {
     const { width } = useWindowDimensions()
@@ -16,6 +165,49 @@ const AboutUs = ({ searchParams }) => {
     //const numbersFontSize = width < 500 ? (width - SPACING.page_horizontal * 2) * 0.07 : (500 - SPACING.page_horizontal * 2) * 0.08
 
     const onContactUsPress = () => { }
+
+    return (
+        <View
+            dataSet={{ id: 'about-us' }}
+            style={{
+                paddingHorizontal: SPACING.page_horizontal,
+                marginTop: 50
+            }}
+        >
+            <View style={{
+                maxWidth: 800,
+                alignItems: 'center',
+                margin: 'auto',
+                marginTop: 64
+            }}>
+                <Text
+                    style={{
+                        fontFamily: FONTS.medium,
+                        fontSize: FONT_SIZES.h1,
+                        color: COLORS.white,
+                        textAlign: 'center',
+                        maxWidth: 500,
+                        marginBottom: 10
+                    }}
+                >
+                    Nechte se inspirovat
+                </Text>
+                <Text
+                    style={{
+                        fontFamily: FONTS.regular,
+                        fontSize: FONT_SIZES.x_large,
+                        color: COLORS.grey400,
+                        lineHeight: FONT_SIZES.large * 1.5,
+                        textAlign: 'center',
+                    }}
+                >
+                    Jsme tým profesionálních sázkařů s dlouholetými zkušenostmi. Jsme tu pro všechny, kteří chtějí sázet a vyhrávat.
+                </Text>
+            </View>
+
+            <KeyFeatues width={width} />
+        </View>
+    )
 
     return (
         <View

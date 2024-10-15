@@ -135,11 +135,11 @@ const FlippableTicket = ({ isLast, offer, searchParams, isSmallScreen, onTimeLef
         }
     })
 
-    const flippedCardAnimatedProps = useAnimatedProps(() => {
+    /*const flippedCardAnimatedProps = useAnimatedProps(() => {
         return {
             pointerEvents: isFlipped.value ? 'auto' : 'none',
         }
-    })
+    })*/
 
     return (
         <View
@@ -186,7 +186,7 @@ const FlippableTicket = ({ isLast, offer, searchParams, isSmallScreen, onTimeLef
                         </Animated.View>
 
                         <Animated.View
-                            animatedProps={flippedCardAnimatedProps}
+                            //animatedProps={flippedCardAnimatedProps}
                             style={[
                                 styles.flippedCard,
                                 flippedCardAnimatedStyle,
@@ -194,7 +194,8 @@ const FlippableTicket = ({ isLast, offer, searchParams, isSmallScreen, onTimeLef
                                     width: cardLayout.width,
                                     height: cardLayout.height,
                                     right: 0,
-                                    bottom: 0
+                                    bottom: 0,
+                                    pointerEvents: isFlipped.value ? 'auto' : 'none',
                                 }
                             ]}>
 

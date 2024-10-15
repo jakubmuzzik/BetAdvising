@@ -5,8 +5,8 @@ BEGIN
     INSERT INTO credit_transactions ("user", transaction_type, amount, payment_intent)
     VALUES (NEW."user", 'purchase', NEW.credits, NEW.id);
 
-    UPDATE users
-    SET credits = credits + NEW.credits
+    UPDATE credits
+    SET amount = amount + NEW.credits
     WHERE id = NEW."user";
   END IF;
 

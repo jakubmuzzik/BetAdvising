@@ -92,9 +92,9 @@ const styles = StyleSheet.create({
     buttonText: {
         fontFamily: FONTS.medium,
         fontSize: FONT_SIZES.medium,
-        textAlignVertical: 'center',
+        verticalAlign: 'center',
         includeFontPadding: false,
-        textAlignVertical: 'center',
+        verticalAlign: 'center',
         flexShrink: 1
     }
 })

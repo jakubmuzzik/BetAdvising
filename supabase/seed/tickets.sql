@@ -28,8 +28,8 @@ BEGIN
     WHERE unlocked_tickets.ticket = NEW.id;
 
     -- Refund the user's credits
-    UPDATE users
-    SET credits = credits + NEW.price
+    UPDATE credits
+    SET amount = amount + NEW.price
     WHERE id = (SELECT "user" FROM unlocked_tickets WHERE ticket = NEW.id);
     
     -- Insert refund credit transactions entry

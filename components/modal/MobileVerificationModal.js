@@ -82,13 +82,9 @@ const MobileVerificationModal = ({ visible, setVisible, toastRef, headerLabel='O
 
     useEffect(() => {
         if (visible) {
-            translateY.value = withTiming(0, {
-                useNativeDriver: true
-            })
+            translateY.value = withTiming(0)
         } else {
-            translateY.value = withTiming(window.height, {
-                useNativeDriver: true
-            })
+            translateY.value = withTiming(window.height)
         }
     }, [visible])
 
@@ -125,9 +121,7 @@ const MobileVerificationModal = ({ visible, setVisible, toastRef, headerLabel='O
     })
 
     const closeModal = () => {
-        translateY.value = withTiming(window.height, {
-            useNativeDriver: true
-        })
+        translateY.value = withTiming(window.height)
         setVisible(false)
         setShowErrorMessages(false)
         setIndex(0)

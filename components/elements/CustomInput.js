@@ -157,6 +157,7 @@ const CustomInput = ({
                             opacity: (value.length > 0 || isFocused) ? 1 : 0,
                             bottom: 3,
                             outlineStyle: 'none',
+                            pointerEvents: onPress ? 'none' : 'auto',
                         }}
                         placeholder={placeholder}
                         placeholderTextColor={placeholderTextColor}
@@ -165,9 +166,8 @@ const CustomInput = ({
                         numberOfLines={numberOfLines}
                         multiline={numberOfLines > 1}
                         underlineColorAndroid="transparent"
-                        textAlignVertical={numberOfLines > 1 ? 'top' : undefined}
+                        verticalAlign={numberOfLines > 1 ? 'top' : undefined}
                         editable={!onPress}
-                        pointerEvents={onPress ? 'none' : 'auto'}
                         maxLength={maxLength}
                         onSubmitEditing={onSubmitEditing}
                     />
@@ -187,7 +187,7 @@ export default memo(CustomInput)
 
 const styles = StyleSheet.create({
     labelStyle: {
-        textAlignVertical: 'center',
+        verticalAlign: 'center',
         includeFontPadding: false,
     },
     errorMessage: {

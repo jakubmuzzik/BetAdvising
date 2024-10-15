@@ -9,7 +9,7 @@ import {
 } from '../actionTypes'
 
 const INITIAL_STATE = {
-    currentUser: {},
+    currentUser: {credits: {}},
     currentAuthUser: {},
     offers: null,
     unlocked: null,

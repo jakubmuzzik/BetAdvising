@@ -17,7 +17,6 @@ import Footer from '../components/Footer'
 import Login from '../screens/auth/Login'
 import Tickets from './Tickets'
 import Credits from './Credits'
-import Order from '../screens/app/credits/Order'
 import Support from '../screens/app/Support'
 import Account from './Account'
 import Notifications from '../screens/app/Notifications'
@@ -152,8 +151,8 @@ const Main = ({ fetchUser, updateCurrentAuthUser, fetchNotifications, clearRedux
 
     useEffect(() => {
         const { subscription } = supabase.auth.onAuthStateChange((_event, session) => {
-            console.log(_event)
-            console.log('session: ', session)
+            //console.log(_event)
+            //console.log('session: ', session)
 
             if (_event === 'SIGNED_OUT') {
                 toastRef.current?.show({

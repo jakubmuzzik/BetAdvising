@@ -14,7 +14,6 @@ const MeasureElement = ({ onLayout, children }) => (
     <Animated.ScrollView
         horizontal
         style={marqueeStyles.hidden}
-        pointerEvents="box-none"
     >
         <View onLayout={(ev) => onLayout(ev.nativeEvent.layout.width)}>
             {children}
@@ -89,13 +88,12 @@ const Marquee = ({ duration = 100000, reverse = false, children, style }) => {
 
     return (
         <View
-            style={style}
+            style={{...style, pointerEvents: 'box-none'}}
             onLayout={(ev) => {
                 setParentWidth(ev.nativeEvent.layout.width)
             }}
-            pointerEvents="box-none"
         >
-            <View style={marqueeStyles.row} pointerEvents="box-none">
+            <View style={marqueeStyles.row}>
                 <MeasureElement onLayout={setChildrenWidth}>{children}</MeasureElement>
             
                 {childrenWidth > 0 && parentWidth > 0 && (
@@ -109,11 +107,12 @@ const Marquee = ({ duration = 100000, reverse = false, children, style }) => {
                     </ChildrenScroller>
                 )}
 
-                <View pointerEvents="none" style={{
+                <View style={{
                     position: 'absolute',
                     left: 0,
                     width: 50,
                     height: '100%',
+                    pointerEvents: 'none',
                 }}>
                     <LinearGradient
                         colors={[
@@ -126,11 +125,12 @@ const Marquee = ({ duration = 100000, reverse = false, children, style }) => {
                     />
                 </View>
 
-                <View pointerEvents="none" style={{
+                <View style={{
                     position: 'absolute',
                     right: 0,
                     width: 40,
                     height: '100%',
+                    pointerEvents: 'none',
                 }}>
                     <LinearGradient
                         colors={[
@@ -148,8 +148,8 @@ const Marquee = ({ duration = 100000, reverse = false, children, style }) => {
 }
 
 const marqueeStyles = StyleSheet.create({
-    hidden: { opacity: 0, zIndex: -1 },
-    row: { flexDirection: 'row', overflow: 'hidden' },
+    hidden: { opacity: 0, zIndex: -1, pointerEvents: 'box-none' },
+    row: { flexDirection: 'row', overflow: 'hidden', pointerEvents: 'box-none' },
 })
 
 const TicketsScroller = () => {

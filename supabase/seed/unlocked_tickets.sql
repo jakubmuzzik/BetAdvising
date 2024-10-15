@@ -8,8 +8,8 @@ CREATE OR REPLACE FUNCTION private.handle_unlocked_tickets_after_insert()
   ticket_price numeric;  -- Declare variable to hold ticket's price
 BEGIN
  -- Get the user's credits from the users table
-  SELECT credits INTO user_credits
-  FROM users
+  SELECT amount INTO user_credits
+  FROM credits
   WHERE id = new.user;
 
   -- Get the ticket price from the tickets table
@@ -22,8 +22,8 @@ BEGIN
     RAISE EXCEPTION 'User does not have enough credits. Required: %, Available: %', ticket_price, user_credits;
    ELSE
     -- Subtract the ticket price from the user's credits
-    UPDATE users
-    SET credits = credits - ticket_price
+    UPDATE credits
+    SET amount = amount - ticket_price
     WHERE id = NEW."user";
   END IF;
 

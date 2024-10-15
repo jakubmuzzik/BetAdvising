@@ -370,7 +370,7 @@ const Credits = ({ searchParams, currentUser, currentAuthUser, setTabHeight, cre
                 }}
             />}
 
-            <Balance credits={currentUser.credits} navigate={navigate} searchParams={searchParams} />
+            <Balance credits={currentUser.credits.amount} navigate={navigate} searchParams={searchParams} />
 
             <History fetchCreditTransactions={fetchCreditTransactions} creditTransactions={creditTransactions}/>
         </View>

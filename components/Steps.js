@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { StyleSheet, Text, Touchable, TouchableOpacity, View, useWindowDimensions } from 'react-native'
 import { SPACING, FONT_SIZES, FONTS, COLORS } from '../constants'
 import { Image } from 'expo-image'
@@ -534,9 +534,8 @@ const Steps = ({ searchParams }) => {
                         }}
                     >
                         {STEPS.map((step, index) => (
-                            <>
+                            <React.Fragment key={step.id}>
                             <Step
-                                key={index}
                                 index={index}
                                 step={step}
                                 searchParams={searchParams}
@@ -556,7 +555,7 @@ const Steps = ({ searchParams }) => {
                                         //marginTop: 32
                                     }}
                                 />}
-                            </>
+                            </React.Fragment>
                         ))}
                     </View>
                 </View>

@@ -31,13 +31,9 @@ const CustomModal = forwardRef((props, ref) => {
 
     useEffect(() => {
         if (visible) {
-            translateY.value = withTiming(0, {
-                useNativeDriver: true
-            })
+            translateY.value = withTiming(0)
         } else {
-            translateY.value = withTiming(window.height, {
-                useNativeDriver: true
-            })
+            translateY.value = withTiming(window.height)
         }
     }, [visible])
 
@@ -81,9 +77,7 @@ const CustomModal = forwardRef((props, ref) => {
     })
 
     const closeModal = () => {
-        translateY.value = withTiming(window.height, {
-            useNativeDriver: true
-        })
+        translateY.value = withTiming(window.height)
         setVisible(false)
     }
 

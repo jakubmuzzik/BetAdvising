@@ -11,6 +11,7 @@ import {
 import { logOut } from '../app'
 import { supabase } from '../../../supabase/config'
 
+const USER_QUERY = '*, credits(amount)'
 const OFFERS_QUERY = '*, ticket_data:ticket(*, ticket_entries(*))'
 const UNLOCKED_QUERY = '*, ticket(*, ticket_entries(*))'
 const NOTIFICATIONS_QUERY = '*, ticket(id, name, price)'
@@ -43,7 +44,7 @@ export const updateCurrentAuthUser = (currentAuthUser) => ({
 export const fetchUser = (userId) => async (dispatch, getState) => {
     const { data, error } = await supabase
         .from('users')
-        .select('*')
+        .select(USER_QUERY)
         .eq('id', userId)
         .limit(1)
 
@@ -138,7 +139,7 @@ export const fetchLatestCreditTransaction = () => async (dispatch, getState) => 
             })
 
         if (data[0]?.transaction_type === 'purchase' && data[0]?.payment_intent?.status === 'succeeded') {
-            dispatch(updateCurrentUserInRedux({ credits: Number(getState().userState.currentUser.credits) + Number(data[0].amount) }))
+            dispatch(updateCurrentUserInRedux({ credits: {amount: Number(getState().userState.currentUser.credits.amount) + Number(data[0].amount)} }))
         }
 
         return data
@@ -254,7 +255,7 @@ export const unlockTicket = (offerId, ticketId) => async (dispatch, getState) =>
 
     if (queryError) throw queryError
 
-    dispatch(updateCurrentUserInRedux({ credits: getState().userState.currentUser.credits - data[0].price }))
+    dispatch(updateCurrentUserInRedux({ credits: {amount: getState().userState.currentUser.credits.amount - data[0].price} }))
 
     dispatch({
         type: OFFERS_STATE_CHANGE,

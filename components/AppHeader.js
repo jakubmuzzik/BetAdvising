@@ -631,7 +631,7 @@ const AppHeader = ({ searchParams, currentAuthUser, logOut, toggleDrawer, curren
                                 color: COLORS.white,
                             }}
                         >
-                            {currentUser?.credits ?? 0}
+                            {currentUser?.credits?.amount ?? 0}
                         </Text>
                     </View>
                     <TouchableOpacity

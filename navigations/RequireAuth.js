@@ -27,4 +27,4 @@ const mapStateToProps = (store) => ({
     currentAuthUser: store.userState.currentAuthUser
 })
 
-export default connect(mapStateToProps)(withSearchParams(RequireAuth, ['language', 'package']))
+export default connect(mapStateToProps)(withSearchParams(RequireAuth, ['language', 'package', 'from']))

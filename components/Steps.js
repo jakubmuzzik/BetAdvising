@@ -90,7 +90,7 @@ const CreditsRefundGuarantee = () => (
 
 const STEPS = [
     {
-        id: 2,
+        id: 1,
         content: (searchParams) => (
             <>
                 <Text
@@ -144,7 +144,7 @@ const STEPS = [
         )
     },
     {
-        id: 3,
+        id: 2,
         content: (searchParams) => (
             <>
                 <Text
@@ -193,7 +193,7 @@ const STEPS = [
         
     },
     {
-        id: 4,
+        id: 3,
         content: (searchParams) => (
             <>
                 <Text

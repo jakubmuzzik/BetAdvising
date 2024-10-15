@@ -17,7 +17,7 @@ import { useNavigate, useLocation, useSearchParams, Navigate } from 'react-route
 import * as Linking from 'expo-linking'
 import { useAnimatedShake } from '../../components/hooks/useAnimatedShake'
 
-const Login = ({ searchParams, toastRef, fetchUser }) => {
+const Login = ({ searchParams, toastRef, currentAuthUser }) => {
     const googleSignInButtonRef = useRef()
     const emailSignupButton = useRef()
 
@@ -39,6 +39,12 @@ const Login = ({ searchParams, toastRef, fetchUser }) => {
         params.delete('from')
 
         return <Navigate to={{pathname: to, search: new URLSearchParams(params).toString()}} replace />
+    }
+
+    if (currentAuthUser.id && currentAuthUser.user_metadata?.profile_completed) {
+        let to = '/tickets/offers'
+
+        return <Navigate to={{pathname: to, search: new URLSearchParams(searchParams).toString()}} replace />
     }
 
     let from = location.state?.from || "/tickets/offers"
@@ -248,7 +254,8 @@ const Login = ({ searchParams, toastRef, fetchUser }) => {
 }
 
 const mapStateToProps = (store) => ({
-    toastRef: store.appState.toastRef
+    toastRef: store.appState.toastRef,
+    currentAuthUser: store.userState.currentAuthUser,
 })
 
 export default connect(mapStateToProps, { fetchUser })(withSearchParams(Login, ['language', 'package']))

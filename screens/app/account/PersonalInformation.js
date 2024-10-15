@@ -1,28 +1,25 @@
-import React, { useState, useCallback, useRef, useMemo, memo, useEffect } from 'react'
-import { View, Text, StyleSheet, TouchableOpacity, ScrollView, useWindowDimensions, Image } from 'react-native'
+import React, { useState } from 'react'
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
 import { Entypo } from '@expo/vector-icons'
-import { SPACING, FONTS, FONT_SIZES, COLORS, SMALL_SCREEN_THRESHOLD } from '../../../constants'
+import { SPACING, FONTS, FONT_SIZES, COLORS } from '../../../constants'
 import { Button } from 'react-native-paper'
-import { MaterialCommunityIcons, FontAwesome5, EvilIcons } from '@expo/vector-icons'
+import { MaterialCommunityIcons } from '@expo/vector-icons'
 
-import { connect } from 'react-redux'
-import CustomButton from '../../../components/elements/CustomButton'
 import HoverableView from '../../../components/elements/HoverableView'
 
 import NameEditor from './NameEditor'
+import MobileVerificationModal from '../../../components/modal/MobileVerificationModal'
 
 const PersonalInformation = ({ toastRef, currentUser, updateCurrentUserInRedux }) => {
-    const { width } = useWindowDimensions()
-    const isSmallScreen = width <= SMALL_SCREEN_THRESHOLD
-
     const [nameEditorVisible, setNameEditorVisible] = useState(false)
+    const [mobileModalVisible, setMobileModalVisible] = useState(false)
 
     const onNameEditPress = () => {
         setNameEditorVisible(true)
     }
 
     const onPhoneEditPress = () => {
-        console.log('edit phone')
+        setMobileModalVisible(true)
     }
 
     const renderContactInformation = () => (
@@ -31,48 +28,6 @@ const PersonalInformation = ({ toastRef, currentUser, updateCurrentUserInRedux }
                 <Text numberOfLines={1} style={styles.sectionHeaderText}>
                     Kontaktní informace
                 </Text>
-
-                {/* <TouchableOpacity
-                        onPress={onContactInformationEditPress}
-                    >
-                        <HoverableView
-                            style={{
-                                alignItems: 'center',
-                                borderRadius: 10,
-                                flexDirection: 'row',
-                                paddingHorizontal: SPACING.x_small,
-                                borderWidth: 1,
-                                borderColor: COLORS.whiteBackground3
-                            }}
-                            hoveredBackgroundColor={'rgba(255,255,255,0.03)'}
-                            withCustomButtonHeight
-                        >
-                            <MaterialCommunityIcons style={{ marginRight: 4 }} name="pencil" size={14} color={COLORS.white} />
-                            <Text style={{ fontFamily: FONTS.medium, fontSize: FONT_SIZES.medium, color: COLORS.white }}>
-                                Upravit
-                            </Text>
-                        </HoverableView>
-                    </TouchableOpacity> */}
-
-                {/* <CustomButton
-                    onPress={onContactInformationEditPress}
-                    textColor={COLORS.white}
-                    buttonText='Upravit'
-                    textStyles={{ fontFamily: FONTS.medium }}
-                    icon={<MaterialCommunityIcons style={{ marginRight: 10 }} name="pencil" size={14} color={COLORS.white} />}
-                    additionalStyles={{ borderWidth: 1, borderColor: COLORS.whiteBackground3, paddingHorizontal: SPACING.x_small }}
-                    hoveredBackgroundColor={COLORS.whiteBackground}
-                /> */}
-
-                {/* <Button
-                    labelStyle={{ fontFamily: FONTS.bold, fontSize: FONT_SIZES.medium, color: '#FFF' }}
-                    mode="outlined"
-                    icon="pencil-outline"
-                    onPress={onContactInformationEditPress}
-                    rippleColor={COLORS.whiteBackground}
-                >
-                    Edit
-                </Button> */}
             </View>
 
             <View style={[styles.row, { borderTopWidth: 1, borderColor: COLORS.whiteBackground2 }]}>
@@ -82,20 +37,27 @@ const PersonalInformation = ({ toastRef, currentUser, updateCurrentUserInRedux }
                         Jméno
                     </Text>
                 </View>
-                <TouchableOpacity
-                    onPress={onNameEditPress}
+                <HoverableView
                     style={{
-                        flexDirection: 'row',
-                        alignItems: 'center',
-                        gap: SPACING.xx_small,
                         flexShrink: 1
                     }}
+                    hoveredOpacity={0.7}
                 >
-                    <Text numberOfLines={1} style={{ fontFamily: FONTS.bold, fontSize: FONT_SIZES.medium, color: currentUser.name ? COLORS.white : COLORS.error }}>
-                        {currentUser.name}
-                    </Text>
-                    <MaterialCommunityIcons name="pencil" size={13} color={COLORS.white} />
-                </TouchableOpacity>
+                    <TouchableOpacity
+                        onPress={onNameEditPress}
+                        style={{
+                            flexDirection: 'row',
+                            alignItems: 'center',
+                            gap: SPACING.xx_small,
+                            flexShrink: 1
+                        }}
+                    >
+                        <Text numberOfLines={1} style={{ fontFamily: FONTS.bold, fontSize: FONT_SIZES.medium, color: currentUser.name ? COLORS.white : COLORS.error }}>
+                            {currentUser.name}
+                        </Text>
+                        <MaterialCommunityIcons name="pencil" size={13} color={COLORS.accent} />
+                    </TouchableOpacity>
+                </HoverableView>
             </View>
             <View style={styles.row}>
                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -104,20 +66,27 @@ const PersonalInformation = ({ toastRef, currentUser, updateCurrentUserInRedux }
                         Telefonní číslo
                     </Text>
                 </View>
-                <TouchableOpacity
-                    onPress={onPhoneEditPress}
+                <HoverableView
                     style={{
-                        flexDirection: 'row',
-                        alignItems: 'center',
-                        gap: SPACING.xx_small,
                         flexShrink: 1
                     }}
+                    hoveredOpacity={0.7}
                 >
-                    <Text numberOfLines={1} style={{ fontFamily: FONTS.bold, fontSize: FONT_SIZES.medium, color: currentUser.name ? COLORS.white : COLORS.error }}>
-                        {currentUser.phone}
-                    </Text>
-                    <MaterialCommunityIcons name="pencil" size={13} color={COLORS.white} />
-                </TouchableOpacity>
+                    <TouchableOpacity
+                        onPress={onPhoneEditPress}
+                        style={{
+                            flexDirection: 'row',
+                            alignItems: 'center',
+                            gap: SPACING.xx_small,
+                            flexShrink: 1
+                        }}
+                    >
+                        <Text numberOfLines={1} style={{ fontFamily: FONTS.bold, fontSize: FONT_SIZES.medium, color: currentUser.name ? COLORS.white : COLORS.error }}>
+                            {currentUser.phone ? '+' + currentUser.phone : ''}
+                        </Text>
+                        <MaterialCommunityIcons name="pencil" size={13} color={COLORS.accent} />
+                    </TouchableOpacity>
+                </HoverableView>
             </View>
 
             <View style={styles.row}>
@@ -139,6 +108,7 @@ const PersonalInformation = ({ toastRef, currentUser, updateCurrentUserInRedux }
             {renderContactInformation()}
 
             <NameEditor visible={nameEditorVisible} setVisible={setNameEditorVisible} toastRef={toastRef} name={currentUser.name} userId={currentUser.id} updateCurrentUserInRedux={updateCurrentUserInRedux} />
+            <MobileVerificationModal visible={mobileModalVisible} setVisible={setMobileModalVisible} headerLabel='Změnit telefonní číslo'/>
         </View>
     )
 }

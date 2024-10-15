@@ -1,5 +1,5 @@
 import { View, useWindowDimensions } from 'react-native'
-import { COLORS, HEADER_HEIGHT, SIDEBAR_WIDTH, SMALL_SCREEN_THRESHOLD_APP_HEADER } from '../constants'
+import { COLORS, HEADER_HEIGHT, SIDEBAR_WIDTH, SMALL_SCREEN_THRESHOLD_APP_HEADER, SPACING } from '../constants'
 
 import AppHeader from '../components/AppHeader'
 import SideBar from '../components/SideBar'
@@ -18,7 +18,7 @@ const AppLayout = ({ children }) => {
             <View style={{
                 marginTop: HEADER_HEIGHT,
                 backgroundColor: COLORS.primary,
-                paddingBottom: 20
+                paddingBottom: SPACING.xxx_large
             }}>
                 {children}
             </View>

@@ -1,13 +1,16 @@
 CREATE OR REPLACE FUNCTION private.handle_users_before_update()
   RETURNS TRIGGER AS $$
 BEGIN
-  IF NEW.credits != OLD.credits AND coalesce(nullif(current_setting('request.jwt.claims', true), '')::jsonb -> 'app_metadata' ->> 'userrole', '') != 'ADMIN' THEN
+  IF NEW.credits != OLD.credits 
+    AND coalesce(nullif(current_setting('request.jwt.claims', true), '')::jsonb -> 'app_metadata' ->> 'userrole', '') != 'ADMIN' 
+    AND current_setting('request.jwt.claims', true)::jsonb->>'role' != 'service_role'
+  THEN
     RAISE EXCEPTION 'You are not allowed to update credits';
   END IF;
 
   RETURN NEW;
 END;
-$$ LANGUAGE plpgsql SECURITY DEFINER set search_path = 'auth';
+$$ LANGUAGE plpgsql SECURITY DEFINER;
 
 CREATE TRIGGER users_before_update
   before update on users

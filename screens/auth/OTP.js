@@ -170,9 +170,9 @@ const OTP = ({ toastRef, searchParams }) => {
                     >
                         <CustomButton ref={continueButtonRef}
                             onPress={onContinuePress}
-                            additionalStyles={{ borderWidth: 1, borderColor: COLORS.white, marginTop: SPACING.medium, width: '100%' }}
-                            textColor={COLORS.black}
-                            backgroundColors={COLORS.white}
+                            additionalStyles={{ borderWidth: 1, borderColor: COLORS.accentSecondaryBorder, marginTop: SPACING.medium, width: '100%' }}
+                            textColor={COLORS.accent}
+                            backgroundColors={COLORS.accentSecondary}
                             buttonText='Continue'
                             textStyles={{ fontFamily: FONTS.medium }}
                             disabled={otp.length !== 6}

@@ -128,7 +128,7 @@ const CompleteProfile = ({ toastRef, searchParams, currentAuthUser, logOut }) =>
                             fontFamily: FONTS.medium
                         }}
                     >
-                        Complete your profile
+                        Dokončit profil
                     </Text>
                     <Text
                         style={{
@@ -138,7 +138,7 @@ const CompleteProfile = ({ toastRef, searchParams, currentAuthUser, logOut }) =>
                             marginTop: SPACING.xx_small
                         }}
                     >
-                        Complete your profile to continue
+                        Dokončete svůj profil pro přístup do aplikace
                     </Text>
 
 
@@ -169,7 +169,7 @@ const CompleteProfile = ({ toastRef, searchParams, currentAuthUser, logOut }) =>
                         size={20}
                         fillColor={COLORS.accent}
                         unfillColor="#FFFFFF"
-                        text="Send me notifications about new bet tickets via email"
+                        text="Zasílat e-mailové notifikace když se objeví nové tipy"
                         iconStyle={{ borderRadius: 3 }}
                         innerIconStyle={{ borderWidth: 2, borderRadius: 3 }}
                         textStyle={{ fontFamily: FONTS.medium, fontSize: FONT_SIZES.medium, textDecorationLine: "none", color: COLORS.grey300 }}
@@ -178,9 +178,9 @@ const CompleteProfile = ({ toastRef, searchParams, currentAuthUser, logOut }) =>
 
                     <CustomButton ref={completeProfileButtonRef}
                         onPress={onCompleteProfilePress}
-                        additionalStyles={{ borderWidth: 1, borderColor: COLORS.white, marginTop: SPACING.medium, width: '100%' }}
-                        textColor={COLORS.black}
-                        backgroundColors={COLORS.white}
+                        additionalStyles={{ borderWidth: 1, borderColor: COLORS.accentSecondaryBorder, marginTop: SPACING.medium, width: '100%' }}
+                        textColor={COLORS.accent}
+                        backgroundColors={COLORS.accentSecondary}
                         buttonText='Complete profile'
                         textStyles={{ fontFamily: FONTS.medium }}
                     />

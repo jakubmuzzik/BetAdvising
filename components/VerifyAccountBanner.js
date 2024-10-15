@@ -41,13 +41,13 @@ const VerifyAccountBanner = ({ containerStyle = {}, dispatch, verifyBannerHidden
                     borderRadius: 10,
                     backgroundColor: COLORS.darkGrey,
                     borderWidth: 1,
-                    borderColor: COLORS.whiteBackground2,//COLORS.accent + '99',
-                    backgroundColor: COLORS.secondary, //COLORS.accent + '14',
+                    borderColor: COLORS.accentSecondaryBorder,//COLORS.accent + '99',
+                    backgroundColor: COLORS.accentSecondary, //COLORS.accent + '14',
                     ...containerStyle
                 }}
             >
-                <View style={{ flexDirection: 'row' }}>
-                    <Ionicons name="information-circle-outline" size={20} color={COLORS.accent} style={{ marginRight: SPACING.xx_small }} />
+                <View style={{ flexDirection: 'row', gap: SPACING.xx_small }}>
+                    <Ionicons name="information-circle-outline" size={20} color={COLORS.accent} />
 
                     <View style={{ flex: 1 }}>
                         <Text style={{ fontFamily: FONTS.medium, fontSize: FONT_SIZES.large, color: '#FFF' }}>

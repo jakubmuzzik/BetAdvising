@@ -215,9 +215,9 @@ const Login = ({ searchParams, toastRef, fetchUser }) => {
                     >
                         <CustomButton ref={emailSignupButton}
                             onPress={onEmailSignupPress}
-                            additionalStyles={{ borderWidth: 1, borderColor: COLORS.whiteBackground2, marginTop: SPACING.x_small, width: '100%' }}
-                            textColor={COLORS.white}
-                            backgroundColors={COLORS.secondary2}
+                            additionalStyles={{ borderWidth: 1, borderColor: COLORS.accentSecondaryBorder, marginTop: SPACING.x_small, width: '100%' }}
+                            textColor={COLORS.accent}
+                            backgroundColors={COLORS.accentSecondary}
                             spinnerColor={COLORS.white}
                             buttonText='Continue with Email'
                             textStyles={{ fontFamily: FONTS.medium }}
@@ -225,7 +225,7 @@ const Login = ({ searchParams, toastRef, fetchUser }) => {
                                 style={{ marginRight: SPACING.xx_small }}
                                 name="mail"
                                 size={normalize(17)}
-                                color={COLORS.white}
+                                color={COLORS.accent}
                             />}
                         />
                     </Animated.View>
@@ -239,7 +239,7 @@ const Login = ({ searchParams, toastRef, fetchUser }) => {
                             lineHeight: 20,
                         }}
                     >
-                        By signing up, you agree to our <Link to={{ to: '/', search: new URLSearchParams(searchParams).toString() }} style={{ textDecorationLine: 'underline', color: COLORS.grey400 }}><Text>Terms of Service</Text></Link> and <Link to={{ to: '/', search: new URLSearchParams(searchParams).toString() }} style={{ textDecorationLine: 'underline', color: COLORS.grey400 }}><Text>Privacy Policy</Text></Link>
+                        By signing up, you agree to our <Link to={{ pathname: '/terms-of-service', search: new URLSearchParams(searchParams).toString() }} style={{ textDecorationLine: 'underline', color: COLORS.grey400 }}><Text>Terms of Service</Text></Link> and <Link to={{ pathname: '/privacy-policy', search: new URLSearchParams(searchParams).toString() }} style={{ textDecorationLine: 'underline', color: COLORS.grey400 }}><Text>Privacy Policy</Text></Link>
                     </Text>
                 </LinearGradient>
             </Animated.View>

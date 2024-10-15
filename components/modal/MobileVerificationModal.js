@@ -63,7 +63,7 @@ const PhoneInputPrefix = () => (
 )
 
 
-const MobileVerificationModal = ({ visible, setVisible, toastRef }) => {
+const MobileVerificationModal = ({ visible, setVisible, toastRef, headerLabel='Ověření profilu' }) => {
     const [routes] = useState([
         { key: '1' },
         { key: '2' }
@@ -221,7 +221,7 @@ const MobileVerificationModal = ({ visible, setVisible, toastRef }) => {
 
             toastRef?.show({
                 type: 'success',
-                text: 'Telefonní číslo bylo ověřeno.'
+                text: 'Telefonní číslo bylo uloženo.'
             })
 
             closeModal()
@@ -269,7 +269,7 @@ const MobileVerificationModal = ({ visible, setVisible, toastRef }) => {
                 <View style={styles.modal__header}>
                     <View style={{ flexBasis: 50, flexGrow: 1, flexShrink: 0 }}></View>
                     <View style={{ flexShrink: 1, flexGrow: 0 }}>
-                        <Animated.Text style={modalHeaderTextStyles1}>Ověření</Animated.Text>
+                        <Animated.Text style={modalHeaderTextStyles1}>{headerLabel}</Animated.Text>
                     </View>
                     <View style={{ flexBasis: 50, flexGrow: 1, flexShrink: 0, alignItems: 'flex-end' }}>
                         <TouchableOpacity
@@ -307,7 +307,7 @@ const MobileVerificationModal = ({ visible, setVisible, toastRef }) => {
                     }}
                 >
                     <Text style={{ color: COLORS.white, fontFamily: FONTS.medium, fontSize: FONT_SIZES.h2, marginTop: SPACING.xxxxx_large, }}>
-                        Ověření profilu
+                        {headerLabel}
                     </Text>
 
                     <Text style={{
@@ -340,10 +340,11 @@ const MobileVerificationModal = ({ visible, setVisible, toastRef }) => {
                         <CustomButton
                             ref={continueButtonRef}
                             onPress={onContinuePress}
-                            additionalStyles={{ borderWidth: 0, borderColor: COLORS.whiteBackground2, marginTop: SPACING.x_small, width: '100%' }}
-                            textColor={COLORS.black}
-                            backgroundColors={COLORS.white}
-                            spinnerColor={COLORS.black}
+                            additionalStyles={{ borderWidth: 1, borderColor: COLORS.accentSecondaryBorder, marginTop: SPACING.x_small, width: '100%' }}
+                            textColor={COLORS.accent}
+                            backgroundColors={COLORS.accentSecondary}
+                            hoveredBackgroundColor={COLORS.accentHoveredSecondary}
+                            spinnerColor={COLORS.white}
                             buttonText='Získat kód'
                             textStyles={{ fontFamily: FONTS.medium }}
                             disabled={phone.length !== 9}
@@ -450,16 +451,17 @@ const MobileVerificationModal = ({ visible, setVisible, toastRef }) => {
                         containerStyle={{ width: '100%', marginTop: SPACING.large }}
                         errorMessage={showErrorMessages && !otp ? 'Enter the verification code' : undefined}
                         keyboardType='numeric'
-                        onSubmitEditing={onContinuePress}
+                        onSubmitEditing={onVerifyPress}
                     />
                     <Animated.View
                         style={[verifyRStyle, { width: '100%' }]}
                     >
                         <CustomButton ref={verifyButtonRef}
                             onPress={onVerifyPress}
-                            additionalStyles={{ borderWidth: 1, borderColor: COLORS.white, marginTop: SPACING.medium, width: '100%' }}
-                            textColor={COLORS.black}
-                            backgroundColors={COLORS.white}
+                            additionalStyles={{ borderWidth: 1, borderColor: COLORS.accentSecondaryBorder, marginTop: SPACING.medium, width: '100%' }}
+                            textColor={COLORS.accent}
+                            backgroundColors={COLORS.accentSecondary}
+                            spinnerColor={COLORS.white}
                             buttonText='Ověřit'
                             textStyles={{ fontFamily: FONTS.medium }}
                             disabled={otp.length !== 6}

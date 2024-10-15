@@ -150,7 +150,7 @@ const CustomInput = ({
                         onChangeText={(val) => onChangeText(val)}
                         value={value}
                         style={{
-                            fontFamily: value ? FONTS.regular : FONTS.light,
+                            fontFamily: value ? FONTS.regular : FONTS.regular,
                             fontSize: FONT_SIZES.medium,
                             color: COLORS.white,
                             ...inputStyle,

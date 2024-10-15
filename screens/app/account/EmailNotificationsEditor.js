@@ -8,33 +8,26 @@ import {
 } from '../../../constants'
 import CustomInput from '../../../components/elements/CustomInput'
 import CustomModal from '../../../components/modal/CustomModal'
+import BouncyCheckbox from "react-native-bouncy-checkbox"
 
 import { supabase } from '../../../supabase/config'
 
-const NameEditor = ({ visible, setVisible, name, toastRef, userId, updateCurrentUserInRedux }) => {
-    const [showErrorMessage, setShowErrorMessage] = useState(false)
-    const [changedName, setChangedName] = useState(name)
+const EmailNotificationsEditor = ({ visible, setVisible, emailNotificationsEnabled, toastRef, userId, updateCurrentUserInRedux }) => {
+    const [changedEmailNotificationsEnabled, setChangedEmailNotificationsEnabled] = useState(emailNotificationsEnabled)
 
     const modalRef = useRef()
 
     useEffect(() => {
         if (visible) {
-            setChangedName(name)
+            setChangedEmailNotificationsEnabled(emailNotificationsEnabled)
         }
     }, [visible])
 
     const onSavePress = async () => {
-        if (!changedName) {
-            setShowErrorMessage(true)
-            return
-        }
-
-        setShowErrorMessage(false)
-
         await supabase
             .from('users')
             .update({
-                name: changedName
+                email_notifications_enabled: changedEmailNotificationsEnabled
             })
             .eq('id', userId)
             .throwOnError()
@@ -43,10 +36,10 @@ const NameEditor = ({ visible, setVisible, name, toastRef, userId, updateCurrent
 
         toastRef.show({
             type: 'success',
-            text: 'Jméno bylo úspěšně změněno.'
+            text: 'Nastavení notifikací bylo úspěšně změněno.'
         })
 
-        updateCurrentUserInRedux({ name: changedName })
+        updateCurrentUserInRedux({ email_notifications_enabled: changedEmailNotificationsEnabled })
     }
 
     return (
@@ -55,7 +48,7 @@ const NameEditor = ({ visible, setVisible, name, toastRef, userId, updateCurrent
             visible={visible}
             setVisible={setVisible}
             handleSave={onSavePress}
-            headerLabel='Upravit jméno'
+            headerLabel='Upravit notifikace'
             errorText='Nepodařilo se uložit změny.'
         >
             <Text style={{
@@ -67,21 +60,26 @@ const NameEditor = ({ visible, setVisible, name, toastRef, userId, updateCurrent
                 marginBottom: SPACING.large
             }}
             >
-                Upravit jméno
+                Upravit notifikace
             </Text>
 
             <View style={{ marginHorizontal: SPACING.small }}>
-                <CustomInput
-                    placeholder='Jakub Novák'
-                    label='Jméno'
-                    value={changedName}
-                    onChangeText={setChangedName}
-                    errorMessage={showErrorMessage && !changedName ? 'Zadejte své jméno' : undefined}
-                    onSubmitEditing={onSavePress}
+                <BouncyCheckbox
+                    disableBuiltInState
+                    isChecked={changedEmailNotificationsEnabled}
+                    size={20}
+                    fillColor={COLORS.accent}
+                    unfillColor={COLORS.primary}
+                    text="Notifikace o nových tipech"
+                    iconStyle={{ borderRadius: 3 }}
+                    innerIconStyle={{ borderWidth: 2, borderRadius: 3 }}
+                    textStyle={{ fontFamily: FONTS.medium, fontSize: FONT_SIZES.large, textDecorationLine: "none" }}
+                    textContainerStyle={{ flexShrink: 1 }}
+                    onPress={() => setChangedEmailNotificationsEnabled((d) => (!d))}
                 />
             </View>
         </CustomModal>
     )
 }
 
-export default NameEditor
+export default EmailNotificationsEditor

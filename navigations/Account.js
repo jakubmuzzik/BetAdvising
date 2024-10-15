@@ -9,6 +9,9 @@ import { connect } from 'react-redux'
 import withSearchParams from '../components/hoc/withSearchParams'
 
 import PersonalInformation from '../screens/app/account/PersonalInformation'
+import EmailNotifications from '../screens/app/account/EmailNotifications'
+import AccountSettings from '../screens/app/account/AccountSettings'
+
 import VerifyAccountBanner from '../components/VerifyAccountBanner'
 
 const Account = ({ currentUser, searchParams, currentAuthUser, toastRef, updateCurrentUserInRedux }) => {
@@ -38,7 +41,15 @@ const Account = ({ currentUser, searchParams, currentAuthUser, toastRef, updateC
                 marginBottom: SPACING.medium,
             }} />}
 
-            <PersonalInformation currentUser={currentUser} toastRef={toastRef} updateCurrentUserInRedux={updateCurrentUserInRedux}/>
+            <View
+                style={{
+                    gap: SPACING.medium,
+                }}
+            >
+                <PersonalInformation currentUser={currentUser} toastRef={toastRef} updateCurrentUserInRedux={updateCurrentUserInRedux} />
+                <EmailNotifications currentUser={currentUser} toastRef={toastRef} updateCurrentUserInRedux={updateCurrentUserInRedux} />
+                <AccountSettings currentUser={currentUser} toastRef={toastRef} updateCurrentUserInRedux={updateCurrentUserInRedux} isVerified={!!currentAuthUser.phone_confirmed_at}/>
+            </View>
         </View>
     )
 }

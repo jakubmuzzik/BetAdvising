@@ -6,6 +6,7 @@ import { Image } from 'expo-image'
 import Package from './Package'
 import { LinearGradient } from 'expo-linear-gradient'
 import withSearchParams from './hoc/withSearchParams'
+import { isBrowser } from 'react-device-detect'
 
 import VanillaTilt from 'vanilla-tilt'
 import { ScrollView } from 'react-native-gesture-handler'
@@ -15,6 +16,8 @@ const Packages = ({ searchParams }) => {
     const { width } = useWindowDimensions()
 
     useEffect(() => {
+        if (!isBrowser) return
+
         VanillaTilt.init(document.querySelectorAll(`[data-id="package"]`), {
           max: 2,
           speed: 200,
@@ -22,6 +25,7 @@ const Packages = ({ searchParams }) => {
           reverse: true,
           glare: true,
           "max-glare": 0.1,
+          scale: 1.02,
         })
       }, [])
 
@@ -130,7 +134,6 @@ const Packages = ({ searchParams }) => {
                         fontSize: FONT_SIZES.x_large,
                         color: COLORS.grey400,
                         lineHeight: FONT_SIZES.large * 1.5,
-                        marginBottom: SPACING.large,
                         textAlign: 'center',
                     }}
                 >
@@ -165,6 +168,7 @@ const Packages = ({ searchParams }) => {
                 showsHorizontalScrollIndicator={false}
                 contentContainerStyle={{
                     paddingHorizontal: SPACING.page_horizontal,
+                    paddingVertical: SPACING.large,
                     gap: SPACING.medium,
                     justifyContent: 'center',
                 }}

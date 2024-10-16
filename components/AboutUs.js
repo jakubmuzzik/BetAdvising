@@ -41,7 +41,7 @@ const KeyFeatues = ({ width }) => {
             >
                 <View
                     style={{
-                        backgroundColor: COLORS.accentSecondary,
+                        backgroundColor: COLORS.accentSecondaryTransparent,
                         width: 60,
                         height: 60,
                         borderRadius: 50,
@@ -84,7 +84,7 @@ const KeyFeatues = ({ width }) => {
             >
                 <View
                     style={{
-                        backgroundColor: COLORS.accentSecondary,
+                        backgroundColor: COLORS.accentSecondaryTransparent,
                         width: 60,
                         height: 60,
                         borderRadius: 50,
@@ -127,7 +127,7 @@ const KeyFeatues = ({ width }) => {
             >
                 <View
                     style={{
-                        backgroundColor: COLORS.accentSecondary,
+                        backgroundColor: COLORS.accentSecondaryTransparent,
                         width: 60,
                         height: 60,
                         borderRadius: 50,

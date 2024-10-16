@@ -127,6 +127,8 @@ router.subscribe(() => {
 
     const hash = window.location.hash
 
+    console.log({hash})
+
     if (!hash) return
 
     const hashValue = hash.replace('#', '')

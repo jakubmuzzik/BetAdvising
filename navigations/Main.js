@@ -127,7 +127,7 @@ router.subscribe(() => {
 
     const hash = window.location.hash
 
-    console.log({hash})
+    console.log(window.location.href)
 
     if (!hash) return
 

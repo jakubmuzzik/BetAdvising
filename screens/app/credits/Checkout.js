@@ -217,21 +217,26 @@ const Checkout = ({ toastRef, searchParams }) => {
             setClientSecret(data.clientSecret)
         } catch (e) {
             console.error('error creating payment intent: ', e)
-            const message = e.message ?? 'An unexpected error occured.'
+            const message = e.message ?? 'Neočekávaná chyba. Zkuste to prosím znovu.'
 
             if (message.includes('Selected package was not found')) {
                 toastRef?.show({
                     type: 'error',
                     text: 'Balíček nebyl nalezen.'
                 })
-
-                navigate({
-                    pathname: '/credits/order/select-package',
-                    search: new URLSearchParams(searchParams).toString(),
-                }, {
-                    replace: true
+            } else {
+                toastRef?.show({
+                    type: 'error',
+                    text: message
                 })
             }
+
+            navigate({
+                pathname: '/credits/order/select-package',
+                search: new URLSearchParams(searchParams).toString(),
+            }, {
+                replace: true
+            })
         } finally {
             setLoading(false)
         }

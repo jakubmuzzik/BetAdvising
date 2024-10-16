@@ -31,8 +31,6 @@ const Login = ({ searchParams, toastRef, currentAuthUser }) => {
 
     const { shake, rStyle } = useAnimatedShake()
 
-    console.log('urlSearchParams', urlSearchParams.get('from'))
-
     //urlSearchParams contains from when redirected from google sign in
     if (urlSearchParams.get('from')) {
         let to = urlSearchParams.get('from')

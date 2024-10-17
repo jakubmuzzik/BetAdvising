@@ -174,7 +174,7 @@ const Login = ({ searchParams, toastRef, currentAuthUser }) => {
                         additionalStyles={{ borderWidth: 1, borderColor: COLORS.whiteBackground2, width: '100%', marginTop: SPACING.large }}
                         textColor={COLORS.black}
                         backgroundColors={COLORS.white}
-                        buttonText='Continue with Google'
+                        buttonText='Přihlásit se pomocí Google'
                         spinnerColor={COLORS.black}
                         textStyles={{ fontFamily: FONTS.regular }}
                         icon={<Image
@@ -225,7 +225,7 @@ const Login = ({ searchParams, toastRef, currentAuthUser }) => {
                             textColor={COLORS.accent}
                             backgroundColors={COLORS.accentSecondary}
                             spinnerColor={COLORS.white}
-                            buttonText='Continue with Email'
+                            buttonText='Přihlásit se pomocí Emailu'
                             textStyles={{ fontFamily: FONTS.medium }}
                             icon={<Feather
                                 style={{ marginRight: SPACING.xx_small }}
@@ -245,7 +245,7 @@ const Login = ({ searchParams, toastRef, currentAuthUser }) => {
                             lineHeight: 20,
                         }}
                     >
-                        By signing up, you agree to our <Link to={{ pathname: '/terms-of-service', search: new URLSearchParams(searchParams).toString() }} style={{ textDecorationLine: 'underline', color: COLORS.grey400 }}><Text>Terms of Service</Text></Link> and <Link to={{ pathname: '/privacy-policy', search: new URLSearchParams(searchParams).toString() }} style={{ textDecorationLine: 'underline', color: COLORS.grey400 }}><Text>Privacy Policy</Text></Link>
+                        Registrací souhlasíte s našimi <Link to={{ pathname: '/terms-of-service', search: new URLSearchParams(searchParams).toString() }} style={{ textDecorationLine: 'underline', color: COLORS.grey400 }}><Text>všeobecnými obchodními podmínkami</Text></Link> a <Link to={{ pathname: '/privacy-policy', search: new URLSearchParams(searchParams).toString() }} style={{ textDecorationLine: 'underline', color: COLORS.grey400 }}><Text>se zpracováním osobních údajů</Text></Link>.
                     </Text>
                 </LinearGradient>
             </Animated.View>

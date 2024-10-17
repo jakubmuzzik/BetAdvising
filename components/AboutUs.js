@@ -213,7 +213,7 @@ const AboutUs = ({ searchParams }) => {
         </View>
     )
 
-    return (
+    /*return (
         <View
             dataSet={{ id: 'about-us' }}
             style={{
@@ -336,7 +336,7 @@ const AboutUs = ({ searchParams }) => {
                         </HoverableView>
                     </Link>
 
-                    {/* <View
+                    <View
                         style={{
                             flexDirection: 'row',
                             gap: SPACING.medium,
@@ -417,7 +417,7 @@ const AboutUs = ({ searchParams }) => {
                                 Zkušeností
                             </Text>
                         </View>
-                    </View> */}
+                    </View>
                 </View>
                 <View style={{
                     flexGrow: 1,
@@ -440,7 +440,7 @@ const AboutUs = ({ searchParams }) => {
                 </View>
             </View>
         </View>
-    )
+    )*/
 }
 
 export default withSearchParams(AboutUs, ['language'])

@@ -71,7 +71,7 @@ const Packages = ({ searchParams }) => {
                 </LinearGradient>
             ) : (
                 <Image
-                    source={require('../assets/images/dot_grid3.png')}
+                    source={require('../assets/images/dot_grid.svg')}
                     style={{
                         width,
                         aspectRatio: 1824 / 623,

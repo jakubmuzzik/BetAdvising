@@ -62,7 +62,7 @@ const EmailNotifications = ({ toastRef, currentUser, updateCurrentUserInRedux })
                 </View>
             </View>
 
-            <EmailNotificationsEditor visible={editorVisible} setVisible={setEditorVisible} toastRef={toastRef} name={currentUser.email_notifications_enabled} userId={currentUser.id} updateCurrentUserInRedux={updateCurrentUserInRedux} />
+            <EmailNotificationsEditor visible={editorVisible} setVisible={setEditorVisible} toastRef={toastRef} emailNotificationsEnabled={currentUser.email_notifications_enabled} userId={currentUser.id} updateCurrentUserInRedux={updateCurrentUserInRedux} />
         </View>
     )
 }

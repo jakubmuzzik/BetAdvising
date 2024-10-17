@@ -26,6 +26,7 @@ import CompleteProfile from '../screens/auth/CompleteProfile'
 
 import Header from '../components/Header'
 import AuthHeader from '../components/AuthHeader'
+import LegalHeader from '../components/LegalHeader'
 import AppLayout from './AppLayout'
 
 import Admin from './Admin'
@@ -51,13 +52,33 @@ const AuthLayout = ({ children }) => (
     </>
 )
 
+const LegalLayout = ({ children }) => (
+    <>
+        <LegalHeader />
+
+        {children}
+    </>
+)
+
 const router = createBrowserRouter(createRoutesFromElements(
     <>
-        <Route path='/' element={
+        <Route element={
             <MarketingLayout>
-                <Home />
+                <Outlet />
             </MarketingLayout>
-        } />
+        }>
+            <Route path='/' element={<Home />} />
+            <Route path='*' element={<Home />} />
+        </Route>
+
+        <Route element={
+            <LegalLayout>
+                <Outlet />
+            </LegalLayout>
+        }>
+            <Route path='/terms-of-service' element={<Home />} />
+            <Route path='/privacy-policy' element={<Home />} />
+        </Route>
 
         <Route path='/auth' element={
             <AuthLayout>
@@ -112,12 +133,6 @@ const router = createBrowserRouter(createRoutesFromElements(
             <RequireAuth>
                 <CompleteProfile />
             </RequireAuth>
-        } />
-
-        <Route path='*' element={
-            <MarketingLayout>
-                <Home />
-            </MarketingLayout>
         } />
     </>
 ))

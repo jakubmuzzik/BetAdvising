@@ -1,16 +1,256 @@
 import React, { useEffect } from 'react'
 import { StyleSheet, Text, Touchable, TouchableOpacity, View, useWindowDimensions } from 'react-native'
-import { SPACING, FONT_SIZES, FONTS, COLORS } from '../constants'
+import { SPACING, FONT_SIZES, FONTS, COLORS, CUSTOM_BUTTON_HEIGHT } from '../constants'
 import { Image } from 'expo-image'
 import { normalize } from '../utils'
 import { LinearGradient } from 'expo-linear-gradient'
 import withSearchParams from './hoc/withSearchParams'
 import VanillaTilt from 'vanilla-tilt'
-import {isBrowser } from 'react-device-detect'
+import { isBrowser } from 'react-device-detect'
 import HoverableLinkButton from './elements/HoverableLinkButton'
+import { Feather, FontAwesome5 } from '@expo/vector-icons'
+import { BlurView } from 'expo-blur'
 
 const SEPARATOR_TOP_INSET = 20
 const STEP_COUNT_MARKER_SIZE = 35
+const STEP_SMALL_SCREEN_THRESHOLD = 1000
+
+const LoginImage = ({ isSmallScreen }) => {
+    return (
+        <View
+            style={{
+                pointerEvents: 'none',
+                //alignSelf: 'center',
+                //margin: 'auto',
+                width: isSmallScreen ? 'auto' : 450,
+                maxWidth: '100%',
+                //flexShrink: 1,
+                //maxWidth: 450,
+                marginVertical: 20,
+                borderColor: COLORS.whiteBackground2,
+                //borderWidth: 1,
+                borderRadius: 10,
+                //boxShadow: '0px 0px 10px rgba(255, 255, 255, 0.1)'
+
+            }}
+        >
+            <LinearGradient
+                style={{
+                    padding: SPACING.xx_large,
+                    borderRadius: 10,
+                    flex: 1,
+                    //width: '80%',
+                    //marginTop: 50
+                }}
+                colors={[COLORS.secondary, COLORS.primary]}
+                start={{ x: -0.7, y: 0 }}
+            >
+                <Text
+                    style={{
+                        fontSize: FONT_SIZES.x_large,
+                        color: COLORS.white,
+                        fontFamily: FONTS.medium
+                    }}
+                >
+                    Registrace
+                </Text>
+                <Text
+                    style={{
+                        fontSize: FONT_SIZES.medium,
+                        color: COLORS.grey400,
+                        fontFamily: FONTS.regular,
+                        marginTop: SPACING.xx_small
+                    }}
+                >
+                    Vyberte si způsob registrace
+                </Text>
+
+                <View
+                    style={{
+                        width: '100%',
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                        marginTop: SPACING.large,
+                        justifyContent: 'center',
+                        backgroundColor: COLORS.white,
+                        borderRadius: 10,
+                        height: CUSTOM_BUTTON_HEIGHT,
+                        borderWidth: 1,
+                        borderColor: COLORS.whiteBackground2,
+                    }}
+                >
+                    <Image
+                        source={require('../assets/logos/google.png')}
+                        style={{ width: normalize(17), aspectRatio: 1 / 1, marginRight: SPACING.xx_small }}
+                    />
+                    <Text
+                        style={{
+                            fontFamily: FONTS.medium,
+                            fontSize: FONT_SIZES.medium,
+                            verticalAlign: 'center',
+                            includeFontPadding: false,
+                            verticalAlign: 'center',
+                            flexShrink: 1
+                        }}
+                    >
+                        Přihlásit se pomocí Google
+                    </Text>
+                </View>
+
+                <View style={{ flexDirection: 'row', alignItems: 'center', gap: SPACING.small, marginVertical: SPACING.large }}>
+                    <View style={{ flexGrow: 1, borderBottomWidth: 1, borderColor: COLORS.grey400 }} />
+                    <Text
+                        style={{
+                            color: COLORS.grey400,
+                            fontFamily: FONTS.regular,
+                            fontSize: FONT_SIZES.medium,
+                            textAlign: 'center'
+                        }}
+                    >
+                        nebo
+                    </Text>
+                    <View style={{ flexGrow: 1, borderBottomWidth: 1, borderColor: COLORS.grey400 }} />
+                </View>
+
+                <View
+                    style={{
+                        width: '100%',
+                        justifyContent: 'center',
+                        backgroundColor: COLORS.secondary2,
+                        borderRadius: 10,
+                        height: CUSTOM_BUTTON_HEIGHT,
+                        borderWidth: 1,
+                        borderColor: COLORS.whiteBackground2,
+                        paddingHorizontal: SPACING.medium,
+                        paddingVertical: SPACING.small
+                    }}
+                >
+                    <Text
+                        style={{
+                            fontFamily: FONTS.medium,
+                            fontSize: FONT_SIZES.medium,
+                            verticalAlign: 'center',
+                            includeFontPadding: false,
+                            verticalAlign: 'center',
+                            flexShrink: 1,
+                            color: COLORS.grey300
+                        }}
+                    >
+                        Email adresa
+                    </Text>
+                </View>
+
+                <View
+                    style={{
+                        width: '100%',
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                        marginTop: SPACING.x_small,
+                        justifyContent: 'center',
+                        backgroundColor: COLORS.accentSecondary,
+                        borderRadius: 10,
+                        height: CUSTOM_BUTTON_HEIGHT,
+                        borderWidth: 1,
+                        borderColor: COLORS.accentSecondaryBorder,
+                    }}
+                >
+                    <Feather
+                        style={{ marginRight: SPACING.xx_small }}
+                        name="mail"
+                        size={normalize(17)}
+                        color={COLORS.accent}
+                    />
+                    <Text
+                        style={{
+                            fontFamily: FONTS.medium,
+                            fontSize: FONT_SIZES.medium,
+                            verticalAlign: 'center',
+                            includeFontPadding: false,
+                            verticalAlign: 'center',
+                            flexShrink: 1,
+                            color: COLORS.accent
+                        }}
+                    >
+                        Přihlásit se pomocí Emailu
+                    </Text>
+                </View>
+
+                <Text
+                    style={{
+                        fontFamily: FONTS.regular,
+                        fontSize: FONT_SIZES.medium,
+                        color: COLORS.grey400,
+                        marginTop: SPACING.large,
+                        lineHeight: 20,
+                    }}
+                >
+                    Registrací souhlasíte s našimi <Text style={{ textDecorationLine: 'underline', color: COLORS.grey400 }}>všeobecnými obchodními podmínkami</Text> a <Text style={{ textDecorationLine: 'underline', color: COLORS.grey400 }}>se zpracováním osobních údajů</Text>
+                </Text>
+
+                <LinearGradient
+                    colors={['rgba(22,22,22,0)', COLORS.primary]}
+                    //locations={[0, 0.9]}
+                    style={{
+                        position: 'absolute',
+                        left: 0,
+                        right: 0,
+                        bottom: 0,
+                        width: '100%',
+                        height: '50%',
+                        justifyContent: 'center',
+                        alignItems: 'center'
+                    }}
+                />
+
+                {/* <BlurView
+                    intensity={10}
+                    tint='none'
+                    style={{
+                        position: 'absolute',
+                        top: -100,
+                        right: -100,
+                        //backgroundColor: COLORS.accentSecondaryTransparent,
+                        borderRadius: 10,
+                        overflow: 'hidden',
+                        backgroundColor: COLORS.accentSecondaryTransparent,
+                        padding: SPACING.medium,
+                        alignItems: 'center',
+                        zIndex: 2,
+                    }}
+                >
+                    <View
+                    style={{
+                        backgroundColor: COLORS.accentSecondaryTransparent,
+                        width: 60,
+                        height: 60,
+                        borderRadius: 50,
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        marginBottom: 20
+                    }}
+                >
+                    <FontAwesome5
+                        name="coins"
+                        size={26}
+                        color={COLORS.accent}
+                    />
+                </View>
+                <Text
+                    style={{
+                        fontFamily: FONTS.regular,
+                        color: COLORS.white,
+                        fontSize: FONT_SIZES.x_large,
+                        textAlign: 'center'
+                    }}
+                >
+                    Zdarma vstupních 200 kreditů
+                </Text>
+                </BlurView> */}
+
+            </LinearGradient>
+        </View>
+    )
+}
 
 const BulletPoint = ({ text }) => (
     <View
@@ -102,45 +342,43 @@ const STEPS = [
                 <BulletPoint text='Pro získání přístupu k našim tipům musíte se prvně zdarma zaregistrovat.' />
                 <BulletPoint text='Každý nový a ověřený uživatel obdrží 200 vstupních kreditů zdarma.' />
 
-                <HoverableLinkButton 
+                <HoverableLinkButton
                     searchParams={searchParams}
                     pathname='/auth'
-                    linkStyles={{ marginTop: SPACING.large}}
+                    linkStyles={{ marginTop: SPACING.large }}
                     buttonText='Zaregistrovat se'
                 />
             </>
         ),
-        image: (width) => (
-            <View
-                style={{
-                    
-                    //borderWidth: 1,
-                    transform: [
-                        { rotateX: '20deg' },
-                        { rotateY: '-20deg' },
-                        { rotateZ: '20deg' },
-                        //{ scale: withTiming(isHovered ? 1.1 : 1, { duration: 200 }) }
-                    ],
-                    width: width - 20,
-                    maxWidth: 300,
-                    aspectRatio: 1811 / 2135,
-                    alignSelf: 'center',
-                    marginVertical: 20
-                }}
-            >
-                <Image
-                    source={require('../assets/images/tickets_mock3.png')}
-                    style={{
-                        flex: 1
-                    }}
-                    contentFit='cover'
-                    contentPosition='top center'
-                />
-               <LinearGradient
-                    colors={['rgba(22,22,22,0)', COLORS.primary]}
-                    style={{ position: 'absolute', bottom: 0, width: '100%', height: '50%', justifyContent: 'center', alignItems: 'center' }}
-                />
-            </View>
+        image: (width, isSmallScreen) => (
+            <LoginImage isSmallScreen={isSmallScreen} />
+            // <View
+            //     style={{
+            //         transform: [
+            //             { rotateX: '20deg' },
+            //             { rotateY: '-20deg' },
+            //             { rotateZ: '20deg' }
+            //         ],
+            //         width: width - 20,
+            //         maxWidth: 300,
+            //         aspectRatio: 1811 / 2135,
+            //         alignSelf: 'center',
+            //         marginVertical: 20
+            //     }}
+            // >
+            //     <Image
+            //         source={require('../assets/images/tickets_mock3.png')}
+            //         style={{
+            //             flex: 1
+            //         }}
+            //         contentFit='cover'
+            //         contentPosition='top center'
+            //     />
+            //    <LinearGradient
+            //         colors={['rgba(22,22,22,0)', COLORS.primary]}
+            //         style={{ position: 'absolute', bottom: 0, width: '100%', height: '50%', justifyContent: 'center', alignItems: 'center' }}
+            //     />
+            // </View>
         )
     },
     {
@@ -184,13 +422,13 @@ const STEPS = [
                     contentFit='cover'
                     contentPosition='top center'
                 />
-               <LinearGradient
+                <LinearGradient
                     colors={['rgba(22,22,22,0)', COLORS.primary]}
                     style={{ position: 'absolute', bottom: 0, width: '100%', height: '50%', justifyContent: 'center', alignItems: 'center' }}
                 />
             </View>
         )
-        
+
     },
     {
         id: 3,
@@ -207,85 +445,36 @@ const STEPS = [
             </>
         ),
         image: (width) => <View
-        style={{
-            
-            //borderWidth: 1,
-            transform: [
-                { rotateX: '20deg' },
-                { rotateY: '-20deg' },
-                { rotateZ: '20deg' },
-                //{ scale: withTiming(isHovered ? 1.1 : 1, { duration: 200 }) }
-            ],
-            width: width - 20,
-            maxWidth: 300,
-            aspectRatio: 1811 / 2135,
-            alignSelf: 'center',
-            marginVertical: 20
-        }}
-    >
-        <Image
-            source={require('../assets/images/tickets_mock3.png')}
             style={{
-                flex: 1
+
+                //borderWidth: 1,
+                transform: [
+                    { rotateX: '20deg' },
+                    { rotateY: '-20deg' },
+                    { rotateZ: '20deg' },
+                    //{ scale: withTiming(isHovered ? 1.1 : 1, { duration: 200 }) }
+                ],
+                width: width - 20,
+                maxWidth: 300,
+                aspectRatio: 1811 / 2135,
+                alignSelf: 'center',
+                marginVertical: 20
             }}
-            contentFit='cover'
-            contentPosition='top center'
-        />
-       <LinearGradient
-            colors={['rgba(22,22,22,0)', COLORS.primary]}
-            style={{ position: 'absolute', bottom: 0, width: '100%', height: '50%', justifyContent: 'center', alignItems: 'center' }}
-        />
-    </View>
-    },
-    // {
-    //     id: 5,
-    //     content: (searchParams) => (
-    //         <>
-    //             <Text
-    //                 style={styles.stepHeaderText}
-    //             >
-    //                 Doplňujte kredity a odemykejte další tipy
-    //             </Text>
-    //             <Text
-    //                 style={styles.stepText}
-    //             >
-    //                 • Pokud s našimi tipy budete spokojení, můžete si dokoupit další kredity
-    //             </Text>
-    //             <Text
-    //                 style={styles.stepText}
-    //             >
-    //                 • Na výběr máte ze 6 balíčků, které se liší počtem kreditů a cenou
-    //             </Text>
-    //         </>
-    //     ),
-    //     image: (width) => <View
-    //     style={{
-    //         transform: [
-    //             { rotateX: '20deg' },
-    //             { rotateY: '20deg' },
-    //             { rotateZ: '-20deg' },
-    //         ],
-    //         width: width - 20,
-    //         maxWidth: 300,
-    //         aspectRatio: 1811 / 2135,
-    //         alignSelf: 'center',
-    //         marginVertical: 20
-    //     }}
-    // >
-    //     <Image
-    //         source={require('../assets/images/tickets_mock3.png')}
-    //         style={{
-    //             flex: 1
-    //         }}
-    //         contentFit='cover'
-    //         contentPosition='top center'
-    //     />
-    //    <LinearGradient
-    //         colors={['rgba(22,22,22,0)', COLORS.primary]}
-    //         style={{ position: 'absolute', bottom: 0, width: '100%', height: '50%', justifyContent: 'center', alignItems: 'center' }}
-    //     />
-    // </View>
-    // }
+        >
+            <Image
+                source={require('../assets/images/tickets_mock3.png')}
+                style={{
+                    flex: 1
+                }}
+                contentFit='cover'
+                contentPosition='top center'
+            />
+            <LinearGradient
+                colors={['rgba(22,22,22,0)', COLORS.primary]}
+                style={{ position: 'absolute', bottom: 0, width: '100%', height: '50%', justifyContent: 'center', alignItems: 'center' }}
+            />
+        </View>
+    }
 ]
 
 const StepCountMarker = ({ stepCount }) => (
@@ -340,7 +529,7 @@ const Step = ({ isSmallScreen, index, isEven, step, searchParams, imageWidth }) 
                 flexDirection: isSmallScreen ? (isEven ? 'column' : 'column-reverse') : 'row',
                 gap: isSmallScreen ? SPACING.xx_large : 150,
                 borderRadius: 20,
-                overflow: 'hidden',
+                //overflow: 'hidden',
                 justifyContent: 'flex-start'
             }}
         >
@@ -415,7 +604,7 @@ const Step = ({ isSmallScreen, index, isEven, step, searchParams, imageWidth }) 
                     isSmallScreen ? { paddingHorizontal: SPACING.medium } : { flex: 1 }
                 ]}
             >
-                {isEven ? step.content(searchParams) : step.image(imageWidth)}
+                {isEven ? step.content(searchParams) : step.image(imageWidth, isSmallScreen)}
             </View>
 
             <StepCountMarker stepCount={index + 1} />
@@ -430,7 +619,7 @@ const Step = ({ isSmallScreen, index, isEven, step, searchParams, imageWidth }) 
                     isSmallScreen ? { paddingHorizontal: SPACING.medium } : { flex: 1 }
                 ]}
             >
-                {isEven ? step.image(imageWidth) : step.content(searchParams)}
+                {isEven ? step.image(imageWidth, isSmallScreen) : step.content(searchParams)}
             </View>
         </LinearGradient>
     )
@@ -535,13 +724,13 @@ const Steps = ({ searchParams }) => {
                     >
                         {STEPS.map((step, index) => (
                             <React.Fragment key={step.id}>
-                            <Step
-                                index={index}
-                                step={step}
-                                searchParams={searchParams}
-                                isSmallScreen={width < 1000}
-                                isEven={index % 2 === 0}
-                                imageWidth={width * 0.2}
+                                <Step
+                                    index={index}
+                                    step={step}
+                                    searchParams={searchParams}
+                                    isSmallScreen={width < STEP_SMALL_SCREEN_THRESHOLD}
+                                    isEven={index % 2 === 0}
+                                    imageWidth={width * 0.2}
                                 />
                                 {index !== STEPS.length - 1 && <LinearGradient
                                     colors={['rgba(255,255,255,.0)', COLORS.accent]}

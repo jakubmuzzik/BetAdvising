@@ -13,7 +13,7 @@ const FooterCTA = ({ searchParams }) => {
     return (
         <>
             <Image
-                source={require('../assets/images/ellipse_glow.png')}
+                source={require('../assets/images/ellipse_glow.svg')}
                 style={{
                     width: isSmallScreen ? '100%' : '80%',
                     aspectRatio: 2908 / 804,

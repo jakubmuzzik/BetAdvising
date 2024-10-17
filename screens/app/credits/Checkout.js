@@ -227,7 +227,7 @@ const Checkout = ({ toastRef, searchParams }) => {
             } else {
                 toastRef?.show({
                     type: 'error',
-                    text: message
+                    text: 'Nepodařilo se vytvořit požadavek na platbu.'
                 })
             }
 

@@ -75,7 +75,7 @@ const CompleteProfile = ({ toastRef, searchParams, currentAuthUser, logOut }) =>
                 type: 'error'
             })
         } finally {
-           completeProfileButtonRef.current.setIsLoading(true)
+           completeProfileButtonRef.current.setIsLoading(false)
         }
     }
 
@@ -183,6 +183,7 @@ const CompleteProfile = ({ toastRef, searchParams, currentAuthUser, logOut }) =>
                         backgroundColors={COLORS.accentSecondary}
                         buttonText='Complete profile'
                         textStyles={{ fontFamily: FONTS.medium }}
+                        spinnerColor={COLORS.white}
                     />
 
                     <HoverableText

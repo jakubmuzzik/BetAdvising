@@ -107,7 +107,7 @@ const SideBar = ({ toggleDrawer, searchParams, currentAuthUser }) => {
             path: '/admin',
             title: 'Admin',
             key: 'admin',
-            icon: (focused) => <MaterialCommunityIcons style={{ marginRight: 10 }} name="book-edit" size={20} color={focused ? COLORS.white : 'rgba(255,255,255,0.7)'} />
+            icon: (focused) => <MaterialCommunityIcons style={{ marginRight: 10 }} name="book-edit" size={17} color={focused ? COLORS.white : 'rgba(255,255,255,0.7)'} />
         }] : ROUTES).map((route, index) => ({ ...route, index }))
     )
 

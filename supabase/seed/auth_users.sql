@@ -11,8 +11,14 @@ begin
   IF (
     OLD.raw_user_meta_data ->> 'profile_completed' IS NULL AND (NEW.raw_user_meta_data ->> 'profile_completed')::boolean = true
   ) THEN
-    INSERT INTO public.users (id, name, email, email_notifications_enabled)
-    VALUES (new.id::uuid, new.raw_user_meta_data->>'name', new.email, (NEW.raw_user_meta_data ->> 'email_notifications_enabled')::boolean);
+    INSERT INTO public.users (id, name, email, email_notifications_enabled, hash)
+    VALUES (
+      new.id::uuid, 
+      new.raw_user_meta_data->>'name', 
+      new.email, 
+      (NEW.raw_user_meta_data ->> 'email_notifications_enabled')::boolean,
+      private.get_hmac(new.id::text, 'users_hash_secret')::text
+    );
 
     INSERT INTO public.credits (id, amount)
     VALUES (new.id::uuid, 0);

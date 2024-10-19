@@ -12,17 +12,20 @@ const TermsOfService = ({ searchParams }) => {
                     paddingHorizontal: SPACING.page_horizontal,
                 }}
             >
-                <Text
+                <h1
                     style={{
                         fontFamily: FONTS.medium,
                         fontSize: FONT_SIZES.h1,
                         color: COLORS.white,
                         textAlign: 'center',
-                        marginTop: 80
+                        marginTop: 80,
+                        background: `linear-gradient(180deg, ${COLORS.white}, rgba(255, 255, 255, 0.7))`,
+                        WebkitBackgroundClip: 'text',
+                        WebkitTextFillColor: 'transparent',
                     }}
                 >
                     Obchodní podmínky
-                </Text>
+                </h1>
                 <Text
                     style={{
                         fontFamily: FONTS.regular,

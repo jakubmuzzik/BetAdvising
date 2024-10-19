@@ -1,35 +1,17 @@
 import React,{ useState, useEffect } from 'react'
 import { BlurView } from 'expo-blur'
 import { View, useWindowDimensions, StyleSheet, Text, TouchableOpacity } from 'react-native'
-import HoverableView from './elements/HoverableView'
 import { Link } from 'react-router-dom'
 import { normalize } from '../utils'
 import { COLORS, FONTS, FONT_SIZES, SPACING, LARGE_SCREEN_THRESHOLD, HEADER_HEIGHT } from '../constants'
 import { Image } from 'expo-image'
 import withSearchParams from './hoc/withSearchParams'
 import { connect } from 'react-redux'
-import { Avatar } from 'react-native-paper'
 import { useLocation } from 'react-router-dom'
 
 import HoverableText from './elements/HoverableText'
 import BurgerMenuIcon from './animated/BurgerMenuIcon'
 import SlideHeaderMenu from './SlideHeaderMenu'
-
-
-
-const AuthButtons = ({ searchParams }) => {
-
-    return (
-        <View
-            style={{
-                flexDirection: 'row',
-                gap: SPACING.small,
-                alignItems: 'center'
-            }}
-        >
-        </View>
-    )
-}
 
 const NavBar = ({ searchParams }) => {
 
@@ -144,9 +126,6 @@ const LegalHeader = ({ searchParams, currentAuthUser }) => {
                         alignItems: 'center'
                     }}
                 >
-                    {currentAuthUser.id ? <GoToAppButton isSmallScreen={true} searchParams={searchParams} profileCompleted={currentAuthUser.user_metadata?.profile_completed} usernameChar={currentAuthUser.user_metadata?.name[0]} />
-                    : <SignUpButton searchParams={searchParams} isSmallScreen={true}/>}
-
                     <TouchableOpacity
                         onPress={() => setIsMenuOpen((prev) => !prev)}
                     >

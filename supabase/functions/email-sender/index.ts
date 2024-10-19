@@ -102,6 +102,10 @@ Deno.serve(async (req) => {
                 ul li span {
                     color: #FFF!important;
                 }
+                .hidden {
+                    opacity: 0;
+                    font-size: 1px;
+                }
             </style>
         </head>
         <body>
@@ -119,8 +123,8 @@ Deno.serve(async (req) => {
                     </p>
                     <p>Hodně štěstí 🍀!</p>
                     <p><a href="{!offers_link}" class="btn">Zobrazit nabídky</a></p>
+                    <span class="hidden">{!randomness}</span>
                 </div>
-
                 <!-- Footer -->
                 <div class="footer">
                     <p>TipStrike s.r.o. Kurzova 2222/16, Stodůlky, 155 00 Praha 5</p>
@@ -135,6 +139,7 @@ Deno.serve(async (req) => {
     template = template.replace('{!stake}', payload.record.stake + '')
     template = template.replace('{!price}', payload.record.price + '')
     template = template.replace('{!offers_link}', 'https://www.tipstrike.cz/tickets/offers')
+    template = template.replace('{!randomness}', Date.now() + '')
 
     const subject = '🔥 Nový sázkový tip k dispozici!'
     const from = 'TipStrike <noreply@tipstrike.cz>'

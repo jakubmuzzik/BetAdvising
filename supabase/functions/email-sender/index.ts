@@ -38,7 +38,6 @@ Deno.serve(async (req) => {
         return new Response('No users to notify', { status: 200 })
     }
 
-    //let template = '<div style="max-width: 600px; margin: 0 auto; background-color: #0D131A; color: #d1d5db; border-radius: 8px; overflow: hidden; font-family: "Roboto", sans-serif;"> <div style="background-color: #0D131A; padding: 20px; font-family: "Roboto", sans-serif;"> <h1 style="color: #ffffff; margin: 0; font-size: 24px; font-family: "Roboto", sans-serif;">Nový sázkový tip k dispozici!</h1> </div> <div style="padding: 20px; color: #d1d5db; background-color: #0D131A; font-family: "Roboto", sans-serif;"> <p style="margin: 0 0 20px 0; font-size: 16px; line-height: 1.5; font-family: "Roboto", sans-serif;">Ahoj {!user_name}!</p> <p style="margin: 0 0 20px 0; font-size: 16px; line-height: 1.5; font-family: "Roboto", sans-serif;">Právě jsme přidali nový sázkový tip s kurzem {!odd}. Odemkni tento tip dokud je ještě čas a použij ho jako inspiraci pro svou další sázku.</p><p style="margin: 0 0 20px 0; font-size: 16px; line-height: 1.5; font-family: "Roboto", sans-serif;">Hodně štěstí!</p> <p style="margin: 0 0 20px 0; font-size: 16px; line-height: 1.5; font-family: "Roboto", sans-serif;"><a href="{!offers_link}" style="display: inline-block; padding: 10px 20px; background-color: #FBC10D; color: #0D131A; text-decoration: none; font-weight: bold; border-radius: 5px; font-family: "Roboto", sans-serif;">Zobrazit nabídky</a></p> </div> <div style="background-color: #0D131A; color: #ffffff; padding: 10px; font-size: 12px; font-family: "Roboto", sans-serif;"> <p style="margin: 0; font-family: "Roboto", sans-serif;">Dostáváš tento e-mail, protože jsi přihlášen k odběru našich tipů na sázení. Pokud již nechceš dostávat tato oznámení, můžeš se <a href="{!unsubscribe_link}" style="color: #FBC10D; text-decoration: none; font-family: "Roboto", sans-serif;">odhlásit zde</a>.</p> </div> </div>'
     let template = `
         <html lang="cs">
         <head>
@@ -49,7 +48,6 @@ Deno.serve(async (req) => {
                 body {
                     font-family: 'Roboto', sans-serif;
                     background-color: #0D131A;
-                    color: #d1d5db;
                     margin: 0;
                     padding: 0;
                 }
@@ -57,22 +55,15 @@ Deno.serve(async (req) => {
                     max-width: 600px;
                     margin: 0 auto;
                     background-color: #0D131A;
-                    color: #d1d5db;
                     border-radius: 8px;
                     overflow: hidden;
                 }
-                .header {
-                    background-color: #0D131A;
-                    padding: 20px;
-                }
-                .header h1 {
-                    color: #ffffff;
-                    margin: 0;
-                    font-size: 24px;
-                }
                 .content {
-                    padding: 20px;
+                    color: #d1d5db!important;
+                    padding: 30px;
                     background-color: #0D131A;
+                    font-size: 16px;
+                    line-height: 1.5;
                 }
                 .content__highlight {
                     color: #FFF;
@@ -81,6 +72,7 @@ Deno.serve(async (req) => {
                     margin: 0 0 20px 0;
                     font-size: 16px;
                     line-height: 1.5;
+                    color: #d1d5db!important;
                 }
                 .btn {
                     display: inline-block;
@@ -92,34 +84,46 @@ Deno.serve(async (req) => {
                     border-radius: 5px;
                 }
                 .footer {
-                    background-color: #0D131A;
-                    color: #ffffff;
-                    padding: 20px;
+                    background-color: #191f26;
+                    color: #f9fafb;
+                    padding: 20px 30px;
                     font-size: 12px;
                 }
                 .footer a {
-                    color: #FBC10D;
-                    text-decoration: none;
+                    color: #f9fafb;
+                    text-decoration: 'underline';
+                }
+                ul {
+                    padding-left: 20px!important;
+                }
+                ul li {
+                    color: #d1d5db!important;
+                }
+                ul li span {
+                    color: #FFF!important;
                 }
             </style>
         </head>
         <body>
             <div class="container">
-                <!-- Header -->
-                <div class="header">
-                    <h1>Nový sázkový tip k dispozici!</h1>
-                </div>
-
                 <!-- Content -->
                 <div class="content">
                     <p>Ahoj {!user_name}!</p>
-                    <p>Právě jsme přidali nový sázkový tip s kurzem <span class="content__highlight">{!odd}</span>. Odemkni tento tip dokud je ještě čas a použij ho jako inspiraci pro svou další sázku.</p>
-                    <p>Hodně štěstí!</p>
+                    <p>Právě jsme přidali nový sázkový tip 🔥. Odemkni si jej dokud je ještě čas a použij ho jako inspiraci pro svou další sázku.</p>
+                    <p>
+                        <ul>
+                            <li>Kurz: <span>{!odd}</span></li>
+                            <li>Naše sázka: <span>{!stake} Kč</span></li>
+                            <li>Cena: <span>{!price} kreditů</span></li>
+                        </ul>
+                    </p>
+                    <p>Hodně štěstí 🍀!</p>
                     <p><a href="{!offers_link}" class="btn">Zobrazit nabídky</a></p>
                 </div>
 
                 <!-- Footer -->
                 <div class="footer">
+                    <p>TipStrike s.r.o. Kurzova 2222/16, Stodůlky, 155 00 Praha 5</p>
                     <p>Dostáváš tento e-mail, protože jsi přihlášen k odběru našich tipů na sázení. Pokud již nechceš dostávat tato oznámení, můžeš se <a href="{!unsubscribe_link}">odhlásit zde</a>.</p>
                 </div>
             </div>
@@ -128,9 +132,11 @@ Deno.serve(async (req) => {
     `
 
     template = template.replace('{!odd}', payload.record.odd + '')
+    template = template.replace('{!stake}', payload.record.stake + '')
+    template = template.replace('{!price}', payload.record.price + '')
     template = template.replace('{!offers_link}', 'https://www.tipstrike.cz/tickets/offers')
 
-    const subject = 'Nový sázkový tip k dispozici'
+    const subject = '🔥 Nový sázkový tip k dispozici!'
     const from = 'TipStrike <noreply@tipstrike.cz>'
 
     //up to 100 emails per batch
@@ -138,8 +144,8 @@ Deno.serve(async (req) => {
     //API rate limit = 2 requests per second
     const messagesChunks = []
 
-    for (let i = 0; i < targetUsers.length; i += 50) {
-        const chunk = targetUsers.slice(i, i + 50).map((user) => ({
+    for (let i = 0; i < targetUsers.length; i += 100) {
+        const chunk = targetUsers.slice(i, i + 100).map((user) => ({
             from,
             subject,
             to: user.email,

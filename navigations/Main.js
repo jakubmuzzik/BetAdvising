@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef, useLayoutEffect } from 'react'
 import { View } from 'react-native'
-import { COLORS, SPACING } from '../constants'
+import { COLORS, HEADER_HEIGHT, SPACING } from '../constants'
 import { normalize } from '../utils'
 import { Image } from 'expo-image'
 import { Route, createBrowserRouter, createRoutesFromElements, RouterProvider, Navigate, Outlet } from 'react-router-dom'
@@ -20,14 +20,18 @@ import Credits from './Credits'
 import Support from '../screens/app/Support'
 import Account from './Account'
 import Notifications from '../screens/app/Notifications'
+import Unsubscribe from '../screens/app/Unsubscribe'
 
 import OTP from '../screens/auth/OTP'
 import CompleteProfile from '../screens/auth/CompleteProfile'
 
 import Header from '../components/Header'
-import AuthHeader from '../components/AuthHeader'
+import HeaderWithLogo from '../components/HeaderWithLogo'
 import LegalHeader from '../components/LegalHeader'
 import AppLayout from './AppLayout'
+
+import PrivacyPolicy from '../screens/legal/PrivacyPolicy'
+import TermsOfService from '../screens/legal/TermsOfService'
 
 import Admin from './Admin'
 import RequireAdminUser from './RequireAdminUser'
@@ -44,11 +48,13 @@ const MarketingLayout = ({ children }) => (
     </>
 )
 
-const AuthLayout = ({ children }) => (
+const LayoutWithLogoAndFooter = ({ children }) => (
     <>
-        <AuthHeader />
+        <HeaderWithLogo />
 
         {children}
+
+        <Footer />
     </>
 )
 
@@ -56,7 +62,11 @@ const LegalLayout = ({ children }) => (
     <>
         <LegalHeader />
 
-        {children}
+        <View style={{ flex: 1, marginTop: HEADER_HEIGHT }}>
+            {children}
+        </View>
+
+        <Footer />
     </>
 )
 
@@ -72,21 +82,27 @@ const router = createBrowserRouter(createRoutesFromElements(
         </Route>
 
         <Route element={
+            <LayoutWithLogoAndFooter>
+                <Outlet />
+            </LayoutWithLogoAndFooter>
+        }>
+            <Route path='/unsubscribe' element={<Unsubscribe />} />
+
+            <Route path='/auth' element={
+                <Outlet />
+            } >
+                <Route index element={<Login />} />
+                <Route path='otp' element={<OTP />} />
+            </Route>
+        </Route>
+
+        <Route element={
             <LegalLayout>
                 <Outlet />
             </LegalLayout>
         }>
-            <Route path='/terms-of-service' element={<Home />} />
-            <Route path='/privacy-policy' element={<Home />} />
-        </Route>
-
-        <Route path='/auth' element={
-            <AuthLayout>
-                <Outlet />
-            </AuthLayout>
-        } >
-            <Route index element={<Login />} />
-            <Route path='otp' element={<OTP />} />
+            <Route path='/terms-of-service' element={<TermsOfService />} />
+            <Route path='/privacy-policy' element={<PrivacyPolicy />} />
         </Route>
 
         <Route element={

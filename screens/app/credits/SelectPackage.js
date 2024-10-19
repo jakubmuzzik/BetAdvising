@@ -92,8 +92,8 @@ const Package = ({ data, isSelected, packageWidth, setSelectedPackage }) => {
                         source={require('../../../assets/images/coin.png')}
                         style={{
                             width: 30,
-                            height: 30,
-                            resizeMode: 'contain'
+                            aspectRatio: 49/36,
+                            contentFit: 'contain'
                         }}
                     />
                 </View>

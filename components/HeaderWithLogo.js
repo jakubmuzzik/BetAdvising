@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom'
 import { COLORS, SPACING, HEADER_HEIGHT } from '../constants'
 import { normalize } from '../utils'
 
-const AuthHeader = ({ searchParams }) => {
+const HeaderWithLogo = ({ searchParams }) => {
 
     return (
         <>
@@ -36,4 +36,4 @@ const AuthHeader = ({ searchParams }) => {
     )
 }
 
-export default withSearchParams(AuthHeader, ['language'])
+export default withSearchParams(HeaderWithLogo, ['language'])

@@ -21,3 +21,21 @@ BEGIN
   RETURN user_email;
 END;
 $$;
+
+CREATE OR REPLACE FUNCTION count_users_by_phone()
+RETURNS INTEGER
+LANGUAGE plpgsql
+SECURITY DEFINER
+AS $$
+DECLARE
+  user_count INTEGER;
+BEGIN
+    -- Query to count the number of users with the given phone number
+    SELECT COUNT(*) INTO user_count
+    FROM verified_phone_numbers
+    WHERE phone = p_phone;
+
+    -- Return the count of users
+    RETURN user_count;
+END;
+$$;

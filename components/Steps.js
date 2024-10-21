@@ -15,6 +15,18 @@ const SEPARATOR_TOP_INSET = 20
 const STEP_COUNT_MARKER_SIZE = 35
 const STEP_SMALL_SCREEN_THRESHOLD = 1000
 
+const ZoomableText = ({children, style, zoom=0.8}) => (
+    <Text
+        style={{
+            ...style,
+            //transform: [{ scale: isBrowser ? 1 : zoom }],
+            zoom: isBrowser ? 1 : zoom
+        }}
+    >
+        {children}
+    </Text>
+)
+
 const LoginImage = ({ isSmallScreen }) => {
     return (
         <View
@@ -27,6 +39,8 @@ const LoginImage = ({ isSmallScreen }) => {
                 borderColor: COLORS.whiteBackground2,
                 borderRadius: 10,
                 zoom: 0.8
+                //transform: [{ scale: 0.8 }], // Use transform instead of zoom
+                //transformOrigin: 'center'
             }}
         >
             <LinearGradient
@@ -40,7 +54,7 @@ const LoginImage = ({ isSmallScreen }) => {
                 colors={[COLORS.secondary, COLORS.primary]}
                 start={{ x: -0.7, y: 0 }}
             >
-                <Text
+                <ZoomableText
                     style={{
                         fontSize: FONT_SIZES.x_large,
                         color: COLORS.white,
@@ -48,8 +62,8 @@ const LoginImage = ({ isSmallScreen }) => {
                     }}
                 >
                     Registrace
-                </Text>
-                <Text
+                </ZoomableText>
+                <ZoomableText
                     style={{
                         fontSize: FONT_SIZES.medium,
                         color: COLORS.grey400,
@@ -58,7 +72,7 @@ const LoginImage = ({ isSmallScreen }) => {
                     }}
                 >
                     Vyberte si způsob registrace
-                </Text>
+                </ZoomableText>
 
                 <View
                     style={{
@@ -78,23 +92,22 @@ const LoginImage = ({ isSmallScreen }) => {
                         source={require('../assets/logos/google.png')}
                         style={{ width: normalize(17), aspectRatio: 1 / 1, marginRight: SPACING.xx_small }}
                     />
-                    <Text
+                    <ZoomableText
                         style={{
                             fontFamily: FONTS.medium,
                             fontSize: FONT_SIZES.medium,
                             verticalAlign: 'center',
-                            includeFontPadding: false,
-                            verticalAlign: 'center',
                             flexShrink: 1
                         }}
+                        transformOrigin='center'
                     >
                         Přihlásit se pomocí Google
-                    </Text>
+                    </ZoomableText>
                 </View>
 
                 <View style={{ flexDirection: 'row', alignItems: 'center', gap: SPACING.small, marginVertical: SPACING.large }}>
                     <View style={{ flexGrow: 1, borderBottomWidth: 1, borderColor: COLORS.grey400 }} />
-                    <Text
+                    <ZoomableText
                         style={{
                             color: COLORS.grey400,
                             fontFamily: FONTS.regular,
@@ -103,7 +116,7 @@ const LoginImage = ({ isSmallScreen }) => {
                         }}
                     >
                         nebo
-                    </Text>
+                    </ZoomableText>
                     <View style={{ flexGrow: 1, borderBottomWidth: 1, borderColor: COLORS.grey400 }} />
                 </View>
 
@@ -120,7 +133,7 @@ const LoginImage = ({ isSmallScreen }) => {
                         paddingVertical: SPACING.small
                     }}
                 >
-                    <Text
+                    <ZoomableText
                         style={{
                             fontFamily: FONTS.medium,
                             fontSize: FONT_SIZES.medium,
@@ -132,7 +145,7 @@ const LoginImage = ({ isSmallScreen }) => {
                         }}
                     >
                         Email adresa
-                    </Text>
+                    </ZoomableText>
                 </View>
 
                 <View
@@ -155,7 +168,7 @@ const LoginImage = ({ isSmallScreen }) => {
                         size={normalize(17)}
                         color={COLORS.accent}
                     />
-                    <Text
+                    <ZoomableText
                         style={{
                             fontFamily: FONTS.medium,
                             fontSize: FONT_SIZES.medium,
@@ -167,10 +180,10 @@ const LoginImage = ({ isSmallScreen }) => {
                         }}
                     >
                         Přihlásit se pomocí Emailu
-                    </Text>
+                    </ZoomableText>
                 </View>
 
-                <Text
+                <ZoomableText
                     style={{
                         fontFamily: FONTS.regular,
                         fontSize: FONT_SIZES.medium,
@@ -179,8 +192,8 @@ const LoginImage = ({ isSmallScreen }) => {
                         lineHeight: 20,
                     }}
                 >
-                    Registrací souhlasíte s našimi <Text style={{ textDecorationLine: 'underline', color: COLORS.grey400 }}>všeobecnými obchodními podmínkami</Text> a <Text style={{ textDecorationLine: 'underline', color: COLORS.grey400 }}>se zpracováním osobních údajů</Text>
-                </Text>
+                    Registrací souhlasíte s našimi <ZoomableText style={{ textDecorationLine: 'underline', color: COLORS.grey400 }}>všeobecnými obchodními podmínkami</ZoomableText> a <ZoomableText style={{ textDecorationLine: 'underline', color: COLORS.grey400 }}>se zpracováním osobních údajů</ZoomableText>
+                </ZoomableText>
 
                 <LinearGradient
                     colors={['rgba(22,22,22,0)', COLORS.primary]}
@@ -219,6 +232,8 @@ const BlurredEnvelope = ({ width, isSmallScreen }) => {
                 width: 450,
                 maxWidth: 450,
                 zoom: width < 300 ? 0.4 : width < 400 ? 0.5 : 0.65,
+                //transform: [{ scale: width < 300 ? 0.4 : width < 400 ? 0.5 : 0.65 }],
+                //transformOrigin: 'center',
                 alignSelf: 'center',
                 marginVertical: isSmallScreen ? 64 : 0,
                 marginBottom: isSmallScreen ? 64 : -60

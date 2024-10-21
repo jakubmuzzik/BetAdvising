@@ -209,7 +209,7 @@ const Hero = ({ searchParams }) => {
                         delay: 60
                     }}
                 >
-                    Získej přístup k nejlepším tipům na sázení od profesionálních tipařů. Začni s 200 kreditama zdarma.
+                    Získej přístup k nejlepším tipům na sázení od našich profesionálních tipařů. Začni se 100 kreditama zdarma.
                 </MotiText>
 
                 <View style={{

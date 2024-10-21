@@ -274,52 +274,66 @@ const TicketsScroller = () => {
                 >
                     <Image
                         style={[styles.logoImage, {
-                            aspectRatio: 935/1280,
+                            aspectRatio: 944/1545,
                             height: width < 800 ? 250 : 330
                         }]}
-                        source={require('../assets/images/ticket.png')}
+                        source={require('../assets/images/tickets/ticket1.png')}
                     />
                     <Image
                         style={[styles.logoImage, {
-                            aspectRatio: 935/1280,
+                            aspectRatio: 944/1545,
                             height: width < 800 ? 250 : 330
                         }]}
-                        source={require('../assets/images/ticket.png')}
+                        source={require('../assets/images/tickets/ticket2.png')}
                     />
                     <Image
                         style={[styles.logoImage, {
-                            aspectRatio: 935/1280,
+                            aspectRatio: 944/1545,
                             height: width < 800 ? 250 : 330
                         }]}
-                        source={require('../assets/images/ticket.png')}
+                        source={require('../assets/images/tickets/ticket3.png')}
                     />
                     <Image
                         style={[styles.logoImage, {
-                            aspectRatio: 935/1280,
+                            aspectRatio: 944/1545,
                             height: width < 800 ? 250 : 330
                         }]}
-                        source={require('../assets/images/ticket.png')}
+                        source={require('../assets/images/tickets/ticket4.png')}
                     />
                     <Image
                         style={[styles.logoImage, {
-                            aspectRatio: 935/1280,
+                            aspectRatio: 944/1545,
                             height: width < 800 ? 250 : 330
                         }]}
-                        source={require('../assets/images/ticket.png')}
+                        source={require('../assets/images/tickets/ticket5.png')}
                     />
                     <Image
                         style={[styles.logoImage, {
-                            aspectRatio: 935/1280,
+                            aspectRatio: 944/1545,
                             height: width < 800 ? 250 : 330
                         }]}
-                        source={require('../assets/images/ticket.png')}
+                        source={require('../assets/images/tickets/ticket6.png')}
                     />
                     <Image
                         style={[styles.logoImage, {
-                            aspectRatio: 935/1280,
+                            aspectRatio: 944/1545,
                             height: width < 800 ? 250 : 330
                         }]}
-                        source={require('../assets/images/ticket.png')}
+                        source={require('../assets/images/tickets/ticket7.png')}
+                    />
+                    <Image
+                        style={[styles.logoImage, {
+                            aspectRatio: 944/1545,
+                            height: width < 800 ? 250 : 330
+                        }]}
+                        source={require('../assets/images/tickets/ticket8.png')}
+                    />
+                    <Image
+                        style={[styles.logoImage, {
+                            aspectRatio: 944/1545,
+                            height: width < 800 ? 250 : 330
+                        }]}
+                        source={require('../assets/images/tickets/ticket9.png')}
                     />
                 </View>
             </Marquee>

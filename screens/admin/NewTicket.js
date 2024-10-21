@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react'
 import { View, StyleSheet, Text, TouchableOpacity } from 'react-native'
-import { COLORS, FONT_SIZES, FONTS, SPACING, SPORTS } from '../../constants'
+import { COLORS, FONT_SIZES, FONTS, SPACING, SPORTS, PACKAGE_TYPES } from '../../constants'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 import { supabase } from '../../supabase/config'
 
@@ -418,6 +418,16 @@ const NewTicket = ({ offsetX, toastRef, setTabHeight, searchParams, storeCreated
             return
         }
 
+        const price = PACKAGE_TYPES.find(type => type.label === ticket.price).price
+
+        if (!price) {
+            toastRef?.show({
+                text: 'Price is required',
+                type: 'error'
+            })
+            return
+        }
+
         try {
             saveButtonRef.current.setIsLoading(true)
 
@@ -434,7 +444,7 @@ const NewTicket = ({ offsetX, toastRef, setTabHeight, searchParams, storeCreated
             const { data, error } = await supabase
                 .from('tickets')
                 .insert({
-                    price: ticket.price,
+                    price,
                     stake: ticket.stake,
                     start_date: formattedEntries.sort((a, b) => a.start_date - b.start_date)[0].start_date,
                 })
@@ -493,7 +503,7 @@ const NewTicket = ({ offsetX, toastRef, setTabHeight, searchParams, storeCreated
                     stake: ticket.stake,
                     start_date: formattedEntries.sort((a, b) => a.start_date - b.start_date)[0].start_date,
                     data: hashedTicketEntries,
-                    price: ticket.price,
+                    price
                 })
 
             if (hashedEntriesError) {
@@ -557,7 +567,7 @@ const NewTicket = ({ offsetX, toastRef, setTabHeight, searchParams, storeCreated
                             flex: 1
                         }}
                     >
-                        <CustomInput
+                        {/* <CustomInput
                             placeholder='100'
                             label='Cena'
                             value={ticket.price}
@@ -569,6 +579,22 @@ const NewTicket = ({ offsetX, toastRef, setTabHeight, searchParams, storeCreated
                                 })
                             }}
                             keyboardType='numeric'
+                        /> */}
+                        <DropdownSelect
+                            label='Cena'
+                            placeholder='Cena'
+                            containerStyle={{ flex: 1 }}
+                            options={PACKAGE_TYPES}
+                            text={ticket.price}
+                            errorMessage={ticket.priceErrorMessage}
+                            setText={(text) => {
+                                setTicket((t) => {
+                                    t.price = text
+                                    return { ...t }
+                                })
+                            }}
+                            rightIconName='chevron-down'
+                            offsetX={offsetX}
                         />
                     </View>
                     <View

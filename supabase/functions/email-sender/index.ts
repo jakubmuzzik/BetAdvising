@@ -122,7 +122,7 @@ Deno.serve(async (req) => {
                         </ul>
                     </p>
                     <p>Hodně štěstí 🍀!</p>
-                    <p><a href="{!offers_link}" class="btn">Zobrazit nabídky</a></p>
+                    <div><a href="{!offers_link}" class="btn">Zobrazit nabídky</a></div>
                     <span class="hidden">{!randomness}</span>
                 </div>
                 <!-- Footer -->

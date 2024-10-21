@@ -144,14 +144,19 @@ export const SPORTS = [
     {label: 'Hokej', icon: renderSportIcon('Hokej')}
 ]
 
+export const PACKAGE_TYPES = [
+    {name: 'regular', label: 'Běžný - 50 kreditů', price: 50},
+    {name: 'exclusive', label: 'Exkluzivní - 100 kreditů', price: 100}
+]
+
 export const API_RETRY_LIMIT = 3
 
 export const PACKAGES = [
-    { id: 'starter', name: 'Starter', credits: 250, price: 1000, discount: 0, description: '5 běžných tipů.' },
-    { id: 'basic', name: 'Basic', credits: 500, price: 1800, discount: 10, description: 'Users who are somewhat familiar with the service and want more flexibility.' },
-    { id: 'standard', name: 'Standard', credits: 1000, price: 3000, discount: 25, description: 'Regular users who frequently use your betting tips.' },
-    { id: 'premium', name: 'Premium', credits: 2000, price: 4800, discount: 40, description: 'Serious bettors who are committed to using your service regularly and want the best value.' },
-    { id: 'vip', name: 'VIP', credits: 4000, price: 7000, discount: 56, description: 'High-volume users or professional bettors who want to maximize their use of the service.' },
+    { id: 'starter', name: 'Starter', credits: 250, price: 1000, discount: 0, description: ['5 běžných tipů', '2 exklusivní tipy'] },
+    { id: 'basic', name: 'Basic', credits: 500, price: 1800, discount: 10, description: ['10 běžných tipů', '5 exklusivních tipů'] },
+    { id: 'standard', name: 'Standard', credits: 1000, price: 3000, discount: 25, description: ['20 běžných tipů', '10 exklusivních tipů']  },
+    { id: 'premium', name: 'Premium', credits: 2000, price: 4800, discount: 40, description: ['40 běžných tipů', '20 exklusivních tipů']  },
+    { id: 'vip', name: 'VIP', credits: 4000, price: 7000, discount: 56, description: ['80 běžných tipů', '40 exklusivních tipů']  },
 ]
 
 //SEARCH PARAMS

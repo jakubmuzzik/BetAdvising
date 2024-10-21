@@ -1,5 +1,5 @@
 import React, { useRef, useState, useMemo } from 'react'
-import { View, Text } from 'react-native'
+import { View, Text, StyleSheet } from 'react-native'
 import { FONTS, FONT_SIZES, COLORS, SPACING, PACKAGES } from '../../../constants'
 import { useNavigate } from 'react-router-dom'
 import { Image } from 'expo-image'
@@ -8,6 +8,7 @@ import withSearchParams from '../../../components/hoc/withSearchParams'
 
 import CustomButton from '../../../components/elements/CustomButton'
 import { TouchableRipple } from 'react-native-paper'
+import { Discount } from '../../../components/Package'
 
 const PACKAGES_GAP = SPACING.medium
 
@@ -44,6 +45,26 @@ const calculatePackageWidth = (contentWidth) => {
     return (contentWidth / numberOfItems) - (PACKAGES_GAP * (numberOfItems - 1) / numberOfItems)
 }
 
+const BulletPoint = ({ text }) => (
+    <View
+        style={{
+            flexDirection: 'row',
+            gap: 6,
+        }}
+    >
+        <Text
+            style={styles.descriptionText}
+        >
+            •
+        </Text>
+        <Text
+            style={styles.descriptionText}
+        >
+            {text}
+        </Text>
+    </View>
+)
+
 const Package = ({ data, isSelected, packageWidth, setSelectedPackage }) => {
 
     return (
@@ -61,6 +82,8 @@ const Package = ({ data, isSelected, packageWidth, setSelectedPackage }) => {
             onPress={() => setSelectedPackage(data.id)}
             rippleColor={COLORS.accent + '10'}
         >
+            <>
+            {data.discount > 0 && <Discount discount={data.discount}/>}
             <View>
                 <Text
                     style={{
@@ -107,16 +130,18 @@ const Package = ({ data, isSelected, packageWidth, setSelectedPackage }) => {
                 >
                     Za {data.price} Kč
                 </Text>
-                <Text
-                    style={{
-                        fontFamily: FONTS.light,
-                        fontSize: FONT_SIZES.medium,
-                        color: COLORS.grey400
-                    }}
-                >
-                    {data.description}
-                </Text>
+                {Array.isArray(data.description) ? (
+                    <View key={data.name} style={{
+                        gap: 4,
+                        flexDirection: 'column',
+                    }}>
+                        {data.description.map((text, index) => (
+                            <BulletPoint text={text} />
+                        ))}
+                    </View>
+                ) : <Text style={styles.descriptionText}>{data.description}</Text>}
             </View>
+            </>
         </TouchableRipple>
     )
 }
@@ -195,3 +220,11 @@ const SelectPackage = ({ searchParams }) => {
 }
 
 export default withSearchParams(SelectPackage, ['language'])
+
+const styles = StyleSheet.create({
+    descriptionText: {
+        fontFamily: FONTS.regular,
+        fontSize: FONT_SIZES.medium,
+        color: COLORS.grey400
+    }
+})

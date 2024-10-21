@@ -89,21 +89,21 @@ const FAQ = () => {
             >
                 <Accordion 
                     headerText='Kolik stojí odemčení jednoho tipu?'
-                    bodyText='Tipy se odemykají pomocí zakoupených kreditů. Cenově jsou rozděleny do dvou kategorií: Běžný a Exklusivní tip. Běžné tipy budou přidávány nejčastěji a mají fixní cenu: 50 kreditů. Exklusivní tipy jsou tipy s maximální důvěrou a zpravidla s vyššími kurzy. Cena exklusivního tipu se pohybuje v rozmezí 100 až 200 kreditů. Exklusivní tipy jsou přidávány vyjímečně v závislosti na dostupných událostech.'
+                    bodyText='Tipy se odemykají pomocí zakoupených kreditů. Cenově jsou rozděleny do dvou kategorií: Běžný a Exklusivní tip. Běžné tipy budou přidávány nejčastěji a stojí 50 kreditů. Exklusivní tipy jsou tipy s maximální důvěrou a zpravidla vyššími kurzy. Cena exklusivního tipu je 100 kreditů. Exklusivní tipy jsou přidávány vyjímečně v závislosti na dostupných událostech.'
                     headerTextStyle={styles.accordionHeader}
                     bodyTextStyle={styles.accordionBody}
                     backgroundColor={COLORS.secondary}
                 />
                 <Accordion 
                     headerText='Co je to garance vrácení kreditů?'
-                    bodyText='Garance vrácení kreditů znamená, že platíte jen za výherní tipy. Pokud odekmnutý tip nevyjde, vrátíme vám použité kredity zpět. Garance platí pro všechny tipy.'
+                    bodyText='Garance vrácení kreditů znamená, že platíte jen za výherní tipy. Pokud odemčený tip nevyjde, vrátíme vám použité kredity zpět. Garance vrácení kreditů platí pro všechny naše tipy.'
                     headerTextStyle={styles.accordionHeader}
                     bodyTextStyle={styles.accordionBody}
                     backgroundColor={COLORS.secondary}
                 />
                 <Accordion 
                     headerText='Jak mohu získat 100 vstupních kreditů zdarma?'
-                    bodyText='100 vstupních kreditů zdarma získáte po vytvoření účtu a jeho následném ověření. Ověření se provádí pomocí telefonního čísla. Po zadání telefonního číla vám přijde SMS s ověřovacím kódem, který zadáte do aplikace. Po ověření obdržíte 100 kreditů zdarma. Jakmile bylo dané telefonní číslo ověřeno, nelze ho už použít pro ověření jiného účtu.'
+                    bodyText='100 vstupních kreditů zdarma získáte po vytvoření účtu a jeho následném ověření. Ověření se provádí pomocí telefonního čísla. Po zadání telefonního čísla vám přijde SMS s ověřovacím kódem, který zadáte do aplikace. Po ověření obdržíte 100 kreditů zdarma. Jakmile bylo dané telefonní číslo ověřeno, nelze ho už použít pro ověření jiného účtu.'
                     headerTextStyle={styles.accordionHeader}
                     bodyTextStyle={styles.accordionBody}
                     backgroundColor={COLORS.secondary}
@@ -111,6 +111,13 @@ const FAQ = () => {
                 <Accordion 
                     headerText='Kolik tipů poskytujeme?'
                     bodyText='Tipy poskytujeme podle aktuálních sportovních událostí. Počet tipů se může lišit v závislosti na dostupných událostech a nalze tak určit přesný počet tipů, které budou poskytnuty.'
+                    headerTextStyle={styles.accordionHeader}
+                    bodyTextStyle={styles.accordionBody}
+                    backgroundColor={COLORS.secondary}
+                />
+                <Accordion 
+                    headerText='Čím se lišíme od konkurence?'
+                    bodyText='Od konkurence se lišíme především členstvím, které není nijak časově omezeno. Kredity zůstávají na Vašem účtě dokud je nevyčerpáte a je jen na vás kdy je použijete. Dále poskytujeme tipy s garancí vrácení kreditů. Naše tipy jsou vytvářeny tipéry s dlouholetou zkušeností.'
                     headerTextStyle={styles.accordionHeader}
                     bodyTextStyle={styles.accordionBody}
                     backgroundColor={COLORS.secondary}

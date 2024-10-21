@@ -34,6 +34,9 @@ begin
     UPDATE public.credits
     SET amount = amount + 100
     WHERE id = NEW.id::uuid;
+
+    INSERT INTO verified_phone_numbers ("user", phone)
+    VALUES (NEW.id::uuid, NEW.phone);
   END IF;
 
    /**
@@ -45,6 +48,9 @@ begin
     UPDATE public.users
     SET phone = NEW.phone
     WHERE id = NEW.id::uuid;
+
+    INSERT INTO verified_phone_numbers ("user", phone)
+    VALUES (NEW.id::uuid, NEW.phone);
   END IF;
 
   RETURN NEW;

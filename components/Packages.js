@@ -137,7 +137,7 @@ const Packages = ({ searchParams }) => {
                         textAlign: 'center',
                     }}
                 >
-                    Vyberte si počet kreditů, za které poté můžete odemykat profesionální tipy.
+                    Vyberte si počet kreditů, za které můžete odemykat naše sázkové tipy.
                 </Text>
             </View>
 

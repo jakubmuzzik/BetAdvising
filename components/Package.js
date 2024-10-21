@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text, TouchableOpacity } from 'react-native'
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'
 import { COLORS, FONT_SIZES, FONTS, SPACING } from '../constants'
 import { normalize } from '../utils'
 import { Image } from 'expo-image'
@@ -8,7 +8,27 @@ import { BlurView } from 'expo-blur'
 import withSearchParams from './hoc/withSearchParams'
 import { Link } from 'react-router-dom'
 
-const Discount = ({ discount }) => (
+const BulletPoint = ({ text }) => (
+    <View
+        style={{
+            flexDirection: 'row',
+            gap: 6,
+        }}
+    >
+        <Text
+            style={styles.descriptionText}
+        >
+            •
+        </Text>
+        <Text
+            style={styles.descriptionText}
+        >
+            {text}
+        </Text>
+    </View>
+)
+
+export const Discount = ({ discount }) => (
     <View
         style={{
             position: 'absolute',
@@ -20,7 +40,7 @@ const Discount = ({ discount }) => (
         <Text
             style={{
                 fontFamily: FONTS.bold,
-                fontSize: FONT_SIZES.small,
+                fontSize: FONT_SIZES.x_small * 1.1,
                 color: COLORS.white,
                 backgroundColor: COLORS.red,
                 height: 25,
@@ -28,7 +48,7 @@ const Discount = ({ discount }) => (
                 paddingTop: 5,
             }}
         >
-            {discount}%
+            -{discount}%
         </Text>
         <View
             style={{
@@ -126,15 +146,17 @@ const Package = ({ id, name, credits, price, description, discount, searchParams
                 >
                     Za {price} Kč
                 </Text>
-                <Text
-                    style={{
-                        fontFamily: FONTS.light,
-                        fontSize: FONT_SIZES.medium,
-                        color: COLORS.grey400
-                    }}
-                >
-                    {description}
-                </Text>
+
+                {Array.isArray(description) ? (
+                    <View key={name} style={{
+                        gap: 4,
+                        flexDirection: 'column',
+                    }}>
+                        {description.map((text, index) => (
+                            <BulletPoint text={text} />
+                        ))}
+                    </View>
+                ) : <Text style={styles.descriptionText}>{description}</Text>}
             </View>
 
             <Link
@@ -146,8 +168,8 @@ const Package = ({ id, name, credits, price, description, discount, searchParams
                 to={{ pathname: '/credits/order/checkout', search: new URLSearchParams({...searchParams, package: id}).toString() }}
             >
                 <HoverableView
-                    //hoveredBackgroundColor={'rgba(255, 255, 255, 0.2)'}
-                    //backgroundColor={COLORS.whiteBackground}
+                    hoveredBackgroundColor={COLORS.accentHoveredSecondary}
+                    backgroundColor={COLORS.accentSecondary}
                     style={{
                         justifyContent: 'center',
                         alignItems: 'center',
@@ -160,12 +182,12 @@ const Package = ({ id, name, credits, price, description, discount, searchParams
                     }}
                     withHoverableArrow
                     withCustomButtonHeight
-                    arrowColor={COLORS.white}
+                    arrowColor={COLORS.accent}
                     arrowSize={11}
                 >
                     <Text
                         style={{
-                            color: COLORS.grey300,
+                            color: COLORS.accent,
                             fontFamily: FONTS.regular,
                             fontSize: FONT_SIZES.medium
                         }}
@@ -179,3 +201,11 @@ const Package = ({ id, name, credits, price, description, discount, searchParams
 }
 
 export default Package
+
+const styles = StyleSheet.create({
+    descriptionText: {
+        fontFamily: FONTS.regular,
+        fontSize: FONT_SIZES.medium,
+        color: COLORS.grey400
+    }
+})

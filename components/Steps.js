@@ -395,11 +395,11 @@ const STEPS = [
                 <Text
                     style={styles.stepHeaderText}
                 >
-                    Zaregistrujte se a získejte 200 vstupních kreditů zdarma
+                    Zaregistrujte se a získejte 100 vstupních kreditů zdarma
                 </Text>
 
-                <BulletPoint text='Pro získání přístupu k našim tipům musíte se prvně zdarma zaregistrovat.' />
-                <BulletPoint text='Každý nový a ověřený uživatel obdrží 200 vstupních kreditů zdarma.' />
+                <BulletPoint text='Zaregistruje se na našich stránkách' />
+                <BulletPoint text='Ověřte svůj profil a získejte 100 kreditů zdarma' />
 
                 <HoverableLinkButton
                     searchParams={searchParams}
@@ -423,8 +423,10 @@ const STEPS = [
                     Odemykejte naše tipy a nechte se inspirovat
                 </Text>
 
-                <BulletPoint text='Naše tipy můžete následně odemykat pomocí kreditů.' />
-                <BulletPoint text='Před odemčením každého tipu vidíte jeho celkový kurz, náš vklad a zbývající čas do začátku prvního zápasu.' />
+                <BulletPoint text='Odemykejte naše tipy pomocí kreditů' />
+                <BulletPoint text='Běžný tip stojí 50 kreditů' />
+                <BulletPoint text='Exklusivní tip stojí 100 kreditů' />
+                <BulletPoint text='Před odemčením tipu vidíte jeho kurz, náš vklad a zbývající čas do prvního zápasu.' />
             </>
         ),
         image: (width) => (
@@ -469,7 +471,7 @@ const STEPS = [
                 <Text
                     style={styles.stepHeaderText}
                 >
-                    Kredity budou uplatněny pouze za úspěšné tipy
+                    Kredity uplatněny pouze při výhře
                 </Text>
                 <BulletPoint text='Pokud by některý z odemčených tiketů nevyšel, budou vám kredity vráceny.' />
 
@@ -668,11 +670,11 @@ const Steps = ({ searchParams }) => {
         if (!isBrowser) return
 
         VanillaTilt.init(document.querySelectorAll(`[data-id="step"]`), {
-            max: 2,
+            max: 0,
             speed: 200,
             easing: "cubic-bezier(.03,.98,.52,.99)",
             reverse: true,
-            //glare: true,
+            glare: true,
             "max-glare": 0.1,
             axis: 'x',
         })

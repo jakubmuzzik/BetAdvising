@@ -107,7 +107,7 @@ const KeyFeatues = ({ width }) => {
                         textAlign: 'center'
                     }}
                 >
-                    Zdarma vstupních 200 kreditů
+                    Zdarma vstupních 100 kreditů
                 </Text>
             </View>
 

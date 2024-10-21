@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { StyleSheet, Text, Touchable, TouchableOpacity, View, useWindowDimensions } from 'react-native'
 import { SPACING, FONT_SIZES, FONTS, COLORS, CUSTOM_BUTTON_HEIGHT } from '../constants'
 import { Image } from 'expo-image'
@@ -8,8 +8,8 @@ import withSearchParams from './hoc/withSearchParams'
 import VanillaTilt from 'vanilla-tilt'
 import { isBrowser } from 'react-device-detect'
 import HoverableLinkButton from './elements/HoverableLinkButton'
-import { Feather, FontAwesome5 } from '@expo/vector-icons'
-import { BlurView } from 'expo-blur'
+import { Feather, Entypo } from '@expo/vector-icons'
+import Animated, { useAnimatedStyle, withTiming } from 'react-native-reanimated'
 
 const SEPARATOR_TOP_INSET = 20
 const STEP_COUNT_MARKER_SIZE = 35
@@ -20,18 +20,13 @@ const LoginImage = ({ isSmallScreen }) => {
         <View
             style={{
                 pointerEvents: 'none',
-                //alignSelf: 'center',
-                //margin: 'auto',
                 width: isSmallScreen ? 'auto' : 450,
                 maxWidth: '100%',
-                //flexShrink: 1,
-                //maxWidth: 450,
+                margin: 'auto',
                 marginVertical: 20,
                 borderColor: COLORS.whiteBackground2,
-                //borderWidth: 1,
                 borderRadius: 10,
-                //boxShadow: '0px 0px 10px rgba(255, 255, 255, 0.1)'
-
+                zoom: 0.8
             }}
         >
             <LinearGradient
@@ -202,25 +197,100 @@ const LoginImage = ({ isSmallScreen }) => {
                     }}
                 />
 
-                {/* <BlurView
-                    intensity={10}
-                    tint='none'
+            </LinearGradient>
+        </View>
+    )
+}
+
+const BlurredEnvelope = ({ width, isSmallScreen }) => {
+    const [isHovered, setIsHovered] = useState(false)
+
+    const loginCardAnimatedStyle = useAnimatedStyle(() => {
+        return {
+            transform: [
+                { translateY: withTiming(isHovered ? -30 : 0, { duration: 200 }) },
+            ]
+        }
+    })
+
+    return (
+        <View
+            style={{
+                width: 450,
+                maxWidth: 450,
+                zoom: width < 300 ? 0.4 : width < 400 ? 0.5 : 0.65,
+                alignSelf: 'center',
+                marginVertical: isSmallScreen ? 64 : 0,
+                marginBottom: isSmallScreen ? 64 : -60
+            }}
+            onMouseEnter={isBrowser ? () => setIsHovered(true) : undefined}
+            onMouseLeave={isBrowser ? () => setIsHovered(false) : undefined}
+        >
+            <View
+                style={{
+                    position: 'absolute',
+                    width: '100%',
+                    height: 270,
+                    top: 30,
+                    backgroundColor: COLORS.whiteBackground,
+                    borderBottomLeftRadius: 8,
+                    borderBottomRightRadius: 8,
+                }}
+            />
+
+            <View
+                style={{
+                    position: 'absolute',
+                    top: -240,
+                    width: '100%',
+                    height: 300,
+                    backgroundColor: COLORS.whiteBackground,
+                    clipPath: 'polygon(0% 10%, 100% 10%, 50% 50%)',
+                    transform: [{ rotate: '180deg' }],
+                }}
+            />
+
+            <Animated.View
+                style={[{
+                    position: 'absolute',
+                    bottom: 0,
+                    left: 0,
+                    right: 0,
+                    margin: 'auto',
+                    alignSelf: 'center',
+                }, loginCardAnimatedStyle]}
+            >
+                <LoginImage />
+            </Animated.View>
+
+            <View
+                style={{
+                    width: '100%',
+                    height: 300,
+                    //backgroundColor: COLORS.whiteBackground,
+                    backgroundColor: 'rgba(24, 29, 37, .43)',
+                    clipPath: 'polygon(0% 10%, 50% 50%, 100% 10%, 100% 100%, 0% 100%)',
+                    borderRadius: '0 0 8px 8px',
+                    backdropFilter: 'blur(10px)', // Apply the blur to content behind
+                    WebkitBackdropFilter: 'blur(10px)', // For Safari
+                    borderColor: COLORS.whiteBackground,
+                    borderWidth: 1,
+                    borderRadius: 8,
+                }}
+            >
+
+            </View>
+            <View
+                style={{
+                    position: 'absolute',
+                    bottom: 0,
+                    right: 20,
+                }}
+            >
+                <View
                     style={{
-                        position: 'absolute',
-                        top: -100,
-                        right: -100,
-                        //backgroundColor: COLORS.accentSecondaryTransparent,
-                        borderRadius: 10,
-                        overflow: 'hidden',
                         backgroundColor: COLORS.accentSecondaryTransparent,
-                        padding: SPACING.medium,
-                        alignItems: 'center',
-                        zIndex: 2,
-                    }}
-                >
-                    <View
-                    style={{
-                        backgroundColor: COLORS.accentSecondaryTransparent,
+                        //backgroundColor: 'rgb(67 67 67 / 23%)',
                         width: 60,
                         height: 60,
                         borderRadius: 50,
@@ -229,25 +299,14 @@ const LoginImage = ({ isSmallScreen }) => {
                         marginBottom: 20
                     }}
                 >
-                    <FontAwesome5
-                        name="coins"
-                        size={26}
+                    <Entypo
+                        name="email"
+                        size={27}
                         color={COLORS.accent}
                     />
                 </View>
-                <Text
-                    style={{
-                        fontFamily: FONTS.regular,
-                        color: COLORS.white,
-                        fontSize: FONT_SIZES.x_large,
-                        textAlign: 'center'
-                    }}
-                >
-                    Zdarma vstupních 200 kreditů
-                </Text>
-                </BlurView> */}
+            </View>
 
-            </LinearGradient>
         </View>
     )
 }
@@ -351,34 +410,7 @@ const STEPS = [
             </>
         ),
         image: (width, isSmallScreen) => (
-            <LoginImage isSmallScreen={isSmallScreen} />
-            // <View
-            //     style={{
-            //         transform: [
-            //             { rotateX: '20deg' },
-            //             { rotateY: '-20deg' },
-            //             { rotateZ: '20deg' }
-            //         ],
-            //         width: width - 20,
-            //         maxWidth: 300,
-            //         aspectRatio: 1811 / 2135,
-            //         alignSelf: 'center',
-            //         marginVertical: 20
-            //     }}
-            // >
-            //     <Image
-            //         source={require('../assets/images/tickets_mock3.png')}
-            //         style={{
-            //             flex: 1
-            //         }}
-            //         contentFit='cover'
-            //         contentPosition='top center'
-            //     />
-            //    <LinearGradient
-            //         colors={['rgba(22,22,22,0)', COLORS.primary]}
-            //         style={{ position: 'absolute', bottom: 0, width: '100%', height: '50%', justifyContent: 'center', alignItems: 'center' }}
-            //     />
-            // </View>
+            <BlurredEnvelope width={width} isSmallScreen={isSmallScreen}/>
         )
     },
     {
@@ -407,21 +439,21 @@ const STEPS = [
                         { rotateZ: '-20deg' },
                         //{ scale: withTiming(isHovered ? 1.1 : 1, { duration: 200 }) }
                     ],
-                    width,
+                    //width,
                     maxWidth: 500,
                     aspectRatio: 1811 / 2135,
                     alignSelf: 'center',
                     marginVertical: 20
                 }}
             >
-                <Image
+                {/* <Image
                     source={require('../assets/images/tickets_mock3.png')}
                     style={{
                         flex: 1
                     }}
                     contentFit='cover'
                     contentPosition='top center'
-                />
+                /> */}
                 <LinearGradient
                     colors={['rgba(22,22,22,0)', COLORS.primary]}
                     style={{ position: 'absolute', bottom: 0, width: '100%', height: '50%', justifyContent: 'center', alignItems: 'center' }}
@@ -454,21 +486,21 @@ const STEPS = [
                     { rotateZ: '20deg' },
                     //{ scale: withTiming(isHovered ? 1.1 : 1, { duration: 200 }) }
                 ],
-                width: width - 20,
+                //width: width - 20,
                 maxWidth: 300,
                 aspectRatio: 1811 / 2135,
                 alignSelf: 'center',
                 marginVertical: 20
             }}
         >
-            <Image
+            {/* <Image
                 source={require('../assets/images/tickets_mock3.png')}
                 style={{
                     flex: 1
                 }}
                 contentFit='cover'
                 contentPosition='top center'
-            />
+            /> */}
             <LinearGradient
                 colors={['rgba(22,22,22,0)', COLORS.primary]}
                 style={{ position: 'absolute', bottom: 0, width: '100%', height: '50%', justifyContent: 'center', alignItems: 'center' }}
@@ -516,7 +548,7 @@ const StepCountMarker = ({ stepCount }) => (
     </View>
 )
 
-const Step = ({ isSmallScreen, index, isEven, step, searchParams, imageWidth }) => {
+const Step = ({ isSmallScreen, index, isEven, step, searchParams, width }) => {
 
     return (
         <LinearGradient
@@ -601,10 +633,12 @@ const Step = ({ isSmallScreen, index, isEven, step, searchParams, imageWidth }) 
                         paddingTop: STEP_COUNT_MARKER_SIZE + SEPARATOR_TOP_INSET + SPACING.large,
                         paddingBottom: 64,
                     } : {},
-                    isSmallScreen ? { paddingHorizontal: SPACING.medium } : { flex: 1 }
+                    isSmallScreen ? { paddingHorizontal: SPACING.medium } : { flex: 1 },
+                    {justifyContent: 'center'},
+                    //!isEven && isSmallScreen ? { paddingBottom: 64 } : {}
                 ]}
             >
-                {isEven ? step.content(searchParams) : step.image(imageWidth, isSmallScreen)}
+                {isEven ? step.content(searchParams) : step.image(width, isSmallScreen)}
             </View>
 
             <StepCountMarker stepCount={index + 1} />
@@ -616,10 +650,12 @@ const Step = ({ isSmallScreen, index, isEven, step, searchParams, imageWidth }) 
                         paddingTop: STEP_COUNT_MARKER_SIZE + SEPARATOR_TOP_INSET + SPACING.large,
                         paddingBottom: 64,
                     } : {},
-                    isSmallScreen ? { paddingHorizontal: SPACING.medium } : { flex: 1 }
+                    isSmallScreen ? { paddingHorizontal: SPACING.medium } : { flex: 1 },
+                    {justifyContent: 'center'},
+                    //isEven && isSmallScreen ? { paddingBottom: 64 } : {}
                 ]}
             >
-                {isEven ? step.image(imageWidth, isSmallScreen) : step.content(searchParams)}
+                {isEven ? step.image(width, isSmallScreen) : step.content(searchParams)}
             </View>
         </LinearGradient>
     )
@@ -636,7 +672,7 @@ const Steps = ({ searchParams }) => {
             speed: 200,
             easing: "cubic-bezier(.03,.98,.52,.99)",
             reverse: true,
-            glare: true,
+            //glare: true,
             "max-glare": 0.1,
             axis: 'x',
         })
@@ -730,13 +766,13 @@ const Steps = ({ searchParams }) => {
                                     searchParams={searchParams}
                                     isSmallScreen={width < STEP_SMALL_SCREEN_THRESHOLD}
                                     isEven={index % 2 === 0}
-                                    imageWidth={width * 0.2}
+                                    width={width}
                                 />
                                 {index !== STEPS.length - 1 && <LinearGradient
                                     colors={['rgba(255,255,255,.0)', COLORS.accent]}
                                     locations={[0, 0.4]}
                                     style={{
-                                        height: 100,
+                                        height: width < STEP_SMALL_SCREEN_THRESHOLD ? 150 : 100,
                                         width: 1,
                                         margin: 'auto',
                                         marginBottom: -SEPARATOR_TOP_INSET,

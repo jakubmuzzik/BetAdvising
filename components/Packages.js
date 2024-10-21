@@ -19,13 +19,13 @@ const Packages = ({ searchParams }) => {
         if (!isBrowser) return
 
         VanillaTilt.init(document.querySelectorAll(`[data-id="package"]`), {
-          max: 2,
+          max: 0,
           speed: 200,
           easing: "cubic-bezier(.03,.98,.52,.99)",
           reverse: true,
           glare: true,
           "max-glare": 0.1,
-          scale: 1.02,
+          //scale: 1.02,
         })
       }, [])
 
@@ -176,36 +176,20 @@ const Packages = ({ searchParams }) => {
                     margin: 'auto',
                 } : {}}
             >
+                {
+                    PACKAGES.map((item, index) => (
                 <Package 
-                    name='Starter'
-                    credits={10}
-                    price={250}
-                    description='New or casual users who want to try out the service with minimal investment.'
-                />
-                <Package 
-                    name='Basic'
-                    credits={50}
-                    price={350}
-                    description='Users who are somewhat familiar with the service and want more flexibility.'
-                />
-                <Package 
-                    name='Standard'
-                    credits={100}
-                    price={550}
-                    description='Regular users who frequently use your betting tips.'
-                />
-                <Package 
-                    name='Premium'
-                    credits={200}
-                    price={850}
-                    description='Serious bettors who are committed to using your service regularly and want the best value.'
-                />
-                <Package 
-                    name='VIP'
-                    credits={350}
-                    price={999}
-                    description='High-volume users or professional bettors who want to maximize their use of the service.'
-                />
+                            key={item.id}
+                            id={item.id}
+                            name={item.name}
+                            credits={item.credits}
+                            price={item.price}
+                            description={item.description}
+                            discount={item.discount}
+                            searchParams={searchParams}
+                        />
+                    ))
+                }
             </ScrollView>
         </View>
     )

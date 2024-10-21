@@ -108,6 +108,8 @@ const GoToAppButton = ({ searchParams, profileCompleted, usernameChar, isSmallSc
                     paddingHorizontal: SPACING.x_small,
                     paddingVertical: SPACING.xx_small
                 }}
+                withHoverableArrow
+                arrowColor={COLORS.white}
             >
                 {
                     profileCompleted && !isSmallScreen && <Avatar.Text size={normalize(28)} label={usernameChar} style={{ backgroundColor: COLORS.accent }} labelStyle={{ fontFamily: FONTS.bold, fontSize: FONT_SIZES.large }} />
@@ -121,7 +123,7 @@ const GoToAppButton = ({ searchParams, profileCompleted, usernameChar, isSmallSc
                         wordBreak: ''
                     }}
                 >
-                    {profileCompleted ? 'Do aplikace →' : 'Dokončit profil →'}
+                    {profileCompleted ? 'Do aplikace' : 'Dokončit profil'}
                 </Text>
             </HoverableView>
         </Link>

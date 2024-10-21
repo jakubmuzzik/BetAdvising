@@ -30,9 +30,9 @@ export const SIDEBAR_WIDTH = normalizeSize(230, 230, 230)
 
 export const COLORS = {
     accent: '#FBC10D',
-    accentSecondary: '#20211b',//'#FBC10D' + '14',
+    accentSecondary: '#1a1b17',//'#20211b',//'#FBC10D' + '14',
     accentSecondaryTransparent: '#FBC10D' + '14',
-    accentHoveredSecondary: '#1a1b17',
+    accentHoveredSecondary: '#20211b',//'#1a1b17',
     accentSecondaryBorder: '#FBC10D' + 'CC', 
     accent2: '#957308',
     hoveredAccent: '#D8A30B',
@@ -147,11 +147,11 @@ export const SPORTS = [
 export const API_RETRY_LIMIT = 3
 
 export const PACKAGES = [
-    { id: 'starter', name: 'Starter', credits: 10, price: 250, description: 'New or casual users who want to try out the service with minimal investment.' },
-    { id: 'basic', name: 'Basic', credits: 50, price: 350, description: 'Users who are somewhat familiar with the service and want more flexibility.' },
-    { id: 'standard', name: 'Standard', credits: 100, price: 550, description: 'Regular users who frequently use your betting tips.' },
-    { id: 'premium', name: 'Premium', credits: 200, price: 850, description: 'Serious bettors who are committed to using your service regularly and want the best value.' },
-    { id: 'vip', name: 'VIP', credits: 350, price: 999, description: 'High-volume users or professional bettors who want to maximize their use of the service.' },
+    { id: 'starter', name: 'Starter', credits: 250, price: 1000, discount: 0, description: '5 běžných tipů.' },
+    { id: 'basic', name: 'Basic', credits: 500, price: 1800, discount: 10, description: 'Users who are somewhat familiar with the service and want more flexibility.' },
+    { id: 'standard', name: 'Standard', credits: 1000, price: 3000, discount: 25, description: 'Regular users who frequently use your betting tips.' },
+    { id: 'premium', name: 'Premium', credits: 2000, price: 4800, discount: 40, description: 'Serious bettors who are committed to using your service regularly and want the best value.' },
+    { id: 'vip', name: 'VIP', credits: 4000, price: 7000, discount: 56, description: 'High-volume users or professional bettors who want to maximize their use of the service.' },
 ]
 
 //SEARCH PARAMS

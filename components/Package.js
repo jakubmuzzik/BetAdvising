@@ -8,7 +8,62 @@ import { BlurView } from 'expo-blur'
 import withSearchParams from './hoc/withSearchParams'
 import { Link } from 'react-router-dom'
 
-const Package = ({ id, name, credits, price, description, searchParams }) => {
+const Discount = ({ discount }) => (
+    <View
+        style={{
+            position: 'absolute',
+            top: 0,
+            right: 16,
+            width: 30,
+        }}
+    >
+        <Text
+            style={{
+                fontFamily: FONTS.bold,
+                fontSize: FONT_SIZES.small,
+                color: COLORS.white,
+                backgroundColor: COLORS.red,
+                height: 25,
+                textAlign: 'center',
+                paddingTop: 5,
+            }}
+        >
+            {discount}%
+        </Text>
+        <View
+            style={{
+                flexDirection: 'row',
+            }}
+        >
+            <View
+                style={{
+                    borderLeftWidth: 15,
+                    //borderRightWidth: 15,
+                    borderBottomWidth: 15,
+                    width: 15,
+                    borderLeftColor: 'transparent',
+                    borderRightColor: 'transparent',
+                    borderBottomColor: COLORS.red,
+                    transform: [{ rotate: '180deg' }]
+                }}
+            />
+            <View
+                style={{
+                    borderLeftWidth: 15,
+                    //borderRightWidth: 15,
+                    borderBottomWidth: 15,
+                    width: 15,
+                    borderLeftColor: 'transparent',
+                    borderRightColor: 'transparent',
+                    borderBottomColor: COLORS.red,
+                    transform: [{ rotateX: '180deg' }]
+                }}
+            />
+        </View>
+    </View>
+)
+
+const Package = ({ id, name, credits, price, description, discount, searchParams }) => {
 
     return (
         <BlurView
@@ -18,19 +73,20 @@ const Package = ({ id, name, credits, price, description, searchParams }) => {
                 borderColor: COLORS.grey400,//COLORS.accent + '90',
                 borderRadius: 10,
                 padding: SPACING.small,
-                maxWidth: normalize(250),
+                width: normalize(250),
                 justifyContent: 'space-between'
             }}
             intensity={20}
             tint='dark'
         >
+           {discount > 0 && <Discount discount={discount}/>}
             <View>
                 <Text
                     style={{
                         fontFamily: FONTS.medium,
                         fontSize: FONT_SIZES.x_large,
                         color: COLORS.accent,
-                        marginBottom: 10
+                        marginBottom: 12
                     }}
                 >
                     {name}
@@ -38,7 +94,7 @@ const Package = ({ id, name, credits, price, description, searchParams }) => {
                 <View style={{
                     flexDirection: 'row',
                     gap: 10,
-                    marginBottom: 10,
+                    marginBottom: 6,
                     alignItems: 'center'
                 }}>
                     <Text
@@ -65,7 +121,7 @@ const Package = ({ id, name, credits, price, description, searchParams }) => {
                         fontFamily: FONTS.regular,
                         fontSize: FONT_SIZES.medium,
                         color: COLORS.grey300,
-                        marginBottom: 20
+                        marginBottom: 24
                     }}
                 >
                     Za {price} Kč

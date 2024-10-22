@@ -2,7 +2,7 @@ import React, { useRef, memo } from 'react'
 import { View, Text, useWindowDimensions } from 'react-native'
 import { FONTS, FONT_SIZES, SPACING, COLORS, renderSportIcon } from '../../constants'
 import { MaterialIcons, MaterialCommunityIcons, FontAwesome } from '@expo/vector-icons'
-import { getEventDate, getEventTime } from '../../utils'
+import { getEventDate, getEventTime, roundOdd } from '../../utils'
 import { Image } from 'expo-image'
 import { IconButton } from 'react-native-paper'
 
@@ -207,7 +207,7 @@ const Match = ({ match, width, ticketId, id, showEditButtons, offsetX, actions }
                         flexShrink: 1,
                     }}
                 >
-                    {match.odd.toFixed(2)}
+                    {roundOdd(match.odd)}
                 </Text>
             </View>
         </View>
@@ -262,7 +262,7 @@ const TicketFooter = ({ odd, result }) => (
                     textAlign: 'center'
                 }}
             >
-                {odd.toFixed(2)}
+                {roundOdd(odd)}
             </Text>
         </View>
         <View>

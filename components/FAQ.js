@@ -89,7 +89,7 @@ const FAQ = () => {
             >
                 <Accordion 
                     headerText='Kolik stojí odemčení jednoho tipu?'
-                    bodyText='Tipy se odemykají pomocí zakoupených kreditů. Cenově jsou rozděleny do dvou kategorií: Běžný a Exklusivní tip. Běžné tipy budou přidávány nejčastěji a stojí 50 kreditů. Exklusivní tipy jsou tipy s maximální důvěrou a zpravidla vyššími kurzy. Cena exklusivního tipu je 100 kreditů. Exklusivní tipy jsou přidávány vyjímečně v závislosti na dostupných událostech.'
+                    bodyText='Tipy se odemykají pomocí zakoupených kreditů. Cenově jsou rozděleny do dvou kategorií: Běžný a Exklusivní tip. Běžné tipy budou přidávány nejčastěji a stojí 50 kreditů. Exklusivní tipy jsou tipy s maximální důvěrou a zpravidla vyššími kurzy a jsou označeny ikonou zlatého diamantu. Cena exklusivního tipu je 100 kreditů. Exklusivní tipy jsou přidávány vyjímečně v závislosti na dostupných událostech.'
                     headerTextStyle={styles.accordionHeader}
                     bodyTextStyle={styles.accordionBody}
                     backgroundColor={COLORS.secondary}

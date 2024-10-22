@@ -1,16 +1,18 @@
 import React, { useEffect, useState, useRef, useLayoutEffect, memo, useMemo } from 'react'
 import { View, Text, useWindowDimensions } from 'react-native'
 import { FONTS, FONT_SIZES, SPACING, COLORS } from '../../constants'
-import { MaterialIcons, MaterialCommunityIcons, FontAwesome } from '@expo/vector-icons'
+import { MaterialIcons, MaterialCommunityIcons, FontAwesome, Ionicons } from '@expo/vector-icons'
 import { BlurView } from 'expo-blur'
-import  { createRandomString, getEventDate, getEventTime } from '../../utils'
+import  { createRandomString, getEventDate, getEventTime, roundOdd } from '../../utils'
 import CustomButton from '../elements/CustomButton'
 import { unlockTicket } from '../../redux/actions/user'
 
 import ConfirmationModal from '../modal/ConfirmationModal'
 import { connect } from 'react-redux'
 
-const TicketHeader = ({ name, type }) => (
+import Tooltip from '../elements/Tooltip'
+
+const TicketHeader = ({ name, type, price }) => (
     <View
         style={{
             flexDirection: 'row',
@@ -48,6 +50,21 @@ const TicketHeader = ({ name, type }) => (
                 </Text>
             </View>
         </View>
+        {price === 100 && (
+            <Tooltip
+                style={{
+                    width: 35,
+                    height: 35,
+                    borderRadius: 17.5,
+                    backgroundColor: COLORS.accentSecondaryTransparent,
+                    justifyContent: 'center',
+                    alignItems: 'center'
+                }}
+                text='Exklusivní tip'
+            >
+                <Ionicons name="diamond" size={18} color={COLORS.accent} style={{marginRight: -1}} />
+            </Tooltip>
+        )}
     </View>
 )
 
@@ -144,7 +161,7 @@ const Match = memo(({data, width}) => (
                     textAlign: 'right'
                 }}
             >
-                {createRandomString(data.odd.toFixed(2))}
+                {createRandomString(roundOdd(data.odd))}
             </Text>
         </View>
     </View>
@@ -308,9 +325,9 @@ const LockedTicket = ({ offer, searchParams, toastRef, unlockTicket }) => {
                 flexGrow: 1
             }}
         >
-            <TicketHeader type={offer.data.length === 1 ? 'Single' : 'AKO'} name={offer.name} />
+            <TicketHeader type={offer.data.length === 1 ? 'Single' : 'AKO'} name={offer.name} price={offer.price}/>
             <TicketBody offer={offer} onUnlockPress={onUnlockPress} />
-            <TicketFooter odd={offer.odd} stake={offer.stake} />
+            <TicketFooter odd={roundOdd(offer.odd)} stake={offer.stake} />
 
             <ConfirmationModal
                 visible={confirmUnlockVisible}

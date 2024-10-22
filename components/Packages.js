@@ -1,4 +1,4 @@
-import React, { useEffect, useLayoutEffect, useState } from 'react'
+import React, { useEffect, useLayoutEffect, useRef } from 'react'
 import { Text, View, useWindowDimensions, StyleSheet, FlatList } from 'react-native'
 import { COLORS, FONT_SIZES, FONTS, SPACING, PACKAGES } from '../constants'
 import { normalize } from '../utils'
@@ -10,10 +10,13 @@ import { isBrowser } from 'react-device-detect'
 
 import VanillaTilt from 'vanilla-tilt'
 import { ScrollView } from 'react-native-gesture-handler'
-
+import { useDraggable } from "react-use-draggable-scroll"
 
 const Packages = ({ searchParams }) => {
     const { width } = useWindowDimensions()
+
+    const ref = useRef(); // We will use React useRef hook to reference the wrapping div:
+    const { events } = useDraggable(ref); // Now we pass the reference to the useDraggable hook:
 
     useEffect(() => {
         if (!isBrowser) return
@@ -164,6 +167,8 @@ const Packages = ({ searchParams }) => {
             /> */}
 
             <ScrollView
+                ref={ref}
+                {...events}
                 horizontal  
                 showsHorizontalScrollIndicator={false}
                 contentContainerStyle={{

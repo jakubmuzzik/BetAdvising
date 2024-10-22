@@ -100,3 +100,7 @@ export const createRandomString = (length) => {
     
     return result
 }
+
+export const roundOdd = (odd, decimalPlaces = 2) => {
+    return odd % 1 === 0 ? odd : odd.toFixed(decimalPlaces)
+}

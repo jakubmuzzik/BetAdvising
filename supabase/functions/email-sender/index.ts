@@ -23,6 +23,10 @@ const supabase = createClient(
 
 const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
+const roundOdd = (odd, decimalPlaces = 2) => {
+    return odd % 1 === 0 ? odd : odd.toFixed(decimalPlaces)
+}
+
 Deno.serve(async (req) => {
     const payload: WebhookPayload = await req.json()
     const { data: targetUsers, error } = await supabase
@@ -135,7 +139,7 @@ Deno.serve(async (req) => {
         </html>
     `
 
-    template = template.replace('{!odd}', payload.record.odd + '')
+    template = template.replace('{!odd}', roundOdd(payload.record.odd) + '')
     template = template.replace('{!stake}', payload.record.stake + '')
     template = template.replace('{!price}', payload.record.price + '')
     template = template.replace('{!offers_link}', 'https://www.tipstrike.cz/tickets/offers')

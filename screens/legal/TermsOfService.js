@@ -6,6 +6,22 @@ import { COLORS, FONT_SIZES, FONTS, SPACING } from '../../constants'
 const TermsOfService = ({ searchParams }) => {
 
     return (
+        <View
+            style={{
+                flex: 1
+            }}
+        >
+            <iframe
+                src='https://gueemidlmywvdpavailq.supabase.co/storage/v1/object/public/legal/vop.pdf?t=2024-10-22T14%3A01%3A10.414Z'
+                width="100%"
+                height="100%"
+                style={{ minHeight: '100vh', border: 'none' }}
+                title="Zpracování osobních údajů"
+            />
+        </View>
+    )
+
+    return (
         <>
             <View
                 style={{
@@ -35,7 +51,7 @@ const TermsOfService = ({ searchParams }) => {
                         marginTop: 20
                     }}
                 >
-                    Naposledy aktualizováno: 17. 10. 2024
+                    Naposledy aktualizováno: 22. 10. 2024
                 </Text>
                 <View
                     style={{

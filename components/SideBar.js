@@ -226,7 +226,7 @@ const SideBar = ({ toggleDrawer, searchParams, currentAuthUser, currentUser }) =
                     source={require('../assets/images/coin.png')}
                     style={{
                         height: 20,
-                        aspectRatio: 49 / 36,
+                        aspectRatio: 437/320,
                         marginBottom: 8
                         
                         //marginTop: -30

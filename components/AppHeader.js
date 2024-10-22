@@ -609,9 +609,9 @@ const AppHeader = ({ searchParams, currentAuthUser, logOut, toggleDrawer, curren
                         source={require('../assets/images/coin.png')}
                         style={{
                             width: 30,
-                            aspectRatio: 49/36,
-                            contentFit:'contain'
+                            aspectRatio: 437/320
                         }}
+                        contentFit='contain'
                     />
                     <View>
                         <Text

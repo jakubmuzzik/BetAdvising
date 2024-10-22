@@ -23,12 +23,11 @@ const HeaderWithLogo = ({ searchParams }) => {
                 >
                     <Image
                         contentFit='contain'
-                        source={require('../assets/logos/logo-header.png')}
+                        source={require('../assets/logos/TipStrike.svg')}
                         style={{
-                            width: normalize(80),
-                            aspectRatio: 773 / 320
+                            aspectRatio:853.76/322.77,
+                            height: HEADER_HEIGHT / 1.6
                         }}
-                        tintColor={COLORS.accent}
                     />
                 </Link>
             </View>

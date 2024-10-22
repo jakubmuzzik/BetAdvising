@@ -77,14 +77,13 @@ const LegalHeader = ({ searchParams, currentAuthUser }) => {
                 >
                     <Image
                         contentFit='contain'
-                        source={require('../assets/logos/logo-header.png')}
+                        source={require('../assets/logos/TipStrike.svg')}
                         style={{
                             maxWidth: '100%',
-                            aspectRatio: 3.1875,
+                            aspectRatio:853.76/322.77,
                             //height: normalize(32),
                             //width: normalize(102)
                         }}
-                        tintColor={COLORS.accent}
                     />
                 </Link>
             </>
@@ -98,13 +97,11 @@ const LegalHeader = ({ searchParams, currentAuthUser }) => {
                 >
                     <Image
                         contentFit='contain'
-                        source={require('../assets/logos/logo-header.png')}
+                        source={require('../assets/logos/TipStrike.svg')}
                         style={{
-                            aspectRatio: 3.1875,
-                            //height: normalize(32),
-                            width: normalize(102)
+                            aspectRatio:853.76/322.77,
+                            height: HEADER_HEIGHT / 1.6
                         }}
-                        tintColor={COLORS.accent}
                     />
                 </Link>
             </>

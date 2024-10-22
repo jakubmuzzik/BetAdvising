@@ -149,12 +149,11 @@ const SideBar = ({ toggleDrawer, searchParams, currentAuthUser }) => {
             >
                 <Image
                     contentFit='contain'
-                    source={require('../assets/logos/logo-header.png')}
+                    source={require('../assets/logos/TipStrike.svg')}
                     style={{
-                        height: normalize(32),
-                        width: normalize(102)
+                        width: 90,
+                        aspectRatio:853.76/322.77
                     }}
-                    tintColor={COLORS.accent}
                 />
             </View>
 

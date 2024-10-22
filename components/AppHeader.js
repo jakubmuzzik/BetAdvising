@@ -571,17 +571,17 @@ const AppHeader = ({ searchParams, currentAuthUser, logOut, toggleDrawer, curren
         ) : (
             <>
                 <View
-                    style={{ height: normalize(50), justifyContent: 'center', marginRight: SPACING.x_small }}
+                    style={{ height: normalize(50), justifyContent: 'center', marginRight: SPACING.medium }}
                 >
                     <Link to={{ pathname: '/tickets/offers', search: new URLSearchParams(searchParams).toString() }}>
-                        <RNImage
-                            resizeMode='contain'
-                            source={require('../assets/logos/logo-header.png')}
+                        <Image
+                            contentFit='contain'
+                            source={require('../assets/logos/TipStrike.svg')}
                             style={{
-                                height: normalize(32),
-                                width: normalize(102)
+                                aspectRatio:853.76/322.77,
+                                //height: normalize(32),
+                                height: HEADER_HEIGHT / 1.6
                             }}
-                            tintColor={COLORS.accent}
                         />
                     </Link>
                 </View>

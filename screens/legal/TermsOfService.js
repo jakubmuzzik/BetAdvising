@@ -963,7 +963,7 @@ datovou schránkou či emailem zaslaným na elektronickou adresu: support@tipstr
 Zákazník může k odstoupení od smlouvy využít vzor oznámení odstoupení od
 smlouvy, který je dostupný zde </span><span lang=CS><a
 href="https://gueemidlmywvdpavailq.supabase.co/storage/v1/object/public/legal/TipStrike_s.r.o._odstoupeni_formular_VZOR.docx?t=2024-10-22T13%3A20%3A06.859Z"><span
-style=''>https://gueemidlmywvdpavailq.supabase.co/storage/v1/object/public/legal/TipStrike_s.r.o._odstoupeni_formular_VZOR.docx?t=2024-10-22T13%3A20%3A06.859Z</span></a></span><span
+style='word-break: break-word;'>https://gueemidlmywvdpavailq.supabase.co/storage/v1/object/public/legal/TipStrike_s.r.o._odstoupeni_formular_VZOR.docx?t=2024-10-22T13%3A20%3A06.859Z</span></a></span><span
 lang=CS style=''>. Lhůta pro odstoupení od smlouvy
 je zachována, pokud zákazník v jejím průběhu odešle Poskytovateli oznámení, že
 od uzavřené smlouvy odstupuje.</span></p>

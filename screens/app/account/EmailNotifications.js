@@ -26,7 +26,7 @@ const EmailNotifications = ({ toastRef, currentUser, updateCurrentUserInRedux })
                         Emailové notifikace
                     </Text>
 
-                    <TouchableOpacity
+                    {/* <TouchableOpacity
                         onPress={onEditPress}
                     >
                         <HoverableView
@@ -47,7 +47,7 @@ const EmailNotifications = ({ toastRef, currentUser, updateCurrentUserInRedux })
                                 Upravit
                             </Text>
                         </HoverableView>
-                    </TouchableOpacity>
+                    </TouchableOpacity> */}
                 </View>
 
                 <View style={[styles.row, { borderTopWidth: 1, borderColor: COLORS.whiteBackground2 }]}>
@@ -58,7 +58,35 @@ const EmailNotifications = ({ toastRef, currentUser, updateCurrentUserInRedux })
                         </Text>
                     </View>
 
+                    <HoverableView
+                    style={{
+                        flexShrink: 1
+                    }}
+                    hoveredOpacity={0.7}
+                >
+                    <TouchableOpacity
+                        style={{
+                            flexDirection: 'row',
+                            alignItems: 'center',
+                            gap: SPACING.xx_small,
+                            flexShrink: 1
+                        }}
+                        onPress={onEditPress}
+                    >
                     <MaterialCommunityIcons name={currentUser.email_notifications_enabled ? 'checkbox-marked' : 'checkbox-blank-outline'} size={20} color={COLORS.accent} />
+                    <View
+                            style={{
+                                padding: 10,
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                                borderRadius: 50,
+                                backgroundColor: COLORS.accentSecondaryTransparent
+                            }}
+                        >
+                            <MaterialCommunityIcons name="pencil" size={13} color={COLORS.accent} />
+                        </View>
+                    </TouchableOpacity>
+                </HoverableView>
                 </View>
             </View>
 
@@ -94,7 +122,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        paddingVertical: SPACING.small,
+        height: 60,
         borderBottomWidth: 1,
         borderBottomColor: COLORS.whiteBackground2
     }

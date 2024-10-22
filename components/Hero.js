@@ -144,6 +144,8 @@ const Hero = ({ searchParams }) => {
                     right: 0
                 }}
                 contentFit='cover'
+                placeholder={{blurhash: 'LR7LDyIAoft8.TITofo#%gMxofoz'}}
+                transition={200}
             />
             <LinearGradient
                 colors={['rgba(22,22,22,0)', COLORS.primary]}

@@ -57,7 +57,8 @@ const AccountSettings = ({ toastRef, currentUser, isVerified, updateCurrentUserI
                                 alignItems: 'center',
                                 gap: SPACING.xx_small,
                                 flexShrink: 1,
-                                alignItems: 'center'
+                                alignItems: 'center',
+                                cursor: isVerified ? 'default' : 'pointer'
                             }}
                         >
                             <Octicons name="dot-fill" size={20} color={!isVerified ? 'yellow' : 'green'} />
@@ -86,16 +87,14 @@ const AccountSettings = ({ toastRef, currentUser, isVerified, updateCurrentUserI
                             activeOpacity={0.7}
                             onPress={onDeleteAccountPress}
                             style={{
-                                flexDirection: 'row',
+                                padding: 10,
+                                justifyContent: 'center',
                                 alignItems: 'center',
-                                gap: SPACING.xx_small,
-                                flexShrink: 1,
-                                alignItems: 'center'
+                                borderRadius: 50,
+                                backgroundColor: '#FF000020'
                             }}
                         >
-                            <Text style={{ fontFamily: FONTS.bold, fontSize: FONT_SIZES.medium, color: COLORS.error }}>
-                                Smazat
-                            </Text>
+                            <MaterialCommunityIcons name="delete-outline" size={15} color='red' />
                         </TouchableOpacity>
                     </HoverableView>
                 </View>
@@ -134,7 +133,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        paddingVertical: SPACING.small,
+        height: 60,
         borderBottomWidth: 1,
         borderBottomColor: COLORS.whiteBackground2
     }

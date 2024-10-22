@@ -55,7 +55,17 @@ const PersonalInformation = ({ toastRef, currentUser, updateCurrentUserInRedux }
                         <Text numberOfLines={1} style={{ fontFamily: FONTS.bold, fontSize: FONT_SIZES.medium, color: currentUser.name ? COLORS.white : COLORS.error }}>
                             {currentUser.name}
                         </Text>
-                        <MaterialCommunityIcons name="pencil" size={13} color={COLORS.accent} />
+                        <View
+                            style={{
+                                padding: 10,
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                                borderRadius: 50,
+                                backgroundColor: COLORS.accentSecondaryTransparent
+                            }}
+                        >
+                            <MaterialCommunityIcons name="pencil" size={13} color={COLORS.accent} />
+                        </View>
                     </TouchableOpacity>
                 </HoverableView>
             </View>
@@ -84,7 +94,17 @@ const PersonalInformation = ({ toastRef, currentUser, updateCurrentUserInRedux }
                         <Text numberOfLines={1} style={{ fontFamily: FONTS.bold, fontSize: FONT_SIZES.medium, color: currentUser.name ? COLORS.white : COLORS.error }}>
                             {currentUser.phone ? '+' + currentUser.phone : ''}
                         </Text>
-                        <MaterialCommunityIcons name="pencil" size={13} color={COLORS.accent} />
+                        <View
+                            style={{
+                                padding: 10,
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                                borderRadius: 50,
+                                backgroundColor: COLORS.accentSecondaryTransparent
+                            }}
+                        >
+                            <MaterialCommunityIcons name="pencil" size={13} color={COLORS.accent} />
+                        </View>
                     </TouchableOpacity>
                 </HoverableView>
             </View>
@@ -140,7 +160,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        paddingVertical: SPACING.small,
+        height: 60,
         borderBottomWidth: 1,
         borderBottomColor: COLORS.whiteBackground2
     }

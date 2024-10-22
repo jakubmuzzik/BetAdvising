@@ -101,7 +101,7 @@ const Drawer = ({ isOpen, toggleLeftDrawer, duration = 250, children }) => {
 //     }
 // }
 
-const SideBar = ({ toggleDrawer, searchParams, currentAuthUser }) => {
+const SideBar = ({ toggleDrawer, searchParams, currentAuthUser, currentUser }) => {
     const [routes] = useState(
         (currentAuthUser?.app_metadata?.userrole === 'ADMIN' ? [...ROUTES, {
             path: '/admin',
@@ -139,6 +139,15 @@ const SideBar = ({ toggleDrawer, searchParams, currentAuthUser }) => {
         toggleLeftDrawer()
     }
 
+    const onBuyCreditsPress = () => {
+        navigate({
+            pathname: '/credits/order/select-package',
+            search: new URLSearchParams(searchParams).toString()
+        })
+
+        toggleLeftDrawer()
+    }
+
     return (
         <Drawer isOpen={isOpen} toggleLeftDrawer={toggleLeftDrawer}>
             <View
@@ -163,7 +172,8 @@ const SideBar = ({ toggleDrawer, searchParams, currentAuthUser }) => {
                     marginTop: 40
                 }}
                 contentContainerStyle={{
-                    gap: 15
+                    gap: 15,
+                    flexGrow: 1
                 }}
             >
                 {routes.map((route, index) => (
@@ -204,6 +214,87 @@ const SideBar = ({ toggleDrawer, searchParams, currentAuthUser }) => {
             </ScrollView>
             <View
                 style={{
+                    marginVertical: SPACING.x_small,
+                    //paddingHorizontal: SPACING.xx_small,
+                    padding: SPACING.xx_small,
+                    borderRadius: 10,
+                    borderWidth: 1,
+                    borderColor: COLORS.whiteBackground2,
+                }}
+            >
+                <Image
+                    source={require('../assets/images/coin.png')}
+                    style={{
+                        height: 20,
+                        aspectRatio: 49 / 36,
+                        marginBottom: 8
+                        
+                        //marginTop: -30
+                    }}
+                    contentFit= 'contain'
+                />
+                <View
+                    style={{
+                        marginBottom: 16
+                    }}
+                >
+                        <Text
+                            style={{
+                                fontFamily: FONTS.regular,
+                                fontSize: FONT_SIZES.small,
+                                color: COLORS.grey300,
+                                marginBottom: 4,
+                                textAlign: 'center'
+                            }}
+                        >
+                            Dostupné kredity
+                        </Text>
+                        <Text
+                            style={{
+                                fontFamily: FONTS.bold,
+                                fontSize: FONT_SIZES.large,
+                                color: COLORS.white,
+                                textAlign: 'center'
+                            }}
+                        >
+                            {currentUser?.credits?.amount ?? 0}
+                        </Text>
+                    </View>
+                    <TouchableOpacity
+                        onPress={onBuyCreditsPress}
+                    >
+                        <HoverableView
+                            hoveredBackgroundColor={COLORS.accentHoveredSecondary}
+                            backgroundColor={COLORS.accentSecondary}
+                            style={{
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                                borderRadius: 10,
+                                width: 'fit-content',
+                                paddingHorizontal: SPACING.x_small,
+                                paddingVertical: SPACING.xx_small,
+                                flexDirection: 'row',
+                                //boxShadow: '0px 0px 10px rgba(251, 193, 13, 0.15)',
+                                borderWidth: 1,
+                                borderColor: COLORS.accentSecondaryBorder,
+                                margin: 'auto'
+                            }}
+                            withCustomButtonHeight
+                        >
+                            <Text
+                                style={{
+                                    color: COLORS.accent,
+                                    fontFamily: FONTS.bold,
+                                    fontSize: FONT_SIZES.medium
+                                }}
+                            >
+                                Dokoupit
+                            </Text>
+                        </HoverableView>
+                    </TouchableOpacity>
+            </View>
+            {/* <View
+                style={{
                     marginTop: SPACING.x_small,
                     //paddingHorizontal: SPACING.xx_small,
                     paddingVertical: SPACING.xxx_small,
@@ -237,7 +328,7 @@ const SideBar = ({ toggleDrawer, searchParams, currentAuthUser }) => {
                     <Picker.Item label="Čeština" value="cs" />
                     <Picker.Item label="English" value="en" />
                 </Picker>
-            </View>
+            </View> */}
         </Drawer>
     )
 }
@@ -245,6 +336,7 @@ const SideBar = ({ toggleDrawer, searchParams, currentAuthUser }) => {
 const mapStateToProps = (store) => ({
     toggleDrawer: store.appState.toggleDrawer,
     currentAuthUser: store.userState.currentAuthUser,
+    currentUser: store.userState.currentUser
 })
 
 export default connect(mapStateToProps)(withSearchParams(SideBar, SEARCH_PARAMS))
@@ -254,7 +346,7 @@ const styles = StyleSheet.create({
         padding: 12,
         width: SIDEBAR_WIDTH,
         maxWidth: '80%',
-        height: Dimensions.get('window').height,
+        height: '100%',//Dimensions.get('window').height,
         position: 'absolute',
         left: 0,
         zIndex: 2,

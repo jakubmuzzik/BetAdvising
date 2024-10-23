@@ -20,11 +20,11 @@ const ConfirmationModal = ({
     confirmButtonTextColor=COLORS.white,
     onCancel, 
     onConfirm,
-    cancelLabel='Cancel',
-    confirmLabel='Delete',
+    cancelLabel='Zrušit',
+    confirmLabel='Smazat',
     width=normalize(500),
-    errorText='There was an error.',
-    headerErrorText='Error'
+    errorText='Vyskytla se chyba.',
+    headerErrorText='Chyba'
 }) => {
     const modalToastRef = useRef()
     const confirmButtonRef = useRef()

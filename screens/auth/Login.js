@@ -110,7 +110,7 @@ const Login = ({ searchParams, toastRef, currentAuthUser }) => {
             console.error('Error signing in with OTP:', e.message ?? e)
             toastRef?.show({
                 type: 'error',
-                text: e.message ?? 'Something went wrong. Please try again later.'
+                text: e.message ?? 'Něco se pokazilo. Zkuste to prosím znovu.'
             })
         } finally {
             emailSignupButton.current.setIsLoading(false)
@@ -155,7 +155,7 @@ const Login = ({ searchParams, toastRef, currentAuthUser }) => {
                             fontFamily: FONTS.medium
                         }}
                     >
-                        Login or Register
+                        Přihlášení a registrace
                     </Text>
                     <Text
                         style={{
@@ -165,7 +165,7 @@ const Login = ({ searchParams, toastRef, currentAuthUser }) => {
                             marginTop: SPACING.xx_small
                         }}
                     >
-                        Choose an option below to continue
+                        Vyberte si způsob jak chete pokračovat
                     </Text>
 
                     <CustomButton
@@ -193,7 +193,7 @@ const Login = ({ searchParams, toastRef, currentAuthUser }) => {
                                 textAlign: 'center'
                             }}
                         >
-                            or
+                            nebo
                         </Text>
                         <View style={{ flexGrow: 1, borderBottomWidth: 1, borderColor: COLORS.grey400 }} />
                     </View>
@@ -213,7 +213,7 @@ const Login = ({ searchParams, toastRef, currentAuthUser }) => {
                             : null
                         }
                         onSubmitEditing={onEmailSignupPress}
-                        errorMessage={showErrorMessage ? (!email ? 'Enter your email address' : !isValidEmail(email) ? 'Invalid email address' : undefined) : undefined}
+                        errorMessage={showErrorMessage ? (!email ? 'Zadejte svůj email' : !isValidEmail(email) ? 'Neplatná email adresa' : undefined) : undefined}
                     />
 
                     <Animated.View

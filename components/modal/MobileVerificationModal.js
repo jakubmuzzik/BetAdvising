@@ -250,7 +250,7 @@ const MobileVerificationModal = ({ visible, setVisible, toastRef, headerLabel='O
             console.error(error)
             modalToastRef.current?.show({
                 type: 'error',
-                text: error.message ?? 'Something went wrong. Please try again later.'
+                text: error.message ?? 'Vyskytla se chyba. Zkuste to prosím později.'
             })
         } finally {
             resendButtonRef.current.setIsLoading(false)

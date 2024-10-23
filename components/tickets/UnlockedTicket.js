@@ -321,7 +321,7 @@ const UnlockedTicket = ({ ticket, searchParams, showEditButtons, offsetX, ticket
                 flexGrow: 1
             }}
         >
-            <TicketHeader type={ticket.ticket_entries?.length > 1 ? 'AKO' : 'Single'} id={ticket.id} name={ticket.name} showEditButtons={showEditButtons} offsetX={offsetX} actions={ticketActions} />
+            <TicketHeader type={ticket.ticket_entries?.length > 1 ? 'AKO' : 'Solo'} id={ticket.id} name={ticket.name} showEditButtons={showEditButtons} offsetX={offsetX} actions={ticketActions} />
             <TicketBody ticket={ticket} showEditButtons={showEditButtons} offsetX={offsetX} actions={ticketEntryActions} />
             <TicketFooter
                 odd={ticket.ticket_entries?.reduce((acc, curr) => acc * curr.odd, 1)}

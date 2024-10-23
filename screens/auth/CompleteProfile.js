@@ -64,14 +64,14 @@ const CompleteProfile = ({ toastRef, searchParams, currentAuthUser, logOut }) =>
             })
 
             toastRef?.show({
-                text: 'Profile completed successfully',
+                text: 'Profil byl úspěšně dokončen.',
                 type: 'success'
             })
         } catch (error) {
             console.error(error)
 
             toastRef?.show({
-                text: 'Failed to complete your profile. Please try again later.',
+                text: 'Něco se pokazilo. Zkuste to prosím znovu.',
                 type: 'error'
             })
         } finally {
@@ -85,7 +85,7 @@ const CompleteProfile = ({ toastRef, searchParams, currentAuthUser, logOut }) =>
         } catch(e) {
             toastRef?.show({
                 type: 'error',
-                text: 'Failed to log out.'
+                text: 'Odhlášení se nepodařilo.'
             })
         }
     }
@@ -148,7 +148,7 @@ const CompleteProfile = ({ toastRef, searchParams, currentAuthUser, logOut }) =>
                         value={firstName}
                         onChangeText={setFirstName}
                         containerStyle={{ width: '100%', marginTop: SPACING.large }}
-                        errorMessage={showErrorMessage && !firstName ? 'Enter your first name' : undefined}
+                        errorMessage={showErrorMessage && !firstName ? 'Zadejte své křestní jméno' : undefined}
                         onSubmitEditing={onCompleteProfilePress}
                     />
 
@@ -158,7 +158,7 @@ const CompleteProfile = ({ toastRef, searchParams, currentAuthUser, logOut }) =>
                         value={lastName}
                         onChangeText={setLastName}
                         containerStyle={{ width: '100%', marginTop: SPACING.xx_small }}
-                        errorMessage={showErrorMessage && !lastName ? 'Enter your last name' : undefined}
+                        errorMessage={showErrorMessage && !lastName ? 'Zadejte své příjmení' : undefined}
                         onSubmitEditing={onCompleteProfilePress}
                     />
 

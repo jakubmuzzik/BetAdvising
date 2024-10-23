@@ -287,7 +287,7 @@ const Unlocked = ({ searchParams, setTabHeight, fetchUnlockedTickets, unlocked }
 
             {unlocked != null && unlocked.length === 0 && !refreshing && (
                 <Animated.Text entering={FlipInEasyX} style={{ textAlign: 'center', fontFamily: FONTS.medium, color: COLORS.grey400, fontSize: FONT_SIZES.x_large, }}>
-                   You haven't unlocked any tickets yet.
+                    Zatím nemáte žádné odemčené tikety
                 </Animated.Text>
             )}
 

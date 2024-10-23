@@ -22,12 +22,12 @@ const Notification = ({ notification }) => {
             const hoursDiff = getHoursDiff(diffInMilliSeconds)
             if (hoursDiff === 0) {
                 const minutesDiff = getMinutesDiff(diffInMilliSeconds)
-                return minutesDiff === 0 ? 'Just now' : `${minutesDiff} minute${minutesDiff < 2 ? '' : 's'} ago`
+                return minutesDiff === 0 ? 'Právě teď' : `před ${minutesDiff} minut${minutesDiff < 2 ? 'ou' : 'ama'} `
             } else {
-                return `${hoursDiff} hour${hoursDiff === 1 ? '' : 's'} ago`
+                return `před ${hoursDiff} hodin${hoursDiff === 1 ? 'ou' : 'ama'}`
             }
         } else if (daysDiff < 8) {
-            return `${daysDiff} day${daysDiff === 1 ? '' : 's'} ago`
+            return `před ${daysDiff} dn${daysDiff === 1 ? 'em' : 'ama'}`
         } else {
             return getEventDate(notification.created_date, true, true)
         }

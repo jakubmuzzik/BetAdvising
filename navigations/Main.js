@@ -192,7 +192,7 @@ const Main = ({ fetchUser, updateCurrentAuthUser, fetchNotifications, clearRedux
             if (_event === 'SIGNED_OUT') {
                 toastRef.current?.show({
                     type: 'success',
-                    text: "You've been logged out."
+                    text: "Byli jste odhlášeni."
                 })
             }
 

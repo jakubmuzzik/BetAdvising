@@ -288,7 +288,7 @@ const LockedTicket = ({ offer, searchParams, toastRef, unlockTicket }) => {
             await unlockTicket(offer.id, offer.ticket)
 
             toastRef?.show({
-                text: 'Ticket has been unlocked',
+                text: 'Tip byl odemčen.',
                 type: 'success'
             })
         } catch(e) {
@@ -308,7 +308,7 @@ const LockedTicket = ({ offer, searchParams, toastRef, unlockTicket }) => {
                 })
             } else {
                 toastRef?.show({
-                    text: 'Failed to unlock ticket',
+                    text: 'Tip se nepodařilo odemknout.',
                     type: 'error'
                 })
             }
@@ -325,20 +325,20 @@ const LockedTicket = ({ offer, searchParams, toastRef, unlockTicket }) => {
                 flexGrow: 1
             }}
         >
-            <TicketHeader type={offer.data.length === 1 ? 'Single' : 'AKO'} name={offer.name} price={offer.price}/>
+            <TicketHeader type={offer.data.length === 1 ? 'Solo' : 'AKO'} name={offer.name} price={offer.price}/>
             <TicketBody offer={offer} onUnlockPress={onUnlockPress} />
             <TicketFooter odd={roundOdd(offer.odd)} stake={offer.stake} />
 
             <ConfirmationModal
                 visible={confirmUnlockVisible}
-                headerText='Unlock ticket'
-                text={'Are you sure you want to unlock this ticket with ' + offer.price + ' credits?'} 
+                headerText='Odemknout tip'
+                text={'Opravdu chcete odemknout tento tip za ' + offer.price + ' kreditů?'} 
                 onCancel={() => setConfirmUnlockVisible(false)}
                 onConfirm={unlock}
-                headerErrorText='Error'
-                errorText='Failed to unlock ticket.'
-                confirmLabel='Unlock'
-                confirmButtonColor={[COLORS.accent2, COLORS.accent, COLORS.accent, COLORS.accent2]}
+                headerErrorText='Chyba'
+                errorText='Tip se nepodařilo odemknout'
+                confirmLabel='Odemknout'
+                confirmButtonColor={COLORS.accent}
                 confirmButtonTextColor={COLORS.black}
             />
         </View>

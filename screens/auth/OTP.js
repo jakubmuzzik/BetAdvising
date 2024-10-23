@@ -55,7 +55,7 @@ const OTP = ({ toastRef, searchParams }) => {
             console.error(error)
 
             toastRef?.show({
-                text: error.message ?? 'Could not validate the Login Code',
+                text: error.message ?? 'Kód se nepodařilo ověřit. Zkuste to prosím znovu.',
                 type: 'error'
             })
 
@@ -140,7 +140,7 @@ const OTP = ({ toastRef, searchParams }) => {
                             textAlign: 'center'
                         }}
                     >
-                        Check your email
+                        Zkontrolujte svůj email
                     </Text>
                     <Text
                         style={{
@@ -151,16 +151,16 @@ const OTP = ({ toastRef, searchParams }) => {
                             textAlign: 'center'
                         }}
                     >
-                        We have sent a verification code to {email ? email : 'your email'}
+                        Poslali jsme vám verifikační kód na {email ? email : 'váš email'}
                     </Text>
 
                     <CustomInput
                         placeholder='xxxxxx'
-                        label='Verification code'
+                        label='Verifikační kód'
                         value={otp}
                         onChangeText={setOtp}
                         containerStyle={{ width: '100%', marginTop: SPACING.x_large }}
-                        errorMessage={showErrorMessage  && !otp ? 'Enter the verification code' : undefined}
+                        errorMessage={showErrorMessage  && !otp ? 'Zadejte verifikační kód' : undefined}
                         keyboardType='numeric'
                         onSubmitEditing={onContinuePress}
                     />
@@ -173,7 +173,7 @@ const OTP = ({ toastRef, searchParams }) => {
                             additionalStyles={{ borderWidth: 1, borderColor: COLORS.accentSecondaryBorder, marginTop: SPACING.medium, width: '100%' }}
                             textColor={COLORS.accent}
                             backgroundColors={COLORS.accentSecondary}
-                            buttonText='Continue'
+                            buttonText='Pokračovat'
                             textStyles={{ fontFamily: FONTS.medium }}
                             disabled={otp.length !== 6}
                         />
@@ -183,7 +183,7 @@ const OTP = ({ toastRef, searchParams }) => {
                         additionalStyles={{ borderWidth: 1, borderColor: COLORS.whiteBackground2, marginTop: SPACING.xx_small, width: '100%' }}
                         textColor={COLORS.white}
                         backgroundColors={COLORS.secondary2}
-                        buttonText='Send code again'
+                        buttonText='Odeslat kód znovu'
                         textStyles={{ fontFamily: FONTS.medium }}
                         spinnerColor={COLORS.white}
                     />
@@ -201,7 +201,7 @@ const OTP = ({ toastRef, searchParams }) => {
                             }}
                             hoveredColor={COLORS.white}
                             hoveredBackgroundColor={COLORS.white}
-                            text='Back to login'
+                            text='Zpátky na přihlášení'
                         />
                     </Link>
                 </LinearGradient>

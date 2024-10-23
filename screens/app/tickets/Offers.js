@@ -7,6 +7,7 @@ import { FontAwesome } from '@expo/vector-icons'
 import ContentLoader, { Rect } from "react-content-loader/native"
 import { MAX_OFFER_ROWS_PER_QUERY } from '../../../redux/actions/user'
 import Animated, { FlipInEasyX } from 'react-native-reanimated'
+import LottieView from 'lottie-react-native'
 
 import withSearchParams from '../../../components/hoc/withSearchParams'
 
@@ -165,9 +166,17 @@ const Offers = ({ searchParams, setTabHeight, fetchOffers, offers }) => {
             </View>
 
             {offers != null && offers.length === 0 && !refreshing && (
+                <>
+                    {/* <LottieView
+                        style={{ height: 130, alignSelf: 'center', width: 'fit-content', }}
+                        autoPlay
+                        loop
+                        source={require('../../../assets/animations/empty-tips.json')}
+                    /> */}
                 <Animated.Text entering={FlipInEasyX} style={{ textAlign: 'center', fontFamily: FONTS.medium, color: COLORS.grey400, fontSize: FONT_SIZES.x_large, }}>
-                    No offers at the moment
+                    Aktuálně nejsou k dispozici žádné nabídky, zkuste to později.
                 </Animated.Text>
+                </>
             )}
 
             {refreshing && <ActivityIndicator color={COLORS.accent} />}

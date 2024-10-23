@@ -213,7 +213,7 @@ const Checkout = ({ toastRef, searchParams }) => {
             
             if (error) throw error
 
-            setStripePromise(loadStripe(data.publishableKey))
+            setStripePromise(loadStripe(data.publishableKey, { locale: 'cs' }))
             setClientSecret(data.clientSecret)
         } catch (e) {
             console.error('error creating payment intent: ', e)

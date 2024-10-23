@@ -190,7 +190,7 @@ const AppHeader = ({ searchParams, currentAuthUser, logOut, toggleDrawer, curren
         } catch (e) {
             toastRef?.show({
                 type: 'error',
-                text: 'Failed to log out.'
+                text: 'Odhlášení se nepodařilo.'
             })
         }
     }
@@ -501,7 +501,7 @@ const AppHeader = ({ searchParams, currentAuthUser, logOut, toggleDrawer, curren
                                     <Avatar.Text size={34} label={currentAuthUser.user_metadata.name[0]} style={{ backgroundColor: COLORS.accent }} labelStyle={{ fontFamily: FONTS.bold, fontSize: FONT_SIZES.large }} />
                                     <View style={{ flexDirection: 'column', marginHorizontal: SPACING.xxx_small, flexShrink: 1, }}>
                                         <Text numberOfLines={1} style={{ fontFamily: FONTS.regular, fontSize: FONT_SIZES.small, color: COLORS.grey400, marginBottom: 4 }}>
-                                            Account
+                                            Účet
                                         </Text>
                                         <Text numberOfLines={1} style={{ fontFamily: FONTS.medium, fontSize: FONT_SIZES.medium, color: COLORS.white }}>
                                             {currentAuthUser.user_metadata.name}
@@ -550,7 +550,7 @@ const AppHeader = ({ searchParams, currentAuthUser, logOut, toggleDrawer, curren
                                 >
                                     <MaterialIcons name="logout" size={17} color={COLORS.red} />
                                     <Text style={{ fontFamily: FONTS.medium, fontSize: FONT_SIZES.medium, color: COLORS.red }}>
-                                        Log out
+                                        Odhlásit se
                                     </Text>
                                 </TouchableOpacity>
                             </HoverableView>

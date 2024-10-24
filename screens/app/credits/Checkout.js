@@ -133,8 +133,6 @@ const CheckoutForm = ({ toastRef, navigate, searchParams }) => {
             if (error) throw error
 
             if (paymentIntent) {
-                console.log('paymentIntent: ', paymentIntent)
-
                 if (paymentIntent.status === 'succeeded') {
                     toastRef?.show({
                         type: 'success',
@@ -204,7 +202,6 @@ const Checkout = ({ toastRef, searchParams }) => {
     const createPaymentIntent = async (packageId) => {         
         try {
             setLoading(true)
-            console.log('creating payment intent for package: ', packageId)
             const { error, data } = await supabase.functions.invoke('create-payment-intent', {
                 body: {
                     packageId

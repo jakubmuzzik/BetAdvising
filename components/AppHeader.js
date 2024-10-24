@@ -200,6 +200,7 @@ const AppHeader = ({ searchParams, currentAuthUser, logOut, toggleDrawer, curren
             pathname: '/support',
             search: new URLSearchParams(searchParams).toString()
         })
+        setUserDropdownVisible(false)
     }
 
     const onBuyCreditsPress = () => {
@@ -511,14 +512,14 @@ const AppHeader = ({ searchParams, currentAuthUser, logOut, toggleDrawer, curren
                                 </TouchableOpacity>
                             </HoverableView>
 
-                            {/* <TouchableOpacity onPress={onGetSupportPress}>
+                            <TouchableOpacity onPress={onGetSupportPress}>
                                 <HoverableView style={{ gap: 5, flexDirection: 'row', paddingHorizontal: SPACING.xx_small, paddingVertical: SPACING.xx_small, alignItems: 'center' }} hoveredBackgroundColor={COLORS.secondary}>
                                     <MaterialIcons name="help-outline" size={17} color={COLORS.grey300} />
                                     <Text style={{ fontFamily: FONTS.medium, fontSize: FONT_SIZES.medium, color: COLORS.grey300 }}>
                                         Podpora
                                     </Text>
                                 </HoverableView>
-                            </TouchableOpacity> */}
+                            </TouchableOpacity>
 {/* 
                             <HoverableView style={{ gap: 5, flexDirection: 'row', paddingHorizontal: SPACING.xx_small, paddingVertical: SPACING.xx_small, alignItems: 'center' }} hoveredBackgroundColor={COLORS.secondary}>
                                 <MaterialIcons name="language" size={17} color={COLORS.grey300} />

@@ -335,6 +335,27 @@ const TicketsScroller = () => {
                         }]}
                         source={require('../assets/images/tickets/ticket9.png')}
                     />
+                    <Image
+                        style={[styles.logoImage, {
+                            aspectRatio: 944/1545,
+                            height: width < 800 ? 250 : 330
+                        }]}
+                        source={require('../assets/images/tickets/ticket10.png')}
+                    />
+                    <Image
+                        style={[styles.logoImage, {
+                            aspectRatio: 944/1545,
+                            height: width < 800 ? 250 : 330
+                        }]}
+                        source={require('../assets/images/tickets/ticket11.png')}
+                    />
+                    <Image
+                        style={[styles.logoImage, {
+                            aspectRatio: 944/1545,
+                            height: width < 800 ? 250 : 330
+                        }]}
+                        source={require('../assets/images/tickets/ticket12.png')}
+                    />
                 </View>
             </Marquee>
         </View>

@@ -15,6 +15,35 @@ import HoverableText from './elements/HoverableText'
 import BurgerMenuIcon from './animated/BurgerMenuIcon'
 import SlideHeaderMenu from './SlideHeaderMenu'
 
+const NAV_BAR_ITEMS = [
+    {
+        text: 'O nás',
+        to: { hash: '#about-us' },
+        textStyle: {}
+    },
+    {
+        text: 'Jak to funguje',
+        to: { hash: '#how-it-works' },
+        textStyle: {}
+    },
+    {
+        text: 'Balíčky',
+        to: { hash: '#packages' },
+        textStyle: {}
+    },
+    {
+        text: 'Kontakt',
+        to: { hash: '#contact' },
+        textStyle: {}
+    },
+    {
+        text: 'Přihlásit se',
+        to: { pathname: '/auth' },
+        prohibitsAuth: true,
+        textStyle: { color: COLORS.accent }
+    }
+]
+
 const LoginButton = ({ searchParams }) => {
 
     return (
@@ -318,7 +347,7 @@ const Header = ({ searchParams, currentAuthUser }) => {
                 </View>
             </BlurView>
 
-            <SlideHeaderMenu isActive={isMenuOpen} searchParams={searchParams}/>
+            <SlideHeaderMenu isLoggedIn={currentAuthUser.id} isActive={isMenuOpen} searchParams={searchParams} items={NAV_BAR_ITEMS}/>
         </>
     )
 }

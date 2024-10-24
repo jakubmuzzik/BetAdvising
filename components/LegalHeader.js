@@ -13,6 +13,19 @@ import HoverableText from './elements/HoverableText'
 import BurgerMenuIcon from './animated/BurgerMenuIcon'
 import SlideHeaderMenu from './SlideHeaderMenu'
 
+const NAV_BAR_ITEMS = [
+    {
+        text: 'Obchodní podmínky',
+        to: { pathname: '/terms-of-service' },
+        textStyle: {}
+    },
+    {
+        text: 'Zpracování osobních údajů',
+        to: { pathname: '/privacy-policy' },
+        textStyle: {}
+    }
+]
+
 const NavBar = ({ searchParams }) => {
 
     return (
@@ -153,7 +166,7 @@ const LegalHeader = ({ searchParams, currentAuthUser }) => {
                 </View>
             </BlurView>
 
-            <SlideHeaderMenu isActive={isMenuOpen} searchParams={searchParams}/>
+            <SlideHeaderMenu isActive={isMenuOpen} searchParams={searchParams} items={NAV_BAR_ITEMS}/>
         </>
     )
 }

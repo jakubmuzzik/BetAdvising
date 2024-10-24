@@ -7,9 +7,7 @@ import Animated, {
     useAnimatedStyle,
     useSharedValue,
     withTiming,
-    FadeInDown,
-    FadeOut,
-    FadeOutDown
+    useAnimatedProps
 } from 'react-native-reanimated'
 import { Ionicons, AntDesign, MaterialCommunityIcons, Entypo } from '@expo/vector-icons'
 import HoverableView from '../elements/HoverableView'
@@ -31,6 +29,8 @@ import { supabase } from '../../supabase/config'
 import { Image } from 'expo-image'
 import LottieView from 'lottie-react-native'
 import { connect } from 'react-redux'
+
+const AninmatedBlurView = Animated.createAnimatedComponent(BlurView)
 
 const window = Dimensions.get('window')
 
@@ -144,6 +144,12 @@ const MobileVerificationModal = ({ visible, setVisible, toastRef, headerLabel='O
             boxShadow: '0px 0px 10px rgba(255, 255, 255, 0.1)'
         }
     })
+
+    const blurViewAnimatedProps = useAnimatedProps(() => {
+        return {
+            intensity: withTiming(visible ? 20 : 0, { duration: 200 })
+        };
+    });
 
     const onContinuePress = async () => {
         if (!phone) {
@@ -490,14 +496,14 @@ const MobileVerificationModal = ({ visible, setVisible, toastRef, headerLabel='O
             visible={visible}
             animationType="fade"
         >
-            <BlurView
-                intensity={20}
+            <AninmatedBlurView
                 tint='dark'
                 style={{
                     flex: 1,
                     justifyContent: 'center',
                     alignItems: 'center',
                 }}
+                animatedProps={blurViewAnimatedProps}
             >
                 <TouchableOpacity
                     style={{ position: 'absolute', top: 0, bottom: 0, left: 0, right: 0, cursor: 'default', backgroundColor: 'rgba(0, 0, 0, .2)' }}
@@ -514,7 +520,7 @@ const MobileVerificationModal = ({ visible, setVisible, toastRef, headerLabel='O
                     //initialLayout={{ width: contentWidth }}
                     />
                 </Animated.View>
-            </BlurView>
+            </AninmatedBlurView>
 
             <Toast ref={modalToastRef} />
         </Modal>

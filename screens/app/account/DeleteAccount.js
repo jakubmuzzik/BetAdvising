@@ -29,7 +29,6 @@ const DeleteAccount = ({ visible, setVisible, toastRef }) => {
     const deleteAccount = async () => {
         if (!deleteChecked) {
             setShowErrorMessage(true)
-            console.log('return')
             return
         }
 

@@ -158,8 +158,6 @@ router.subscribe(() => {
 
     const hash = window.location.hash
 
-    console.log(window.location.href)
-
     if (!hash) {
         window.scrollTo({ top: 0, left: 0, behavior: 'instant'})
     }

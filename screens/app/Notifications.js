@@ -11,42 +11,42 @@ import { markNotificationsAsDisplayed } from '../../redux/actions/user'
 
 import UnlockedTicketModal from '../../components/modal/UnlockedTicketModal'
 
+const getMinutesDiff = (diff) => {
+    const minutes = Math.floor(diff / 60) % 60
+    return minutes
+}
+
+const getHoursDiff = (diff) => {
+    const hours = Math.floor(diff / 3600) % 24
+    return hours
+}
+
+const getDaysDiff = (diff) => {
+    const days = Math.floor(diff / 86400)
+    return days
+}
+
+const renderDate = (createdDate) => {
+    let diffInMilliSeconds = Math.abs(new Date(createdDate) - new Date()) / 1000
+    const daysDiff = getDaysDiff(diffInMilliSeconds)
+
+    if (daysDiff === 0) {
+        const hoursDiff = getHoursDiff(diffInMilliSeconds)
+        if (hoursDiff === 0) {
+            const minutesDiff = getMinutesDiff(diffInMilliSeconds)
+            return minutesDiff === 0 ? 'Právě teď' : `před ${minutesDiff} minut${minutesDiff < 2 ? 'ou' : 'ama'} `
+        } else {
+            return `před ${hoursDiff} hodin${hoursDiff === 1 ? 'ou' : 'ama'}`
+        }
+    } else if (daysDiff < 8) {
+        return `před ${daysDiff} dn${daysDiff === 1 ? 'em' : 'ama'}`
+    } else {
+        return getEventDate(createdDate, true, true)
+    }
+}
+
 const Notification = ({ notification }) => {
     const [ticketModalVisible, setTicketModalVisible] = useState(false)
-
-    const renderDate = () => {
-        let diffInMilliSeconds = Math.abs(new Date(notification.created_date) - new Date()) / 1000
-        const daysDiff = getDaysDiff(diffInMilliSeconds)
-
-        if (daysDiff === 0) {
-            const hoursDiff = getHoursDiff(diffInMilliSeconds)
-            if (hoursDiff === 0) {
-                const minutesDiff = getMinutesDiff(diffInMilliSeconds)
-                return minutesDiff === 0 ? 'Právě teď' : `před ${minutesDiff} minut${minutesDiff < 2 ? 'ou' : 'ama'} `
-            } else {
-                return `před ${hoursDiff} hodin${hoursDiff === 1 ? 'ou' : 'ama'}`
-            }
-        } else if (daysDiff < 8) {
-            return `před ${daysDiff} dn${daysDiff === 1 ? 'em' : 'ama'}`
-        } else {
-            return getEventDate(notification.created_date, true, true)
-        }
-    }
-
-    const getMinutesDiff = (diff) => {
-        const minutes = Math.floor(diff / 60) % 60
-        return minutes
-    }
-
-    const getHoursDiff = (diff) => {
-        const hours = Math.floor(diff / 3600) % 24
-        return hours
-    }
-
-    const getDaysDiff = (diff) => {
-        const days = Math.floor(diff / 86400)
-        return days
-    }
 
     const onNotificationPress = () => {
         setTicketModalVisible(true)

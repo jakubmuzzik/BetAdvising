@@ -1,21 +1,25 @@
 import React, { useEffect, useState } from 'react'
-import { StyleSheet, Text, Touchable, TouchableOpacity, View, useWindowDimensions } from 'react-native'
-import { SPACING, FONT_SIZES, FONTS, COLORS, CUSTOM_BUTTON_HEIGHT } from '../constants'
+import { StyleSheet, Text, View, useWindowDimensions } from 'react-native'
+import { SPACING, FONT_SIZES, FONTS, COLORS } from '../../constants'
 import { Image } from 'expo-image'
-import { normalize } from '../utils'
+import { normalize } from '../../utils'
 import { LinearGradient } from 'expo-linear-gradient'
-import withSearchParams from './hoc/withSearchParams'
+import withSearchParams from '../hoc/withSearchParams'
 import VanillaTilt from 'vanilla-tilt'
 import { isBrowser } from 'react-device-detect'
-import HoverableLinkButton from './elements/HoverableLinkButton'
-import { Feather, Entypo } from '@expo/vector-icons'
-import Animated, { useAnimatedStyle, withTiming } from 'react-native-reanimated'
+
+import HoverableLinkButton from '../elements/HoverableLinkButton'
+
+import BlurredEnvelope from './BlurredEnvelope'
+import Tickets from './Tickets'
+import Notifications from './Notifications'
 
 const SEPARATOR_TOP_INSET = 20
 const STEP_COUNT_MARKER_SIZE = 35
-const STEP_SMALL_SCREEN_THRESHOLD = 1000
 
-const ZoomableText = ({children, style, zoom=0.8}) => (
+export const STEP_SMALL_SCREEN_THRESHOLD = 1000
+
+export const ZoomableText = ({children, style, zoom=0.8}) => (
     <Text
         style={{
             ...style,
@@ -26,305 +30,6 @@ const ZoomableText = ({children, style, zoom=0.8}) => (
         {children}
     </Text>
 )
-
-const LoginImage = ({ isSmallScreen }) => {
-    return (
-        <View
-            style={{
-                pointerEvents: 'none',
-                width: isSmallScreen ? 'auto' : 450,
-                maxWidth: '100%',
-                margin: 'auto',
-                marginVertical: 20,
-                borderColor: COLORS.whiteBackground2,
-                borderRadius: 10,
-                zoom: 0.8
-                //transform: [{ scale: 0.8 }], // Use transform instead of zoom
-                //transformOrigin: 'center'
-            }}
-        >
-            <LinearGradient
-                style={{
-                    padding: SPACING.xx_large,
-                    borderRadius: 10,
-                    flex: 1,
-                    //width: '80%',
-                    //marginTop: 50
-                }}
-                colors={[COLORS.secondary, COLORS.primary]}
-                start={{ x: -0.7, y: 0 }}
-            >
-                <ZoomableText
-                    style={{
-                        fontSize: FONT_SIZES.x_large,
-                        color: COLORS.white,
-                        fontFamily: FONTS.medium
-                    }}
-                >
-                    Registrace
-                </ZoomableText>
-                <ZoomableText
-                    style={{
-                        fontSize: FONT_SIZES.medium,
-                        color: COLORS.grey400,
-                        fontFamily: FONTS.regular,
-                        marginTop: SPACING.xx_small
-                    }}
-                >
-                    Vyberte si způsob registrace
-                </ZoomableText>
-
-                <View
-                    style={{
-                        width: '100%',
-                        flexDirection: 'row',
-                        alignItems: 'center',
-                        marginTop: SPACING.large,
-                        justifyContent: 'center',
-                        backgroundColor: COLORS.white,
-                        borderRadius: 10,
-                        height: CUSTOM_BUTTON_HEIGHT,
-                        borderWidth: 1,
-                        borderColor: COLORS.whiteBackground2,
-                    }}
-                >
-                    <Image
-                        source={require('../assets/logos/google.png')}
-                        style={{ width: normalize(17), aspectRatio: 1 / 1, marginRight: SPACING.xx_small }}
-                    />
-                    <ZoomableText
-                        style={{
-                            fontFamily: FONTS.medium,
-                            fontSize: FONT_SIZES.medium,
-                            verticalAlign: 'center',
-                            flexShrink: 1
-                        }}
-                        transformOrigin='center'
-                    >
-                        Přihlásit se pomocí Google
-                    </ZoomableText>
-                </View>
-
-                <View style={{ flexDirection: 'row', alignItems: 'center', gap: SPACING.small, marginVertical: SPACING.large }}>
-                    <View style={{ flexGrow: 1, borderBottomWidth: 1, borderColor: COLORS.grey400 }} />
-                    <ZoomableText
-                        style={{
-                            color: COLORS.grey400,
-                            fontFamily: FONTS.regular,
-                            fontSize: FONT_SIZES.medium,
-                            textAlign: 'center'
-                        }}
-                    >
-                        nebo
-                    </ZoomableText>
-                    <View style={{ flexGrow: 1, borderBottomWidth: 1, borderColor: COLORS.grey400 }} />
-                </View>
-
-                <View
-                    style={{
-                        width: '100%',
-                        justifyContent: 'center',
-                        backgroundColor: COLORS.secondary2,
-                        borderRadius: 10,
-                        height: CUSTOM_BUTTON_HEIGHT,
-                        borderWidth: 1,
-                        borderColor: COLORS.whiteBackground2,
-                        paddingHorizontal: SPACING.medium,
-                        paddingVertical: SPACING.small
-                    }}
-                >
-                    <ZoomableText
-                        style={{
-                            fontFamily: FONTS.medium,
-                            fontSize: FONT_SIZES.medium,
-                            verticalAlign: 'center',
-                            includeFontPadding: false,
-                            verticalAlign: 'center',
-                            flexShrink: 1,
-                            color: COLORS.grey300
-                        }}
-                    >
-                        Email adresa
-                    </ZoomableText>
-                </View>
-
-                <View
-                    style={{
-                        width: '100%',
-                        flexDirection: 'row',
-                        alignItems: 'center',
-                        marginTop: SPACING.x_small,
-                        justifyContent: 'center',
-                        backgroundColor: COLORS.accentSecondary,
-                        borderRadius: 10,
-                        height: CUSTOM_BUTTON_HEIGHT,
-                        borderWidth: 1,
-                        borderColor: COLORS.accentSecondaryBorder,
-                    }}
-                >
-                    <Feather
-                        style={{ marginRight: SPACING.xx_small }}
-                        name="mail"
-                        size={normalize(17)}
-                        color={COLORS.accent}
-                    />
-                    <ZoomableText
-                        style={{
-                            fontFamily: FONTS.medium,
-                            fontSize: FONT_SIZES.medium,
-                            verticalAlign: 'center',
-                            includeFontPadding: false,
-                            verticalAlign: 'center',
-                            flexShrink: 1,
-                            color: COLORS.accent
-                        }}
-                    >
-                        Přihlásit se pomocí Emailu
-                    </ZoomableText>
-                </View>
-
-                <ZoomableText
-                    style={{
-                        fontFamily: FONTS.regular,
-                        fontSize: FONT_SIZES.medium,
-                        color: COLORS.grey400,
-                        marginTop: SPACING.large,
-                        lineHeight: 20,
-                    }}
-                >
-                    Registrací souhlasíte s našimi <ZoomableText style={{ textDecorationLine: 'underline', color: COLORS.grey400 }}>všeobecnými obchodními podmínkami</ZoomableText> a <ZoomableText style={{ textDecorationLine: 'underline', color: COLORS.grey400 }}>se zpracováním osobních údajů</ZoomableText>
-                </ZoomableText>
-
-                <LinearGradient
-                    colors={['rgba(22,22,22,0)', COLORS.primary]}
-                    //locations={[0, 0.9]}
-                    style={{
-                        position: 'absolute',
-                        left: 0,
-                        right: 0,
-                        bottom: 0,
-                        width: '100%',
-                        height: '50%',
-                        justifyContent: 'center',
-                        alignItems: 'center'
-                    }}
-                />
-
-            </LinearGradient>
-        </View>
-    )
-}
-
-const BlurredEnvelope = ({ width, isSmallScreen }) => {
-    const [isHovered, setIsHovered] = useState(false)
-
-    const loginCardAnimatedStyle = useAnimatedStyle(() => {
-        return {
-            transform: [
-                { translateY: withTiming(isHovered ? -30 : 0, { duration: 200 }) },
-            ]
-        }
-    })
-
-    return (
-        <View
-            style={{
-                width: 450,
-                maxWidth: 450,
-                zoom: width < 300 ? 0.4 : width < 400 ? 0.5 : 0.65,
-                //transform: [{ scale: width < 300 ? 0.4 : width < 400 ? 0.5 : 0.65 }],
-                //transformOrigin: 'center',
-                alignSelf: 'center',
-                marginVertical: isSmallScreen ? 64 : 0,
-                marginBottom: isSmallScreen ? 64 : -60
-            }}
-            onMouseEnter={isBrowser ? () => setIsHovered(true) : undefined}
-            onMouseLeave={isBrowser ? () => setIsHovered(false) : undefined}
-        >
-            <View
-                style={{
-                    position: 'absolute',
-                    width: '100%',
-                    height: 270,
-                    top: 30,
-                    backgroundColor: COLORS.whiteBackground,
-                    borderBottomLeftRadius: 8,
-                    borderBottomRightRadius: 8,
-                }}
-            />
-
-            <View
-                style={{
-                    position: 'absolute',
-                    top: -240,
-                    width: '100%',
-                    height: 300,
-                    backgroundColor: COLORS.whiteBackground,
-                    clipPath: 'polygon(0% 10%, 100% 10%, 50% 50%)',
-                    transform: [{ rotate: '180deg' }],
-                }}
-            />
-
-            <Animated.View
-                style={[{
-                    position: 'absolute',
-                    bottom: 0,
-                    left: 0,
-                    right: 0,
-                    margin: 'auto',
-                    alignSelf: 'center',
-                }, loginCardAnimatedStyle]}
-            >
-                <LoginImage />
-            </Animated.View>
-
-            <View
-                style={{
-                    width: '100%',
-                    height: 300,
-                    //backgroundColor: COLORS.whiteBackground,
-                    backgroundColor: 'rgba(24, 29, 37, .43)',
-                    clipPath: 'polygon(0% 10%, 50% 50%, 100% 10%, 100% 100%, 0% 100%)',
-                    borderRadius: '0 0 8px 8px',
-                    backdropFilter: 'blur(10px)', // Apply the blur to content behind
-                    WebkitBackdropFilter: 'blur(10px)', // For Safari
-                    borderColor: COLORS.whiteBackground,
-                    borderWidth: 1,
-                    borderRadius: 8,
-                }}
-            >
-
-            </View>
-            <View
-                style={{
-                    position: 'absolute',
-                    bottom: 0,
-                    right: 20,
-                }}
-            >
-                <View
-                    style={{
-                        backgroundColor: COLORS.accentSecondaryTransparent,
-                        //backgroundColor: 'rgb(67 67 67 / 23%)',
-                        width: 60,
-                        height: 60,
-                        borderRadius: 50,
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        marginBottom: 20
-                    }}
-                >
-                    <Entypo
-                        name="email"
-                        size={27}
-                        color={COLORS.accent}
-                    />
-                </View>
-            </View>
-
-        </View>
-    )
-}
 
 const BulletPoint = ({ text }) => (
     <View
@@ -367,7 +72,7 @@ const CreditsRefundGuarantee = () => (
         }}
     >
         <Image
-            source={require('../assets/images/guarantee.png')}
+            source={require('../../assets/images/guarantee.png')}
             style={{
                 width: normalize(50),
                 aspectRatio: 99 / 92,
@@ -424,13 +129,11 @@ const STEPS = [
                 />
             </>
         ),
-        image: (width, isSmallScreen) => (
-            <BlurredEnvelope width={width} isSmallScreen={isSmallScreen}/>
-        )
+        image: () => <BlurredEnvelope />
     },
     {
         id: 2,
-        content: (searchParams) => (
+        content: () => (
             <>
                 <Text
                     style={styles.stepHeaderText}
@@ -444,44 +147,12 @@ const STEPS = [
                 <BulletPoint text='Před odemčením tipu vidíte jeho kurz, náš vklad a zbývající čas do prvního zápasu.' />
             </>
         ),
-        image: (width) => (
-            <View
-                style={{
-                    borderRadius: 10,
-                    borderColor: COLORS.whiteBackground2,
-                    //borderWidth: 1,
-                    transform: [
-                        { rotateX: '-20deg' },
-                        { rotateY: '-20deg' },
-                        { rotateZ: '-20deg' },
-                        //{ scale: withTiming(isHovered ? 1.1 : 1, { duration: 200 }) }
-                    ],
-                    //width,
-                    maxWidth: 500,
-                    aspectRatio: 1811 / 2135,
-                    alignSelf: 'center',
-                    marginVertical: 20
-                }}
-            >
-                {/* <Image
-                    source={require('../assets/images/tickets_mock3.png')}
-                    style={{
-                        flex: 1
-                    }}
-                    contentFit='cover'
-                    contentPosition='top center'
-                /> */}
-                <LinearGradient
-                    colors={['rgba(22,22,22,0)', COLORS.primary]}
-                    style={{ position: 'absolute', bottom: 0, width: '100%', height: '50%', justifyContent: 'center', alignItems: 'center' }}
-                />
-            </View>
-        )
+        image: () => <Tickets />
 
     },
     {
         id: 3,
-        content: (searchParams) => (
+        content: () => (
             <>
                 <Text
                     style={styles.stepHeaderText}
@@ -493,36 +164,7 @@ const STEPS = [
                 <CreditsRefundGuarantee />
             </>
         ),
-        image: (width) => <View
-            style={{
-
-                //borderWidth: 1,
-                transform: [
-                    { rotateX: '20deg' },
-                    { rotateY: '-20deg' },
-                    { rotateZ: '20deg' },
-                    //{ scale: withTiming(isHovered ? 1.1 : 1, { duration: 200 }) }
-                ],
-                //width: width - 20,
-                maxWidth: 300,
-                aspectRatio: 1811 / 2135,
-                alignSelf: 'center',
-                marginVertical: 20
-            }}
-        >
-            {/* <Image
-                source={require('../assets/images/tickets_mock3.png')}
-                style={{
-                    flex: 1
-                }}
-                contentFit='cover'
-                contentPosition='top center'
-            /> */}
-            <LinearGradient
-                colors={['rgba(22,22,22,0)', COLORS.primary]}
-                style={{ position: 'absolute', bottom: 0, width: '100%', height: '50%', justifyContent: 'center', alignItems: 'center' }}
-            />
-        </View>
+        image: () => <Notifications />
     }
 ]
 
@@ -648,7 +290,7 @@ const Step = ({ isSmallScreen, index, isEven, step, searchParams, width }) => {
                     isEven ? {
                         paddingLeft: SPACING.xx_large,
                         paddingTop: STEP_COUNT_MARKER_SIZE + SEPARATOR_TOP_INSET + SPACING.large,
-                        paddingBottom: 64,
+                        paddingBottom: isSmallScreen ? 42 : 64,
                     } : {},
                     isSmallScreen ? { paddingHorizontal: SPACING.medium } : { flex: 1 },
                     {justifyContent: 'center'},
@@ -665,7 +307,7 @@ const Step = ({ isSmallScreen, index, isEven, step, searchParams, width }) => {
                     !isEven ? {
                         paddingRight: SPACING.xx_large,
                         paddingTop: STEP_COUNT_MARKER_SIZE + SEPARATOR_TOP_INSET + SPACING.large,
-                        paddingBottom: 64,
+                        paddingBottom: isSmallScreen ? 32 : 64,
                     } : {},
                     isSmallScreen ? { paddingHorizontal: SPACING.medium } : { flex: 1 },
                     {justifyContent: 'center'},
@@ -681,7 +323,7 @@ const Step = ({ isSmallScreen, index, isEven, step, searchParams, width }) => {
 const Steps = ({ searchParams }) => {
     const { width } = useWindowDimensions()
 
-    useEffect(() => {
+    /*useEffect(() => {
         if (!isBrowser) return
 
         VanillaTilt.init(document.querySelectorAll(`[data-id="step"]`), {
@@ -693,7 +335,7 @@ const Steps = ({ searchParams }) => {
             "max-glare": 0.1,
             axis: 'x',
         })
-    }, [])
+    }, [])*/
 
     return (
         <View

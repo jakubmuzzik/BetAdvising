@@ -1,14 +1,15 @@
 import React, { useRef, memo } from 'react'
 import { View, Text, useWindowDimensions } from 'react-native'
 import { FONTS, FONT_SIZES, SPACING, COLORS, renderSportIcon } from '../../constants'
-import { MaterialIcons, MaterialCommunityIcons, FontAwesome } from '@expo/vector-icons'
+import { MaterialIcons, MaterialCommunityIcons, Ionicons } from '@expo/vector-icons'
 import { getEventDate, getEventTime, roundOdd } from '../../utils'
 import { Image } from 'expo-image'
 import { IconButton } from 'react-native-paper'
 
 import DropdownSelect from '../elements/DropdownSelect'
+import Tooltip from '../elements/Tooltip'
 
-const TicketHeader = ({ name, id, type, showEditButtons, offsetX, actions }) => {
+const TicketHeader = ({ name, id, type, showEditButtons, offsetX, actions, price }) => {
     const actionsDropdownRef = useRef()
 
     return (
@@ -65,6 +66,22 @@ const TicketHeader = ({ name, id, type, showEditButtons, offsetX, actions }) => 
                         onPress={() => actionsDropdownRef.current?.onDropdownPress()}
                     />
                 </DropdownSelect>
+            )}
+
+            {price === 100 && !showEditButtons && (
+                <Tooltip
+                    style={{
+                        width: 35,
+                        height: 35,
+                        borderRadius: 17.5,
+                        backgroundColor: COLORS.accentSecondaryTransparent,
+                        justifyContent: 'center',
+                        alignItems: 'center'
+                    }}
+                    text='Exklusivní tip'
+                >
+                    <Ionicons name="diamond" size={18} color={COLORS.accent} style={{ marginRight: -1 }} />
+                </Tooltip>
             )}
         </View>
     )
@@ -321,7 +338,7 @@ const UnlockedTicket = ({ ticket, searchParams, showEditButtons, offsetX, ticket
                 flexGrow: 1
             }}
         >
-            <TicketHeader type={ticket.ticket_entries?.length > 1 ? 'AKO' : 'Solo'} id={ticket.id} name={ticket.name} showEditButtons={showEditButtons} offsetX={offsetX} actions={ticketActions} />
+            <TicketHeader price={ticket.price} type={ticket.ticket_entries?.length > 1 ? 'AKO' : 'Solo'} id={ticket.id} name={ticket.name} showEditButtons={showEditButtons} offsetX={offsetX} actions={ticketActions} />
             <TicketBody ticket={ticket} showEditButtons={showEditButtons} offsetX={offsetX} actions={ticketEntryActions} />
             <TicketFooter
                 odd={ticket.ticket_entries?.reduce((acc, curr) => acc * curr.odd, 1)}

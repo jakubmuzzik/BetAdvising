@@ -1165,7 +1165,7 @@ text-indent:-35.4pt'><span lang=CS style='font-size:12.0pt;line-height:107%;
 s uzavřením a plněním smlouvy se zákazníkem Poskytovatel zpracovává nezbytné
 osobní údaje zákazníka, a to za účelem, v rozsahu a způsobem popsaným v&nbsp;<b>Informaci
 o zpracování osobních údajů</b>, která je dostupná na Webu zde: </span><span
-lang=CS><a href="https://tipstrike.cz/privacy-policy"><span style=''>https://tipstrike.cz/privacy-policy</span></a></span><span
+lang=CS><a style='word-break: break-word;' href="https://tipstrike.cz/privacy-policy"><span style=''>https://tipstrike.cz/privacy-policy</span></a></span><span
 lang=CS style=''>.</span></p>
 
 <p class=MsoListParagraphCxSpMiddle><span lang=CS style='font-size:12.0pt;
@@ -1182,7 +1182,7 @@ předpisů, ke vzniku spotřebitelského sporu ze smlouvy o zpřístupnění sá
 tipů,  který se nepodaří vyřešit vzájemnou dohodou, může zákazník podat návrh
 na mimosoudní řešení takového sporu určenému subjektu mimosoudního řešení
 spotřebitelských sporů, kterým je Česká obchodní inspekce, Štěpánská 15, 120 00
-Praha 2, Email:&nbsp;</span><span lang=CS><a
+Praha 2, Email:&nbsp;</span><span lang=CS><a style='word-break: break-word;'
 href="https://www.coi.cz/pro-podnikatele/informace-pro-prodejce-zbozi-a-sluzeb/mimosoudni-reseni-spotrebitelskych-sporu-adr/"
 title="adr@coi.cz"><span style=''>adr@coi.cz</span></a></span><span
 lang=CS style=''>, Web:&nbsp;</span><span lang=CS><a
@@ -1197,7 +1197,7 @@ text-indent:-35.4pt'><span lang=CS style='font-size:12.0pt;line-height:107%;
 '>11.9.<span style='font:7.0pt "Times New Roman"'>
 </span></span><span lang=CS style=''>Zákazník může
 využít rovněž platformu pro řešení sporů online, Která je zřízena Evropskou
-komisí na adrese&nbsp;</span><span lang=CS><a
+komisí na adrese&nbsp;</span><span lang=CS><a style='word-break: break-word;'
 href="http://ec.europa.eu/consumers/odr/"><span style=''>http://ec.europa.eu/consumers/odr/</span></a></span><span
 lang=CS style=''>.</span></p>
 

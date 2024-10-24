@@ -6,7 +6,8 @@ import Animated, {
     useAnimatedScrollHandler,
     useAnimatedStyle,
     useSharedValue,
-    withTiming
+    withTiming,
+    useAnimatedProps
 } from 'react-native-reanimated'
 import { Ionicons } from '@expo/vector-icons'
 import HoverableView from '../elements/HoverableView'
@@ -19,6 +20,8 @@ import {
 } from '../../constants'
 import { BlurView } from 'expo-blur'
 import CustomButton from '../elements/CustomButton'
+
+const AninmatedBlurView = Animated.createAnimatedComponent(BlurView)
 
 import Toast from '../Toast'
 
@@ -101,19 +104,26 @@ const CustomModal = forwardRef((props, ref) => {
         }
     })
 
+    const blurViewAnimatedProps = useAnimatedProps(() => {
+        return {
+            intensity: withTiming(visible ? 20 : 0, { duration: 200 })
+        };
+    });
+
     return (
-        <Modal transparent={true}
+        <Modal 
+            transparent
             visible={visible}
             animationType="fade"
         >
-            <BlurView
-                intensity={20}
+            <AninmatedBlurView
                 tint='dark'
                 style={{
                     flex: 1,
                     justifyContent: 'center',
                     alignItems: 'center',
                 }}
+                animatedProps={blurViewAnimatedProps}
             >
                 <TouchableOpacity
                     style={{ position: 'absolute', top: 0, bottom: 0, left: 0, right: 0, cursor: 'default', backgroundColor: 'rgba(0, 0, 0, .2)' }}
@@ -178,7 +188,7 @@ const CustomModal = forwardRef((props, ref) => {
                         />
                     </View>
                 </Animated.View>
-            </BlurView>
+            </AninmatedBlurView>
 
             <Toast ref={modalToastRef} />
         </Modal>

@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom'
 
 import HoverableText from './elements/HoverableText'
 
-const SlideHeaderMenu = ({ isActive, duration=250, searchParams, isLoggedIn }) => {
+const SlideHeaderMenu = ({ isActive, duration=250, searchParams, isLoggedIn, items }) => {
     const { height } = useWindowDimensions()
 
     const animatedStyle = useAnimatedStyle(() => {
@@ -47,68 +47,23 @@ const SlideHeaderMenu = ({ isActive, duration=250, searchParams, isLoggedIn }) =
                     alignItems: 'center',
                 }}
             >
-                <Link
-                    style={{
-                        textDecoration: 'none',
-                    }}
-                    to={{ hash: '#about-us', search: new URLSearchParams(searchParams).toString() }}
-                >
-                    <HoverableText
-                        text='O nás'
-                        hoveredColor={COLORS.accent}
-                        textStyle={styles.headerMenuText}
-                    />
-                </Link>
-                <Link
-                    style={{
-                        textDecoration: 'none',
-                    }}
-                    to={{ hash: '#how-it-works', search: new URLSearchParams(searchParams).toString() }}
-                >
-                    <HoverableText
-                        text='Jak to funguje'
-                        hoveredColor={COLORS.accent}
-                        textStyle={styles.headerMenuText}
-                    />
-                </Link>
-                <Link
-                    style={{
-                        textDecoration: 'none',
-                    }}
-                    to={{ hash: '#packages', search: new URLSearchParams(searchParams).toString() }}
-                >
-                    <HoverableText
-                        text='Balíčky'
-                        hoveredColor={COLORS.accent}
-                        textStyle={styles.headerMenuText}
-                    />
-                </Link>
-                <Link
-                    style={{
-                        textDecoration: 'none',
-                    }}
-                    to={{ hash: '#contact', search: new URLSearchParams(searchParams).toString() }}
-                >
-                    <HoverableText
-                        text='Kontakt'
-                        hoveredColor={COLORS.accent}
-                        textStyle={styles.headerMenuText}
-                    />
-                </Link>
-                {!isLoggedIn && (
-                    <Link
-                        style={{
-                            textDecoration: 'none',
-                        }}
-                        to={{ pathname: '/auth', search: new URLSearchParams(searchParams).toString() }}
-                    >
-                        <HoverableText
-                            text='Přihlásit se'
-                            hoveredColor={COLORS.hoveredAccent}
-                            textStyle={{...styles.headerMenuText, color: COLORS.accent}}
-                        />
-                    </Link>
-                )}
+                {
+                    items.filter(item => item.requireAuth ? isLoggedIn : item.prohibitsAuth ? !isLoggedIn : true).map((item, index) => (
+                        <Link
+                            key={index}
+                            style={{
+                                textDecoration: 'none',
+                            }}
+                            to={{ ...item.to, search: new URLSearchParams(searchParams).toString() }}
+                        >
+                            <HoverableText
+                                text={item.text}
+                                hoveredColor={COLORS.accent}
+                                textStyle={[styles.headerMenuText, item.textStyle]}
+                            />
+                        </Link>
+                    ))
+                }
             </BlurView>
         </Animated.View>
     )

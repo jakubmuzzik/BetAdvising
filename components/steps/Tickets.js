@@ -65,7 +65,7 @@ const TicketHeader = ({ name, type, price }) => (
                 alignItems: 'center',
             }}
         >
-            <MaterialCommunityIcons name="ticket-confirmation" size={30} color={COLORS.grey200} />
+            <MaterialCommunityIcons name="ticket-confirmation" size={normalize(30, 10)} color={COLORS.grey200} />
             <View>
                 <ZoomableText
                     style={{
@@ -100,7 +100,7 @@ const TicketHeader = ({ name, type, price }) => (
                 }}
                 text='Exklusivní tip'
             >
-                <Ionicons name="diamond" size={normalize(18)} color={COLORS.accent} style={{ marginRight: -1 }} />
+                <Ionicons name="diamond" size={normalize(18, 8)} color={COLORS.accent} style={{ marginRight: -1 }} />
             </Tooltip>
         )}
     </View>
@@ -130,7 +130,7 @@ const Match = memo(({ data, width }) => (
                     flexShrink: 1
                 }}
             >
-                <FontAwesome name="soccer-ball-o" size={18} color={COLORS.grey300} />
+                <FontAwesome name="soccer-ball-o" size={normalize(18, 8)} color={COLORS.grey300} />
                 <ZoomableText
                     style={{
                         fontFamily: FONTS.medium,
@@ -145,7 +145,7 @@ const Match = memo(({ data, width }) => (
             </View>
 
             <View>
-                <MaterialIcons name="question-mark" size={FONT_SIZES.x_large} color={COLORS.white} />
+                <MaterialIcons name="question-mark" size={normalize(20, 8)} color={COLORS.white} />
             </View>
         </View>
         <View

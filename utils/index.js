@@ -3,8 +3,8 @@ import { isSmallScreen } from "../constants"
 const DAY_NAMES = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
 const TRANSLATED_DAY_NAMES = ['Neděle', 'Pondělí', 'Úterý', 'Středa', 'Čtvrtek', 'Pátek', 'Sobota']
 
-export const normalize = (size, inverse = false) => {
-    return isSmallScreen ? size - 5 * (inverse ? -1 : 1) : size
+export const normalize = (size, smallScreenDelta=5, inverse = false) => {
+    return isSmallScreen ? size - smallScreenDelta * (inverse ? -1 : 1) : size
 }
 
 export const stripEmptyParams = (params) => {

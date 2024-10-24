@@ -2,7 +2,7 @@ import React, { useRef, memo } from 'react'
 import { View, Text, useWindowDimensions } from 'react-native'
 import { FONTS, FONT_SIZES, SPACING, COLORS, renderSportIcon } from '../../constants'
 import { MaterialIcons, MaterialCommunityIcons, Ionicons } from '@expo/vector-icons'
-import { getEventDate, getEventTime, roundOdd, normalize } from '../../utils'
+import { getEventDate, getEventTime, roundOdd } from '../../utils'
 import { Image } from 'expo-image'
 import { IconButton } from 'react-native-paper'
 
@@ -80,7 +80,7 @@ const TicketHeader = ({ name, id, type, showEditButtons, offsetX, actions, price
                     }}
                     text='Exklusivní tip'
                 >
-                    <Ionicons name="diamond" size={normalize(18)} color={COLORS.accent} style={{ marginRight: -1 }} />
+                    <Ionicons name="diamond" size={18} color={COLORS.accent} style={{ marginRight: -1 }} />
                 </Tooltip>
             )}
         </View>

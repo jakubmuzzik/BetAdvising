@@ -3,7 +3,7 @@ import { View, Text, useWindowDimensions } from 'react-native'
 import { FONTS, FONT_SIZES, SPACING, COLORS } from '../../constants'
 import { MaterialIcons, MaterialCommunityIcons, FontAwesome, Ionicons } from '@expo/vector-icons'
 import { BlurView } from 'expo-blur'
-import  { createRandomString, getEventDate, getEventTime, roundOdd, normalize } from '../../utils'
+import  { createRandomString, getEventDate, getEventTime, roundOdd } from '../../utils'
 import CustomButton from '../elements/CustomButton'
 import { unlockTicket } from '../../redux/actions/user'
 
@@ -62,7 +62,7 @@ const TicketHeader = ({ name, type, price }) => (
                 }}
                 text='Exklusivní tip'
             >
-                <Ionicons name="diamond" size={normalize(18)} color={COLORS.accent} style={{marginRight: -1}} />
+                <Ionicons name="diamond" size={18} color={COLORS.accent} style={{marginRight: -1}} />
             </Tooltip>
         )}
     </View>

@@ -311,7 +311,7 @@ const BlurredEnvelope = () => {
                 >
                     <Entypo
                         name="email"
-                        size={27}
+                        size={normalize(27, 10)}
                         color={COLORS.accent}
                     />
                 </View>

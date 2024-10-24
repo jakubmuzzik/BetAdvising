@@ -1,14 +1,10 @@
 import { useState, memo } from 'react'
 import { View, useWindowDimensions } from 'react-native'
-import { BlurView } from 'expo-blur'
-import { Text } from 'react-native'
-import { FONTS, FONT_SIZES, SPACING, CUSTOM_BUTTON_HEIGHT, COLORS } from '../../constants'
-import { Ionicons, MaterialCommunityIcons, MaterialIcons, FontAwesome } from '@expo/vector-icons'
-import Tooltip from '../elements/Tooltip'
-import { getEventDate, getEventTime } from '../../utils'
-import Animated, { useAnimatedStyle, withTiming, useAnimatedProps, interpolateColor } from 'react-native-reanimated'
+import { FONTS, FONT_SIZES, COLORS } from '../../constants'
+import { getEventDate } from '../../utils'
 import { STEP_SMALL_SCREEN_THRESHOLD } from '.'
 import HoverableView from '../elements/HoverableView'
+import { ZoomableText } from '.'
 
 const getMinutesDiff = (diff) => {
     const minutes = Math.floor(diff / 60) % 60
@@ -132,15 +128,15 @@ const Notification = ({ notification, index }) => {
                     >
                         {
                             notification.type === 'credit_returned' ? (
-                                <Text style={{ fontSize: FONT_SIZES.xx_large }}>↩️</Text>
+                                <ZoomableText style={{ fontSize: FONT_SIZES.xx_large }}>↩️</ZoomableText>
                             ) : notification.type === 'ticket_success' ? (
-                                <Text style={{ fontSize: FONT_SIZES.xx_large }}>🎉</Text>
+                                <ZoomableText style={{ fontSize: FONT_SIZES.xx_large }}>🎉</ZoomableText>
                             ) : null
                         }
                     </View>
 
                     <View style={{ flex: 1 }}>
-                        <Text
+                        <ZoomableText
                             style={{
                                 color: COLORS.grey400,
                                 fontFamily: FONTS.regular,
@@ -148,9 +144,9 @@ const Notification = ({ notification, index }) => {
                             }}
                         >
                             {renderDate(notification.created_date)}
-                        </Text>
+                        </ZoomableText>
 
-                        <Text
+                        <ZoomableText
                             style={{
                                 paddingTop: 8,
                                 fontFamily: FONTS.medium,
@@ -163,7 +159,7 @@ const Notification = ({ notification, index }) => {
                                     : notification.type === 'ticket_success' ? 'Gratulujeme, zakoupený tiket #' + notification.ticket.name + ' byl úspěšný.'
                                         : ''
                             }
-                        </Text>
+                        </ZoomableText>
                     </View>
                 </>
             </View>

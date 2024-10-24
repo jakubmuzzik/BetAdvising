@@ -1,13 +1,13 @@
 import { useState, memo } from 'react'
 import { View, useWindowDimensions } from 'react-native'
 import { BlurView } from 'expo-blur'
-import { Text } from 'react-native'
 import { FONTS, FONT_SIZES, SPACING, CUSTOM_BUTTON_HEIGHT, COLORS } from '../../constants'
 import { Ionicons, MaterialCommunityIcons, MaterialIcons, FontAwesome } from '@expo/vector-icons'
 import Tooltip from '../elements/Tooltip'
-import { roundOdd, getEventDate, getEventTime } from '../../utils'
+import { roundOdd, getEventDate, getEventTime, normalize } from '../../utils'
 import Animated, { useAnimatedStyle, withTiming, useAnimatedProps, interpolateColor } from 'react-native-reanimated'
 import { STEP_SMALL_SCREEN_THRESHOLD } from '.'
+import { ZoomableText } from '.'
 
 const AnimatedBlurView = Animated.createAnimatedComponent(BlurView)
 
@@ -67,7 +67,7 @@ const TicketHeader = ({ name, type, price }) => (
         >
             <MaterialCommunityIcons name="ticket-confirmation" size={30} color={COLORS.grey200} />
             <View>
-                <Text
+                <ZoomableText
                     style={{
                         fontFamily: FONTS.medium,
                         fontSize: FONT_SIZES.small,
@@ -76,8 +76,8 @@ const TicketHeader = ({ name, type, price }) => (
                     }}
                 >
                     {type}
-                </Text>
-                <Text
+                </ZoomableText>
+                <ZoomableText
                     style={{
                         fontFamily: FONTS.medium,
                         fontSize: FONT_SIZES.large,
@@ -85,7 +85,7 @@ const TicketHeader = ({ name, type, price }) => (
                     }}
                 >
                     Tiket #{name}
-                </Text>
+                </ZoomableText>
             </View>
         </View>
         {price === 100 && (
@@ -100,7 +100,7 @@ const TicketHeader = ({ name, type, price }) => (
                 }}
                 text='Exklusivní tip'
             >
-                <Ionicons name="diamond" size={18} color={COLORS.accent} style={{ marginRight: -1 }} />
+                <Ionicons name="diamond" size={normalize(18)} color={COLORS.accent} style={{ marginRight: -1 }} />
             </Tooltip>
         )}
     </View>
@@ -131,7 +131,7 @@ const Match = memo(({ data, width }) => (
                 }}
             >
                 <FontAwesome name="soccer-ball-o" size={18} color={COLORS.grey300} />
-                <Text
+                <ZoomableText
                     style={{
                         fontFamily: FONTS.medium,
                         fontSize: width < 420 ? FONT_SIZES.medium : FONT_SIZES.large,
@@ -141,7 +141,7 @@ const Match = memo(({ data, width }) => (
                     }}
                 >
                     {data.home} - {data.away}
-                </Text>
+                </ZoomableText>
             </View>
 
             <View>
@@ -157,7 +157,7 @@ const Match = memo(({ data, width }) => (
             }}
         >
             <View style={{ flexShrink: 1, }}>
-                <Text
+                <ZoomableText
                     style={{
                         fontFamily: FONTS.medium,
                         fontSize: FONT_SIZES.medium,
@@ -167,8 +167,8 @@ const Match = memo(({ data, width }) => (
                     }}
                 >
                     {getEventDate(new Date(), false, true)}, {getEventTime(new Date())}
-                </Text>
-                <Text
+                </ZoomableText>
+                <ZoomableText
                     style={{
                         fontFamily: FONTS.medium,
                         fontSize: FONT_SIZES.medium,
@@ -178,8 +178,8 @@ const Match = memo(({ data, width }) => (
                     }}
                 >
                     {data.tip}
-                </Text>
-                <Text
+                </ZoomableText>
+                <ZoomableText
                     style={{
                         fontFamily: FONTS.medium,
                         fontSize: FONT_SIZES.medium,
@@ -188,10 +188,10 @@ const Match = memo(({ data, width }) => (
                     }}
                 >
                     {data.league}
-                </Text>
+                </ZoomableText>
             </View>
 
-            <Text
+            <ZoomableText
                 style={{
                     fontFamily: FONTS.medium,
                     fontSize: FONT_SIZES.large,
@@ -200,7 +200,7 @@ const Match = memo(({ data, width }) => (
                 }}
             >
                 {roundOdd(data.odd)}
-            </Text>
+            </ZoomableText>
         </View>
     </View>
 ))
@@ -245,7 +245,7 @@ const TicketBody = ({ offer, animatedProps, animatedButtonStyle }) => {
                         backgroundColor: COLORS.accent,
                     }, animatedButtonStyle]}
                 >
-                    <Text
+                    <ZoomableText
                         style={{
                             fontFamily: FONTS.bold,
                             fontSize: FONT_SIZES.large,
@@ -253,7 +253,7 @@ const TicketBody = ({ offer, animatedProps, animatedButtonStyle }) => {
                         }}
                     >
                         Odemknout
-                    </Text>
+                    </ZoomableText>
                 </Animated.View>
             </AnimatedBlurView>
 
@@ -273,7 +273,7 @@ const TicketFooter = ({ odd, stake }) => (
         }}
     >
         <View>
-            <Text
+            <ZoomableText
                 style={{
                     fontFamily: FONTS.medium,
                     fontSize: FONT_SIZES.medium,
@@ -281,8 +281,8 @@ const TicketFooter = ({ odd, stake }) => (
                 }}
             >
                 Celkový kurz
-            </Text>
-            <Text
+            </ZoomableText>
+            <ZoomableText
                 style={{
                     fontFamily: FONTS.medium,
                     fontSize: FONT_SIZES.large,
@@ -292,10 +292,10 @@ const TicketFooter = ({ odd, stake }) => (
                 }}
             >
                 {odd}
-            </Text>
+            </ZoomableText>
         </View>
         <View>
-            <Text
+            <ZoomableText
                 style={{
                     fontFamily: FONTS.medium,
                     fontSize: FONT_SIZES.medium,
@@ -303,7 +303,7 @@ const TicketFooter = ({ odd, stake }) => (
                 }}
             >
                 Kolik jsme vsadili
-            </Text>
+            </ZoomableText>
             <View
                 style={{
                     fontFamily: FONTS.medium,
@@ -313,7 +313,7 @@ const TicketFooter = ({ odd, stake }) => (
                     alignItems: 'center'
                 }}
             >
-                <Text
+                <ZoomableText
                     style={{
                         fontFamily: FONTS.medium,
                         fontSize: FONT_SIZES.large,
@@ -322,7 +322,7 @@ const TicketFooter = ({ odd, stake }) => (
                     }}
                 >
                     {stake} Kč
-                </Text>
+                </ZoomableText>
             </View>
         </View>
     </View>

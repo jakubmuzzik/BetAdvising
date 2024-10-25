@@ -184,10 +184,9 @@ lang=CS style=''>&nbsp;</span></p>
 text-indent:-25.2pt'><span lang=CS style=''>2.1.1.<span
 style='font:7.0pt "Times New Roman"'> </span></span><span lang=CS
 style=''>V&nbsp;rámci balíčku „<b>Starter</b>“ se
-Poskytovatel zavazuje poskytnout zákazníkovi 10 (slovy deset) kreditů, za které
+Poskytovatel zavazuje poskytnout zákazníkovi 250 (slovy dvě stě padesát) kreditů, za které
 je zákazník oprávněn získat od Poskytovatele 5 běžných sázkových tipů
-v&nbsp;oblasti kurzové sázení za cenu <b>250,-Kč</b> (slovy dvě stě padesát
-korun českých), a to ve sportovních odvětvích dle volby zákazníka.</span></p>
+v&nbsp;oblasti kurzové sázení za cenu <b>1000,-Kč</b> (slovy jeden tisíc korun českých), a to ve sportovních odvětvích dle volby zákazníka.</span></p>
 
 <p class=MsoListParagraphCxSpMiddle style='margin-left:61.2pt;text-align:justify'><span
 lang=CS style=''>&nbsp;</span></p>
@@ -195,11 +194,10 @@ lang=CS style=''>&nbsp;</span></p>
 <p class=MsoListParagraphCxSpMiddle style='margin-left:61.2pt;text-align:justify;
 text-indent:-25.2pt'><span lang=CS style=''>2.1.2.<span
 style='font:7.0pt "Times New Roman"'> </span></span><span lang=CS
-style=''> V&nbsp;rámci balíčku „<b>Basic</b>“ se
-Poskytovatel zavazuje poskytnout zákazníkovi 50 (slovy padesát) kreditů, za
-které je zákazník oprávněn získat od Poskytovatele  10 běžných sázkových tipů
-v&nbsp;oblasti kurzové sázení za cenu <b>350,-Kč</b> (slovy tři sta padesát
-korun českých), a to ve sportovních odvětvích dle volby zákazníka.</span></p>
+style=''>V&nbsp;rámci balíčku „<b>Basic</b>“ se
+Poskytovatel zavazuje poskytnout zákazníkovi 500 (slovy pět set) kreditů, za
+které je zákazník oprávněn získat od Poskytovatele 10 běžných sázkových tipů
+v&nbsp;oblasti kurzové sázení za cenu <b>1800,-Kč</b> (slovy jeden tisíc osm set korun českých), a to ve sportovních odvětvích dle volby zákazníka.</span></p>
 
 <p class=MsoListParagraphCxSpMiddle><span lang=CS style=''>&nbsp;</span></p>
 
@@ -207,10 +205,9 @@ korun českých), a to ve sportovních odvětvích dle volby zákazníka.</span>
 text-indent:-25.2pt'><span lang=CS style=''>2.1.3.<span
 style='font:7.0pt "Times New Roman"'> </span></span><span lang=CS
 style=''>V&nbsp;rámci balíčku „<b>Standard</b>“ se
-Poskytovatel zavazuje poskytnout zákazníkovi 100 (slovy jedno sto) kreditů, za
-které je zákazník oprávněn získat od Poskytovatele  20 běžných sázkových tipů
-v&nbsp;oblasti kurzové sázení za cenu <b>550,-Kč</b> (slovy pět set padesát
-korun českých), a to ve sportovních odvětvích dle volby zákazníka.</span></p>
+Poskytovatel zavazuje poskytnout zákazníkovi 1000 (slovy jeden tisíc) kreditů, za
+které je zákazník oprávněn získat od Poskytovatele 20 běžných sázkových tipů
+v&nbsp;oblasti kurzové sázení za cenu <b>3000,-Kč</b> (slovy tři tisíce korun českých), a to ve sportovních odvětvích dle volby zákazníka.</span></p>
 
 <p class=MsoListParagraphCxSpMiddle><span lang=CS style=''>&nbsp;</span></p>
 
@@ -218,10 +215,9 @@ korun českých), a to ve sportovních odvětvích dle volby zákazníka.</span>
 text-indent:-25.2pt'><span lang=CS style=''>2.1.4.<span
 style='font:7.0pt "Times New Roman"'> </span></span><span lang=CS
 style=''>V&nbsp;rámci balíčku „<b>Premium</b>“ se
-Poskytovatel zavazuje poskytnout zákazníkovi 100 (slovy sto) kreditů, za které
-je zákazník oprávněn získat od Poskytovatele  40 běžných sázkových tipů
-v&nbsp;oblasti kurzové sázení za cenu <b>850,-Kč</b> (slovy osm set padesát
-korun českých), a to ve sportovních odvětvích dle volby zákazníka.</span></p>
+Poskytovatel zavazuje poskytnout zákazníkovi 2000 (slovy dva tisíce) kreditů, za které
+je zákazník oprávněn získat od Poskytovatele 40 běžných sázkových tipů
+v&nbsp;oblasti kurzové sázení za cenu <b>4800,-Kč</b> (slovy čtyři tisíce osm set korun českých), a to ve sportovních odvětvích dle volby zákazníka.</span></p>
 
 <p class=MsoListParagraphCxSpMiddle style='margin-left:61.2pt;text-align:justify'><span
 lang=CS style=''>&nbsp;</span></p>
@@ -230,10 +226,9 @@ lang=CS style=''>&nbsp;</span></p>
 text-indent:-25.2pt'><span lang=CS style=''>2.1.5.<span
 style='font:7.0pt "Times New Roman"'> </span></span><span lang=CS
 style=''>V&nbsp;rámci balíčku „<b>VIP</b>“ se
-Poskytovatel zavazuje poskytnout zákazníkovi 350 (slovy tři sta padesát)
-kreditů, za které je zákazník oprávněn získat od Poskytovatele  80 běžných sázkových
-tipů v&nbsp;oblasti kurzové sázení za cenu 999,-Kč (slovy devět set devadesát
-devět korun českých), a to ve sportovních odvětvích dle volby zákazníka.</span></p>
+Poskytovatel zavazuje poskytnout zákazníkovi 4000 (slovy čtyři tisíce)
+kreditů, za které je zákazník oprávněn získat od Poskytovatele 80 běžných sázkových
+tipů v&nbsp;oblasti kurzové sázení za cenu 7000,-Kč (slovy sedm tisíc korun českých), a to ve sportovních odvětvích dle volby zákazníka.</span></p>
 
 <p class=MsoNoSpacing><span lang=CS style=''>&nbsp;</span></p>
 
@@ -295,7 +290,7 @@ text-indent:-25.2pt'><span lang=CS style='font-size:10.0pt;line-height:107%;
 </span></span><span lang=CS style=''>V&nbsp;případě
 zákazníka s&nbsp;již existujícím Zákaznickým účtem, provede zákazník objednávku
 po přihlášení ke svému Zákaznickému účtu tak, že vybere na webu požadovaný druh
-služby (balíčku) (Předkrm, Základní, Standard, Prémie, VIP) a po potvrzení
+služby (balíčku) (Starter, Basic, Standard, Premium, VIP) a po potvrzení
 svého výběru ve vyskakovacím okně, je zákazník přesměrován na platební bránu,
 kde provede úhradu ceny služby. Objednávka je dokončena a stává se závaznou
 stiskem tlačítka „zaplatit“, které je uvedeno u prezentace služby na Webu.</span></p>
@@ -572,7 +567,7 @@ obchodních podmínek. Tím není dotčen nárok Poskytovatele na náhradu majet
 škody a nemajetkové újmy vůči zákazníkovi. Porušení odst. 4.4. těchto
 všeobecných obchodních podmínek je stranami uzavřené smlouvy považováno za její
 podstatné porušení a zakládá tak Poskytovateli právo na okamžité odstoupení od
-smlouvy o zpřístupnění sázkových tipů.  </span></p>
+smlouvy o zpřístupnění sázkových tipů. </span></p>
 
 <p class=MsoListParagraphCxSpMiddle style='margin-left:2.0cm;text-indent:-35.4pt'><span
 lang=CS style='font-size:12.0pt;line-height:107%;'>&nbsp;</span></p>
@@ -878,7 +873,7 @@ nepřímo, použitím sázkového tipu nebo jakékoliv další související inf
 poskytnuté Poskytovatelem zákazníkovi. Zákazník se uzavřením smlouvy o
 zpřístupnění sázkových tipů dle těchto všeobecných obchodních podmínek výslovně
 předem vzdává jakýchkoliv případných nároků na náhradu škody či nemajetkové
-újmy vůči Poskytovateli vzniklých     přímo nebo nepřímo použitím sázkového
+újmy vůči Poskytovateli vzniklých přímo nebo nepřímo použitím sázkového
 tipu nebo jakékoliv další související informace poskytnuté Poskytovatelem zákazníkovi.</span></p>
 
 <p class=MsoListParagraphCxSpMiddle><span lang=CS style=''>&nbsp;</span></p>
@@ -989,7 +984,7 @@ lang=CS style=''>&nbsp;</span></p>
 <p class=MsoListParagraphCxSpLast style='margin-left:18.0pt;text-indent:-18.0pt'><b><span
 lang=CS style='font-size:12.0pt;line-height:107%;'>10.<span
 style='font:7.0pt "Times New Roman"'>&nbsp; </span></span></b><b><span lang=CS
-style='font-size:12.0pt;line-height:107%;'> Trvání
+style='font-size:12.0pt;line-height:107%;'>Trvání
 smlouvy</span></b></p>
 
 <p class=MsoNormal style='text-align:justify'><span lang=CS style='font-size:
@@ -1093,7 +1088,7 @@ na Webu. Na závaznost všeobecných obchodních podmínek je zákazník nálež
 vlastním odesláním objednávky služby dostatečným způsobem upozorněn.</span></p>
 
 <p class=MsoListParagraphCxSpMiddle style='margin-left:2.0cm;text-align:justify'><span
-lang=CS style='font-size:12.0pt;line-height:107%;'> </span></p>
+lang=CS style='font-size:12.0pt;line-height:107%;'></span></p>
 
 <p class=MsoListParagraphCxSpMiddle style='margin-left:2.0cm;text-align:justify;
 text-indent:-35.4pt'><span lang=CS style='font-size:12.0pt;line-height:107%;
@@ -1179,7 +1174,7 @@ s ustanovením § 1820 odst. 1 písm. j) občanského zákoníku společnost
 Poskytovatel zákazníka informuje, že v případě, že dojde mezi Poskytovatelem a
 zákazníkem, který je spotřebitelem ve smyslu obecně závazných právních
 předpisů, ke vzniku spotřebitelského sporu ze smlouvy o zpřístupnění sázkových
-tipů,  který se nepodaří vyřešit vzájemnou dohodou, může zákazník podat návrh
+tipů, který se nepodaří vyřešit vzájemnou dohodou, může zákazník podat návrh
 na mimosoudní řešení takového sporu určenému subjektu mimosoudního řešení
 spotřebitelských sporů, kterým je Česká obchodní inspekce, Štěpánská 15, 120 00
 Praha 2, Email:&nbsp;</span><span lang=CS><a style='word-break: break-word;'

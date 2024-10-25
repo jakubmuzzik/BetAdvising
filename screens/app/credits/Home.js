@@ -206,6 +206,8 @@ const TransactionEntry = ({ transaction }) => {
                                     <Text style={{ fontSize: FONT_SIZES.xx_large }}>🔓</Text>
                                 ) : transaction.transaction_type === 'failed_ticket_refund' ? (
                                     <Text style={{ fontSize: FONT_SIZES.xx_large }}>↩️</Text>
+                                ) : transaction.transaction_type === 'free_entry_credits' ? (
+                                    <Text style={{ fontSize: FONT_SIZES.xx_large }}>🎁</Text>
                                 ) : null
                             }
                         </View>
@@ -236,6 +238,8 @@ const TransactionEntry = ({ transaction }) => {
                                     `Odemčení tiketu${transaction.ticket ? ` #${transaction.ticket.name}` : ''} za ${transaction.amount} kreditů.`
                                 ) : transaction.transaction_type === 'failed_ticket_refund' ? (
                                     `Vrácení kreditů za neúspěšný odemčený tiket${transaction.ticket ? ` #${transaction.ticket.name}` : ''}.`
+                                ) : transaction.transaction_type === 'free_entry_credits' ? (
+                                    `Získání ${transaction.amount} vstupních kreditů zdarma.`
                                 ) : null
                             }
                             </Text>

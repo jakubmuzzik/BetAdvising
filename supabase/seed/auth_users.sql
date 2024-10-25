@@ -1,7 +1,7 @@
 CREATE OR REPLACE FUNCTION private.handle_auth_users_after_update()
 returns trigger 
 language plpgsql
-security definer set search_path = ''
+security definer set search_path = 'public'
 as $$
 begin
   /*
@@ -35,8 +35,11 @@ begin
     SET amount = amount + 100
     WHERE id = NEW.id::uuid;
 
-    INSERT INTO verified_phone_numbers ("user", phone)
-    VALUES (NEW.id::uuid, NEW.phone);
+    INSERT INTO verified_phone_numbers ("user", phone, email)
+    VALUES (NEW.id::uuid, NEW.phone, NEW.email);
+
+    INSERT INTO public.credit_transactions ("user", transaction_type, amount)
+    VALUES (new.id::uuid, 'free_entry_credits', 100);
   END IF;
 
    /**
@@ -44,13 +47,14 @@ begin
    */
   IF (
     OLD.phone IS DISTINCT FROM NEW.phone
+    AND OLD.phone_confirmed_at IS NOT NULL
   ) THEN
     UPDATE public.users
     SET phone = NEW.phone
     WHERE id = NEW.id::uuid;
 
-    INSERT INTO verified_phone_numbers ("user", phone)
-    VALUES (NEW.id::uuid, NEW.phone);
+    INSERT INTO public.verified_phone_numbers ("user", phone, email)
+    VALUES (NEW.id::uuid, NEW.phone, NEW.email);
   END IF;
 
   RETURN NEW;

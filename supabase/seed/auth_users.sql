@@ -35,6 +35,10 @@ begin
     SET amount = amount + 100
     WHERE id = NEW.id::uuid;
 
+    UPDATE public.users
+    SET phone = NEW.phone
+    WHERE id = NEW.id::uuid;
+
     INSERT INTO verified_phone_numbers ("user", phone, email)
     VALUES (NEW.id::uuid, NEW.phone, NEW.email);
 

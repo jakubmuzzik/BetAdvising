@@ -382,6 +382,19 @@ const NewTicket = ({ offsetX, toastRef, setTabHeight, searchParams, storeCreated
                 current.oddsErrorMessage = ''
             }
 
+            if (current.date && current.time && current.date.length === 8 && current.time.length === 4) {
+                const entryDateTime = convertStringsToDateTime(current.date, current.time)
+                if (entryDateTime < new Date()) {
+                    console.log('Date is in the past')
+                    current.dateErrorMessage = 'Date must be in the future'
+                    current.timeErrorMessage = 'Time must be in the future'
+                    out = false
+                } else {
+                    current.dateErrorMessage = ''
+                    current.timeErrorMessage = ''
+                }
+            }
+
             updatedTicketEntries = { ...updatedTicketEntries, ...current }
 
             return out

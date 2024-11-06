@@ -30,7 +30,9 @@ BEGIN
     -- Refund the user's credits
     UPDATE credits
     SET amount = amount + NEW.price
-    WHERE id = (SELECT "user" FROM unlocked_tickets WHERE ticket = NEW.id);
+    FROM unlocked_tickets
+    WHERE credits.id = unlocked_tickets."user"
+      AND unlocked_tickets.ticket = NEW.id;
     
     -- Insert refund credit transactions entry
     INSERT INTO credit_transactions ("user", transaction_type, amount, ticket)

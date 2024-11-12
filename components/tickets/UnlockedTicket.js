@@ -326,7 +326,7 @@ const TicketFooter = ({ odd, result }) => (
     </View>
 )
 
-const UnlockedTicket = ({ ticket, searchParams, showEditButtons, offsetX, ticketEntryActions, ticketActions }) => {
+const UnlockedTicket = ({ ticket, searchParams, showEditButtons, offsetX, ticketEntryActions, ticketActions, style={} }) => {
 
     return (
         <View
@@ -335,7 +335,8 @@ const UnlockedTicket = ({ ticket, searchParams, showEditButtons, offsetX, ticket
                 backgroundColor: COLORS.secondary,
                 borderWidth: 1,
                 borderColor: COLORS.whiteBackground2,
-                flexGrow: 1
+                flexGrow: 1,
+                ...style
             }}
         >
             <TicketHeader price={ticket.price} type={ticket.ticket_entries?.length > 1 ? 'AKO' : 'Solo'} id={ticket.id} name={ticket.name} showEditButtons={showEditButtons} offsetX={offsetX} actions={ticketActions} />

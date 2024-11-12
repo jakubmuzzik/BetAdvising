@@ -1,7 +1,7 @@
 import React, { useState, useMemo, useEffect } from 'react'
 import { View, Text, TouchableOpacity } from 'react-native'
 import { FONT_SIZES, COLORS, FONTS, SPACING } from '../../constants'
-import { normalize } from '../../utils'
+import { normalize, getEventDate } from '../../utils'
 import { Octicons } from '@expo/vector-icons'
 import Animated, { FlipInEasyX } from 'react-native-reanimated'
 

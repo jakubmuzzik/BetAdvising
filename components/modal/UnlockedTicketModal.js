@@ -45,7 +45,7 @@ const UnlockedTicketModal = ({
     const Content = () => (
         <>
             <View style={{  flex: 1 }}>
-                {ticket && <UnlockedTicket ticket={ticket} />}
+                {ticket && <UnlockedTicket ticket={ticket} style={{ borderWidth: 0 }} />}
                 {!ticket && <ActivityIndicator color={COLORS.accent} size='small' />}
             </View>
         </>
@@ -69,7 +69,10 @@ const UnlockedTicketModal = ({
                                 borderRadius: 10,
                                 width,
                                 maxWidth: '90%',
-                                maxHeight: '80%'
+                                maxHeight: '80%',
+                                overflowY: 'auto',
+                                borderColor: COLORS.whiteBackground2,
+                                borderWidth: 1,
                             }}>
                                 <Content />
                             </View>

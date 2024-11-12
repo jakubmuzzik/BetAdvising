@@ -25,10 +25,10 @@ const Admin = ({ searchParams }) => {
 
     const [index, setIndex] = useState(0)
     const [routes, setRoutes] = useState([
-        { key: 'admin', title: 'Admin Dashboard', pathname: '/admin', navigationPaths: [], height: '100%',  },
-        { key: 'new-ticket', title: 'New Ticket', pathname: '/admin/new-ticket', navigationPaths: ['New Ticket'], height: '100%',  },
-        { key: 'open-tickets', title: 'Open Tickets', pathname: '/admin/open-tickets', navigationPaths: ['Open Tickets'], height: '100%',  },
-        { key: 'closed-tickets', title: 'Closed Tickets', pathname: '/admin/closed-tickets', navigationPaths: ['Closed Tickets'], height: '100%',  },
+        { key: 'admin', title: 'Admin', pathname: '/admin', navigationPaths: [], height: '100%',  },
+        { key: 'new-ticket', title: 'Nový tiket', pathname: '/admin/new-ticket', navigationPaths: ['Nový tiket'], height: '100%',  },
+        { key: 'open-tickets', title: 'Otevřené tikety', pathname: '/admin/open-tickets', navigationPaths: ['Otevřené tikety'], height: '100%',  },
+        { key: 'closed-tickets', title: 'Uzavřené tikety', pathname: '/admin/closed-tickets', navigationPaths: ['Uzavřené tikety'], height: '100%',  },
     ]
     .map((route, index) => ({ ...route, index })))
 
@@ -121,7 +121,7 @@ const Admin = ({ searchParams }) => {
                             textDecorationLine: index !== 0 ? 'underline' : 'none'
                         }}
                     >
-                        Admin Dashboard
+                        Admin
                     </Text>
 
                     <AnimatePresence>
@@ -165,7 +165,7 @@ const Admin = ({ searchParams }) => {
                             additionalStyles={{ alignSelf: 'flex-end' }}
                             textColor={COLORS.black}
                             backgroundColors={COLORS.accent}
-                            buttonText='New Ticket'
+                            buttonText='Nový tiket'
                             textStyles={{ fontSize: FONT_SIZES.large, fontFamily: FONTS.bold }}
                         />
                     </Animated.View>}

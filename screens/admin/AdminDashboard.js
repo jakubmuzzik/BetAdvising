@@ -4,13 +4,16 @@ import { FONTS, FONT_SIZES, SPACING, COLORS, SUPPORTED_LANGUAGES } from '../../c
 import { normalize, stripEmptyParams, getParam } from '../../utils'
 import { useLocation, useNavigate, useSearchParams } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { MaterialIcons, Entypo } from '@expo/vector-icons'
+import { MaterialIcons, FontAwesome5, FontAwesome6 } from '@expo/vector-icons'
 import ContentLoader, { Rect } from "react-content-loader/native"
 import { TouchableRipple } from 'react-native-paper'
 
-import { fetchClosedTicketsCount, fetchOpenTicketsCount } from '../../redux/actions/admin'
-
-import { supabase } from '../../supabase/config'
+import { 
+    fetchClosedTicketsCount, 
+    fetchOpenTicketsCount, 
+    fetchUsersCount, 
+    fetchTransactionsCount 
+} from '../../redux/actions/admin'
 
 import withSearchParams from '../../components/hoc/withSearchParams'
 
@@ -20,6 +23,10 @@ const AdminDashboard = ({
     closedTicketsCount,
     fetchClosedTicketsCount, 
     fetchOpenTicketsCount,
+    fetchUsersCount, 
+    fetchTransactionsCount,
+    usersCount,
+    transactionsCount,
     searchParams
 }) => {
     const navigate = useNavigate()
@@ -32,12 +39,26 @@ const AdminDashboard = ({
         if (closedTicketsCount == null) {
             fetchClosedTicketsCount()
         }
+
+        if (usersCount == null) {
+            fetchUsersCount()
+        }
+
+        if (transactionsCount == null) {
+            fetchTransactionsCount()
+        }
     }, [
         openTicketsCount,
-        closedTicketsCount
+        closedTicketsCount,
+        usersCount,
+        transactionsCount
     ])
 
     const onDataCountCardPress = (pathToNavigate) => {
+        if (pathToNavigate == null) {
+            return
+        }
+
         navigate({
             pathname: pathToNavigate,
             search: new URLSearchParams(searchParams).toString()
@@ -53,7 +74,8 @@ const AdminDashboard = ({
             borderRadius: 10,
             backgroundColor: COLORS.secondary,
             borderWidth: 1,
-            borderColor: COLORS.whiteBackground2
+            borderColor: COLORS.whiteBackground2,
+            cursor: pathToNavigate == null ? 'default' : 'pointer'
         }}
             onPress={() => onDataCountCardPress(pathToNavigate)}
             rippleColor='rgba(251, 193, 13, 0.1)'
@@ -94,8 +116,12 @@ const AdminDashboard = ({
     return (
         <View style={{ width: normalize(800), maxWidth: '100%', alignSelf: 'center', paddingHorizontal: SPACING.medium }}>
             <View style={{ flexDirection: 'row', marginBottom: SPACING.xx_small }}>
-                {renderNewDataCard(openTicketsCount, 'Open Tickets', '/admin/open-tickets', SPACING.xx_small, <MaterialIcons name="timelapse" size={25} color="white" />)}
-                {renderNewDataCard(closedTicketsCount, 'Closed Tickets', '/admin/closed-tickets', 0, <MaterialIcons name="check-circle" size={25} color={COLORS.white} />)}
+                {renderNewDataCard(openTicketsCount, 'Otevřené tikety', '/admin/open-tickets', SPACING.xx_small, <MaterialIcons name="timelapse" size={25} color="white" />)}
+                {renderNewDataCard(closedTicketsCount, 'Uzavřené tikety', '/admin/closed-tickets', 0, <MaterialIcons name="check-circle" size={25} color={COLORS.white} />)}
+            </View>
+            <View style={{ flexDirection: 'row', marginBottom: SPACING.xx_small }}>
+                {renderNewDataCard(usersCount, 'Počet registrací', null, SPACING.xx_small, <FontAwesome5 name="user-friends" size={20} color="white" />)}
+                {renderNewDataCard(transactionsCount, 'Počet zakoupení', null, 0, <FontAwesome6 name="money-check-dollar" size={25} color="white" />)}
             </View>
         </View>
     )
@@ -104,7 +130,15 @@ const AdminDashboard = ({
 const mapStateToProps = (store) => ({
     toastRef: store.appState.toastRef,
     openTicketsCount: store.adminState.openTicketsCount,
-    closedTicketsCount: store.adminState.closedTicketsCount
+    closedTicketsCount: store.adminState.closedTicketsCount,
+    usersCount: store.adminState.usersCount,
+    transactionsCount: store.adminState.transactionsCount
 })
 
-export default connect(mapStateToProps, { fetchClosedTicketsCount, fetchOpenTicketsCount })(withSearchParams(AdminDashboard, ['language']))
+export default connect(
+    mapStateToProps, { 
+    fetchClosedTicketsCount, 
+    fetchOpenTicketsCount,
+    fetchUsersCount, 
+    fetchTransactionsCount 
+})(withSearchParams(AdminDashboard, ['language']))

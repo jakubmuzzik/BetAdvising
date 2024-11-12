@@ -3,13 +3,17 @@ import {
     CLOSED_TICKETS_COUNT_CHANGE,
     CLEAR_DATA,
     OPEN_TICKETS_STATE_CHANGE,
-    CLOSED_TICKETS_STATE_CHANGE
+    CLOSED_TICKETS_STATE_CHANGE,
+    USERS_COUNT_STATE_CHANGE,
+    TRANSACTIONS_COUNT_STATE_CHANGE
 } from '../actionTypes'
 
 const INITIAL_STATE = {
     openTicketsCount: null,
     closedTicketsCount: null,
-    openTickets: null
+    openTickets: null,
+    usersCount: null,
+    transactionsCount: null
 }
 
 export const admin = (state = INITIAL_STATE, action) => {
@@ -33,6 +37,16 @@ export const admin = (state = INITIAL_STATE, action) => {
             return {
                 ...state,
                 closedTickets: action.closedTickets
+            }
+        case USERS_COUNT_STATE_CHANGE:
+            return {
+                ...state,
+                usersCount: action.usersCount
+            }
+        case TRANSACTIONS_COUNT_STATE_CHANGE:
+            return {
+                ...state,
+                transactionsCount: action.transactionsCount
             }
         case CLEAR_DATA:
             return {

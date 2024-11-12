@@ -165,7 +165,7 @@ const OpenTickets = ({ fetchOpenTickets, setTabHeight, toastRef, openTickets, se
         try {
             const { error } = await supabase
                 .from('tickets')
-                .update({ result })
+                .update({ result, closed_date: new Date() })
                 .eq('id', ticketId)
 
             if (error) throw error
@@ -359,7 +359,7 @@ const OpenTickets = ({ fetchOpenTickets, setTabHeight, toastRef, openTickets, se
 
             {openTickets != null && openTickets.length === 0 && !refreshing && (
                 <Animated.Text entering={FlipInEasyX} style={{ textAlign: 'center', fontFamily: FONTS.medium, color: COLORS.grey400, fontSize: FONT_SIZES.xx_large, }}>
-                    No open tickets
+                    Žádné otevřené tickety
                 </Animated.Text>
             )}
 

@@ -2,7 +2,9 @@ import {
     OPEN_TICKETS_COUNT_CHANGE,
     CLOSED_TICKETS_COUNT_CHANGE,
     OPEN_TICKETS_STATE_CHANGE,
-    CLOSED_TICKETS_STATE_CHANGE
+    CLOSED_TICKETS_STATE_CHANGE,
+    USERS_COUNT_STATE_CHANGE,
+    TRANSACTIONS_COUNT_STATE_CHANGE
 } from '../../actionTypes'
 import { API_RETRY_LIMIT } from '../../../constants'
 import { supabase } from '../../../supabase/config'
@@ -19,6 +21,16 @@ export const setOpenTicketsCount = (openTicketsCount) => ({
 export const setClosedTicketsCount = (closedTicketsCount) => ({
     type: CLOSED_TICKETS_COUNT_CHANGE,
     closedTicketsCount
+})
+
+export const setUsersCount = (usersCount) => ({
+    type: USERS_COUNT_STATE_CHANGE,
+    usersCount
+})
+
+export const setTransactionsCount = (transactionsCount) => ({
+    type: TRANSACTIONS_COUNT_STATE_CHANGE,
+    transactionsCount
 })
 
 export const fetchOpenTickets = () => async (dispatch, getState) => {
@@ -121,13 +133,58 @@ export const fetchClosedTicketsCount = (attemptsLeft=API_RETRY_LIMIT) => async (
 
         dispatch(setClosedTicketsCount(count ?? 0))
     } catch (e) {
-        console.error('setClosedTicketsCount', e)
+        console.error('fetchClosedTicketsCount', e)
 
         if (attemptsLeft > 0) {
-            console.log('setClosedTicketsCount failed. Retrying...' + Number(attemptsLeft - 1))
-            return dispatch(setClosedTicketsCount(Number(attemptsLeft - 1)))
+            console.log('fetchClosedTicketsCount failed. Retrying...' + Number(attemptsLeft - 1))
+            return dispatch(fetchClosedTicketsCount(Number(attemptsLeft - 1)))
         } else {
-            console.log('setClosedTicketsCount failed. No more retries left.')
+            console.log('fetchClosedTicketsCount failed. No more retries left.')
+            return null
+        }
+    }
+}
+
+export const fetchUsersCount = (attemptsLeft=API_RETRY_LIMIT) => async (dispatch, getState) => {
+    try {        
+        const { count, error } = await supabase
+            .from('users')
+            .select('id', { count: 'exact', head: true })
+
+        if (error) throw error
+
+        dispatch(setUsersCount(count ?? 0))
+    } catch (e) {
+        console.error('fetchUsersCount', e)
+
+        if (attemptsLeft > 0) {
+            console.log('fetchUsersCount failed. Retrying...' + Number(attemptsLeft - 1))
+            return dispatch(fetchUsersCount(Number(attemptsLeft - 1)))
+        } else {
+            console.log('fetchUsersCount failed. No more retries left.')
+            return null
+        }
+    }
+}
+
+export const fetchTransactionsCount = (attemptsLeft=API_RETRY_LIMIT) => async (dispatch, getState) => {
+    try {
+        const { count, error } = await supabase
+            .from('payment_intents')
+            .select('id', { count: 'exact', head: true })
+            .eq('status', 'succeeded')
+
+        if (error) throw error
+
+        dispatch(setTransactionsCount(count ?? 0))
+    } catch (e) {
+        console.error('fetchTransactionsCount', e)
+
+        if (attemptsLeft > 0) {
+            console.log('fetchTransactionsCount failed. Retrying...' + Number(attemptsLeft - 1))
+            return dispatch(fetchTransactionsCount(Number(attemptsLeft - 1)))
+        } else {
+            console.log('fetchTransactionsCount failed. No more retries left.')
             return null
         }
     }

@@ -195,6 +195,7 @@ const SideBar = ({ toggleDrawer, searchParams, currentAuthUser, currentUser }) =
                                 paddingVertical: 8,
                                 alignItems: 'center',
                                 justifyContent: 'flex-start',
+                                flex: 1
                             }}
                             to={{ pathname: route.path, search: new URLSearchParams(searchParams).toString() }}
                         >

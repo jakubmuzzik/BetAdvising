@@ -180,7 +180,7 @@ const ClosedTickets = ({ fetchClosedTickets, setTabHeight, toastRef, closedTicke
 
             {closedTickets != null && closedTickets.length === 0 && !refreshing && (
                 <Animated.Text entering={FlipInEasyX} style={{ textAlign: 'center', fontFamily: FONTS.medium, color: COLORS.grey400, fontSize: FONT_SIZES.xx_large, }}>
-                    No closed tickets
+                    Žádné uzavřené tikety
                 </Animated.Text>
             )}
 

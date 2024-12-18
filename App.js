@@ -8,6 +8,11 @@ import * as Font from 'expo-font'
 import { Provider } from 'react-redux'
 import { PersistGate } from 'redux-persist/integration/react'
 import initStore from './redux/store'
+import ReactGA from 'react-ga'
+
+const TRACKING_ID = "G-FBF6MTJT97"
+ReactGA.initialize(TRACKING_ID);
+
 const { store, persistor } = initStore()
 
 import Main from './navigations/Main'

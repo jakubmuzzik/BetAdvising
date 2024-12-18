@@ -22,15 +22,15 @@ const Packages = ({ searchParams }) => {
         if (!isBrowser) return
 
         VanillaTilt.init(document.querySelectorAll(`[data-id="package"]`), {
-          max: 0,
-          speed: 200,
-          easing: "cubic-bezier(.03,.98,.52,.99)",
-          reverse: true,
-          glare: true,
-          "max-glare": 0.1,
-          //scale: 1.02,
+            max: 0,
+            speed: 200,
+            easing: "cubic-bezier(.03,.98,.52,.99)",
+            reverse: true,
+            glare: true,
+            "max-glare": 0.1,
+            //scale: 1.02,
         })
-      }, [])
+    }, [])
 
     return (
         <View
@@ -92,7 +92,7 @@ const Packages = ({ searchParams }) => {
                     contentFit='contain'
                 />
             )}
-            
+
             <Image
                 source={require('../assets/images/arrow.png')}
                 style={{
@@ -169,7 +169,7 @@ const Packages = ({ searchParams }) => {
             <ScrollView
                 ref={ref}
                 {...events}
-                horizontal  
+                horizontal
                 showsHorizontalScrollIndicator={false}
                 contentContainerStyle={{
                     paddingHorizontal: SPACING.page_horizontal,
@@ -183,7 +183,7 @@ const Packages = ({ searchParams }) => {
             >
                 {
                     PACKAGES.map((item, index) => (
-                <Package 
+                        <Package
                             key={item.id}
                             id={item.id}
                             name={item.name}

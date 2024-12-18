@@ -120,7 +120,7 @@ const AdminDashboard = ({
                 {renderNewDataCard(closedTicketsCount, 'Uzavřené tikety', '/admin/closed-tickets', 0, <MaterialIcons name="check-circle" size={25} color={COLORS.white} />)}
             </View>
             <View style={{ flexDirection: 'row', marginBottom: SPACING.xx_small }}>
-                {renderNewDataCard(usersCount, 'Počet registrací', null, SPACING.xx_small, <FontAwesome5 name="user-friends" size={20} color="white" />)}
+                {renderNewDataCard(usersCount, 'Uživatelé', '/admin/users', SPACING.xx_small, <FontAwesome5 name="user-friends" size={20} color="white" />)}
                 {renderNewDataCard(transactionsCount, 'Počet zakoupení', null, 0, <FontAwesome6 name="money-check-dollar" size={25} color="white" />)}
             </View>
         </View>

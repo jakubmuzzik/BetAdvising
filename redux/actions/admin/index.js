@@ -4,14 +4,17 @@ import {
     OPEN_TICKETS_STATE_CHANGE,
     CLOSED_TICKETS_STATE_CHANGE,
     USERS_COUNT_STATE_CHANGE,
-    TRANSACTIONS_COUNT_STATE_CHANGE
+    TRANSACTIONS_COUNT_STATE_CHANGE,
+    USERS_STATE_CHANGE
 } from '../../actionTypes'
 import { API_RETRY_LIMIT } from '../../../constants'
 import { supabase } from '../../../supabase/config'
 
 export const MAX_TICKETS_ROWS_PER_QUERY = 50
+export const MAX_USER_ROWS_PER_QUERY = 50
 
 const TICKETS_QUERY = '*, ticket_entries(*)'
+const USERS_QUERY = 'id, name, email, created_date'
 
 export const setOpenTicketsCount = (openTicketsCount) => ({
     type: OPEN_TICKETS_COUNT_CHANGE,
@@ -55,7 +58,7 @@ export const fetchOpenTickets = () => async (dispatch, getState) => {
         } else {
             dispatch({
                 type: OPEN_TICKETS_STATE_CHANGE,
-                openTickets: getState().userState.openTickets.concat(data)
+                openTickets: getState().adminState.openTickets.concat(data)
             })
         }
 
@@ -88,7 +91,7 @@ export const fetchClosedTickets = () => async (dispatch, getState) => {
         } else {
             dispatch({
                 type: CLOSED_TICKETS_STATE_CHANGE,
-                closedTickets: getState().userState.closedTickets.concat(data)
+                closedTickets: getState().adminState.closedTickets.concat(data)
             })
         }
 
@@ -164,6 +167,37 @@ export const fetchUsersCount = (attemptsLeft=API_RETRY_LIMIT) => async (dispatch
             console.log('fetchUsersCount failed. No more retries left.')
             return null
         }
+    }
+}
+
+export const fetchUsers = () => async (dispatch, getState) => {
+    try {
+        const from = getState().adminState.users != null ? getState().adminState.users.length : 0
+
+        const { data=[], error } = await supabase
+            .from('users')
+            .select(USERS_QUERY)
+            .order('created_date', { ascending: false })
+            .range(from, Number(from) + Number(MAX_USER_ROWS_PER_QUERY) - 1)
+
+        if (error) throw error
+
+        if (from === 0) {
+            dispatch({
+                type: USERS_STATE_CHANGE,
+                users: data
+            })
+        } else {
+            dispatch({
+                type: USERS_STATE_CHANGE,
+                users: getState().adminState.users.concat(data)
+            })
+        }
+
+        return data
+    } catch (e) {
+        console.error(e)
+        return null
     }
 }
 

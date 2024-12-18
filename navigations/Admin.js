@@ -19,6 +19,7 @@ import CustomButton from '../components/elements/CustomButton'
 import NewTicket from '../screens/admin/NewTicket'
 import OpenTickets from '../screens/admin/OpenTickets'
 import ClosedTickets from '../screens/admin/ClosedTickets'
+import Users from '../screens/admin/Users'
 
 const Admin = ({ searchParams }) => {
     const { width: windowWidth } = useWindowDimensions()
@@ -29,6 +30,7 @@ const Admin = ({ searchParams }) => {
         { key: 'new-ticket', title: 'Nový tiket', pathname: '/admin/new-ticket', navigationPaths: ['Nový tiket'], height: '100%',  },
         { key: 'open-tickets', title: 'Otevřené tikety', pathname: '/admin/open-tickets', navigationPaths: ['Otevřené tikety'], height: '100%',  },
         { key: 'closed-tickets', title: 'Uzavřené tikety', pathname: '/admin/closed-tickets', navigationPaths: ['Uzavřené tikety'], height: '100%',  },
+        { key: 'users', title: 'Uživatelé', pathname: '/admin/users', navigationPaths: ['Uživatelé'], height: '100%',  },
     ]
     .map((route, index) => ({ ...route, index })))
 
@@ -103,6 +105,12 @@ const Admin = ({ searchParams }) => {
                         <ClosedTickets setTabHeight={(height) => setTabHeight(height, route.index)} offsetX={windowWidth * route.index}/>
                     </View>
                 )
+            case 'users':
+                return (
+                    <View style={{ paddingHorizontal: SPACING.medium, maxWidth: '100%', height: routes[index].height, alignSelf: 'center' }}>
+                        <Users setTabHeight={(height) => setTabHeight(height, route.index)} offsetX={windowWidth * route.index}/>
+                    </View>
+                )
             default:
                 return null
         }
@@ -110,7 +118,16 @@ const Admin = ({ searchParams }) => {
 
     return (
         <View style={{ backgroundColor: COLORS.lightBlack, height: routes[index].key === 'add_lady' ? initialHeight - normalize(70) : '100%' }}>
-            <View style={{ width: normalize(800), maxWidth: '100%', alignSelf: 'center', marginTop: SPACING.large + SPACING.medium, paddingHorizontal: SPACING.medium, marginBottom: SPACING.large }}>
+            <View 
+                style={{
+                    width: normalize(800),
+                    maxWidth: '100%', 
+                    alignSelf: 'center', 
+                    marginTop: SPACING.large + SPACING.medium, 
+                    paddingHorizontal: SPACING.medium, 
+                    marginBottom: SPACING.large 
+                }}
+            >
                 <View style={{ flexDirection: 'row', justifyContent: index === 0 ? 'space-between' : 'flex-start' }}>
                     <Text
                         onPress={index !== 0 ? () => onNavigationPathPress(0) : undefined}

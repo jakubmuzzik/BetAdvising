@@ -142,6 +142,7 @@ const router = createBrowserRouter(createRoutesFromElements(
                 <Route path='open-tickets' element={<Admin />} />
                 <Route path='closed-tickets' element={<Admin />} />
                 <Route path='new-ticket' element={<Admin />} />
+                <Route path='users' element={<Admin />} />
             </Route>
         </Route>
 

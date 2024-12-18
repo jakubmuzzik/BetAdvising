@@ -36,7 +36,7 @@ import TermsOfService from '../screens/legal/TermsOfService'
 import Admin from './Admin'
 import RequireAdminUser from './RequireAdminUser'
 
-import ReactGA from 'react-ga'
+import ReactGA from 'react-ga4'
 
 const MarketingLayout = ({ children }) => (
     <>
@@ -157,7 +157,7 @@ const router = createBrowserRouter(createRoutesFromElements(
 ))
 
 router.subscribe(() => {
-    ReactGA.pageview(window.location.pathname + window.location.search)
+    ReactGA.send({ hitType: "pageview", page: window.location.pathname + window.location.search })
     //window.scrollTo({ top: 0, left: 0, behavior: 'instant'}) 
 
     const hash = window.location.hash

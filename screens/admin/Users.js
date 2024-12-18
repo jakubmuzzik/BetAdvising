@@ -137,7 +137,7 @@ const Users = ({ fetchUsers, setTabHeight, users, searchParams, offsetX, closeOp
                 width: normalize(800),
                 maxWidth: '100%',
                 alignSelf: 'center',
-                paddingHorizontal: SPACING.medium,
+                //paddingHorizontal: SPACING.medium,
                 paddingTop: SPACING.xx_large,
                 backgroundColor: COLORS.primary,
                 //alignItems: 'center',

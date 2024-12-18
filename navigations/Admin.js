@@ -107,7 +107,7 @@ const Admin = ({ searchParams }) => {
                 )
             case 'users':
                 return (
-                    <View style={{ paddingHorizontal: SPACING.medium, maxWidth: '100%', height: routes[index].height, alignSelf: 'center' }}>
+                    <View style={{ paddingHorizontal: SPACING.medium, maxWidth: '100%', width: normalize(800), height: routes[index].height, alignSelf: 'center' }}>
                         <Users setTabHeight={(height) => setTabHeight(height, route.index)} offsetX={windowWidth * route.index}/>
                     </View>
                 )

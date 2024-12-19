@@ -181,6 +181,9 @@ const FlippableTicket = ({ isLast, offer, searchParams, isSmallScreen, onTimeLef
                                 <LockedTicket
                                     searchParams={searchParams}
                                     offer={offer}
+                                    style={{
+                                        borderWidth: 0
+                                    }}
                                 />
                             </View>
                         </Animated.View>
@@ -199,7 +202,14 @@ const FlippableTicket = ({ isLast, offer, searchParams, isSmallScreen, onTimeLef
                                 }
                             ]}>
 
-                            {offer.ticket_data && <UnlockedTicket ticket={offer.ticket_data} />}
+                            {offer.ticket_data && (
+                                <UnlockedTicket
+                                    ticket={offer.ticket_data}
+                                    style={{
+                                        borderWidth: 0
+                                    }}
+                                />
+                            )}
                         </Animated.View>
                     </View>
                 </>
@@ -214,12 +224,15 @@ const styles = StyleSheet.create({
     regularCard: {
         zIndex: 1,
         overflow: 'hidden',
-        flexGrow: 1
+        flexGrow: 1,
     },
     flippedCard: {
         position: 'absolute',
         backfaceVisibility: 'hidden',
         zIndex: 2,
-        overflow: 'hidden'
+        overflow: 'hidden',
+        borderWidth: 1,
+        borderColor: COLORS.whiteBackground2,
+        borderRadius: 10
     },
 })

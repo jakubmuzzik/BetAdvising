@@ -276,7 +276,7 @@ const TicketFooter = ({ odd, stake }) => (
     </View>
 )
 
-const LockedTicket = ({ offer, searchParams, toastRef, unlockTicket }) => {
+const LockedTicket = ({ offer, searchParams, toastRef, unlockTicket, style={} }) => {
     const [confirmUnlockVisible, setConfirmUnlockVisible] = useState(false)
 
     const onUnlockPress = () => {
@@ -322,7 +322,8 @@ const LockedTicket = ({ offer, searchParams, toastRef, unlockTicket }) => {
                 backgroundColor: COLORS.secondary,
                 borderWidth: 1,
                 borderColor: COLORS.whiteBackground2,
-                flexGrow: 1
+                flexGrow: 1,
+                ...style
             }}
         >
             <TicketHeader type={offer.data.length === 1 ? 'Solo' : 'AKO'} name={offer.name} price={offer.price}/>
